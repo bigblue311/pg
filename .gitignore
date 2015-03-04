@@ -1,0 +1,7 @@
+.project
+.classpath
+target/
+.settings/
+.DS_Store
+pg.app.web/src/main/webapp/WEB-INF/lib
+pg.app.web/src/main/webapp/WEB-INF/classes
