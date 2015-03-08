@@ -19,6 +19,7 @@
     <result property="description" column="description"/>
     <result property="brandId" column="brand_id"/>
     <result property="categoryId" column="category_id"/>
+    <result property="enable" column="enable"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Package">
@@ -32,11 +33,12 @@
       img,
       description,
       brand_id,
-      category_id
+      category_id,
+      enable
     ) values (
       now(), now(),
       #name#, #title#, #code#, #img#, #description#,
-      #brandId#, #categoryId#
+      #brandId#, #categoryId#, #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -82,12 +84,25 @@
            category_id = #categoryId#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="enable">  
+         <![CDATA[   
+           enable = #enable#,
+         ]]> 
+      </isNotEmpty>
     </dynamic>
     	gmt_modify = now()
     where
       id = #id#
   </update>
-
+  
+  <update id="softDeleteById" parameterClass="java.lang.Long">
+  	update pg_product set enable = '1' where id = #id#
+  </update>
+  
+  <update id="recoverById" parameterClass="java.lang.Long">
+  	update pg_product set enable = '0' where id = #id#
+  </update>
+  
   <select id="getAll" resultMap="RM">
     select * from pg_product  
   </select>
@@ -119,9 +134,28 @@
         	brand_id = #brandId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="packageId" prepend="and">
+        	<![CDATA[ 
+        	id in (select product_id from pg_prod_pack where package_id = #packageId#)
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="publishId" prepend="and">
+        	<![CDATA[ 
+        	(
+        		id in (select product_id from pg_prod_pack where package_id = (select extend_id from pg_publish where prod_type = '1' and id = #publishId#)) 
+        		or 
+        		id = (select extend_id from pg_publish where prod_type = '0' and id = #publishId#)
+        	)
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="categoryId" prepend="and">
         	<![CDATA[ 
         	category_id = #categoryId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="enable" prepend="and">
+        	<![CDATA[ 
+        	enable = #enable#
         	]]>
 	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
@@ -134,7 +168,13 @@
   	<isNull property="code">
   	<isNull property="brandId">
   	<isNull property="categoryId">
+  	<isNull property="packageId">
+  	<isNull property="publishId">
+  	<isNull property="enable">
         <include refid="Common.validModify" />
+    </isNull>
+    </isNull>
+    </isNull>
     </isNull>
     </isNull>
     </isNull>

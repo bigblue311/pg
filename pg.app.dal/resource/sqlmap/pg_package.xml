@@ -17,6 +17,7 @@
     <result property="code" column="code"/>
     <result property="img" column="img"/>
     <result property="description" column="description"/>
+    <result property="enable" column="enable"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Package">
@@ -28,10 +29,12 @@
       title,
       code,
       img,
-      description
+      description,
+      enable
     ) values (
       now(), now(),
-      #name#, #title#, #code#, #img#, #description#
+      #name#, #title#, #code#, #img#, #description#,
+      #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -67,10 +70,23 @@
            description = #description#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="enable">  
+         <![CDATA[   
+           enable = #enable#,
+         ]]> 
+      </isNotEmpty>
     </dynamic>
     	gmt_modify = now()
     where
       id = #id#
+  </update>
+  
+  <update id="softDeleteById" parameterClass="java.lang.Long">
+  	update pg_package set enable = '1' where id = #id#
+  </update>
+  
+  <update id="recoverById" parameterClass="java.lang.Long">
+  	update pg_package set enable = '0' where id = #id#
   </update>
 
   <select id="getAll" resultMap="RM">
@@ -99,6 +115,11 @@
         	code = #code#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="enable" prepend="and">
+        	<![CDATA[ 
+        	enable = #enable#
+        	]]>
+	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
   	</dynamic>
   </sql>
@@ -107,7 +128,9 @@
   	<isNull property="name">
   	<isNull property="title">
   	<isNull property="code">
+  	<isNull property="enable">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
 	</isNull>

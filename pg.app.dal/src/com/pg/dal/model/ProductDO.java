@@ -23,6 +23,7 @@ public class ProductDO extends EntityDO implements Serializable{
 	private Long brandId;		//品牌ID
 	private Long categoryId;	//品类ID
 	private String description;	//描述
+	private String enable;		//有效
 	
 	public String getName() {
 		return name;
@@ -66,7 +67,12 @@ public class ProductDO extends EntityDO implements Serializable{
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
-	
+	public String getEnable() {
+		return enable;
+	}
+	public void setEnable(String enable) {
+		this.enable = enable;
+	}
 	public ProductQueryCondition toQueryCondition(){
 		ProductQueryCondition queryCondition = new ProductQueryCondition();
 		queryCondition.setQueryMap(this.toMap());

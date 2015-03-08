@@ -2,29 +2,29 @@ package com.pg.dal.dao;
 
 import java.util.List;
 
-import com.pg.dal.model.BrandDO;
-import com.pg.dal.query.BrandQueryCondition;
+import com.pg.dal.model.CategoryDO;
+import com.pg.dal.query.CategoryQueryCondition;
 
-public interface BrandDAO {
+public interface CategoryDAO {
 	/**
 	 * 创建对象
-	 * @param BrandDO
+	 * @param CategoryDO
 	 * @return
 	 */
-	Long insert(BrandDO brandDO);
+	Long insert(CategoryDO categoryDO);
 	
 	/**
 	 * 更新对象信息
-	 * @param BrandDO
+	 * @param CategoryDO
 	 */
-	Boolean update(BrandDO brandDO);
+	Boolean update(CategoryDO categoryDO);
 	
 	/**
 	 * 根据ID获取
 	 * @param id
 	 * @return
 	 */
-	BrandDO getById(Long id);
+	CategoryDO getById(Long id);
 	
 	/**
 	 * 软删除
@@ -45,13 +45,13 @@ public interface BrandDAO {
 	 * @param queryCondition
 	 * @return
 	 */
-	List<BrandDO> getByCondition(BrandQueryCondition queryCondition);
+	List<CategoryDO> getByCondition(CategoryQueryCondition queryCondition);
 	
 	/**
 	 * 获取分页数据
 	 * @param queryCondition
 	 * @return
 	 */
-	List<BrandDO> getPage(BrandQueryCondition queryCondition);
-	Integer getCount(BrandQueryCondition queryCondition);
+	List<CategoryDO> getPage(CategoryQueryCondition queryCondition);
+	Integer getCount(CategoryQueryCondition queryCondition);
 }

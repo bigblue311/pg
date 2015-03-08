@@ -69,6 +69,10 @@
   <delete id="deleteById" parameterClass="java.lang.Long">
     delete from pg_prod_pack where id = #id#
   </delete>
+  
+  <delete id="deleteByPackageId" parameterClass="java.lang.Long">
+    delete from pg_prod_pack where package_id = #packageId#
+  </delete>
 
   <select id="getAll" resultMap="RM">
     select * from pg_prod_pack  

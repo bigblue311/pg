@@ -59,6 +59,14 @@
       id = #id#
   </update>
 
+  <update id="softDeleteById" parameterClass="java.lang.Long">
+  	update pg_category set enable = '1' where id = #id#
+  </update>
+  
+  <update id="recoverById" parameterClass="java.lang.Long">
+  	update pg_category set enable = '0' where id = #id#
+  </update>
+
   <select id="getAll" resultMap="RM">
     select * from pg_category  
   </select>

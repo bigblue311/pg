@@ -32,6 +32,22 @@ public class EntityDAO<Entity extends EntityDO, Query extends QueryCondition> {
 		return mySqlMapClient.getSqlMapClient();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Entity> getAll(){
+		try {
+			Object obj = getSqlMapClient().queryForList(namespace+".getAll");
+			if(obj != null) {
+				List<Entity> list = (List<Entity>)obj;
+				return list;
+			} else {
+				return Lists.newArrayList();
+			}
+		} catch (SQLException e) {
+			log.error("SQL执行失败", "getAll", e);
+			return Lists.newArrayList();
+		}
+	}
+	
 	public List<Entity> queryForList(String sqlId, Entity query){
 		return queryForList(sqlId, query.toMap());
 	}

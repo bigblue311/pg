@@ -14,23 +14,22 @@ public abstract class StaticCache<entity extends EntityDO, query extends QueryCo
 		super(namespace);
 	}
 
-	private final Map<Long,Object> cacheMap = Maps.newConcurrentMap();
+	public static final String ON = "ON";
+	private final Map<String,Object> cacheMap = Maps.newConcurrentMap();
 	
 	public abstract void reloadCache();
-	
-	public abstract Collection<Object> getAll();
 	
 	public final void clearCache(){
 		cacheMap.clear();
 	}
 	
-	public final Object getCache(Long key){
+	public final Object getCache(String key){
 		if(key == null) return null;
 		return cacheMap.get(key);
 	}
 	
-	public final void updateCache(Long key, Object obj){
-		cacheMap.put(key, obj);
+	public final void updateCache(String key, Object value){
+		cacheMap.put(key, value);
 	}
 	
 	public final void updateDB(entity e){

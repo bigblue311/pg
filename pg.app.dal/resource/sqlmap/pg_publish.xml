@@ -130,6 +130,18 @@
     where
       id = #id#
   </update>
+  
+  <delete id="deleteById" parameterClass="java.lang.Long">
+    delete from pg_publish where id = #id#
+  </delete>
+  
+  <delete id="deleteByPackageId" parameterClass="java.lang.Long">
+    delete from pg_publish where extend_id = #packageId# and prod_type = '1'
+  </delete>
+  
+  <delete id="deleteByProductId" parameterClass="java.lang.Long">
+    delete from pg_publish where extend_id = #productId# and prod_type = '0'
+  </delete>
 
   <select id="getAll" resultMap="RM">
     select * from pg_publish  
@@ -165,12 +177,12 @@
 	    <isNotNull property="valid">
 	    	<isEqual property="valid" compareValue="true" prepend="and">
 	    	<![CDATA[
-        	(valid_from < now() and valid_to > now() and enable = '0')
+        	(valid_from < now() and valid_to > now() and enable = '0' and balance > 0)
         	 ]]>
         	</isEqual>
         	<isEqual property="valid" compareValue="false" prepend="and">
 	    	<![CDATA[
-        	(valid_from > now() or valid_to < now() or enable = '1')
+        	(valid_from > now() or valid_to < now() or enable = '1' or balance <= 0)
         	 ]]>
         	</isEqual>
 	    </isNotNull>
@@ -183,7 +195,9 @@
   	<isNull property="prodType">
   	<isNull property="extendId">
   	<isNull property="extendCode">
+  	<isNull property="valid">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
     </isNull>
@@ -191,17 +205,17 @@
   </sql>
   
   <sql id="orderBy">
-  	<isNotEmpty property="price">
-  		order by price 
+  	<isNotEmpty property="orderBy">
+  		order by #orderBy# 
   	</isNotEmpty>
-  	<isEmpty property="price">
+  	<isEmpty property="orderBy">
   		order by id 
   	</isEmpty>
-  	<isNotEmpty property="desc">
-  		desc
+  	<isNotEmpty property="order">
+  		#order#
   	</isNotEmpty>
-  	<isEmpty property="desc">
-  		asc
+  	<isEmpty property="order">
+  		desc
   	</isEmpty>
   </sql>
   

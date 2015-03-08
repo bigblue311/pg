@@ -7,14 +7,14 @@ import com.pg.dal.query.CustomerQueryCondition;
 
 public interface CustomerDAO {
 	/**
-	 * 创建用户
+	 * 创建对象
 	 * @param customerDO
 	 * @return
 	 */
 	Long insert(CustomerDO customerDO);
 	
 	/**
-	 * 更新用户信息
+	 * 更新对象信息
 	 * @param customerDO
 	 */
 	Boolean update(CustomerDO customerDO);

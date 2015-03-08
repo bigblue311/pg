@@ -32,6 +32,16 @@ public class PublishQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public PublishQueryCondition setOrderBy(String orderBy){
+		put("orderBy",orderBy);
+		return this;
+	}
+	
+	public PublishQueryCondition setOrder(String order){
+		put("order",order);
+		return this;
+	}
+	
 	@Override
 	public PublishQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));

@@ -22,6 +22,16 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public ProductQueryCondition setPackageId(Long packageId) {
+		put("packageId",packageId);
+		return this;
+	}
+	
+	public ProductQueryCondition setPublishId(Long publishId) {
+		put("publishId",publishId);
+		return this;
+	}
+	
 	public ProductQueryCondition setBrandId(Long brandId) {
 		put("brandId",brandId);
 		return this;

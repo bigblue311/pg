@@ -15,6 +15,7 @@
     <result property="name" column="name"/>
     <result property="role" column="role"/>
     <result property="password" column="password"/>
+    <result property="enable" column="enable"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Employee">
@@ -24,10 +25,11 @@
       gmt_modify,
       name,
       role,
-      password
+      password,
+      enable
     ) values (
       now(), now(),
-      #name#, #role#, #password#
+      #name#, #role#, #password#, #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -53,10 +55,23 @@
            password = #password#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="enable">  
+         <![CDATA[   
+           enable = #enable#,
+         ]]> 
+      </isNotEmpty>
     </dynamic>
     	gmt_modify = now()
     where
       id = #id#
+  </update>
+
+  <update id="softDeleteById" parameterClass="java.lang.Long">
+  	update pg_employee set enable = '1' where id = #id#
+  </update>
+  
+  <update id="recoverById" parameterClass="java.lang.Long">
+  	update pg_employee set enable = '0' where id = #id#
   </update>
 
   <select id="getAll" resultMap="RM">
@@ -80,6 +95,11 @@
         	role = #role#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="enable" prepend="and">
+        	<![CDATA[ 
+        	enable = #enable#
+        	]]>
+	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
   	</dynamic>
   </sql>
@@ -87,7 +107,9 @@
   <sql id="validate">
   	<isNull property="name">
   	<isNull property="role">
+  	<isNull property="enable">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
 	</isNull>
   </sql>

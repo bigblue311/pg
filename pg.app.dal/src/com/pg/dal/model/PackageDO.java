@@ -16,11 +16,13 @@ public class PackageDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4950264146722336203L;
-	private String name;	//名称
-	private String title;	//标题
-	private String code;	//编号
-	private String img;		//图片
+	private String name;		//名称
+	private String title;		//标题
+	private String code;		//编号
+	private String img;			//图片
 	private String description;	//描述
+	private String enable;		//有效
+	
 	public String getName() {
 		return name;
 	}
@@ -51,7 +53,12 @@ public class PackageDO extends EntityDO implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public String getEnable() {
+		return enable;
+	}
+	public void setEnable(String enable) {
+		this.enable = enable;
+	}
 	public PackageQueryCondition toQueryCondition(){
 		PackageQueryCondition queryCondition = new PackageQueryCondition();
 		queryCondition.setQueryMap(this.toMap());
