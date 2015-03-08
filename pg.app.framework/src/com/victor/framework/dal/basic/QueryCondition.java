@@ -29,14 +29,18 @@ public abstract class QueryCondition {
 	public void clearEnable(){
 		this.queryMap.remove("enable");
 	}
+	
+	public void setEnable(){
+		queryMap.put("enable", "0");
+	}
 
-	public abstract QueryCondition gmtModifyStart(Date from);
+	public abstract QueryCondition setGmtModifyStart(Date from);
 	
-	public abstract QueryCondition gmtModifyEnd(Date to);
+	public abstract QueryCondition setGmtModifyEnd(Date to);
 	
-	public abstract QueryCondition start(int start);
+	public abstract QueryCondition setStart(int start);
 	
-	public abstract QueryCondition pageSize(int pageSize);
+	public abstract QueryCondition setPageSize(int pageSize);
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Paging getPaging(int totalSize,int barSize){

@@ -6,8 +6,9 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.victor.framework.dal.basic.EntityDAO;
 import com.victor.framework.dal.basic.EntityDO;
+import com.victor.framework.dal.basic.QueryCondition;
 
-public abstract class StaticCache<entity extends EntityDO> extends EntityDAO<entity> {
+public abstract class StaticCache<entity extends EntityDO, query extends QueryCondition> extends EntityDAO<entity,query> {
 	
 	public StaticCache(String namespace) {
 		super(namespace);

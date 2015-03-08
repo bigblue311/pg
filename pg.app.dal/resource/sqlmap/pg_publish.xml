@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PublishDO">
+
+  <typeAlias alias="Publish" type="com.pg.dal.model.PublishDO"/>
+
+  <resultMap id="RM" class="Publish">
+    <result property="id" column="id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtModify" column="gmt_modify"/>
+    <result property="price" column="price"/>
+    <result property="unit" column="unit"/>
+    <result property="balance" column="balance"/>
+    <result property="warehouseId" column="warehouse_id"/>
+    <result property="img" column="img"/>
+    <result property="description" column="description"/>
+    <result property="prodType" column="prod_type"/>
+    <result property="extendId" column="extend_id"/>
+    <result property="extendCode" column="extend_code"/>
+    <result property="limitBuy" column="limit_buy"/>
+    <result property="validFrom" column="valid_from"/>
+    <result property="validTo" column="valid_to"/>
+    <result property="enable" column="enable"/>
+  </resultMap>
+
+  <insert id="insert" parameterClass="Publish">
+    <![CDATA[
+    insert into pg_publish (
+      gmt_create,
+      gmt_modify,
+      price,
+      unit,
+      balance,
+      warehouse_id,
+      img,
+      description,
+      prod_type,
+      extend_id,
+      extend_code,
+      limit_buy,
+      valid_from,
+      valid_to,
+      enable
+    ) values (
+      now(), now(),
+      #price#, #unit#, #balance#, #warehouseId#, #img#,
+      #description#, #prodType#, #extendId#, #extendCode#, #limitBuy#,
+      #validFrom#, #validTo#, #enable#
+    )
+    ]]>
+    <selectKey resultClass="long" keyProperty="id">    
+		<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+	</selectKey>
+  </insert>
+  
+  <update id="update" parameterClass="Publish">
+    update pg_publish set 
+    <dynamic>
+      <isNotEmpty property="price">  
+         <![CDATA[   
+           price = #price#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="unit">  
+         <![CDATA[   
+           unit = #unit#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="balance">  
+         <![CDATA[   
+           balance = #balance#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="warehouseId">  
+         <![CDATA[   
+           warehouse_id = #warehouseId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="img">  
+         <![CDATA[   
+           img = #img#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="description">  
+         <![CDATA[   
+           description = #description#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="prodType">  
+         <![CDATA[   
+           prod_type = #prodType#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="extendId">  
+         <![CDATA[   
+           extend_id = #extendId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="extendCode">  
+         <![CDATA[   
+           extend_code = #extendCode#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="limitBuy">  
+         <![CDATA[   
+           limit_buy = #limitBuy#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="validFrom">  
+         <![CDATA[   
+           valid_from = #validFrom#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="validTo">  
+         <![CDATA[   
+           valid_to = #validTo#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="enable">  
+         <![CDATA[   
+           enable = #enable#,
+         ]]> 
+      </isNotEmpty>
+    </dynamic>
+    	gmt_modify = now()
+    where
+      id = #id#
+  </update>
+
+  <select id="getAll" resultMap="RM">
+    select * from pg_publish  
+  </select>
+  
+  <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
+    select * from pg_publish where id = #id#  
+  </select>
+  
+  <sql id="where">
+  	<include refid="validate" />
+  	<dynamic prepend="where">
+	    <isNotEmpty property="warehouseId" prepend="and">
+        	<![CDATA[ 
+        	warehouse_id = #warehouseId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="prodType" prepend="and">
+        	<![CDATA[ 
+        	prod_type = #prodType#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendId" prepend="and">
+        	<![CDATA[ 
+        	extend_id = #extendId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendCode" prepend="and">
+        	<![CDATA[ 
+        	extend_code = #extendCode#
+        	]]>
+	    </isNotEmpty>
+	    <isNotNull property="valid">
+	    	<isEqual property="valid" compareValue="true" prepend="and">
+	    	<![CDATA[
+        	(valid_from < now() and valid_to > now() and enable = '0')
+        	 ]]>
+        	</isEqual>
+        	<isEqual property="valid" compareValue="false" prepend="and">
+	    	<![CDATA[
+        	(valid_from > now() or valid_to < now() or enable = '1')
+        	 ]]>
+        	</isEqual>
+	    </isNotNull>
+	    <include refid="Common.queryModify" />
+  	</dynamic>
+  </sql>
+  
+  <sql id="validate">
+  	<isNull property="warehouseId">
+  	<isNull property="prodType">
+  	<isNull property="extendId">
+  	<isNull property="extendCode">
+        <include refid="Common.validModify" />
+    </isNull>
+    </isNull>
+    </isNull>
+	</isNull>
+  </sql>
+  
+  <sql id="orderBy">
+  	<isNotEmpty property="price">
+  		order by price 
+  	</isNotEmpty>
+  	<isEmpty property="price">
+  		order by id 
+  	</isEmpty>
+  	<isNotEmpty property="desc">
+  		desc
+  	</isNotEmpty>
+  	<isEmpty property="desc">
+  		asc
+  	</isEmpty>
+  </sql>
+  
+  <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_publish 
+    <include refid="where" />
+    <include refid="orderBy" />
+  </select>
+  
+  <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_publish 
+    <include refid="where" />
+    <include refid="orderBy" />
+    <include refid="Common.pageSql" />
+  </select>
+  
+  <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+    select count(*) from pg_publish
+	<include refid="where" />
+  </select>
+</sqlMap>

@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.OpLogQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -36,5 +37,11 @@ public class OpLogDO extends EntityDO implements Serializable{
 	}
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
+	}
+	
+	public OpLogQueryCondition toQueryCondition(){
+		OpLogQueryCondition queryCondition = new OpLogQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

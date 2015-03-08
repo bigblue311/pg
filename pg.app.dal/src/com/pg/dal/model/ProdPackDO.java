@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.ProdPackQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -19,6 +20,7 @@ public class ProdPackDO extends EntityDO implements Serializable{
 	private Long packageId;		//商品包ID
 	private Long productId;		//商品ID
 	private Integer quantity;	//数量
+	private String unit;		//单位
 	
 	public Long getPackageId() {
 		return packageId;
@@ -37,5 +39,17 @@ public class ProdPackDO extends EntityDO implements Serializable{
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	public ProdPackQueryCondition toQueryCondition(){
+		ProdPackQueryCondition queryCondition = new ProdPackQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

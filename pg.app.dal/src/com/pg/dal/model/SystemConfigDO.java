@@ -15,9 +15,9 @@ public class SystemConfigDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 366539580312188554L;
-	private String key; 	//key
-	private String value;	//value
-	private String desc;	//描述
+	private String key; 		//key
+	private String value;		//value
+	private String description;	//描述
 	
 	public String getKey() {
 		return key;
@@ -31,10 +31,10 @@ public class SystemConfigDO extends EntityDO implements Serializable{
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

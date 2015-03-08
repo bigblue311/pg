@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.OrderQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -16,14 +17,16 @@ public class OrderDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6072027456711318024L;
-	private String wAddressFrom;	//发货仓库
-	private String wAddressTo;		//收货仓库
-	private String wKeeper;			//收货联系人
-	private String wPhone;			//收货联系人电话
-	private String wMobile;			//收货联系人手机
+	private String addressFrom;		//发货仓库
+	private String addressTo;		//收货仓库
+	private String keeper;			//收货联系人
+	private String phone;			//收货联系人电话
+	private String mobile;			//收货联系人手机
+	private Long customerId;		//客户ID
 	private Double deposit;			//定金
 	private String prodType;		//商品类型(商品/商品包)
 	private Long extendId;			//外部ID(商品/商品包)
+	private String extendCode;		//外部Code(商品/商品包)
 	private Integer quantity;		//数量
 	private String unit;			//单位
 	private Double price;			//单价
@@ -32,35 +35,42 @@ public class OrderDO extends EntityDO implements Serializable{
 	private String transportCode;	//物流编号
 	private String status;			//状态
 	private String comment;			//备注
-	public String getwAddressFrom() {
-		return wAddressFrom;
+	
+	public String getAddressFrom() {
+		return addressFrom;
 	}
-	public void setwAddressFrom(String wAddressFrom) {
-		this.wAddressFrom = wAddressFrom;
+	public void setAddressFrom(String addressFrom) {
+		this.addressFrom = addressFrom;
 	}
-	public String getwAddressTo() {
-		return wAddressTo;
+	public String getAddressTo() {
+		return addressTo;
 	}
-	public void setwAddressTo(String wAddressTo) {
-		this.wAddressTo = wAddressTo;
+	public void setAddressTo(String addressTo) {
+		this.addressTo = addressTo;
 	}
-	public String getwKeeper() {
-		return wKeeper;
+	public String getKeeper() {
+		return keeper;
 	}
-	public void setwKeeper(String wKeeper) {
-		this.wKeeper = wKeeper;
+	public void setKeeper(String keeper) {
+		this.keeper = keeper;
 	}
-	public String getwPhone() {
-		return wPhone;
+	public String getPhone() {
+		return phone;
 	}
-	public void setwPhone(String wPhone) {
-		this.wPhone = wPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public String getwMobile() {
-		return wMobile;
+	public String getMobile() {
+		return mobile;
 	}
-	public void setwMobile(String wMobile) {
-		this.wMobile = wMobile;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public Long getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 	public Double getDeposit() {
 		return deposit;
@@ -79,6 +89,12 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setExtendId(Long extendId) {
 		this.extendId = extendId;
+	}
+	public String getExtendCode() {
+		return extendCode;
+	}
+	public void setExtendCode(String extendCode) {
+		this.extendCode = extendCode;
 	}
 	public Integer getQuantity() {
 		return quantity;
@@ -127,5 +143,11 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public OrderQueryCondition toQueryCondition(){
+		OrderQueryCondition queryCondition = new OrderQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

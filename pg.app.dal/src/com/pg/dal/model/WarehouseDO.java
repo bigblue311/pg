@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.WarehouseQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -16,6 +17,7 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	 */
 	private static final long serialVersionUID = -690583555143238541L;
 	
+	private String name;	//名称
 	private String address;	//地址
 	private String keeper;	//收件人
 	private String mobile;	//手机号码
@@ -23,6 +25,12 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	private Long customerId;//客户ID
 	private String comment;	//备注
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -58,5 +66,10 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public WarehouseQueryCondition toQueryCondition(){
+		WarehouseQueryCondition queryCondition = new WarehouseQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.EmployeeQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -37,5 +38,11 @@ public class EmployeeDO extends EntityDO implements Serializable{
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public EmployeeQueryCondition toQueryCondition(){
+		EmployeeQueryCondition queryCondition = new EmployeeQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

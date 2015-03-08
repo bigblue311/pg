@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="OrderDO">
+
+  <typeAlias alias="Order" type="com.pg.dal.model.OrderDO"/>
+
+  <resultMap id="RM" class="Order">
+    <result property="id" column="id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtModify" column="gmt_modify"/>
+    <result property="addressFrom" column="address_from"/>
+    <result property="addressTo" column="address_to"/>
+    <result property="keeper" column="keeper"/>
+    <result property="phone" column="phone"/>
+    <result property="mobile" column="mobile"/>
+    <result property="customerId" column="cutomer_id"/>
+    <result property="deposit" column="deposit"/>
+    <result property="prodType" column="prod_type"/>
+    <result property="extendId" column="extend_id"/>
+    <result property="extendCode" column="extend_code"/>
+    <result property="quantity" column="quantity"/>
+    <result property="unit" column="unit"/>
+    <result property="price" column="price"/>
+    <result property="totalPrice" column="total_price"/>
+    <result property="transportFee" column="transport_fee"/>
+    <result property="transportCode" column="transport_code"/>
+    <result property="status" column="status"/>
+    <result property="comment" column="comment"/>
+  </resultMap>
+
+  <insert id="insert" parameterClass="Order">
+    <![CDATA[
+    insert into pg_order (
+      gmt_create,
+      gmt_modify,
+      address_from,
+      address_to,
+      keeper,
+      phone,
+      mobile,
+      customer_id,
+      deposit,
+      prod_type,
+      extend_id,
+      extend_code,
+      quantity,
+      unit,
+      price,
+      total_price,
+      transport_fee,
+      transport_code,
+      status,
+      comment
+    ) values (
+      now(), now(),
+      #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
+      #customerId#, #deposit#, #prodType#, #extendId#, #extendCode#,
+      #quantity#, #unit#, #price#, #totalPrice#, #transportFee#,
+      #transportCode#, #status#, #comment#
+    )
+    ]]>
+    <selectKey resultClass="long" keyProperty="id">    
+		<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+	</selectKey>
+  </insert>
+  
+  <update id="update" parameterClass="Order">
+    update pg_order set 
+    <dynamic>
+      <isNotEmpty property="addressFrom">  
+         <![CDATA[   
+           address_from = #addressFrom#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="addressTo">  
+         <![CDATA[   
+           address_to = #addressTo#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="keeper">  
+         <![CDATA[   
+           keeper = #keeper#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="phone">  
+         <![CDATA[   
+           phone = #phone#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="mobile">  
+         <![CDATA[   
+           mobile = #mobile#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="deposite">  
+         <![CDATA[   
+           deposite = #deposite#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="quantity">  
+         <![CDATA[   
+           quantity = #quantity#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="price">  
+         <![CDATA[   
+           price = #price#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="totalPrice">  
+         <![CDATA[   
+           total_price = #totalPrice#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="transportFee">  
+         <![CDATA[   
+           transport_fee = #transportFee#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="transportCode">  
+         <![CDATA[   
+           transport_code = #transportCode#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="status">  
+         <![CDATA[   
+           status = #status#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="comment">  
+         <![CDATA[   
+           comment = #comment#,
+         ]]> 
+      </isNotEmpty>
+    </dynamic>
+    	gmt_modify = now()
+    where
+      id = #id#
+  </update>
+
+  <select id="getAll" resultMap="RM">
+    select * from pg_order  
+  </select>
+  
+  <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
+    select * from pg_order where id = #id#  
+  </select>
+  
+  <sql id="where">
+  	<include refid="validate" />
+  	<dynamic prepend="where">
+	    <isNotEmpty property="addressFrom" prepend="and">
+        	<![CDATA[ 
+        	address_from like concat('%',#addressFrom#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="addressTo" prepend="and">
+        	<![CDATA[ 
+        	address_to like concat('%',#addressTo#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="keeper" prepend="and">
+        	<![CDATA[ 
+        	keeper like concat('%',#keeper#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="phone" prepend="and">
+        	<![CDATA[ 
+        	phone = #phone#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="mobile" prepend="and">
+        	<![CDATA[ 
+        	mobile = #mobile#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="customerId" prepend="and">
+        	<![CDATA[ 
+        	customer_id = #customerId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="depositStart" prepend="and">
+        	<![CDATA[ 
+        	deposit >= #depositStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="depositEnd" prepend="and">
+        	<![CDATA[ 
+        	deposit <= #depositEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="prodType" prepend="and">
+        	<![CDATA[ 
+        	prod_type = #prodType#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendId" prepend="and">
+        	<![CDATA[ 
+        	extend_id = #extendId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendCode" prepend="and">
+        	<![CDATA[ 
+        	extend_code = #extendCode#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="quantityStart" prepend="and">
+        	<![CDATA[ 
+        	quantity >= #quantityStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="quantityEnd" prepend="and">
+        	<![CDATA[ 
+        	quantity <= #quantityEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="priceStart" prepend="and">
+        	<![CDATA[ 
+        	price >= #priceStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="priceEnd" prepend="and">
+        	<![CDATA[ 
+        	price <= #priceEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="totalPriceStart" prepend="and">
+        	<![CDATA[ 
+        	total_price >= #totalPriceStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="totalPriceEnd" prepend="and">
+        	<![CDATA[ 
+        	total_price <= #totalPriceEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="transportFeeStart" prepend="and">
+        	<![CDATA[ 
+        	transport_fee >= #transportFeeStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="transportFeeEnd" prepend="and">
+        	<![CDATA[ 
+        	transport_fee <= #transportFeeEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="transportCode" prepend="and">
+        	<![CDATA[ 
+        	transport_code = #transportCode#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="status" prepend="and">
+        	<![CDATA[ 
+        	status = #status#
+        	]]>
+	    </isNotEmpty>
+	    <include refid="Common.queryModify" />
+  	</dynamic>
+  </sql>
+  
+  <sql id="validate">
+  	<isNull property="name">
+  	<isNull property="role">
+        <include refid="Common.validModify" />
+    </isNull>
+	</isNull>
+  </sql>
+  
+  <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_order 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+  </select>
+  
+  <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_order 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+    <include refid="Common.pageSql" />
+  </select>
+  
+  <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+    select count(*) from pg_order
+	<include refid="where" />
+  </select>
+</sqlMap>

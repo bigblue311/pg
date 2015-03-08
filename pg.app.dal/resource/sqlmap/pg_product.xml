@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ProductDO">
+
+  <typeAlias alias="Product" type="com.pg.dal.model.ProductDO"/>
+
+  <resultMap id="RM" class="Product">
+    <result property="id" column="id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtModify" column="gmt_modify"/>
+    <result property="name" column="name"/>
+    <result property="title" column="title"/>
+    <result property="code" column="code"/>
+    <result property="img" column="img"/>
+    <result property="description" column="description"/>
+    <result property="brandId" column="brand_id"/>
+    <result property="categoryId" column="category_id"/>
+  </resultMap>
+
+  <insert id="insert" parameterClass="Package">
+    <![CDATA[
+    insert into pg_product (
+      gmt_create,
+      gmt_modify,
+      name,
+      title,
+      code,
+      img,
+      description,
+      brand_id,
+      category_id
+    ) values (
+      now(), now(),
+      #name#, #title#, #code#, #img#, #description#,
+      #brandId#, #categoryId#
+    )
+    ]]>
+    <selectKey resultClass="long" keyProperty="id">    
+		<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+	</selectKey>
+  </insert>
+  
+  <update id="update" parameterClass="Product">
+    update pg_product set 
+    <dynamic>
+      <isNotEmpty property="name">  
+         <![CDATA[   
+           name = #name#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="title">  
+         <![CDATA[   
+           title = #title#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="code">  
+         <![CDATA[   
+           code = #code#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="img">  
+         <![CDATA[   
+           img = #img#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="description">  
+         <![CDATA[   
+           description = #description#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="brandId">  
+         <![CDATA[   
+           brand_id = #brandId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="categoryId">  
+         <![CDATA[   
+           category_id = #categoryId#,
+         ]]> 
+      </isNotEmpty>
+    </dynamic>
+    	gmt_modify = now()
+    where
+      id = #id#
+  </update>
+
+  <select id="getAll" resultMap="RM">
+    select * from pg_product  
+  </select>
+  
+  <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
+    select * from pg_product where id = #id#  
+  </select>
+  
+  <sql id="where">
+  	<include refid="validate" />
+  	<dynamic prepend="where">
+	    <isNotEmpty property="name" prepend="and">
+        	<![CDATA[ 
+        	name like concat('%',#name#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="title" prepend="and">
+        	<![CDATA[ 
+        	title like concat('%',#title#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="code" prepend="and">
+        	<![CDATA[ 
+        	code = #code#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="brandId" prepend="and">
+        	<![CDATA[ 
+        	brand_id = #brandId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="categoryId" prepend="and">
+        	<![CDATA[ 
+        	category_id = #categoryId#
+        	]]>
+	    </isNotEmpty>
+	    <include refid="Common.queryModify" />
+  	</dynamic>
+  </sql>
+  
+  <sql id="validate">
+  	<isNull property="name">
+  	<isNull property="title">
+  	<isNull property="code">
+  	<isNull property="brandId">
+  	<isNull property="categoryId">
+        <include refid="Common.validModify" />
+    </isNull>
+    </isNull>
+    </isNull>
+    </isNull>
+	</isNull>
+  </sql>
+  
+  <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_product 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+  </select>
+  
+  <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_product 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+    <include refid="Common.pageSql" />
+  </select>
+  
+  <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+    select count(*) from pg_product
+	<include refid="where" />
+  </select>
+</sqlMap>

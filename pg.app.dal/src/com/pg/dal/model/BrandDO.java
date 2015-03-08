@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.BrandQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -37,5 +38,11 @@ public class BrandDO extends EntityDO implements Serializable{
 	}
 	public void setEnable(String enable) {
 		this.enable = enable;
+	}
+	
+	public BrandQueryCondition toQueryCondition(){
+		BrandQueryCondition queryCondition = new BrandQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

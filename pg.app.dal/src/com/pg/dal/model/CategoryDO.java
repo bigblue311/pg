@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.CategoryQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -37,5 +38,11 @@ public class CategoryDO extends EntityDO implements Serializable{
 	}
 	public void setEnable(String enable) {
 		this.enable = enable;
+	}
+	
+	public CategoryQueryCondition toQueryCondition(){
+		CategoryQueryCondition queryCondition = new CategoryQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
 	}
 }

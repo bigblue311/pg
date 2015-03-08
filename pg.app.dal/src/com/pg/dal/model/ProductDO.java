@@ -2,6 +2,7 @@ package com.pg.dal.model;
 
 import java.io.Serializable;
 
+import com.pg.dal.query.ProductQueryCondition;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -21,6 +22,7 @@ public class ProductDO extends EntityDO implements Serializable{
 	private String img;			//图片
 	private Long brandId;		//品牌ID
 	private Long categoryId;	//品类ID
+	private String description;	//描述
 	
 	public String getName() {
 		return name;
@@ -46,6 +48,12 @@ public class ProductDO extends EntityDO implements Serializable{
 	public void setImg(String img) {
 		this.img = img;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public Long getBrandId() {
 		return brandId;
 	}
@@ -57,5 +65,11 @@ public class ProductDO extends EntityDO implements Serializable{
 	}
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
-	}	
+	}
+	
+	public ProductQueryCondition toQueryCondition(){
+		ProductQueryCondition queryCondition = new ProductQueryCondition();
+		queryCondition.setQueryMap(this.toMap());
+		return queryCondition;
+	}
 }
