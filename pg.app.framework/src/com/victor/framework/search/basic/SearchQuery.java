@@ -19,47 +19,47 @@ public class SearchQuery extends QueryCondition {
 		return searchResultEnum;
 	}
 	
-	public SearchQuery shopId(Long shopId){
+	public SearchQuery setShopId(Long shopId){
 		put("shopId", shopId);
 		return this;
 	}
 	
-	public SearchQuery customerId(Long customerId){
+	public SearchQuery setCustomerId(Long customerId){
 		put("customerId", customerId);
 		return this;
 	}
-	public SearchQuery keyword(String keyword) {
+	public SearchQuery setKeyword(String keyword) {
 		put("keyword",keyword.replace("'", ""));
 		return this;
 	}
-	public SearchQuery tagId(Long tagId) {
+	public SearchQuery setTagId(Long tagId) {
 		put("tagId",tagId);
 		return this;
 	}
-	public SearchQuery categoryId(Long categoryId) {
+	public SearchQuery setCategoryId(Long categoryId) {
 		put("categoryId",categoryId);
 		return this;
 	}
 	@Override
-	public SearchQuery gmtModifyStart(Date from){
+	public SearchQuery setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));
 		return this;
 	}
 	
 	@Override
-	public SearchQuery gmtModifyEnd(Date to){
+	public SearchQuery setGmtModifyEnd(Date to){
 		put("gmtModifyEnd", DateTools.getDayEnd(to));
 		return this;
 	}
 	
 	@Override
-	public SearchQuery start(int start){
+	public SearchQuery setStart(int start){
 		put("start", start);
 		return this;
 	}
 	
 	@Override
-	public SearchQuery pageSize(int pageSize){
+	public SearchQuery setPageSize(int pageSize){
 		put("pageSize", pageSize);
 		return this;
 	}
