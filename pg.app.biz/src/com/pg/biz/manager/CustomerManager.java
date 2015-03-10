@@ -12,6 +12,4 @@ public interface CustomerManager {
 	CustomerDO login(String mobile, String password);
 	
 	CustomerDO checkExist(String mobile);
-	
-	Page
 }
