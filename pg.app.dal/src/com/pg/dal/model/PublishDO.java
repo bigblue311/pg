@@ -3,7 +3,10 @@ package com.pg.dal.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.pg.dal.enumerate.EnableEnum;
 import com.pg.dal.query.PublishQueryCondition;
+import com.victor.framework.common.tools.DateTools;
+import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.EntityDO;
 
 public class PublishDO extends EntityDO implements Serializable{
@@ -103,6 +106,22 @@ public class PublishDO extends EntityDO implements Serializable{
 	}
 	public void setEnable(String enable) {
 		this.enable = enable;
+	}
+	
+	public boolean isValid(){
+		if(StringTools.isEmpty(enable)){
+			return false;
+		}
+		if(EnableEnum.无效.getCode().equals(enable)){
+			return false;
+		}
+		if(validFrom != null && DateTools.today().before(validFrom)){
+			return false;
+		}
+		if(validTo != null && DateTools.today().after(validTo)){
+			return false;
+		}
+		return true;
 	}
 	
 	public PublishQueryCondition toQueryCondition(){

@@ -26,6 +26,14 @@ public class CategoryManagerImpl implements CategoryManager{
 
 	@Override
 	public void delete(Long id) {
+		//遍历的删除子节点
+		List<CategoryDO> sonList = getLevel(id);
+		for(CategoryDO categoryDO : sonList){
+			if(categoryDO != null){
+				delete(categoryDO.getId());
+			}
+		}
+		//再删除自己
 		categoryDAO.softDelete(id);
 	}
 

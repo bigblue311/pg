@@ -26,6 +26,14 @@ public class BrandManagerImpl implements BrandManager{
 
 	@Override
 	public void delete(Long id) {
+		//遍历的删除子节点
+		List<BrandDO> sonList = getLevel(id);
+		for(BrandDO brandDO : sonList){
+			if(brandDO != null){
+				delete(brandDO.getId());
+			}
+		}
+		//再删除自己
 		brandDAO.softDelete(id);
 	}
 
