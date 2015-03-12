@@ -22,7 +22,7 @@
     <result property="enable" column="enable"/>
   </resultMap>
 
-  <insert id="insert" parameterClass="Package">
+  <insert id="insert" parameterClass="Product">
     <![CDATA[
     insert into pg_product (
       gmt_create,

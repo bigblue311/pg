@@ -4,11 +4,11 @@
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="BrandDO">
+<sqlMap namespace="SystemConfigDO">
 
-  <typeAlias alias="Brand" type="com.pg.dal.model.BrandDO"/>
+  <typeAlias alias="SystemConfig" type="com.pg.dal.model.SystemConfigDO"/>
 
-  <resultMap id="RM" class="Brand">
+  <resultMap id="RM" class="SystemConfig">
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
@@ -17,7 +17,7 @@
     <result property="description" column="description"/>
   </resultMap>
   
-  <update id="update" parameterClass="Brand">
+  <update id="update" parameterClass="SystemConfig">
     update pg_system_config set 
     <dynamic>
       <isNotEmpty property="key">  
