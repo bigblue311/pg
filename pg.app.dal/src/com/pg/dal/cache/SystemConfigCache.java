@@ -1,8 +1,16 @@
 package com.pg.dal.cache;
 
+import java.util.List;
+
 import com.pg.dal.model.SystemConfigDO;
 
 public interface SystemConfigCache {
+	
+	/**
+	 * 获取所有
+	 * @return
+	 */
+	List<SystemConfigDO> cachedValues();
 	
 	/**
 	 * 重新加载
@@ -27,5 +35,5 @@ public interface SystemConfigCache {
 	 * @param name
 	 * @return
 	 */
-	boolean getSwitch(String name);
+	boolean getSwitch(String key);
 }

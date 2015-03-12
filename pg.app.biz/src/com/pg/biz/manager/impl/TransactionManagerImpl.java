@@ -109,6 +109,9 @@ public class TransactionManagerImpl implements TransactionManager{
 		OrderVO orderVO = new OrderVO();
 		orderVO.setOrderDO(orderDO);
 		CustomerDO customerDO = customerDAO.getById(orderDO.getCustomerId());
+		if(customerDO == null){
+			return null;
+		}
 		orderVO.setCustomerDO(customerDO);
 		OpLogQueryCondition query = new OpLogQueryCondition();
 		query.setOrderId(orderDO.getId());
@@ -116,11 +119,17 @@ public class TransactionManagerImpl implements TransactionManager{
 		orderVO.setOpLogList(opList);
 		if(ProdTypeEnum.商品.equals(orderDO.getProdType())){
 			ProductDO productDO = productDAO.getById(orderDO.getExtendId());
+			if(productDO == null){
+				return null;
+			}
 			orderVO.setName(productDO.getName());
 			orderVO.setTitle(productDO.getTitle());
 		}
 		if(ProdTypeEnum.商品包.equals(orderDO.getProdType())){
 			PackageDO packageDO = packageDAO.getById(orderDO.getExtendId());
+			if(packageDO == null){
+				return null;
+			}
 			orderVO.setName(packageDO.getName());
 			orderVO.setTitle(packageDO.getTitle());
 		}

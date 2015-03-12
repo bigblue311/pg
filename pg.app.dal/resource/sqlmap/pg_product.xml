@@ -134,9 +134,19 @@
         	brand_id = #brandId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="categoryId" prepend="and">
+        	<![CDATA[ 
+        	category_id = #categoryId#
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="packageId" prepend="and">
         	<![CDATA[ 
         	id in (select product_id from pg_prod_pack where package_id = #packageId#)
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="notInPackageId" prepend="and">
+        	<![CDATA[ 
+        	id not in (select product_id from pg_prod_pack where package_id = #notInPackageId#)
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="publishId" prepend="and">
@@ -146,11 +156,6 @@
         		or 
         		id = (select extend_id from pg_publish where prod_type = '0' and id = #publishId#)
         	)
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="categoryId" prepend="and">
-        	<![CDATA[ 
-        	category_id = #categoryId#
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="enable" prepend="and">

@@ -1,7 +1,9 @@
 package com.pg.dal.cache.impl;
 
+import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.pg.dal.cache.SystemConfigCache;
 import com.pg.dal.model.SystemConfigDO;
 import com.pg.dal.query.SystemConfigQueryCondition;
@@ -42,5 +44,15 @@ public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConf
 	@Override
 	public void reload() {
 		reloadCache();
+	}
+
+	@Override
+	public List<SystemConfigDO> cachedValues() {
+		Collection<Object> all = this.cacheValues();
+		List<SystemConfigDO> list = Lists.newArrayList();
+		for(Object obj : all){
+			list.add((SystemConfigDO)obj);
+		}
+		return list;
 	}
 }

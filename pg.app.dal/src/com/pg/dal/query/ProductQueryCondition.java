@@ -27,6 +27,11 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public ProductQueryCondition setNotInPackageId(Long packageId) {
+		put("notInPackageId",packageId);
+		return this;
+	}
+	
 	public ProductQueryCondition setPublishId(Long publishId) {
 		put("publishId",publishId);
 		return this;
