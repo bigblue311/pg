@@ -24,7 +24,7 @@
 		</group>
 		
 		<group name="login" extends="csrfCheck">
-			<field name="loginId" displayName="邮箱/用户名">
+			<field name="name" displayName="用户名">
 				<fm-validators:required-validator>
 					<message>必须填写 ${displayName}</message>
 				</fm-validators:required-validator>
@@ -45,25 +45,5 @@
 				</fm-validators:required-validator>
 			</field>
 		</group>
-		
-		<group name="systemConfig" extends="csrfCheck">
-			<field name="id" displayName="ID" >
-				<fm-validators:required-validator>
-					<message>必须填写 ${displayName}</message>
-				</fm-validators:required-validator>
-			</field>
-			<field name="key" displayName="KEY" />
-			<field name="value" displayName="VALUE" />
-			<field name="description" displayName="描述" />
-		</group>
-		
-		<group name="employee" extends="csrfCheck">
-			<field name="id" displayName="ID" />
-			<field name="name" displayName="姓名" />
-			<field name="password" displayName="密码" />
-			<field name="mobile" displayName="联系电话" />
-			<field name="role" displayName="角色" />
-		</group>
 	</services:form>
-
 </beans:beans>

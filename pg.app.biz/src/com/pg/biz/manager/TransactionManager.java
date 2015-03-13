@@ -14,6 +14,13 @@ public interface TransactionManager {
 	void create(OrderDO orderDO);
 	
 	/**
+	 * 创建订单
+	 * @param orderDO
+	 * @param employeeId
+	 */
+	void create(OrderDO orderDO, Long employeeId);
+	
+	/**
 	 * 更新订单
 	 * @param orderDO
 	 * @param employeeId

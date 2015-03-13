@@ -23,6 +23,10 @@
         <!-- 分析URL，取得target。 -->
         <pl-valves:analyzeURL />
         
+        <!-- 后台登录Valve -->
+        <valve class="com.pg.web.admin.pipeline.AuthenticationValve" 
+        	xmlns="http://www.alibaba.com/schema/services/pipeline/valves"/>
+        
         <!-- 检查csrf token，防止csrf攻击和重复提交。假如request和session中的token不匹配，则出错，或显示expired页面。 -->
         <pl-valves:checkCsrfToken />
 

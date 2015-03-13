@@ -51,6 +51,24 @@ public class TransactionManagerImpl implements TransactionManager{
 	public void create(OrderDO orderDO) {
 		orderDAO.insert(orderDO);
 	}
+	
+	@Override
+	public void create(OrderDO orderDO, Long employeeId) {
+		if(orderDO != null){
+			Long orderId = orderDAO.insert(orderDO);
+			
+			OpLogDO opLogDO = new OpLogDO();
+			opLogDO.setEmployeeId(employeeId);
+			opLogDO.setOrderId(orderId);
+			CustomerDO customerDO = customerDAO.getById(orderDO.getCustomerId());
+			if(customerDO == null){
+				return;
+			}
+			String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]提交了订单";
+			opLogDO.setAction(msg);
+			opLogDAO.insert(opLogDO);
+		}
+	}
 
 	@Override
 	public void update(OrderDO orderDO,Long employeeId) {
@@ -63,7 +81,7 @@ public class TransactionManagerImpl implements TransactionManager{
 			orderDAO.update(orderDO);
 		}
 	}
-
+	
 	@Override
 	public OrderDO getDOById(Long id) {
 		return orderDAO.getById(id);

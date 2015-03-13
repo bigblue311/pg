@@ -1,1 +1,0 @@
-./autoconfig -u antx-prod.properties pg.app.web/target/*.war
