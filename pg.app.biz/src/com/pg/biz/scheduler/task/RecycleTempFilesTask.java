@@ -22,7 +22,6 @@ public class RecycleTempFilesTask extends ScheduledTask{
 	@Override
 	public void doWork() {
 		fileUploadManager.recycleTemp();
-		System.out.println("自动回收零时文件执行完成");
-		log.error("自动回收零时文件执行完成");
+		log.info("自动回收零时文件执行完成");
 	}
 }

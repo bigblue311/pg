@@ -12,7 +12,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alipay.AlipayService;
 import com.alipay.config.AlipayConfig;
 import com.alipay.util.httpClient.HttpProtocolHandler;
 import com.alipay.util.httpClient.HttpRequest;
@@ -31,23 +33,32 @@ import com.alipay.sign.MD5;
  *该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
  */
 
-public class AlipaySubmit {
+public class AlipaySubmit implements AlipayService{
     
+	@Autowired
+    private AlipayCore alipayCore;
+	
     /**
      * 支付宝提供给商户的服务接入网关URL(新)
      */
-    private static final String ALIPAY_GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
+    private final String ALIPAY_GATEWAY_NEW = "https://mapi.alipay.com/gateway.do?";
 	
-    /**
+    private AlipayConfig alipayConfig;
+    
+    public void setAlipayConfig(AlipayConfig alipayConfig) {
+		this.alipayConfig = alipayConfig;
+	}
+
+	/**
      * 生成签名结果
      * @param sPara 要签名的数组
      * @return 签名结果字符串
      */
-	public static String buildRequestMysign(Map<String, String> sPara) {
-    	String prestr = AlipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+	public String buildRequestMysign(Map<String, String> sPara) {
+    	String prestr = alipayCore.createLinkString(sPara); //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
     	String mysign = "";
-        if(AlipayConfig.sign_type.equals("MD5") ) {
-        	mysign = MD5.sign(prestr, AlipayConfig.key, AlipayConfig.input_charset);
+        if(alipayConfig.getSignType().equals("MD5") ) {
+        	mysign = MD5.sign(prestr, alipayConfig.getKey(), alipayConfig.getInputCharset());
         }
         return mysign;
     }
@@ -57,15 +68,15 @@ public class AlipaySubmit {
      * @param sParaTemp 请求前的参数数组
      * @return 要请求的参数数组
      */
-    private static Map<String, String> buildRequestPara(Map<String, String> sParaTemp) {
+    private Map<String, String> buildRequestPara(Map<String, String> sParaTemp) {
         //除去数组中的空值和签名参数
-        Map<String, String> sPara = AlipayCore.paraFilter(sParaTemp);
+        Map<String, String> sPara = alipayCore.paraFilter(sParaTemp);
         //生成签名结果
         String mysign = buildRequestMysign(sPara);
 
         //签名结果与签名方式加入请求提交参数组中
         sPara.put("sign", mysign);
-        sPara.put("sign_type", AlipayConfig.sign_type);
+        sPara.put("sign_type", alipayConfig.getSignType());
 
         return sPara;
     }
@@ -77,7 +88,7 @@ public class AlipaySubmit {
      * @param strButtonName 确认按钮显示文字
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
+    public String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
         List<String> keys = new ArrayList<String>(sPara.keySet());
@@ -85,7 +96,7 @@ public class AlipaySubmit {
         StringBuffer sbHtml = new StringBuffer();
 
         sbHtml.append("<form id=\"alipaysubmit\" name=\"alipaysubmit\" action=\"" + ALIPAY_GATEWAY_NEW
-                      + "_input_charset=" + AlipayConfig.input_charset + "\" method=\"" + strMethod
+                      + "_input_charset=" + alipayConfig.getInputCharset() + "\" method=\"" + strMethod
                       + "\">");
 
         for (int i = 0; i < keys.size(); i++) {
@@ -110,7 +121,7 @@ public class AlipaySubmit {
      * @param strParaFileName 文件上传的参数名
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName) {
+    public String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
         List<String> keys = new ArrayList<String>(sPara.keySet());
@@ -118,7 +129,7 @@ public class AlipaySubmit {
         StringBuffer sbHtml = new StringBuffer();
 
         sbHtml.append("<form id=\"alipaysubmit\" name=\"alipaysubmit\"  enctype=\"multipart/form-data\" action=\"" + ALIPAY_GATEWAY_NEW
-                      + "_input_charset=" + AlipayConfig.input_charset + "\" method=\"" + strMethod
+                      + "_input_charset=" + alipayConfig.getInputCharset() + "\" method=\"" + strMethod
                       + "\">");
 
         for (int i = 0; i < keys.size(); i++) {
@@ -146,7 +157,7 @@ public class AlipaySubmit {
      * @return 支付宝处理结果
      * @throws Exception
      */
-    public static String buildRequest(String strParaFileName, String strFilePath,Map<String, String> sParaTemp) throws Exception {
+    public String buildRequest(String strParaFileName, String strFilePath,Map<String, String> sParaTemp) throws Exception {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
 
@@ -154,17 +165,17 @@ public class AlipaySubmit {
 
         HttpRequest request = new HttpRequest(HttpResultType.BYTES);
         //设置编码集
-        request.setCharset(AlipayConfig.input_charset);
+        request.setCharset(alipayConfig.getInputCharset());
 
         request.setParameters(generatNameValuePair(sPara));
-        request.setUrl(ALIPAY_GATEWAY_NEW+"_input_charset="+AlipayConfig.input_charset);
+        request.setUrl(ALIPAY_GATEWAY_NEW+"_input_charset="+alipayConfig.getInputCharset());
 
         HttpResponse response = httpProtocolHandler.execute(request,strParaFileName,strFilePath);
         if (response == null) {
             return null;
         }
         
-        String strResult = response.getStringResult();
+        String strResult = response.getStringResult(alipayConfig.getInputCharset());
 
         return strResult;
     }
@@ -174,7 +185,7 @@ public class AlipaySubmit {
      * @param properties  MAP类型数组
      * @return NameValuePair类型数组
      */
-    private static NameValuePair[] generatNameValuePair(Map<String, String> properties) {
+    private NameValuePair[] generatNameValuePair(Map<String, String> properties) {
         NameValuePair[] nameValuePair = new NameValuePair[properties.size()];
         int i = 0;
         for (Map.Entry<String, String> entry : properties.entrySet()) {
@@ -193,11 +204,10 @@ public class AlipaySubmit {
      * @throws MalformedURLException
      */
 	@SuppressWarnings("unchecked")
-	public static String query_timestamp() throws MalformedURLException,
-                                                        DocumentException, IOException {
+	public String query_timestamp() throws MalformedURLException, DocumentException, IOException {
 
         //构造访问query_timestamp接口的URL串
-        String strUrl = ALIPAY_GATEWAY_NEW + "service=query_timestamp&partner=" + AlipayConfig.partner + "&_input_charset" +AlipayConfig.input_charset;
+        String strUrl = ALIPAY_GATEWAY_NEW + "service=query_timestamp&partner=" + alipayConfig.getPartner() + "&_input_charset" +alipayConfig.getInputCharset();
         StringBuffer result = new StringBuffer();
 
         SAXReader reader = new SAXReader();

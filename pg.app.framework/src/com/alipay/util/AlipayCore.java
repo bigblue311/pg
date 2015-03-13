@@ -27,12 +27,18 @@ import com.alipay.config.AlipayConfig;
 
 public class AlipayCore {
 
+	private AlipayConfig alipayConfig;
+    
+    public void setAlipayConfig(AlipayConfig alipayConfig) {
+		this.alipayConfig = alipayConfig;
+	}
+	
     /** 
      * 除去数组中的空值和签名参数
      * @param sArray 签名参数组
      * @return 去掉空值与签名参数后的新签名参数组
      */
-    public static Map<String, String> paraFilter(Map<String, String> sArray) {
+    public Map<String, String> paraFilter(Map<String, String> sArray) {
 
         Map<String, String> result = new HashMap<String, String>();
 
@@ -57,7 +63,7 @@ public class AlipayCore {
      * @param params 需要排序并参与字符拼接的参数组
      * @return 拼接后字符串
      */
-    public static String createLinkString(Map<String, String> params) {
+    public String createLinkString(Map<String, String> params) {
 
         List<String> keys = new ArrayList<String>(params.keySet());
         Collections.sort(keys);
@@ -82,10 +88,10 @@ public class AlipayCore {
      * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
      * @param sWord 要写入日志里的文本内容
      */
-    public static void logResult(String sWord) {
+    public void logResult(String sWord) {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(AlipayConfig.log_path + "alipay_log_" + System.currentTimeMillis()+".txt");
+            writer = new FileWriter(alipayConfig.getLogPath() + "alipay_log_" + System.currentTimeMillis()+".txt");
             writer.write(sWord);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +112,7 @@ public class AlipayCore {
      * @param file_digest_type 摘要算法
      * @return 文件摘要结果
      */
-    public static String getAbstract(String strFilePath, String file_digest_type) throws IOException {
+    public String getAbstract(String strFilePath, String file_digest_type) throws IOException {
         PartSource file = new FilePartSource(new File(strFilePath));
     	if(file_digest_type.equals("MD5")){
     		return DigestUtils.md5Hex(file.createInputStream());

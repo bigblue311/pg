@@ -26,16 +26,6 @@
     
     <bean id="warehouseManager" class="com.pg.biz.manager.impl.WarehouseManagerImpl"/>
     
-    <bean id="fileUploadManager" class="com.pg.biz.manager.impl.FileUploadManagerImpl">
-    	<property name="apacheRoot" value="C:\zhaile\apache\apache2.2\resource"/>
-    	<property name="extWhiteList">
-    		 <list>
-                  <value>.JPG</value>
-                  <value>.PNG</value>
-             </list>
-    	</property>
-    </bean>
-    
     <bean id="recycleTempFilesTask" class="com.pg.biz.scheduler.task.RecycleTempFilesTask"/>
     
     <bean id="scheduler" class="com.pg.biz.scheduler.Scheduler" >

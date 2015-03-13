@@ -13,12 +13,12 @@
     	http://www.springframework.org/schema/context/spring-context-3.0.xsd ">
     
     <bean id="memcachedService" class="com.victor.framework.spymemcached.MemcachedServiceImpl">
-    	<property name="host" value="c0aa126057f54d03.m.cnqdalicm9pub001.ocs.aliyuncs.com" />
-    	<property name="port" value="11211" />
-    	<property name="username" value="c0aa126057f54d03" />
-    	<property name="password" value="zhaileAdm1n" />
+    	<property name="host" value="" />
+    	<property name="port" value="" />
+    	<property name="username" value="" />
+    	<property name="password" value="" />
     	<property name="auth" value="true" />
     	<property name="enable" value="false" />
-    	<property name="keyPrefix" value="zhaile.dev" />
+    	<property name="keyPrefix" value="pg.dev" />
     </bean>
 </beans>

@@ -11,9 +11,9 @@
 	<transactionManager type="JDBC" commitRequired="false">
 		<dataSource type="SIMPLE">
 	     	<property name="JDBC.Driver" value="com.mysql.jdbc.Driver"/>
-	     	<property name="JDBC.ConnectionURL" value="jdbc:mysql://rdsbb36f2jiqvrn.mysql.rds.aliyuncs.com:3306/zhaile"/>
-	     	<property name="JDBC.Username" value="zhaile_admin"/>
-	     	<property name="JDBC.Password" value="haveFun"/>
+	     	<property name="JDBC.ConnectionURL" value=""/>
+	     	<property name="JDBC.Username" value=""/>
+	     	<property name="JDBC.Password" value=""/>
 	     	<property name="Pool.MaximumIdleConnections" value="5"/>
 	     	<property name="Pool.MaximumWait" value="60000"/>
 	     	<property name="Pool.ValidationQuery" value="select now()"/>

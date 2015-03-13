@@ -1,7 +1,5 @@
 package com.alipay.util.httpClient;
 
-import com.alipay.config.AlipayConfig;
-
 import org.apache.commons.httpclient.Header;
 import java.io.UnsupportedEncodingException;
 
@@ -55,12 +53,12 @@ public class HttpResponse {
         this.byteResult = byteResult;
     }
 
-    public String getStringResult() throws UnsupportedEncodingException {
+    public String getStringResult(String inputCharset) throws UnsupportedEncodingException {
         if (stringResult != null) {
             return stringResult;
         }
         if (byteResult != null) {
-            return new String(byteResult, AlipayConfig.input_charset);
+            return new String(byteResult, inputCharset);
         }
         return null;
     }

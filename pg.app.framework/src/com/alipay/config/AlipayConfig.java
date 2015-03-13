@@ -23,22 +23,57 @@ package com.alipay.config;
 
 public class AlipayConfig {
 	
-	//↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 	// 合作身份者ID，以2088开头由16位纯数字组成的字符串
-	public static String partner = "2088901320884186";
+	private String partner = "2088901320884186";
 	// 商户的私钥
-	public static String key = "4co64tywqtwm42dhh3pgbpkore0vdlo3";
-
-	//↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-	
+	private String key = "4co64tywqtwm42dhh3pgbpkore0vdlo3";
 
 	// 调试用，创建TXT日志文件夹路径
-	public static String log_path = "D:\\";
+	private String logPath = "D:\\";
 
 	// 字符编码格式 目前支持 gbk 或 utf-8
-	public static String input_charset = "utf-8";
+	private String inputCharset = "utf-8";
 	
 	// 签名方式 不需修改
-	public static String sign_type = "MD5";
+	private String signType = "MD5";
 
+	public String getPartner() {
+		return partner;
+	}
+
+	public void setPartner(String partner) {
+		this.partner = partner;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getLogPath() {
+		return logPath;
+	}
+
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
+	}
+
+	public String getInputCharset() {
+		return inputCharset;
+	}
+
+	public void setInputCharset(String inputCharset) {
+		this.inputCharset = inputCharset;
+	}
+
+	public String getSignType() {
+		return signType;
+	}
+
+	public void setSignType(String signType) {
+		this.signType = signType;
+	}
 }
