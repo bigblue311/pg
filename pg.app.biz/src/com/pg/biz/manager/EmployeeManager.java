@@ -44,7 +44,14 @@ public interface EmployeeManager {
 	 * @param password
 	 * @return
 	 */
-	Result<EmployeeDO> login(String name,String password);
+	Result<EmployeeDO> login(EmployeeDO employeeDO);
+	
+	/**
+	 * 检测密码
+	 * @param employeeDO
+	 * @return
+	 */
+	Result<Boolean> checkPwd(EmployeeDO employeeDO);
 	
 	/**
 	 * 检查是否已存在

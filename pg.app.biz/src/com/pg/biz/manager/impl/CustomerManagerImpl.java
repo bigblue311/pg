@@ -22,13 +22,11 @@ public class CustomerManagerImpl implements CustomerManager{
 	
 	@Override
 	public void create(CustomerDO customerDO) {
-		customerDO.setPassword(MD5.getMD5(customerDO.getPassword().getBytes()));
 		customerDAO.insert(customerDO);
 	}
 
 	@Override
 	public void update(CustomerDO customerDO) {
-		customerDO.setPassword(MD5.getMD5(customerDO.getPassword().getBytes()));
 		customerDAO.update(customerDO);
 	}
 
@@ -43,7 +41,7 @@ public class CustomerManagerImpl implements CustomerManager{
 			return Result.newInstance(null, "用户名或密码为空", false);
 		}
 		CustomerQueryCondition queryCondition = new CustomerQueryCondition();
-		queryCondition.setMobile(mobile).setPassword(MD5.getMD5(password.getBytes()));
+		queryCondition.setMobile(mobile).setPassword(MD5.getMD5(password));
 		List<CustomerDO> list = customerDAO.getByCondition(queryCondition);
 		if(list.isEmpty() || list.size() == 0){
 			return Result.newInstance(null, "用户名不存在或密码错误", false);

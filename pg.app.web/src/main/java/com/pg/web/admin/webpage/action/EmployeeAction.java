@@ -11,8 +11,9 @@ import com.pg.biz.manager.EmployeeManager;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.web.admin.common.AuthenticationToken;
 import com.victor.framework.common.shared.Result;
+import com.victor.framework.common.tools.MD5;
 
-public class LoginAction {
+public class EmployeeAction {
 	
 	@Autowired
     private HttpSession session;
@@ -21,13 +22,21 @@ public class LoginAction {
 	private EmployeeManager employeeManager;
 	
 	public void doLogin(@FormGroup("login") EmployeeDO employeeDO, Navigator nav,Context context) {
-		Result<EmployeeDO> result = employeeManager.login(employeeDO.getName(), employeeDO.getPassword());
+		Result<EmployeeDO> result = employeeManager.login(employeeDO);
 		if(result.isSuccess()){
 			AuthenticationToken.set(session, result.getDataObject());
 			nav.redirectTo("admin").withTarget("welcome.vm");
 		} else {
 			nav.redirectTo("admin").withTarget("login.vm");
 		}
+	}
+	
+	public void doChangePwd(@FormGroup("changePwd")EmployeeDO employeeDO,Navigator nav){
+		String password = MD5.getMD5(employeeDO.getPassword());
+		employeeDO.setPassword(password);
+		employeeManager.update(employeeDO);
+		AuthenticationToken.expire(session);
+		nav.redirectTo("admin").withTarget("login.vm");
 	}
 	
 	public void doLogout(Navigator nav){

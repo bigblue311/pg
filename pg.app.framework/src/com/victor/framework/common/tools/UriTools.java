@@ -1,5 +1,7 @@
 package com.victor.framework.common.tools;
 
+import com.victor.framework.common.shared.Split;
+
 public class UriTools {
 	
 	public static String getResource(String uri){
@@ -7,7 +9,7 @@ public class UriTools {
 			return "";
 		}
 		if(uri.contains(".")){
-			return uri.split("\\.")[0];
+			return uri.split(Split.点)[0];
 		} else {
 			return uri;
 		}
@@ -18,7 +20,7 @@ public class UriTools {
 			return "";
 		}
 		if(uri.contains(".")){
-			String[] strs = uri.split("\\.");
+			String[] strs = uri.split(Split.点);
 			if(strs.length>1){
 				String extension = strs[1];
 				if(StringTools.isNotEmpty(extension)){

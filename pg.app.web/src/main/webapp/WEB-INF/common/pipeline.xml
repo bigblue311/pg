@@ -20,12 +20,12 @@
         <!-- 设置日志系统的上下文，支持把当前请求的详情打印在日志中。 -->
         <pl-valves:setLoggingContext />
 
+		<!-- 资源访问控制 -->
+        <valve class="com.pg.web.admin.pipeline.ResourceValve" 
+        	   xmlns="http://www.alibaba.com/schema/services/pipeline/valves"/>
+
         <!-- 分析URL，取得target。 -->
         <pl-valves:analyzeURL />
-        
-        <!-- 后台登录Valve -->
-        <valve class="com.pg.web.admin.pipeline.AuthenticationValve" 
-        	xmlns="http://www.alibaba.com/schema/services/pipeline/valves"/>
         
         <!-- 检查csrf token，防止csrf攻击和重复提交。假如request和session中的token不匹配，则出错，或显示expired页面。 -->
         <pl-valves:checkCsrfToken />

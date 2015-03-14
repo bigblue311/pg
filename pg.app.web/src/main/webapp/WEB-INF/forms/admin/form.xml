@@ -37,9 +37,12 @@
 		</group>
 		
 		<group name="changePwd" extends="csrfCheck">
-			<field name="name" displayName="用户名" />
-			<field name="mobile" displayName="手机号码" />
-			<field name="newPassword" displayName="新密码">
+			<field name="id" displayName="用户ID" >
+				<fm-validators:required-validator>
+					<message>登录超时,请重新登录</message>
+				</fm-validators:required-validator>
+			</field>
+			<field name="password" displayName="新密码">
 				<fm-validators:required-validator>
 					<message>必须填写 ${displayName}</message>
 				</fm-validators:required-validator>

@@ -1,4 +1,4 @@
-package com.pg.web.admin.common;
+package com.pg.web.admin.enumerate;
 
 import java.util.List;
 

@@ -5,4 +5,5 @@ public class Split {
 	public static final String 波浪 = "~";
 	public static final String 竖线 = "|";
 	public static final String 分号 = ";";
+	public static final String 点 = "\\.";
 }

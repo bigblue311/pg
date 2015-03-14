@@ -4,7 +4,11 @@ import java.security.NoSuchAlgorithmException;
 
 public  class  MD5 {
 
-	public static String getMD5(byte[] source) {
+	public static String getMD5(String source){
+		return getMD5(source.getBytes());
+	}
+	
+	private static String getMD5(byte[] source) {
 		String s = null;
 		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'a', 'b', 'c', 'd', 'e', 'f' };// 用来将字节转换成16进制表示的字符

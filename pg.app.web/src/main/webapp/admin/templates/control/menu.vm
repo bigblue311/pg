@@ -1,0 +1,148 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<div id="m2"></div>
+<script type="text/javascript">
+	var Menu = BUI.Menu;
+	var sideMenu = new Menu.SideMenu({
+		render : '#m2',
+		width : 200,
+		items : [ 
+		{
+			text : '系统管理',
+			#if($topMenu != 'topMenuSystem')collapsed:true,#end
+			items : [ {
+				text : '后台账号',
+				href : '$!admin.setTarget("employee.vm")'
+				#if($!subMenu == 'subMenuEmployee')
+					,
+					selected: true
+				#end
+			},{
+				text : '资源权限',
+				href : '$!admin.setTarget("resource.vm")'
+				#if($!subMenu == 'subMenuResource')
+					,
+					selected: true
+				#end
+			},{
+				text : '系统配置',
+				href : '$!admin.setTarget("system.vm")'
+				#if($!subMenu == 'subMenuSystem')
+					,
+					selected: true
+				#end
+			}]
+		}, {
+			text : '产品管理',
+			#if($topMenu != 'topMenuProduct')collapsed:true,#end
+			items : [ {
+				text : '品牌管理',
+				href : '$!admin.setTarget("brand.vm")'
+				#if($!subMenu == 'subMenuBrand')
+					,
+					selected: true
+				#end
+			},{
+				text : '品类管理',
+				href : '$!admin.setTarget("category.vm")'
+				#if($!subMenu == 'subMenuCategory')
+					,
+					selected: true
+				#end
+			},{
+				text : '产品管理',
+				href : '$!admin.setTarget("product.vm")'
+				#if($!subMenu == 'subMenuProduct')
+					,
+					selected: true
+				#end
+			},{
+				text : '产品打包',
+				href : '$!admin.setTarget("package.vm")'
+				#if($!subMenu == 'subMenuPackage')
+					,
+					selected: true
+				#end
+			}]
+		}, {
+			text : '客户管理',
+			#if($topMenu != 'topMenuCustomer')collapsed:true,#end
+			items : [ {
+				text : '客户查询',
+				href : '$!admin.setTarget("customer.vm")'
+				#if($!subMenu == 'subMenuCustomer')
+					,
+					selected: true
+				#end
+			}]
+		}, {
+			text : '物流管理',
+			#if($topMenu != 'topMenuLogistics')collapsed:true,#end
+			items : [ {
+				text : '我的仓库',
+				href : '$!admin.setTarget("myWarehouse.vm")'
+				#if($!subMenu == 'subMenuMyWarehouse')
+					,
+					selected: true
+				#end
+			},{
+				text : '客户仓库',
+				href : '$!admin.setTarget("warehouse.vm")'
+				#if($!subMenu == 'subMenuCuWarehouse')
+					,
+					selected: true
+				#end
+			} ]
+		}, {
+			text : '交易管理',
+			#if($topMenu != 'topMenuOrder')collapsed:true,#end
+			items : [ {
+				text : '商品发布',
+				href : '$!admin.setTarget("publish.vm")'
+				#if($!subMenu == 'subMenuPublish')
+					,
+					selected: true
+				#end
+			},{
+				text : '订单管理',
+				href : '$!admin.setTarget("order.vm")'
+				#if($!subMenu == 'subMenuOrder')
+					,
+					selected: true
+				#end
+			} ]
+		}]
+	});
+	
+	function currentDate(){
+		var d = new Date(),str = '';
+		 str += d.getFullYear()+'-';
+		 str += getTimeStr(d.getMonth() + 1)+'-';
+		 str += getTimeStr(d.getDate());
+		return str;
+	}
+
+	function currentTime(){
+		var d = new Date(),str = '';
+		 str += d.getFullYear()+'-';
+		 str += getTimeStr(d.getMonth() + 1)+'-';
+		 str += getTimeStr(d.getDate())+' ';
+		 str += getTimeStr(d.getHours())+':'; 
+		 str += getTimeStr(d.getMinutes())+':'; 
+		 str += getTimeStr(d.getSeconds()); 
+		return str;
+	}
+
+	function getTimeStr(t){
+		if(t < 10){
+			return "0"+t;
+		} else {
+			return t;
+		}
+	}
+
+	sideMenu.render();
+	
+	sideMenu.on('menuclick', function(e) {
+		window.location.replace(e.item.get('href'));
+	});
+</script>

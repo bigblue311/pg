@@ -3,8 +3,6 @@ package com.pg.dal.query;
 import java.util.Date;
 
 import com.victor.framework.common.tools.DateTools;
-import com.victor.framework.common.tools.MD5;
-import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.QueryCondition;
 
 public class CustomerQueryCondition extends QueryCondition {
@@ -15,9 +13,7 @@ public class CustomerQueryCondition extends QueryCondition {
 	}
 	
 	public CustomerQueryCondition setPassword(String password) {
-		if(StringTools.isNotEmpty(password)){
-			put("password",MD5.getMD5(password.getBytes()));
-		}
+		put("password",password);
 		return this;
 	}
 	
