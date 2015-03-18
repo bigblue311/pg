@@ -56,6 +56,10 @@
     	<property name="mySqlMapClient" ref="mySqlMapClient"/>
     </bean>
     
+    <bean id="resourceRoleDAO" class="com.pg.dal.dao.impl.ResourceRoleDAOImpl">
+    	<property name="mySqlMapClient" ref="mySqlMapClient"/>
+    </bean>
+    
     <bean id="warehouseDAO" class="com.pg.dal.dao.impl.WarehouseDAOImpl">
     	<property name="mySqlMapClient" ref="mySqlMapClient"/>
     </bean>

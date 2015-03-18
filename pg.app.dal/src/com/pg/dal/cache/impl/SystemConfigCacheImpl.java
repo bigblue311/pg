@@ -3,13 +3,15 @@ package com.pg.dal.cache.impl;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.InitializingBean;
+
 import com.google.common.collect.Lists;
 import com.pg.dal.cache.SystemConfigCache;
 import com.pg.dal.model.SystemConfigDO;
 import com.pg.dal.query.SystemConfigQueryCondition;
 import com.victor.framework.dal.cache.StaticCache;
 
-public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConfigQueryCondition> implements SystemConfigCache{
+public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConfigQueryCondition> implements SystemConfigCache,InitializingBean{
 
 	public SystemConfigCacheImpl() {
 		super(SystemConfigDO.class.getSimpleName());
@@ -22,7 +24,7 @@ public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConf
 			return;
 		}
 		for(SystemConfigDO systemConfig : list){
-			this.updateCache(systemConfig.getKey(), systemConfig);
+			this.updateCache(systemConfig.getConfigKey(), systemConfig);
 		}
 	}
 	
@@ -38,7 +40,7 @@ public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConf
 		if(switchDO==null){
 			return false;
 		}
-		return ON.equals(switchDO.getValue());
+		return ON.equals(switchDO.getConfigValue());
 	}
 
 	@Override
@@ -54,5 +56,10 @@ public class SystemConfigCacheImpl extends StaticCache<SystemConfigDO,SystemConf
 			list.add((SystemConfigDO)obj);
 		}
 		return list;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		reload();
 	}
 }

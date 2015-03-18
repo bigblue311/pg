@@ -22,6 +22,8 @@
     
     <bean id="productManager" class="com.pg.biz.manager.impl.ProductManagerImpl" />
     
+    <bean id="securityManager" class="com.pg.biz.manager.impl.SecurityManagerImpl" />
+    
     <bean id="transactionManager" class="com.pg.biz.manager.impl.TransactionManagerImpl" />
     
     <bean id="warehouseManager" class="com.pg.biz.manager.impl.WarehouseManagerImpl"/>

@@ -12,22 +12,22 @@
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
-    <result property="key" column="key"/>
-    <result property="value" column="value"/>
+    <result property="configKey" column="config_key"/>
+    <result property="configValue" column="config_value"/>
     <result property="description" column="description"/>
   </resultMap>
   
   <update id="update" parameterClass="SystemConfig">
     update pg_system_config set 
     <dynamic>
-      <isNotEmpty property="key">  
+      <isNotEmpty property="configKey">  
          <![CDATA[   
-           key = #key#,
+           config_key = #configKey#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="value">  
+      <isNotEmpty property="configValue">  
          <![CDATA[   
-           value = #value#,
+           config_value = #configValue#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="description">  
@@ -52,9 +52,9 @@
   <sql id="where">
   	<include refid="validate" />
   	<dynamic prepend="where">
-	    <isNotEmpty property="key" prepend="and">
+	    <isNotEmpty property="configKey" prepend="and">
         	<![CDATA[ 
-        	key = #key#
+        	config_key = #configKey#
         	]]>
 	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
@@ -62,7 +62,7 @@
   </sql>
   
   <sql id="validate">
-  	<isNull property="key">
+  	<isNull property="configKey">
         <include refid="Common.validModify" />
 	</isNull>
   </sql>

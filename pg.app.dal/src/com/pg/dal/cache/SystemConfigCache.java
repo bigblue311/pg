@@ -25,7 +25,7 @@ public interface SystemConfigCache {
 	SystemConfigDO getConfig(String key);
 	
 	/**
-	 * 更新数据库
+	 * 更新缓存
 	 * @param systemConfigDO
 	 */
 	void updateDB(SystemConfigDO systemConfigDO);

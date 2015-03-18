@@ -2,7 +2,6 @@ package com.pg.web.admin.webpage.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.Navigator;
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.CategoryManager;
@@ -13,7 +12,7 @@ public class CategoryAction {
 	@Autowired
 	private CategoryManager CategoryManager;
 	
-	public void doUpdate(@FormGroup("category") CategoryDO categoryDO, Navigator nav,Context context) {
+	public void doUpdate(@FormGroup("category") CategoryDO categoryDO, Navigator nav) {
 		if(categoryDO.getId() == null ) {
 			CategoryManager.create(categoryDO);
 		} else {
@@ -27,7 +26,7 @@ public class CategoryAction {
 		}
 	}
 	
-	public void doDelete(@FormGroup("category") CategoryDO categoryDO, Navigator nav,Context context) {
+	public void doDelete(@FormGroup("category") CategoryDO categoryDO, Navigator nav) {
 		CategoryManager.delete(categoryDO.getId());
 		Long parentId = categoryDO.getParentId();
 		if(parentId == null || parentId == 0l){

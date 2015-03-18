@@ -1,4 +1,4 @@
-package com.pg.web.admin.enumerate;
+package com.pg.dal.enumerate;
 
 import java.util.List;
 

@@ -15,21 +15,21 @@ public class SystemConfigDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 366539580312188554L;
-	private String key; 		//key
-	private String value;		//value
+	private String configKey; 		//key
+	private String configValue;		//value
 	private String description;	//描述
 	
-	public String getKey() {
-		return key;
+	public String getConfigKey() {
+		return configKey;
 	}
-	public void setKey(String key) {
-		this.key = key;
+	public void setConfigKey(String configKey) {
+		this.configKey = configKey;
 	}
-	public String getValue() {
-		return value;
+	public String getConfigValue() {
+		return configValue;
 	}
-	public void setValue(String value) {
-		this.value = value;
+	public void setConfigValue(String configValue) {
+		this.configValue = configValue;
 	}
 	public String getDescription() {
 		return description;

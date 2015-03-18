@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.Navigator;
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.EmployeeManager;
@@ -21,7 +20,7 @@ public class EmployeeAction {
 	@Autowired
 	private EmployeeManager employeeManager;
 	
-	public void doLogin(@FormGroup("login") EmployeeDO employeeDO, Navigator nav,Context context) {
+	public void doLogin(@FormGroup("login") EmployeeDO employeeDO, Navigator nav) {
 		Result<EmployeeDO> result = employeeManager.login(employeeDO);
 		if(result.isSuccess()){
 			AuthenticationToken.set(session, result.getDataObject());
@@ -44,7 +43,7 @@ public class EmployeeAction {
 		nav.redirectTo("admin").withTarget("login.vm");
 	}
 	
-	public void doUpdate(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav,Context context) {
+	public void doUpdate(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav) {
 		if(employeeDO.getId() == null ) {
 			String name = employeeDO.getName();
 			if(!employeeManager.checkExist(name)){
@@ -57,7 +56,7 @@ public class EmployeeAction {
 		nav.redirectTo("admin").withTarget("employee.vm");
 	}
 	
-	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav,Context context) {
+	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav) {
 		employeeManager.delete(employeeDO.getId());
 		nav.redirectTo("admin").withTarget("employee.vm");
 	}

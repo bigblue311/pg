@@ -9,9 +9,9 @@ import com.alibaba.citrus.turbine.dataresolver.Param;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.CategoryManager;
+import com.pg.dal.enumerate.ResourceEnum;
 import com.pg.dal.model.CategoryDO;
-import com.pg.web.admin.common.CrumbLink;
-import com.pg.web.admin.enumerate.ResourceEnum;
+import com.pg.web.admin.model.json.CrumbJson;
 
 public class Category {
 	
@@ -33,18 +33,18 @@ public class Category {
 	}
 	
 	private void setCrumb(Context context,Long parentId){
-		List<CrumbLink> crumbs = Lists.newLinkedList();
+		List<CrumbJson> crumbs = Lists.newLinkedList();
 		Long prevId = parentId;
 		for(int i=0;i<3;i++){
 			if(prevId == null || prevId == 0l){
 				break;
 			} else {
 				CategoryDO categoryDO = categoryManager.getById(prevId);
-				crumbs.add(new CrumbLink(categoryDO.getName(),ResourceEnum.品类管理.getUri()+"?parentId="+prevId));
+				crumbs.add(new CrumbJson(categoryDO.getName(),ResourceEnum.品类管理.getUri()+"?parentId="+prevId));
 				prevId = categoryDO.getParentId();
 			}
 		}
-		crumbs.add(new CrumbLink(ResourceEnum.品类管理.getDesc(),ResourceEnum.品类管理.getUri()));
+		crumbs.add(new CrumbJson(ResourceEnum.品类管理.getName(),ResourceEnum.品类管理.getUri()));
 		crumbs = Lists.reverse(crumbs);
 		context.put("crumbs", crumbs);
 	}

@@ -2,7 +2,6 @@ package com.pg.web.admin.webpage.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.Navigator;
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.BrandManager;
@@ -13,7 +12,7 @@ public class BrandAction {
 	@Autowired
 	private BrandManager brandManager;
 	
-	public void doUpdate(@FormGroup("brand") BrandDO brandDO, Navigator nav,Context context) {
+	public void doUpdate(@FormGroup("brand") BrandDO brandDO, Navigator nav) {
 		if(brandDO.getId() == null ) {
 			brandManager.create(brandDO);
 		} else {
@@ -27,7 +26,7 @@ public class BrandAction {
 		}
 	}
 	
-	public void doDelete(@FormGroup("brand") BrandDO brandDO, Navigator nav,Context context) {
+	public void doDelete(@FormGroup("brand") BrandDO brandDO, Navigator nav) {
 		brandManager.delete(brandDO.getId());
 		Long parentId = brandDO.getParentId();
 		if(parentId == null || parentId == 0l){

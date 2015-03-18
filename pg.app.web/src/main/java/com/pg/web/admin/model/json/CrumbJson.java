@@ -1,10 +1,10 @@
-package com.pg.web.admin.common;
+package com.pg.web.admin.model.json;
 
-public class CrumbLink {
+public class CrumbJson {
 	private String name;
 	private String link;
 	
-	public CrumbLink(String name,String link){
+	public CrumbJson(String name,String link){
 		this.name = name;
 		this.link = link;
 	}

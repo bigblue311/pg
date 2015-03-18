@@ -5,19 +5,21 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 public enum RoleEnum {
-	系统管理员("0","系统管理员"),
-	管理员("1","管理员"),
-	客户经理("2","客户经理");
+	系统管理员(0l,"系统管理员",false),
+	管理员(1l,"管理员",true),
+	客户经理(2l,"客户经理",true);
 	
-	private String code;
+	private Long code;
 	private String desc;
+	private boolean editable;
 	
-	private RoleEnum(String code,String desc){
+	private RoleEnum(Long code,String desc,boolean editable){
 		this.code = code;
 		this.desc = desc;
+		this.editable = editable;
 	}
 
-	public String getCode() {
+	public Long getCode() {
 		return code;
 	}
 
@@ -25,13 +27,30 @@ public enum RoleEnum {
 		return desc;
 	}
 	
+	public boolean isEditable() {
+		return editable;
+	}
+
 	public static List<RoleEnum> getAll(){
 		return Lists.newArrayList(RoleEnum.values());
 	}
 	
-	public static RoleEnum getByCode(String code){
+	public static List<RoleEnum> getEditable(){
+		List<RoleEnum> list = Lists.newArrayList();
 		for(RoleEnum role : getAll()){
-			if(role.code.equals(code)){
+			if(role.editable){
+				list.add(role);
+			}
+		}
+		return list;
+	}
+	
+	public static RoleEnum getByCode(Long code){
+		if(code == null){
+			return null;
+		}
+		for(RoleEnum role : getAll()){
+			if(role.code.longValue() == code.longValue()){
 				return role;
 			}
 		}
@@ -45,12 +64,5 @@ public enum RoleEnum {
 			}
 		}
 		return null;
-	}
-	
-	public static RoleEnum getByText(String text){
-		if(getByCode(text) == null) {
-			return getByDesc(text);
-		}
-		return getByCode(text);
 	}
 }
