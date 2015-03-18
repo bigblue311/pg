@@ -1,5 +1,13 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 #set ($changePwdGroup = $form.changePwd.defaultInstance)
+<div class="crumb">
+	<a href="/admin/welcome.htm">管理系统</a>
+	#if(${crumbs})
+		#foreach($crumb in $crumbs)
+			<span class="divider">/</span> <a href="$crumb.link">$!{crumb.name}</a>
+		#end	
+	#end 
+</div>
 <label style="padding-right:20px;">欢迎您,$!{loginedUser.name}</label>
 <form method="post" id="changePwd_form" style="display:inline-block;">
 	$csrfToken.hiddenField

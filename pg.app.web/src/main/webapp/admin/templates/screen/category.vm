@@ -1,12 +1,4 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<h3 class="crumb">
-	<a href="$admin.setTarget('category.vm')">品类管理</a> 
-	#if(${parentList})
-		#foreach($parent in $parentList)
-			<span class="divider">/</span> <a href="$admin.setTarget('category.vm')?parentId=$!{parent.id}">$!{parent.name}</a>
-		#end	
-	#end
-</h3>
 <div id="grid"></div>
 #set ($group = $form.category.defaultInstance)
 <form action="$admin.setTarget('category.vm')" method="post" id="actionFrom">

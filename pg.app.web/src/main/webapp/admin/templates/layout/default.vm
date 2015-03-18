@@ -21,7 +21,7 @@ $control.setTemplate("resource.vm")
 			$control.setTemplate("menu.vm")
 			<h1>快消后台订单状态</h1>
 		</td>
-		<td valign="top" align="left" style="position: relative;top: -20px;">
+		<td valign="top" align="left">
 			$screen_placeholder
 		</td>
 	</tr>

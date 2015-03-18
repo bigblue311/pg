@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <link href="http://g.alicdn.com/bui/bui/1.1.10/css/default/dpl.css" rel="stylesheet">
-  <link href="http://g.alicdn.com/bui/bui/1.1.10/css/default/bui.css" rel="stylesheet">
+<link href="http://g.alicdn.com/bui/bui/1.1.10/css/default/bui.css" rel="stylesheet">
 <script src="http://a.tbcdn.cn/s/bui/jquery-1.8.1.min.js"></script>
 <script src="http://g.tbcdn.cn/fi/bui/bui-min.js?t=201407291544"></script>
 <script src="http://g.alicdn.com/bui/seajs/2.3.0/sea.js?t=201407291544"></script>
@@ -15,7 +15,17 @@
 	}
 	
 	.crumb{
-		position:relative;
-		top:-3px;
+		display:inline;
+		float:left;
+	}
+	
+	.crumb a{
+		color: #319dfc;
+		text-decoration: none;
+	}
+	
+	.crumb .divider{
+		padding: 0 5px;
+		color: #999;
 	}
 </style>

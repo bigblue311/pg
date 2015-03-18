@@ -1,12 +1,4 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<h3 class="crumb">
-	<a href="$admin.setTarget('brand.vm')">品牌管理</a> 
-	#if(${parentList})
-		#foreach($parent in $parentList)
-			<span class="divider">/</span> <a href="$admin.setTarget('brand.vm')?parentId=$!{parent.id}">$!{parent.name}</a>
-		#end	
-	#end
-</h3>
 <div id="grid"></div>
 #set ($group = $form.brand.defaultInstance)
 <form action="$admin.setTarget('brand.vm')" method="post" id="actionFrom">
