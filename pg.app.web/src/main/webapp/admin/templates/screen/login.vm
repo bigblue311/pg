@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 #set ($group = $form.login.defaultInstance)
-<h1>XXX后台管理系统</h1>
+<h1>快消后台管理系统</h1>
 <form method="post" id="login_form">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="employeeAction"/>  

@@ -43,4 +43,22 @@ public class EmployeeAction {
 		AuthenticationToken.expire(session);
 		nav.redirectTo("admin").withTarget("login.vm");
 	}
+	
+	public void doUpdate(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav,Context context) {
+		if(employeeDO.getId() == null ) {
+			String name = employeeDO.getName();
+			if(!employeeManager.checkExist(name)){
+				employeeDO.setPassword(MD5.getMD5(employeeDO.getPassword()));
+				employeeManager.create(employeeDO);
+			}
+		} else {
+			employeeManager.update(employeeDO);
+		}
+		nav.redirectTo("admin").withTarget("employee.vm");
+	}
+	
+	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav,Context context) {
+		employeeManager.delete(employeeDO.getId());
+		nav.redirectTo("admin").withTarget("employee.vm");
+	}
 }

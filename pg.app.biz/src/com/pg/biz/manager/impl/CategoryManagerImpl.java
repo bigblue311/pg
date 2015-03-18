@@ -45,7 +45,7 @@ public class CategoryManagerImpl implements CategoryManager{
 	@Override
 	public List<CategoryDO> getTopLevel() {
 		CategoryQueryCondition queryCondition = new CategoryQueryCondition();
-		queryCondition.setParentId(-1l);
+		queryCondition.setParentId(0l);
 		return categoryDAO.getByCondition(queryCondition);
 	}
 

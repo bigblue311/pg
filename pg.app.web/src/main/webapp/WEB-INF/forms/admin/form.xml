@@ -48,5 +48,27 @@
 				</fm-validators:required-validator>
 			</field>
 		</group>
+		
+		<group name="employee" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="姓名" />
+			<field name="password" displayName="密码" />
+			<field name="role" displayName="角色" />
+			<field name="enable" displayName="是否有效" />
+		</group>
+		
+		<group name="brand" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="姓名" />
+			<field name="parentId" displayName="父节点ID" />
+			<field name="enable" displayName="是否有效" />
+		</group>
+		
+		<group name="category" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="姓名" />
+			<field name="parentId" displayName="父节点ID" />
+			<field name="enable" displayName="是否有效" />
+		</group>
 	</services:form>
 </beans:beans>

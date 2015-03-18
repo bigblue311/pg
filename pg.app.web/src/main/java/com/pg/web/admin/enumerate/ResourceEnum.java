@@ -9,7 +9,10 @@ public enum ResourceEnum {
 	根目录("-2","/admin","根目录",null,false),
 	默认页("-1","/admin/","默认页",null,false),
 	登录("0","/admin/login","登录页面",null,false),
-	欢迎("1","/admin/welcome","欢迎页面",null,true);
+	欢迎("1","/admin/welcome","欢迎页面",null,true),
+	后台账号("2","/admin/employee","后台账号",SubMenuEnum.后台账号,true),
+	品牌管理("3","/admin/brand","后台账号",SubMenuEnum.品牌管理,true),
+	品类管理("4","/admin/category","后台账号",SubMenuEnum.品类管理,true);
 	
 	private ResourceEnum(String code,String resource,String desc, SubMenuEnum subMenu, Boolean loginRequired){
 		this.code = code;

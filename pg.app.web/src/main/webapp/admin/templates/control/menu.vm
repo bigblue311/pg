@@ -4,7 +4,7 @@
 	var Menu = BUI.Menu;
 	var sideMenu = new Menu.SideMenu({
 		render : '#m2',
-		width : 200,
+		width : 130,
 		items : [ 
 		{
 			text : '系统管理',

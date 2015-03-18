@@ -45,7 +45,7 @@ public class BrandManagerImpl implements BrandManager{
 	@Override
 	public List<BrandDO> getTopLevel() {
 		BrandQueryCondition queryCondition = new BrandQueryCondition();
-		queryCondition.setParentId(-1l);
+		queryCondition.setParentId(0l);
 		return brandDAO.getByCondition(queryCondition);
 	}
 

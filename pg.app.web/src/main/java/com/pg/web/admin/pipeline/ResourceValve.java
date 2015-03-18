@@ -2,6 +2,8 @@ package com.pg.web.admin.pipeline;
 
 import static com.alibaba.citrus.turbine.util.TurbineUtil.getTurbineRunData;
 
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import com.pg.web.admin.enumerate.ExtensionEnum;
 import com.pg.web.admin.enumerate.ResourceEnum;
 import com.pg.web.admin.enumerate.SubMenuEnum;
 import com.pg.web.admin.enumerate.TopMenuEnum;
+import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.common.tools.UriTools;
 
 public class ResourceValve implements Valve{
@@ -34,6 +37,7 @@ public class ResourceValve implements Valve{
 	public void invoke(PipelineContext pipelineContext) throws Exception {
 		try {
 			TurbineRunDataInternal rundata = (TurbineRunDataInternal) getTurbineRunData(request);
+			loadSystemCopyright(rundata);
 			String uri = request.getRequestURI();
 			String resource = UriTools.getResource(uri);
 			String extend = UriTools.getExtension(uri);
@@ -87,5 +91,20 @@ public class ResourceValve implements Valve{
 		} finally {
 			pipelineContext.invokeNext();
 		}
+	}
+	
+	private void loadSystemCopyright(TurbineRunDataInternal rundata){
+		//先获取域名
+		String domain = "";
+		try{
+			URL urlObj = new URL(request.getRequestURL().toString());
+			domain = urlObj.getHost();
+		}catch(Exception e){
+			domain = "";
+		}
+		String year = DateTools.thisYear();
+		
+		String copyright = "©"+year+"  版权所有"+domain;
+		rundata.getContext().put("copyright", copyright);
 	}
 }

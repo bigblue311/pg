@@ -204,6 +204,14 @@ public class DateTools {
 		return StringToDate(Date);
 	}
 	
+	public static String thisYear(){
+		Date today = today();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+		String year = cal.get(Calendar.YEAR)+"";
+		return year;
+	}
+	
 	private static String trunk(int val){
 		if(val<10) {
 			return "0"+val;
