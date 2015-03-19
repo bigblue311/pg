@@ -1,0 +1,21 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<h1>查询条件</h1>
+<div class="doc-content">
+	<form action="$admin.setTarget('product.vm')" class="form-horizontal well" id="queryForm">
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">产品名称：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="name" value="$!query.name">
+					<input type="hidden" name="page" id="page" value="$!query.page">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-actions offset3">
+				<button class="button button-primary">搜索</button>
+				<button type="reset" class="button">重置</button>
+			</div>
+		</div>
+	</form>
+</div>

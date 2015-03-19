@@ -12,9 +12,17 @@ public class ProdPackQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getPackageId(){
+		return getLong("packageId");
+	}
+	
 	public ProdPackQueryCondition setProductId(Long productId) {
 		put("productId",productId);
 		return this;
+	}
+	
+	public Long getProductId(){
+		return getLong("productId");
 	}
 	
 	@Override

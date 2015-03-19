@@ -12,14 +12,26 @@ public class PackageQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public PackageQueryCondition setTitle(String title) {
 		put("title",title);
 		return this;
 	}
 	
+	public String getTitle(){
+		return getString("title");
+	}
+	
 	public PackageQueryCondition setCode(String code) {
 		put("code",code);
 		return this;
+	}
+	
+	public String getCode(){
+		return getString("code");
 	}
 	
 	@Override

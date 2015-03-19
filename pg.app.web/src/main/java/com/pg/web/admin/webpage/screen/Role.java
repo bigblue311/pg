@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.citrus.turbine.Context;
+import com.alibaba.citrus.turbine.dataresolver.Param;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.pg.dal.cache.RoleCache;
@@ -17,8 +18,11 @@ public class Role {
 	@Autowired
 	private RoleCache roleCache;
 	
-	public void execute(Context context) {
+	public void execute(@Param(name="reload", defaultValue="false")boolean reload,Context context) {
 		setCrumb(context);
+		if(reload){
+			roleCache.reload();
+		}
 		List<RoleDO> list = roleCache.cacheValues();
 		context.put("list", JSONObject.toJSONString(list));
 	}

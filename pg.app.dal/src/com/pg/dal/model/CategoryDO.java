@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.pg.dal.enumerate.EnableEnum;
 import com.pg.dal.query.CategoryQueryCondition;
+import com.victor.framework.annotation.EnumValue;
 import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.EntityDO;
 
@@ -19,6 +20,7 @@ public class CategoryDO extends EntityDO implements Serializable{
 	 */
 	private static final long serialVersionUID = -5180648161565465644L;
 	
+	@EnumValue
 	private String name;		//名称
 	private Long parentId;		//父节点ID
 	private String enable;		//是否有效

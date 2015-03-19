@@ -1,6 +1,7 @@
 package com.pg.dal.cache;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.RoleDO;
 
@@ -10,6 +11,12 @@ public interface RoleCache {
 	 * @return
 	 */
 	List<RoleDO> cacheValues();
+	
+	/**
+	 * 获得枚举方法
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 重新加载

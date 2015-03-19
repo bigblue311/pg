@@ -12,9 +12,17 @@ public class CategoryQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public CategoryQueryCondition setParentId(Long parentId) {
 		put("parentId",parentId);
 		return this;
+	}
+	
+	public Long getParentId(){
+		return getLong("parentId");
 	}
 	
 	@Override

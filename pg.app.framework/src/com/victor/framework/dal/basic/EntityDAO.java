@@ -1,5 +1,8 @@
 package com.victor.framework.dal.basic;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.victor.framework.annotation.EnumKey;
+import com.victor.framework.annotation.EnumValue;
 import com.victor.framework.common.tools.LogTools;
 
 public class EntityDAO<Entity extends EntityDO, Query extends QueryCondition> {
@@ -46,6 +51,56 @@ public class EntityDAO<Entity extends EntityDO, Query extends QueryCondition> {
 			log.error("SQL执行失败", "getAll", e);
 			return Lists.newArrayList();
 		}
+	}
+	
+	public Map<String,String> getEnumMap(){
+		Map<String,String> map = Maps.newLinkedHashMap();
+		for(Entity e: getAll()){
+			map.put(getEnumKey(e), getEnumValue(e));
+		}
+		return map;
+	}
+	
+	protected String getEnumKey(Entity e){
+		Field[] fields = e.getClass().getDeclaredFields();
+		
+		for(Field field : fields){
+			EnumKey key = field.getAnnotation(EnumKey.class);
+			if(key != null){
+				return getFiledValue(e,field);
+			}
+		}
+		return e.getId().toString();
+	}
+	
+	protected String getEnumValue(Entity e){
+		Field[] fields = e.getClass().getDeclaredFields();
+		
+		for(Field field : fields){
+			EnumValue key = field.getAnnotation(EnumValue.class);
+			if(key != null){
+				return getFiledValue(e,field);
+			}
+		}
+		return e.getId().toString();
+	}
+	
+	protected String getFiledValue(Entity e,Field field){
+		Method[] methods = e.getClass().getDeclaredMethods();
+		for(Method method : methods){
+			if(method.getName().equalsIgnoreCase("get"+field.getName())){
+				try {
+					return method.invoke(e, new Object[0]).toString();
+				} catch (IllegalAccessException e1) {
+					return e.getId().toString();
+				} catch (IllegalArgumentException e1) {
+					return e.getId().toString();
+				} catch (InvocationTargetException e1) {
+					return e.getId().toString();
+				}
+			}
+		}
+		return e.getId().toString();
 	}
 	
 	public List<Entity> queryForList(String sqlId, Entity query){

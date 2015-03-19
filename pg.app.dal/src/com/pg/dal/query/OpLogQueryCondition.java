@@ -12,9 +12,17 @@ public class OpLogQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getEmployeeId(){
+		return getLong("employeeId");
+	}
+	
 	public OpLogQueryCondition setOrderId(Long orderId) {
 		put("orderId",orderId);
 		return this;
+	}
+	
+	public Long getOrderId(){
+		return getLong("orderId");
 	}
 	
 	@Override

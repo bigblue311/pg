@@ -79,13 +79,19 @@
         columns : columns,
         bbar : {
         	items : [
-			{
-				btnCls : 'button button-small',
-				text : '<i class="icon-plus"></i>添加',
-				listeners : {
-					'click' : addFunction
+				{
+					btnCls : 'button button-small',
+					text : '<i class="icon-plus"></i>添加',
+					listeners : {
+						'click' : addFunction
+					}
+				},{
+					btnCls : 'button button-small',
+					text : '<i class="icon-refresh"></i>刷新',
+					listeners : {
+						'click' : reloadFunction
+					}
 				}
-			}
 			]
         },
         plugins : [editing],
@@ -101,6 +107,10 @@
         	deleteFunction(record);
 		}, 'question');
     });
+    
+    function reloadFunction(){
+    	window.location.replace('$admin.setTarget("role.vm")?reload=true');
+    }
     
     //添加记录
 	function addFunction() {

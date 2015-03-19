@@ -12,9 +12,17 @@ public class ResourceRoleQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getRoleId(){
+		return getLong("roleId");
+	}
+	
 	public ResourceRoleQueryCondition setResourceId(Long resourceId) {
 		put("resourceId",resourceId);
 		return this;
+	}
+	
+	public Long getResourceId(){
+		return getLong("resourceId");
 	}
 	
 	@Override

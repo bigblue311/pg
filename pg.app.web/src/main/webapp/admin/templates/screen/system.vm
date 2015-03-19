@@ -61,11 +61,26 @@
         render:'#grid',
         width:'100%',//这个属性一定要设置
         columns : columns,
+        bbar : {
+        	items : [
+				{
+					btnCls : 'button button-small',
+					text : '<i class="icon-refresh"></i>刷新',
+					listeners : {
+						'click' : reloadFunction
+					}
+				}
+			]
+        },
         plugins : [editing],
         store : store
       });
 
     grid.render();
+    
+    function reloadFunction(){
+    	window.location.replace('$admin.setTarget("system.vm")?reload=true');
+    }
     
     function updateFunction(e){
     	var id = e.record.id;

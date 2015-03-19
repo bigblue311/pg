@@ -12,9 +12,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getAddressFrom(){
+		return getString("addressFrom");
+	}
+	
 	public OrderQueryCondition setAddressTo(String addressTo) {
 		put("addressTo",addressTo);
 		return this;
+	}
+	
+	public String getAddressTo(){
+		return getString("addressTo");
 	}
 	
 	public OrderQueryCondition setKeeper(String keeper) {
@@ -22,9 +30,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getKeeper(){
+		return getString("keeper");
+	}
+	
 	public OrderQueryCondition setPhone(String phone) {
 		put("phone",phone);
 		return this;
+	}
+	
+	public String getPhone(){
+		return getString("phone");
 	}
 	
 	public OrderQueryCondition setMobile(String mobile) {
@@ -32,9 +48,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getMobile(){
+		return getString("mobile");
+	}
+	
 	public OrderQueryCondition setCustomerId(Long customerId) {
 		put("customerId",customerId);
 		return this;
+	}
+	
+	public Long getCutomerId(){
+		return getLong("customerId");
 	}
 	
 	public OrderQueryCondition setDepositStart(Double depositStart) {
@@ -42,9 +66,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Double getDepositStart(){
+		return getDouble("depositStart");
+	}
+	
 	public OrderQueryCondition setDepositEnd(Double depositEnd) {
 		put("depositEnd",depositEnd);
 		return this;
+	}
+	
+	public Double getDepositEnd(){
+		return getDouble("depositEnd");
 	}
 	
 	public OrderQueryCondition setProdType(String prodType) {
@@ -52,9 +84,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getProdType(){
+		return getString("prodType");
+	}
+	
 	public OrderQueryCondition setExtendId(Long extendId) {
 		put("extendId",extendId);
 		return this;
+	}
+	
+	public Long getExtendId(){
+		return getLong("extendId");
 	}
 	
 	public OrderQueryCondition setExtendCode(Long extendCode) {
@@ -62,9 +102,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getExtendCode(){
+		return getLong("extendCode");
+	}
+	
 	public OrderQueryCondition setQuantityStart(Integer quantityStart) {
 		put("quantityStart",quantityStart);
 		return this;
+	}
+	
+	public int getQuantityStart(){
+		return getInteger("quantityStart");
 	}
 	
 	public OrderQueryCondition setQuantityEnd(Integer quantityEnd) {
@@ -72,9 +120,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public int getQuantityEnd(){
+		return getInteger("quantityEnd");
+	}
+	
 	public OrderQueryCondition setPriceStart(Double priceStart) {
 		put("priceStart",priceStart);
 		return this;
+	}
+	
+	public Double getPriceStart(){
+		return getDouble("priceStart");
 	}
 	
 	public OrderQueryCondition setPriceEnd(Double priceEnd) {
@@ -82,9 +138,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Double getPriceEnd(){
+		return getDouble("priceEnd");
+	}
+	
 	public OrderQueryCondition setTotalPriceStart(Double totalPriceStart) {
 		put("totalPriceStart",totalPriceStart);
 		return this;
+	}
+	
+	public Double getTotalPriceStart(){
+		return getDouble("totalPriceStart");
 	}
 	
 	public OrderQueryCondition setTotalPriceEnd(Double totalPriceEnd) {
@@ -92,9 +156,17 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Double getTotalPriceEnd(){
+		return getDouble("totalPriceEnd");
+	}
+	
 	public OrderQueryCondition setTransportFeeStart(Double transportFeeStart) {
 		put("transportFeeStart",transportFeeStart);
 		return this;
+	}
+	
+	public Double setTransportFeeStart(){
+		return getDouble("transportFeeStart");
 	}
 	
 	public OrderQueryCondition setTransportFeeEnd(Double transportFeeEnd) {
@@ -102,14 +174,26 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Double getTransportFeeEnd(){
+		return getDouble("transportFeeEnd");
+	}
+	
 	public OrderQueryCondition setTransportCode(Double transportCode) {
 		put("transportCode",transportCode);
 		return this;
 	}
 	
+	public String getTransportCode(){
+		return getString("transportCode");
+	}
+	
 	public OrderQueryCondition setStatus(String status) {
 		put("status",status);
 		return this;
+	}
+	
+	public String getStatus(){
+		return getString("status");
 	}
 	
 	@Override

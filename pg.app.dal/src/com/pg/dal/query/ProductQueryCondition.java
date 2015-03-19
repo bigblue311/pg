@@ -12,9 +12,17 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public ProductQueryCondition setTitle(String title) {
 		put("title",title);
 		return this;
+	}
+	
+	public String getTitle(){
+		return getString("title");
 	}
 	
 	public ProductQueryCondition setCode(String code) {
@@ -22,9 +30,17 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getCode(){
+		return getString("code");
+	}
+	
 	public ProductQueryCondition setPackageId(Long packageId) {
 		put("packageId",packageId);
 		return this;
+	}
+	
+	public Long getPackageId(){
+		return getLong("packageId");
 	}
 	
 	public ProductQueryCondition setNotInPackageId(Long packageId) {
@@ -32,9 +48,17 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getNotInPackageId(){
+		return getLong("notInPackageId");
+	}
+	
 	public ProductQueryCondition setPublishId(Long publishId) {
 		put("publishId",publishId);
 		return this;
+	}
+	
+	public Long getPublishId(){
+		return getLong("publishId");
 	}
 	
 	public ProductQueryCondition setBrandId(Long brandId) {
@@ -42,9 +66,17 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getBrandId(){
+		return getLong("brandId");
+	}
+	
 	public ProductQueryCondition setCategoryId(Long categoryId) {
 		put("categoryId",categoryId);
 		return this;
+	}
+	
+	public Long getCategoryId(){
+		return getLong("categoryId");
 	}
 	
 	@Override

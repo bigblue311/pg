@@ -12,14 +12,26 @@ public class EmployeeQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public EmployeeQueryCondition setPassword(String password) {
 		put("password",password);
 		return this;
 	}
 	
+	public String getPassword(){
+		return getString("password");
+	}
+	
 	public EmployeeQueryCondition setRole(String role) {
 		put("role",role);
 		return this;
+	}
+	
+	public String getRole(){
+		return getString("role");
 	}
 	
 	@Override

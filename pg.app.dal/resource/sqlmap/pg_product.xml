@@ -174,9 +174,11 @@
   	<isNull property="brandId">
   	<isNull property="categoryId">
   	<isNull property="packageId">
+  	<isNull property="notInPackageId">
   	<isNull property="publishId">
   	<isNull property="enable">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
     </isNull>

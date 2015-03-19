@@ -1,6 +1,7 @@
 package com.pg.biz.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.BrandDO;
 
@@ -31,6 +32,12 @@ public interface BrandManager {
 	 * @return
 	 */
 	BrandDO getById(Long id);
+	
+	/**
+	 * 获取枚举MAP
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 获取父节点所有品牌

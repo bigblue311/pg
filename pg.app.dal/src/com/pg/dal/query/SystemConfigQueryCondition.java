@@ -12,6 +12,10 @@ public class SystemConfigQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getKey(){
+		return getString("configKey");
+	}
+	
 	@Override
 	public SystemConfigQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));

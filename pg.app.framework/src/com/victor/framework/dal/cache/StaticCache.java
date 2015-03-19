@@ -1,8 +1,6 @@
 package com.victor.framework.dal.cache;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -73,31 +71,22 @@ public abstract class StaticCache<entity extends EntityDO, query extends QueryCo
 		return list;
 	}
 	
-	private String getKey(entity e){
+	@Override
+	public Map<String,String> getEnumMap(){
+		Map<String,String> map = Maps.newLinkedHashMap();
+		for(entity e: cacheMap.values()){
+			map.put(getEnumKey(e), getEnumValue(e));
+		}
+		return map;
+	}
+	
+	protected String getKey(entity e){
 		Field[] fields = e.getClass().getDeclaredFields();
 		
 		for(Field field : fields){
 			StaticCacheKey key = field.getAnnotation(StaticCacheKey.class);
 			if(key != null){
-				getFiledValue(e,field);
-			}
-		}
-		return e.getId().toString();
-	}
-	
-	private String getFiledValue(entity e,Field field){
-		Method[] methods = this.getClass().getDeclaredMethods();
-		for(Method method : methods){
-			if(method.getName().equalsIgnoreCase("get"+field.getName())){
-				try {
-					return method.invoke(this, new Object[0]).toString();
-				} catch (IllegalAccessException e1) {
-					return e.getId().toString();
-				} catch (IllegalArgumentException e1) {
-					return e.getId().toString();
-				} catch (InvocationTargetException e1) {
-					return e.getId().toString();
-				}
+				return getFiledValue(e,field);
 			}
 		}
 		return e.getId().toString();

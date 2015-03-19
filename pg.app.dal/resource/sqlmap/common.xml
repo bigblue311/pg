@@ -29,7 +29,11 @@
 	<sql id="validModify">
 		<isNull property="gmtModifyStart">
 	    <isNull property="gmtModifyEnd">
+	    <isNull property="pageSize">
+	    <isNull property="start">
 	        @@sql not allowed
+	    </isNull>
+	    </isNull>
 		</isNull>
 		</isNull>
 	</sql>

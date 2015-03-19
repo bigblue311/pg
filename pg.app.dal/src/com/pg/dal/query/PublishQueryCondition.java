@@ -12,9 +12,17 @@ public class PublishQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getWarehouseId(){
+		return getLong("warehouseId");
+	}
+	
 	public PublishQueryCondition setProdType(String prodType) {
 		put("prodType",prodType);
 		return this;
+	}
+	
+	public String getProdType(){
+		return getString("prodType");
 	}
 	
 	public PublishQueryCondition setExtendId(Long extendId) {
@@ -22,9 +30,17 @@ public class PublishQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Long getExtendId(){
+		return getLong("extendId");
+	}
+	
 	public PublishQueryCondition setExtendCode(String extendCode) {
 		put("extendCode",extendCode);
 		return this;
+	}
+	
+	public String getExtendCode(){
+		return getString("extendCode");
 	}
 	
 	public PublishQueryCondition setValid(Boolean valid) {
@@ -32,14 +48,26 @@ public class PublishQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public Boolean getValid(){
+		return getBoolean("valid");
+	}
+	
 	public PublishQueryCondition setOrderBy(String orderBy){
 		put("orderBy",orderBy);
 		return this;
 	}
 	
+	public String getOrderBy(){
+		return getString("orderBy");
+	}
+	
 	public PublishQueryCondition setOrder(String order){
 		put("order",order);
 		return this;
+	}
+	
+	public String getOrder(){
+		return getString("order");
 	}
 	
 	@Override

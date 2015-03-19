@@ -1,6 +1,7 @@
 package com.pg.biz.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,6 +55,11 @@ public class CategoryManagerImpl implements CategoryManager{
 		CategoryQueryCondition queryCondition = new CategoryQueryCondition();
 		queryCondition.setParentId(parentId);
 		return categoryDAO.getByCondition(queryCondition);
+	}
+
+	@Override
+	public Map<String, String> getEnumMap() {
+		return categoryDAO.getEnumMap();
 	}
 
 }

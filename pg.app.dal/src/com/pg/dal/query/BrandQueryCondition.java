@@ -12,9 +12,17 @@ public class BrandQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public BrandQueryCondition setParentId(Long parentId) {
 		put("parentId",parentId);
 		return this;
+	}
+	
+	public Long getParentId(){
+		return getLong("parentId");
 	}
 	
 	@Override

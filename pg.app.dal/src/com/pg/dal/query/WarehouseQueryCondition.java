@@ -12,14 +12,26 @@ public class WarehouseQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public WarehouseQueryCondition setCustomerId(Long customerId) {
 		put("customerId",customerId);
 		return this;
 	}
 	
+	public Long getCustomerId(){
+		return getLong("customerId");
+	}
+	
 	public WarehouseQueryCondition setSystem(Boolean system) {
 		put("system",system);
 		return this;
+	}
+	
+	public Boolean getSystem(){
+		return getBoolean("system");
 	}
 	
 	@Override

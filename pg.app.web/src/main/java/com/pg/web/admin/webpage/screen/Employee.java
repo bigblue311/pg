@@ -25,7 +25,7 @@ public class Employee {
 		setCrumb(context);
 		List<EmployeeDO> list = employeeManager.getAll();
 		context.put("list", JSONObject.toJSONString(list));
-		context.put("roleEnum", roleCache.cacheValues());
+		context.put("roleEnum", JSONObject.toJSONString(roleCache.getEnumMap()));
 	}
 	
 	private void setCrumb(Context context){

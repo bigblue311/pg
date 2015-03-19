@@ -1,6 +1,7 @@
 package com.pg.biz.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.CategoryDO;
 
@@ -24,6 +25,12 @@ public interface CategoryManager {
 	 * @param id
 	 */
 	void delete(Long id);
+	
+	/**
+	 * 获取枚举MAP
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 根据ID获取

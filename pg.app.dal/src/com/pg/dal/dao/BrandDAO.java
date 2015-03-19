@@ -1,6 +1,7 @@
 package com.pg.dal.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.BrandDO;
 import com.pg.dal.query.BrandQueryCondition;
@@ -12,6 +13,12 @@ public interface BrandDAO {
 	 * @return
 	 */
 	Long insert(BrandDO brandDO);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 更新对象信息

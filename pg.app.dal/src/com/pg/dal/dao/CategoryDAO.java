@@ -1,6 +1,7 @@
 package com.pg.dal.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.CategoryDO;
 import com.pg.dal.query.CategoryQueryCondition;
@@ -12,6 +13,12 @@ public interface CategoryDAO {
 	 * @return
 	 */
 	Long insert(CategoryDO categoryDO);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 更新对象信息

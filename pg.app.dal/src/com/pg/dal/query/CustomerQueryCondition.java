@@ -12,14 +12,26 @@ public class CustomerQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public CustomerQueryCondition setPassword(String password) {
 		put("password",password);
 		return this;
 	}
 	
+	public String getPassword(){
+		return getString("password");
+	}
+	
 	public CustomerQueryCondition setMobile(String mobile) {
 		put("mobile",mobile);
 		return this;
+	}
+	
+	public String getMobile(){
+		return getString("mobile");
 	}
 	
 	@Override

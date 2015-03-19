@@ -16,14 +16,7 @@
       Data = BUI.Data;
       var Grid = Grid,
       Store = Data.Store,
-      roleObj = {
-	  	#foreach($role in $roleEnum)
-		"$!role.id": "$!role.name"
-			#if(${velocityCount} != $roleEnum.size())
-				,
-			#end
-		#end
-	  },
+      roleObj = #if($!{roleEnum})#noescape()$!{roleEnum}#end#else null #end,
       columns = [
 		{
 			title : 'id',
