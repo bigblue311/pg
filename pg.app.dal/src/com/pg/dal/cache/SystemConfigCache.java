@@ -10,7 +10,7 @@ public interface SystemConfigCache {
 	 * 获取所有
 	 * @return
 	 */
-	List<SystemConfigDO> cachedValues();
+	List<SystemConfigDO> cacheValues();
 	
 	/**
 	 * 重新加载
@@ -22,7 +22,7 @@ public interface SystemConfigCache {
 	 * @param key
 	 * @return
 	 */
-	SystemConfigDO getConfig(String key);
+	SystemConfigDO getCache(String key);
 	
 	/**
 	 * 更新缓存

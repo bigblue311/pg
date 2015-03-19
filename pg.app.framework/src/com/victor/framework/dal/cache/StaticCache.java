@@ -1,9 +1,14 @@
 package com.victor.framework.dal.cache;
 
-import java.util.Collection;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.victor.framework.annotation.StaticCacheKey;
 import com.victor.framework.dal.basic.EntityDAO;
 import com.victor.framework.dal.basic.EntityDO;
 import com.victor.framework.dal.basic.QueryCondition;
@@ -15,36 +20,86 @@ public abstract class StaticCache<entity extends EntityDO, query extends QueryCo
 	}
 
 	public static final String ON = "ON";
-	private final Map<String,Object> cacheMap = Maps.newConcurrentMap();
+	private final Map<String,entity> cacheMap = Maps.newConcurrentMap();
 	
-	public abstract void reloadCache();
+	public void reload(){
+		List<entity> all = super.getAll();
+		for(entity e : all){
+			updateCache(getKey(e),e);
+		}
+	}
 	
 	public final void clearCache(){
 		cacheMap.clear();
 	}
 	
-	public final Object getCache(String key){
+	public final entity getCache(String key){
 		if(key == null) return null;
 		return cacheMap.get(key);
 	}
 	
-	public final void updateCache(String key, Object value){
+	public final boolean exist(String key){
+		if(key == null) return false;
+		return cacheMap.containsKey(key);
+	}
+	
+	public final void updateCache(String key, entity value){
 		cacheMap.put(key, value);
 	}
 	
 	public final void updateDB(entity e){
 		super.update(e);
+		entity forUpdate = super.getById(e.getId());
+		updateCache(getKey(forUpdate),forUpdate);
 	}
 	
 	public final void insertDB(entity e){
-		super.insert(e);
+		Long id = super.insert(e);
+		entity forUpdate = super.getById(id);
+		updateCache(getKey(forUpdate),forUpdate);
 	}
 	
 	public final void deleteDB(Long id){
+		entity forUpdate = super.getById(id);
+		cacheMap.remove(getKey(forUpdate));
 		super.delete(id);
 	}
 	
-	public final Collection<Object> cacheValues(){
-		return cacheMap.values();
+	public final List<entity> cacheValues(){
+		List<entity> list = Lists.newArrayList();
+		for(entity e : cacheMap.values()){
+			list.add(e);
+		}
+		return list;
+	}
+	
+	private String getKey(entity e){
+		Field[] fields = e.getClass().getDeclaredFields();
+		
+		for(Field field : fields){
+			StaticCacheKey key = field.getAnnotation(StaticCacheKey.class);
+			if(key != null){
+				getFiledValue(e,field);
+			}
+		}
+		return e.getId().toString();
+	}
+	
+	private String getFiledValue(entity e,Field field){
+		Method[] methods = this.getClass().getDeclaredMethods();
+		for(Method method : methods){
+			if(method.getName().equalsIgnoreCase("get"+field.getName())){
+				try {
+					return method.invoke(this, new Object[0]).toString();
+				} catch (IllegalAccessException e1) {
+					return e.getId().toString();
+				} catch (IllegalArgumentException e1) {
+					return e.getId().toString();
+				} catch (InvocationTargetException e1) {
+					return e.getId().toString();
+				}
+			}
+		}
+		return e.getId().toString();
 	}
 }

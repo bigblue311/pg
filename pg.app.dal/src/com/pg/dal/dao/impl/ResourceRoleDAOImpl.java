@@ -11,4 +11,9 @@ public class ResourceRoleDAOImpl extends EntityDAO<ResourceRoleDO,ResourceRoleQu
 		super(ResourceRoleDO.class.getSimpleName());
 	}
 
+	@Override
+	public Boolean deleteByRoleId(Long roleId) {
+		return super.deleteBySID("deleteByRoleId", roleId);
+	}
+
 }

@@ -71,6 +71,13 @@
 			<field name="enable" displayName="是否有效" />
 		</group>
 		
+		<group name="role" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="角色名称" />
+			<field name="description" displayName="角色描述" />
+			<field name="editable" displayName="是否可编辑" />
+		</group>
+		
 		<group name="resourceRole" extends="csrfCheck">
 			<field name="id" displayName="ID" />
 			<field name="roleId" displayName="角色ID" />

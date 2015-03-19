@@ -48,40 +48,4 @@
   <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
     select * from pg_system_config where id = #id#  
   </select>
-  
-  <sql id="where">
-  	<include refid="validate" />
-  	<dynamic prepend="where">
-	    <isNotEmpty property="configKey" prepend="and">
-        	<![CDATA[ 
-        	config_key = #configKey#
-        	]]>
-	    </isNotEmpty>
-	    <include refid="Common.queryModify" />
-  	</dynamic>
-  </sql>
-  
-  <sql id="validate">
-  	<isNull property="configKey">
-        <include refid="Common.validModify" />
-	</isNull>
-  </sql>
-  
-  <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
-    select * from pg_system_config 
-    <include refid="where" />
-    <include refid="Common.orderByModify" />
-  </select>
-  
-  <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
-    select * from pg_system_config 
-    <include refid="where" />
-    <include refid="Common.orderByModify" />
-    <include refid="Common.pageSql" />
-  </select>
-  
-  <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
-    select count(*) from pg_system_config
-	<include refid="where" />
-  </select>
 </sqlMap>

@@ -5,33 +5,28 @@ import java.util.Date;
 import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.dal.basic.QueryCondition;
 
-public class SystemConfigQueryCondition extends QueryCondition {
-	
-	public SystemConfigQueryCondition setKey(String key) {
-		put("configKey",key);
-		return this;
-	}
+public class RoleQueryCondition extends QueryCondition {
 	
 	@Override
-	public SystemConfigQueryCondition setGmtModifyStart(Date from){
+	public RoleQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));
 		return this;
 	}
 	
 	@Override
-	public SystemConfigQueryCondition setGmtModifyEnd(Date to){
+	public RoleQueryCondition setGmtModifyEnd(Date to){
 		put("gmtModifyEnd", DateTools.getDayEnd(to));
 		return this;
 	}
 	
 	@Override
-	public SystemConfigQueryCondition setStart(int start){
+	public RoleQueryCondition setStart(int start){
 		put("start", start);
 		return this;
 	}
 	
 	@Override
-	public SystemConfigQueryCondition setPageSize(int pageSize){
+	public RoleQueryCondition setPageSize(int pageSize){
 		put("pageSize", pageSize);
 		return this;
 	}

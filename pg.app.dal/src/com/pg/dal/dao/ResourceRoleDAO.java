@@ -25,6 +25,7 @@ public interface ResourceRoleDAO {
 	 * @param id
 	 */
 	Boolean delete(Long id);
+	Boolean deleteByRoleId(Long roleId);
 	
 	/**
 	 * 根据ID获取对象

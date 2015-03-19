@@ -14,7 +14,6 @@ public class SystemConfigAction {
 	
 	public void doUpdate(@FormGroup("systemConfig") SystemConfigDO systemConfigDO, Navigator nav) {
 		systemConfigCache.updateDB(systemConfigDO);
-		systemConfigCache.reload();
 		nav.redirectTo("admin").withTarget("system.vm");
 	}
 }

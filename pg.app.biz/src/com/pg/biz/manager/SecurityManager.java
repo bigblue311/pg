@@ -18,6 +18,7 @@ public interface SecurityManager {
 	 * @param id
 	 */
 	void delete(Long id);
+	void deleteByRoleId(Long roleId);
 	void delete(ResourceRoleDO resourceRoleDO);
 	
 	/**

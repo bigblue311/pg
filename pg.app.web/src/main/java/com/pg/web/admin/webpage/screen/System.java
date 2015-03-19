@@ -19,7 +19,7 @@ public class System {
 	
 	public void execute(Context context){
 		setCrumb(context);
-		List<SystemConfigDO> list = systemConfigCache.cachedValues();
+		List<SystemConfigDO> list = systemConfigCache.cacheValues();
 		context.put("list", JSONObject.toJSONString(list));
 	}
 	

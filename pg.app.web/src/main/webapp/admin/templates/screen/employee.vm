@@ -18,7 +18,7 @@
       Store = Data.Store,
       roleObj = {
 	  	#foreach($role in $roleEnum)
-		"$!role.code": "$!role.desc"
+		"$!role.id": "$!role.name"
 			#if(${velocityCount} != $roleEnum.size())
 				,
 			#end

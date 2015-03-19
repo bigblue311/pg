@@ -6,17 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.SecurityManager;
+import com.pg.dal.cache.RoleCache;
 import com.pg.dal.dao.ResourceRoleDAO;
 import com.pg.dal.enumerate.ResourceEnum;
-import com.pg.dal.enumerate.RoleEnum;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.ResourceRoleDO;
+import com.pg.dal.model.RoleDO;
 import com.pg.dal.query.ResourceRoleQueryCondition;
 
 public class SecurityManagerImpl implements SecurityManager{
 
 	@Autowired
 	private ResourceRoleDAO resourceRoleDAO;
+	
+	@Autowired
+	private RoleCache roleCache;
 	
 	@Override
 	public void create(ResourceRoleDO resourceRoleDO) {
@@ -26,6 +30,11 @@ public class SecurityManagerImpl implements SecurityManager{
 	@Override
 	public void delete(Long id) {
 		resourceRoleDAO.delete(id);
+	}
+	
+	@Override
+	public void deleteByRoleId(Long roleId) {
+		resourceRoleDAO.deleteByRoleId(roleId);
 	}
 	
 	@Override
@@ -71,8 +80,9 @@ public class SecurityManagerImpl implements SecurityManager{
 			if(roleId == null){
 				return false;
 			}
-			if(roleId.longValue() == RoleEnum.系统管理员.getCode().longValue()){
-				//加入是系统管理员,那么一直有权限
+			RoleDO role = roleCache.getCache(roleId.toString());
+			if(role.isSuperAdmin()){
+				//默认权限,是不需要检查的
 				return true;
 			}
 			ResourceRoleQueryCondition queryCondition = new ResourceRoleQueryCondition();

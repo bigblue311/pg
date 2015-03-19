@@ -56,6 +56,10 @@
   	delete from pg_resource_role where id = #id#
   </update>
   
+  <update id="deleteByRoleId" parameterClass="java.lang.Long">
+  	delete from pg_resource_role where role_id = #id#
+  </update>
+  
   <select id="getAll" resultMap="RM">
     select * from pg_resource_role  
   </select>
