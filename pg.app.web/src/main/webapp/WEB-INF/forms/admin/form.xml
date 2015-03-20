@@ -88,5 +88,16 @@
 			<field name="id" displayName="ID" />
 			<field name="configValue" displayName="值" />
 		</group>
+		
+		<group name="product" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="名称" />
+			<field name="title" displayName="标题" />
+			<field name="code" displayName="编号" />
+			<field name="brandId" displayName="品牌ID" />
+			<field name="categoryId" displayName="品类ID" />
+			<field name="description" displayName="描述" />
+			<field name="enable" displayName="是否有效" />
+		</group>
 	</services:form>
 </beans:beans>

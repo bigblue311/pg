@@ -111,7 +111,7 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
-	public int getQuantityStart(){
+	public Integer getQuantityStart(){
 		return getInteger("quantityStart");
 	}
 	
@@ -120,7 +120,7 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
-	public int getQuantityEnd(){
+	public Integer getQuantityEnd(){
 		return getInteger("quantityEnd");
 	}
 	

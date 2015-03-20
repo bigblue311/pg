@@ -8,7 +8,7 @@
 		#end	
 	#end 
 </div>
-<label style="padding-right:20px;">欢迎您,$!{loginedUser.name}</label>
+<label style="padding-right:20px;">欢迎您[$!{loginedUser.name}]</label>
 <form method="post" id="changePwd_form" style="display:inline-block;">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="employeeAction"/>

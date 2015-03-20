@@ -72,14 +72,14 @@ public abstract class QueryCondition {
 	
 	public abstract QueryCondition setStart(int start);
 	
-	public int getStart(){
+	public Integer getStart(){
 		return getInteger("start");
 	}
 	
 	public abstract QueryCondition setPageSize(int pageSize);
 	
-	public int getPageSize(){
-		return getInteger("pageSize");
+	public Integer getPageSize(){
+		return getInteger("pageSize",20);
 	}
 	
 	public void setPage(int page){
@@ -91,8 +91,8 @@ public abstract class QueryCondition {
 		put("page",page);
 	}
 	
-	public int getPage(){
-		return getInteger("page");
+	public Integer getPage(){
+		return getInteger("page",1);
 	}
 	
 	public Double getDouble(String key){

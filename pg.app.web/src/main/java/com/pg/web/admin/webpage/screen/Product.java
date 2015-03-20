@@ -37,8 +37,8 @@ public class Product {
 		context.put("query", query);
 		context.put("paging", pageList);
 		context.put("list", JSONObject.toJSONString(pageList.getData()));
-		context.put("brandEnum", JSONObject.toJSONString(brandManager.getEnumMap()));
-		context.put("categoryEnum", JSONObject.toJSONString(categoryManager.getEnumMap()));
+		context.put("brandEnum", brandManager.getEnumMap().entrySet());
+		context.put("categoryEnum", categoryManager.getEnumMap().entrySet());
 	}
 	
 	private void setCrumb(Context context){

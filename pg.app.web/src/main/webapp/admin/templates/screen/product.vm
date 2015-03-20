@@ -1,21 +1,256 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<h1>查询条件</h1>
 <div class="doc-content">
 	<form action="$admin.setTarget('product.vm')" class="form-horizontal well" id="queryForm">
 		<div class="row">
 			<div class="control-group">
-				<label class="control-label">产品名称：</label>
+				<label class="control-label">名称：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="name" value="$!query.name">
-					<input type="hidden" name="page" id="page" value="$!query.page">
+					<input type="text" class="control-text" name="name" value="$query.name">
+					<input type="hidden" name="page" id="page" value="$query.page">
+				</div>
+				<label class="control-label">编码：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="code" value="$query.code">
+				</div>
+				<label class="control-label">品牌：</label>
+				<div class="controls">
+					<select name="brandId">
+						<option selected value="">全部</option>
+						#foreach($brand in $brandEnum)
+						<option 
+							#if($!query.brandId)
+								#if($!query.brandId==$!brand.key)
+									selected
+								#end
+							#end 
+							value="$!brand.key">$!brand.value</option>
+						#end
+					</select>
+				</div>
+				<label class="control-label">品类：</label>
+				<div class="controls selector">
+					<select name="categoryId">
+						<option selected value="">全部</option>
+						#foreach($category in $categoryEnum)
+						<option 
+							#if($!query.categoryId)
+								#if($!query.categoryId==$!category.key)
+									selected
+								#end
+							#end 
+							value="$!category.key">$!category.value</option>
+						#end
+					</select>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="form-actions offset3">
-				<button class="button button-primary">搜索</button>
-				<button type="reset" class="button">重置</button>
+				<button class="button button-primary"><i class="icon-search icon-white"></i>搜索</button>
+				<button type="reset" class="button"><i class="icon-repeat"></i>重置</button>
 			</div>
 		</div>
 	</form>
 </div>
+<div id="grid"></div>
+$control.setTemplate("paging.vm")
+#set ($group = $form.product.defaultInstance)
+<form action="$admin.setTarget('product.vm')" method="post" id="actionFrom">
+	$csrfToken.hiddenField
+	<input type="hidden" name="action" value="productAction"/>  
+	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
+	<input type="hidden" id="id" name="$group.id.key" value=""/>
+	<input type="hidden" id="name" name="$group.name.key" value=""/>
+	<input type="hidden" id="title" name="$group.title.key" value=""/>
+	<input type="hidden" id="code" name="$group.code.key" value=""/>
+	<input type="hidden" id="brandId" name="$group.brandId.key" value=""/>
+	<input type="hidden" id="categoryId" name="$group.categoryId.key" value=""/>
+	<input type="hidden" id="description" name="$group.description.key" value=""/>
+	<input type="hidden" id="enable" name="$group.enable.key" value="0"/>
+</form>
+<script type="text/javascript">
+      var Grid = BUI.Grid,
+      Data = BUI.Data;
+      var Grid = Grid,
+      Store = Data.Store,
+      brandObj = {
+ 	   		#foreach($brand in $brandEnum)
+ 			"$!brand.key": "$!brand.value"
+ 				#if(${velocityCount} != $brandEnum.size())
+ 					,
+ 				#end
+ 			#end
+ 	  },
+      categoryObj = {
+ 	   		#foreach($category in $categoryEnum)
+ 			"$!category.key": "$!category.value"
+ 				#if(${velocityCount} != $categoryEnum.size())
+ 					,
+ 				#end
+ 			#end
+ 	  },
+      columns = [
+		{
+			title : 'id',
+			dataIndex : 'id',
+			visible: false
+		},{
+          title : '名称',
+          elCls: 'left',
+          dataIndex :'name',
+          editor : {
+				xtype : 'text',
+				rules : {required : true}
+		  },
+          width:'10%'
+        },{
+          title : '标题',
+          elCls: 'left',
+          dataIndex :'title',
+          editor : {
+  				xtype : 'text',
+  				rules : {required : true}
+  		  },
+          width:'10%'
+        },{
+          title : '编号',
+          elCls: 'left',
+          dataIndex :'code',
+          editor : {
+				xtype : 'text',
+				rules : {required : true}
+		  },
+          width:'10%'
+        },{
+          title : '品牌',
+          elCls: 'left',
+          dataIndex :'brandId',
+          editor : {
+				xtype : 'select',
+				items : brandObj,
+				rules : {required : true}
+		  },
+		  renderer : Grid.Format.enumRenderer(brandObj),
+          width:'10%'
+        },{
+          title : '品类',
+          elCls: 'left',
+          dataIndex :'categoryId',
+          editor : {
+  				xtype : 'select',
+  				items : categoryObj,
+  				rules : {required : true}
+  		  },
+  		  renderer : Grid.Format.enumRenderer(categoryObj),
+          width:'10%'
+        },{
+          title : '描述',
+          elCls: 'left',
+          dataIndex :'description',
+          editor : {
+  				xtype : 'text',
+  				rules : {required : true}
+  		  },
+          width:'35%'
+        },{
+			title : '操作',
+			elCls: 'center',
+			dataIndex : 'oper',
+			renderer : function() {
+				var edit = '<span class="grid-command btn-edit">编辑</span>';
+				var del = '<span class="grid-command btn-del">删除</span>';
+				return edit+del;
+			},
+	        width:'15%'
+		}],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+      var store = new Store({
+        data : data,
+        listeners : {
+        	'update' : updateFunction
+        }
+      }),
+      editing = new Grid.Plugins.RowEditing({
+			triggerCls : 'btn-edit',
+			triggerSelected : false
+	  }),
+      grid = new Grid.Grid({
+        render:'#grid',
+        width:'100%',//这个属性一定要设置
+        columns : columns,
+        bbar : {
+        	items : [
+			{
+				btnCls : 'button button-small',
+				text : '<i class="icon-plus"></i>添加',
+				listeners : {
+					'click' : addFunction
+				}
+			}
+			]
+        },
+        plugins : [editing],
+        store : store
+      });
+
+    grid.render();
+    
+    jQuery(".btn-del").click(function(){
+    	BUI.Message.Confirm("确定删除该产品吗?", function() {
+    		var selections = grid.getSelection();
+        	var record = selections[0];
+        	deleteFunction(record);
+		}, 'question');
+    });
+    
+  	//添加记录
+	function addFunction() {
+		var newData = {};
+		store.addAt(newData, 0);
+		editing.edit(newData, "name"); //添加记录后，直接编辑
+	}
+    
+    function updateFunction(e){
+    	var id = e.record.id;
+    	var name = e.record.name;
+    	var title = e.record.title;
+    	var code = e.record.code;
+    	var brandId = e.record.brandId;
+    	var categoryId = e.record.categoryId;
+    	var description = e.record.description;
+    	var event = "event_submit_do_update";
+    	jQuery("#id").val(id);
+    	jQuery("#name").val(name);
+    	jQuery("#title").val(title);
+    	jQuery("#code").val(code);
+    	jQuery("#brandId").val(brandId);
+    	jQuery("#categoryId").val(categoryId);
+    	jQuery("#description").val(description);
+    	jQuery("#event").attr("name",event);
+    	jQuery("#actionFrom").submit();
+    }
+    
+    function deleteFunction(record){
+    	var id = record.id;
+    	var event = "event_submit_do_delete";
+    	jQuery("#id").val(id);
+    	jQuery("#event").attr("name",event);
+    	jQuery("#actionFrom").submit();
+    }
+    
+    BUI.use('bui/select',function(Select){
+        var select_brand = new Select.Select({  
+              render:'#select_brand',
+              valueField:'#hide_brand',
+              items:brandObj
+            });
+        select_brand.render();
+        
+        var select_category = new Select.Select({  
+            render:'#select_category',
+            valueField:'#hide_category',
+            items:categoryObj
+          });
+        select_category.render();
+    });
+</script>
