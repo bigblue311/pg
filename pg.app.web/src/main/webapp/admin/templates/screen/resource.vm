@@ -1,102 +1,32 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<style>
-	.top{
-		vertical-align: top;
-		padding:5px;
-	}
-	
-	.top h2{
-		display:inline-block;
-		min-width:230px;
-	}
-	
-	.top .box{
-		height:250px;
-		border:1px solid lightgrey;
-		overflow-y:auto;
-	}
-
-	.top .item{
-		padding:5px;
-		background:white;
-	}
-	
-	.top .item label{
-		display: inline-block;
-	}
-	
-	.top .item i{
-		float:right;
-		margin-right:20px;
-		display:none;
-		cursor:pointer;
-	}
-	
-	.top .item span{
-		display:none;
-	}
-	
-	.top .item:hover span{
-		display:inline-block;
-		margin-left:5px;
-	}
-	
-	.top .item:hover{
-		background:whitesmoke;
-	}
-	
-	.top .item:hover i{
-		display:inline-block;
-		cursor:pointer;
-	}
-</style>
+<link href="/css/comboxList.css" rel="stylesheet">
 <table>
 	<tr>
-		<td class="top">
-			<h2>未开通的权限</h2>
-			<div class="box">
+		<td class="comboList">
+			<h2>未开通的权限
+				<span class="selectAll"><i class="icon-check"></i>全选</span>
+				<input type="text" placeholder="可输入名称来过滤" class="filter">
+			</h2>
+			<div id="box1" class="box">
 			#foreach($exclude in $excludeList)
 			<div class="item">
-				<label>$exclude.name</label><span id="tip${exclude.id}" class="icon-question"></span><i class="icon-plus" onclick="add('$exclude.id')"></i>
-				<script type="text/javascript">
-				BUI.use('bui/tooltip',function (Tooltip) {
-			        //使用模板右边显示
-			        var tip = new Tooltip.Tip({
-			          trigger : '#tip${exclude.id}',
-			          alignType : 'right',
-			          offset : 10,
-			          title : '${exclude.desc}',
-			          elCls : 'tips tips-success'
-			        });
-			        tip.render();
-			   });
-				</script>
+				<label>$exclude.name</label><input type="hidden" value="${exclude.id}"/>
 			</div>
 			#end
 			</div>
 		</td>
 		<td>
-			&nbsp;< >&nbsp;
+			&nbsp;<a class="linkBtn" id="btnDel">&lt;</a> <a class="linkBtn" id="btnAdd">&gt;</a>&nbsp;
 		</td>
-		<td class="top">
-			<h2>开通的权限</h2>
-			<div class="box">
+		<td class="comboList">
+			<h2>已开通的权限
+				<span class="selectAll"><i class="icon-check"></i>全选</span>
+				<input type="text" placeholder="可输入名称来过滤" class="filter">
+			</h2>
+			<div id="box2" class="box">
 			#foreach($include in $includeList)
 			<div class="item">
-				<label>$include.name</label><span id="tip${include.id}" class="icon-question"></span><i class="icon-minus" onclick="del('$include.id')"></i>
-				<script type="text/javascript">
-				BUI.use('bui/tooltip',function (Tooltip) {
-			        //使用模板右边显示
-			        var tip = new Tooltip.Tip({
-			          trigger : '#tip${include.id}',
-			          alignType : 'right',
-			          offset : 10,
-			          title : '${include.desc}',
-			          elCls : 'tips tips-success'
-			        });
-			        tip.render();
-			   });
-				</script>
+				<label>$include.name</label><input type="hidden" value="${include.id}"/>
 			</div>
 			#end
 			</div>
@@ -108,22 +38,33 @@
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="resourceRoleAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
-	<input type="hidden" id="id" name="$group.id.key" value=""/>
 	<input type="hidden" id="roleId" name="$group.roleId.key" value="$!{roleId}"/>
-	<input type="hidden" id="resourceId" name="$group.resourceId.key" value=""/>
+	<input type="hidden" id="resourceIds" name="$group.resourceIds.key" value=""/>
 </form>
+<script type="text/javascript" src="/js/comboxList.js"></script>
 <script type="text/javascript">
-    function add(resourceId){
+jQuery(function(){
+
+	jQuery("#btnAdd").click(function(){
+		var ids = "";
+    	jQuery("#box1 .selected input").each(function(){
+    		ids += jQuery(this).val()+",";
+    	});
     	var event = "event_submit_do_update";
-    	jQuery("#resourceId").val(resourceId);
+    	jQuery("#resourceIds").val(ids);
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();
-    }
-    
-    function del(resourceId){
+	});
+	
+	jQuery("#btnDel").click(function(){
+		var ids = "";
+    	jQuery("#box2 .selected input").each(function(){
+    		ids += jQuery(this).val()+",";
+    	});
     	var event = "event_submit_do_delete";
-    	jQuery("#resourceId").val(resourceId);
+    	jQuery("#resourceIds").val(ids);
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();
-    }
+	});
+});
 </script>

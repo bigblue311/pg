@@ -21,6 +21,7 @@ import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.enumerate.ProdTypeEnum;
 import com.pg.dal.query.PackageQueryCondition;
+import com.pg.dal.query.ProdPackQueryCondition;
 import com.pg.dal.query.ProductQueryCondition;
 import com.pg.dal.query.PublishQueryCondition;
 import com.victor.framework.dal.basic.Paging;
@@ -137,10 +138,34 @@ public class ProductManagerImpl implements ProductManager{
 	public void updateProdPack(ProdPackDO prodPackDO) {
 		prodPackDAO.update(prodPackDO);
 	}
+	
+	@Override
+	public void updateProdPackQuantityUnit(ProdPackDO prodPackDO) {
+		ProdPackQueryCondition queryCondition = prodPackDO.toQueryCondition();
+		List<ProdPackDO> list = prodPackDAO.getByCondition(queryCondition);
+		for(ProdPackDO each : list){
+			prodPackDO.setId(each.getId());
+			prodPackDAO.update(prodPackDO);
+		}
+	}
 
 	@Override
 	public void deleteProdPack(Long id) {
 		prodPackDAO.delete(id);
+	}
+	
+	@Override
+	public void deleteProdPack(ProdPackDO prodPackDO) {
+		ProdPackQueryCondition queryCondition = prodPackDO.toQueryCondition();
+		List<ProdPackDO> list = prodPackDAO.getByCondition(queryCondition);
+		for(ProdPackDO each : list){
+			prodPackDAO.delete(each.getId());
+		}
+	}
+	
+	@Override
+	public List<ProdPackDO> getProdPackByCondition(ProdPackQueryCondition queryCondition) {
+		return prodPackDAO.getByCondition(queryCondition);
 	}
 
 	@Override
@@ -250,5 +275,4 @@ public class ProductManagerImpl implements ProductManager{
 		}
 		return null;
 	}
-
 }

@@ -47,5 +47,6 @@ public class Brand {
 		crumbs.add(new CrumbJson(ResourceEnum.品牌管理.getName(),ResourceEnum.品牌管理.getUri()));
 		crumbs = Lists.reverse(crumbs);
 		context.put("crumbs", crumbs);
+		context.put("crumbDesc", ResourceEnum.品牌管理.getDesc());
 	}
 }

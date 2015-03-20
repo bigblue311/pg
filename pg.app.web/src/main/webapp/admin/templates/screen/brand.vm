@@ -37,7 +37,7 @@
 				var child = '';
 				if(obj!=null){
 					var parentId = obj.id;
-					child = '<a href="$admin.setTarget("brand.vm")?parentId='+parentId+'">子品牌</a>&nbsp;&nbsp;';
+					child = '<span class="grid-command"><a href="$admin.setTarget("brand.vm")?parentId='+parentId+'">子品牌</a></span>';
 				}
 				var edit = '<span class="grid-command btn-edit">编辑</span>';
 				var del = '<span class="grid-command btn-del">删除</span>';

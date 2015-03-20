@@ -79,9 +79,8 @@
 		</group>
 		
 		<group name="resourceRole" extends="csrfCheck">
-			<field name="id" displayName="ID" />
 			<field name="roleId" displayName="角色ID" />
-			<field name="resourceId" displayName="资源ID" />
+			<field name="resourceIds" displayName="资源ID" />
 		</group>
 		
 		<group name="systemConfig" extends="csrfCheck">
@@ -98,6 +97,22 @@
 			<field name="categoryId" displayName="品类ID" />
 			<field name="description" displayName="描述" />
 			<field name="enable" displayName="是否有效" />
+		</group>
+		
+		<group name="package" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="名称" />
+			<field name="title" displayName="标题" />
+			<field name="code" displayName="编号" />
+			<field name="description" displayName="描述" />
+			<field name="enable" displayName="是否有效" />
+		</group>
+		
+		<group name="prodpack" extends="csrfCheck">
+			<field name="packageId" displayName="包名称" />
+			<field name="productIds" displayName="产品名称" />
+			<field name="quantitys" displayName="数量" />
+			<field name="units" displayName="单位" />
 		</group>
 	</services:form>
 </beans:beans>

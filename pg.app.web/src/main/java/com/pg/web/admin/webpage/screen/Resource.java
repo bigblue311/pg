@@ -44,7 +44,6 @@ public class Resource {
 				ResourceJson json = new ResourceJson();
 				json.setId(resourceEnum.getCode());
 				json.setName(resourceEnum.getName());
-				json.setDesc(resourceEnum.getDesc());
 				return json;
 			}
 		});
@@ -56,5 +55,6 @@ public class Resource {
 		RoleDO roleDO = roleCache.getCache(roleId.toString());
 		crumbs.add(new CrumbJson(roleDO.getName(),ResourceEnum.资源权限.getUri()+"?roleId="+roleId));
 		context.put("crumbs", crumbs);
+		context.put("crumbDesc", ResourceEnum.资源权限.getDesc());
 	}
 }

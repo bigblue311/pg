@@ -6,6 +6,7 @@
 				<label class="control-label">名称：</label>
 				<div class="controls">
 					<input type="text" class="control-text" name="name" value="$query.name">
+					<input type="hidden" name="packageId" id="packageId" value="$query.packageId">
 					<input type="hidden" name="page" id="page" value="$query.page">
 				</div>
 				<label class="control-label">编码：</label>
@@ -237,20 +238,4 @@ $control.setTemplate("paging.vm")
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();
     }
-    
-    BUI.use('bui/select',function(Select){
-        var select_brand = new Select.Select({  
-              render:'#select_brand',
-              valueField:'#hide_brand',
-              items:brandObj
-            });
-        select_brand.render();
-        
-        var select_category = new Select.Select({  
-            render:'#select_category',
-            valueField:'#hide_category',
-            items:categoryObj
-          });
-        select_category.render();
-    });
 </script>

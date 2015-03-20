@@ -50,7 +50,7 @@
 				var child = '';
 				if(obj!=null){
 					var roleId = obj.id;
-					child = '<a href="$admin.setTarget("resource.vm")?roleId='+roleId+'">权限管理</a>&nbsp;&nbsp;';
+					child = '<span class="grid-command btn-edit"><a href="$admin.setTarget("resource.vm")?roleId='+roleId+'">权限管理</a></span>';
 					var roleEditable = obj.editable;
 					if(roleEditable == '1'){
 						return '无法被编辑';

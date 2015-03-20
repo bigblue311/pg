@@ -1,0 +1,36 @@
+.bui-select .icon-caret{
+	margin-top: 6px;
+}
+
+.bui-grid-bbar{
+	width:100%;
+}
+
+.crumb{
+	display:inline;
+	float:left;
+	margin-top: 3px;
+}
+
+.crumbDesc{
+	display:inline;
+	float:left;
+	padding-left:20px;
+}
+
+a{
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.crumb .divider{
+	padding: 0 5px;
+	color: #999;
+}
+
+.linkBtn{
+	cursor:pointer;
+}

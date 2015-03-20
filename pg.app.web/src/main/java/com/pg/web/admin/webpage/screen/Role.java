@@ -31,5 +31,6 @@ public class Role {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.角色权限.getName(),ResourceEnum.角色权限.getUri()));
 		context.put("crumbs", crumbs);
+		context.put("crumbDesc", ResourceEnum.角色权限.getDesc());
 	}
 }

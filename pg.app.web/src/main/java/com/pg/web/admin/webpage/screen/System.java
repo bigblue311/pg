@@ -31,5 +31,6 @@ public class System {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.系统配置.getName(),ResourceEnum.系统配置.getUri()));
 		context.put("crumbs", crumbs);
+		context.put("crumbDesc", ResourceEnum.系统配置.getDesc());
 	}
 }

@@ -9,6 +9,7 @@ import com.pg.dal.model.ProdPackDO;
 import com.pg.dal.model.ProductDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.query.PackageQueryCondition;
+import com.pg.dal.query.ProdPackQueryCondition;
 import com.pg.dal.query.ProductQueryCondition;
 import com.pg.dal.query.PublishQueryCondition;
 import com.victor.framework.dal.basic.Paging;
@@ -111,13 +112,20 @@ public interface ProductManager {
 	 * @param prodPackDO
 	 */
 	void updateProdPack(ProdPackDO prodPackDO);
-	
+	void updateProdPackQuantityUnit(ProdPackDO prodPackDO);
 	/**
 	 * 删除产品包与产品的关系
 	 * @param id
 	 */
 	void deleteProdPack(Long id);
+	void deleteProdPack(ProdPackDO prodPackDO);
 	
+	/**
+	 * 根据查询条件获取
+	 * @param packageQueryCondition
+	 * @return
+	 */
+	List<ProdPackDO> getProdPackByCondition(ProdPackQueryCondition queryCondition);
 	/**
 	 * 发布一个商品/商品包
 	 * @param publishDO

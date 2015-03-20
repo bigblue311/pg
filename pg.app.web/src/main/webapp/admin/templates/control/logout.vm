@@ -8,8 +8,18 @@
 		#end	
 	#end 
 </div>
-<label style="padding-right:20px;">欢迎您[$!{loginedUser.name}]</label>
-<form method="post" id="changePwd_form" style="display:inline-block;">
+<ul id="js-news" class="js-hidden">
+    <li class="news-item"><a href="#">$!{crumbDesc}</a></li>
+</ul>
+<script type="text/javascript">
+	$(function () {
+	    $('#js-news').ticker({
+	    	titleText: '最新订单'
+	    });
+	});
+</script>
+<label style="padding-left:20px;padding-right:20px;position:relative;top:-4px;">欢迎您[$!{loginedUser.name}]</label>
+<form method="post" id="changePwd_form" style="display:inline-block;position:relative;top:-4px;">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="employeeAction"/>
 	<input type="hidden" name="event_submit_do_change_pwd" value="true"/>
@@ -17,7 +27,7 @@
 	<input type="hidden" name="$changePwdGroup.password.key" id="form_newPassword" value="">
 	<a class="auxiliary-text" id="changePwdLink" href="#" style="padding-right:10px;"><i class="icon-user"></i>修改密码</a>
 </form>
-<form method="post" id="logout_form" style="display:inline-block;">
+<form method="post" id="logout_form" style="display:inline-block;position:relative;top:-4px;">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="employeeAction"/>  
 	<input type="hidden" name="event_submit_do_logout" value="true"/>
