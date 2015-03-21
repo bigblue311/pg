@@ -7,6 +7,15 @@ import com.victor.framework.dal.basic.QueryCondition;
 
 public class CustomerQueryCondition extends QueryCondition {
 	
+	public CustomerQueryCondition setId(Long id) {
+		put("id",id);
+		return this;
+	}
+	
+	public Long getId(){
+		return getLong("id");
+	}
+	
 	public CustomerQueryCondition setName(String name) {
 		put("name",name);
 		return this;
@@ -16,15 +25,6 @@ public class CustomerQueryCondition extends QueryCondition {
 		return getString("name");
 	}
 	
-	public CustomerQueryCondition setPassword(String password) {
-		put("password",password);
-		return this;
-	}
-	
-	public String getPassword(){
-		return getString("password");
-	}
-	
 	public CustomerQueryCondition setMobile(String mobile) {
 		put("mobile",mobile);
 		return this;
@@ -32,6 +32,42 @@ public class CustomerQueryCondition extends QueryCondition {
 	
 	public String getMobile(){
 		return getString("mobile");
+	}
+	
+	public void setCreateStart(String createStart){
+		put("createStart",createStart);
+		setGmtCreateStart(StringToDate(createStart));
+	}
+	
+	public String getCreateStart(){
+		return getString("createStart");
+	}
+	
+	public void setCreateEnd(String createEnd){
+		put("createEnd",createEnd);
+		setGmtCreateEnd(StringToDate(createEnd));
+	}
+	
+	public String getCreateEnd(){
+		return getString("createEnd");
+	}
+
+	public CustomerQueryCondition setGmtCreateStart(Date from){
+		put("gmtCreateStart", DateTools.getDayBegin(from));
+		return this;
+	}
+	
+	public Date getGmtCreateStart(){
+		return getDate("gmtCreateStart");
+	}
+	
+	public CustomerQueryCondition setGmtCreateEnd(Date to){
+		put("gmtCreateEnd", DateTools.getDayEnd(to));
+		return this;
+	}
+	
+	public Date getGmtCreateEnd(){
+		return getDate("gmtCreateEnd");
 	}
 	
 	@Override

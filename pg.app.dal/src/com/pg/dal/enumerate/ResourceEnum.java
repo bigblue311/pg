@@ -21,12 +21,12 @@ public enum ResourceEnum {
 	产品打包(9l,"/admin/package","产品打包","将多个产品定义为一个产品包",SubMenuEnum.产品打包,true),
 	商品包关系(10l,"/admin/prodpack","商品包关系","产品与产品包的包含关系",SubMenuEnum.产品打包,true),
 	客户查询(11l,"/admin/customer","客户查询","查看目前拥有的客户",SubMenuEnum.客户查询,true),
-	我的仓库(12l,"/admin/my_warehouse","我的仓库","管理我所拥有的发货仓库",SubMenuEnum.我的仓库,true),
+	我的仓库(12l,"/admin/mywarehouse","我的仓库","管理我所拥有的发货仓库",SubMenuEnum.我的仓库,true),
 	客户仓库(13l,"/admin/warehouse","客户仓库","管理客户的发货仓库/地址",SubMenuEnum.客户仓库,true),
 	商品发布(14l,"/admin/publish","商品发布","将事先定义好的商品或者商品包发布到上架",SubMenuEnum.商品发布,true),
 	订单管理(15l,"/admin/order","订单管理","查询订单列表",SubMenuEnum.订单管理,true),
-	订单详情(16l,"/admin/order_detail","订单详情","查看/修改订单详情",SubMenuEnum.订单管理,true),
-	出货单(17l,"/admin/order_print","出货单","打印出货单",SubMenuEnum.订单管理,true);
+	订单详情(16l,"/admin/orderdetail","订单详情","查看/修改订单详情",SubMenuEnum.订单管理,true),
+	出货单(17l,"/admin/orderprint","出货单","打印出货单",SubMenuEnum.订单管理,true);
 	
 	private ResourceEnum(Long code,String resource,String name,String desc, SubMenuEnum subMenu, Boolean loginRequired){
 		this.code = code;

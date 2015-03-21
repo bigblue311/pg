@@ -16,6 +16,42 @@ public class WarehouseQueryCondition extends QueryCondition {
 		return getString("name");
 	}
 	
+	public WarehouseQueryCondition setAddress(String address){
+		put("address",address);
+		return this;
+	}
+	
+	public String getAddress(){
+		return getString("address");
+	}
+	
+	public WarehouseQueryCondition setKeeper(String keeper){
+		put("keeper",keeper);
+		return this;
+	}
+	
+	public String getKeeper(){
+		return getString("keeper");
+	}
+	
+	public WarehouseQueryCondition setMobile(String mobile){
+		put("mobile",mobile);
+		return this;
+	}
+	
+	public String getMobile(){
+		return getString("mobile");
+	}
+	
+	public WarehouseQueryCondition setPhone(String phone){
+		put("phone",phone);
+		return this;
+	}
+	
+	public String getPhone(){
+		return getString("phone");
+	}
+	
 	public WarehouseQueryCondition setCustomerId(Long customerId) {
 		put("customerId",customerId);
 		return this;
@@ -32,6 +68,33 @@ public class WarehouseQueryCondition extends QueryCondition {
 	
 	public Boolean getSystem(){
 		return getBoolean("system");
+	}
+	
+	public WarehouseQueryCondition setProvince(String province){
+		put("province",province);
+		return this;
+	}
+	
+	public String getProvince(){
+		return getString("province");
+	}
+	
+	public WarehouseQueryCondition setCity(String city){
+		put("city",city);
+		return this;
+	}
+	
+	public String getCity(){
+		return getString("city");
+	}
+	
+	public WarehouseQueryCondition setTown(String town){
+		put("town",town);
+		return this;
+	}
+	
+	public String getTown(){
+		return getString("town");
 	}
 	
 	@Override

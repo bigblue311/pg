@@ -114,5 +114,25 @@
 			<field name="quantitys" displayName="数量" />
 			<field name="units" displayName="单位" />
 		</group>
+		
+		<group name="customer" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="名称" />
+			<field name="mobile" displayName="电话" />
+		</group>
+		
+		<group name="warehouse" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="name" displayName="名称" />
+			<field name="address" displayName="地址" />
+			<field name="keeper" displayName="联系人" />
+			<field name="mobile" displayName="手机" />
+			<field name="phone" displayName="电话" />
+			<field name="customerId" displayName="客户ID" />
+			<field name="comment" displayName="备注" />
+			<field name="province" displayName="省" />
+			<field name="city" displayName="市" />
+			<field name="town" displayName="区" />
+		</group>
 	</services:form>
 </beans:beans>

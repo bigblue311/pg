@@ -19,6 +19,9 @@
     <result property="customerId" column="customer_id"/>
     <result property="comment" column="comment"/>
     <result property="name" column="name"/>
+    <result property="province" column="province"/>
+    <result property="city" column="city"/>
+    <result property="town" column="town"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Warehouse">
@@ -32,11 +35,14 @@
       phone,
       customer_id,
       comment,
-      name
+      name,
+      province,
+      city,
+      town
     ) values (
       now(), now(),
       #address#, #keeper#, #mobile#, #phone#, #customerId#,
-      #comment#, #name#
+      #comment#, #name#, #province#, #city#, #town#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -82,6 +88,21 @@
            name = #name#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="province">  
+         <![CDATA[   
+           province = #province#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="city">  
+         <![CDATA[   
+           city = #city#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="town">  
+         <![CDATA[   
+           town = #town#,
+         ]]> 
+      </isNotEmpty>
     </dynamic>
     	gmt_modify = now()
     where
@@ -108,15 +129,55 @@
         	name like concat('%',#name#,'%')
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="address" prepend="and">
+        	<![CDATA[ 
+        	address like concat('%',#address#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="keeper" prepend="and">
+        	<![CDATA[ 
+        	keeper like concat('%',#keeper#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="mobile" prepend="and">
+        	<![CDATA[ 
+        	mobile like concat('%',#mobile#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="phone" prepend="and">
+        	<![CDATA[ 
+        	phone like concat('%',#phone#,'%')
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="customerId" prepend="and">
         	<![CDATA[ 
         	customer_id = #customerId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="province" prepend="and">
+        	<![CDATA[ 
+        	province = #province#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="city" prepend="and">
+        	<![CDATA[ 
+        	city = #city#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="town" prepend="and">
+        	<![CDATA[ 
+        	town = #town#
+        	]]>
+	    </isNotEmpty>
 	    <isNotNull property="system">
 	    	<isEqual property="system" compareValue="true" prepend="and">
 	    		<![CDATA[ 
-	        	customer_id is null
+	        	customer_id = 0
+	        	]]>
+	    	</isEqual>
+	    	<isEqual property="system" compareValue="false" prepend="and">
+	    		<![CDATA[ 
+	        	customer_id != 0
 	        	]]>
 	    	</isEqual>
 	    </isNotNull>
@@ -125,10 +186,26 @@
   </sql>
   
   <sql id="validate">
+  	<isNull property="name">
+  	<isNull property="address">
+  	<isNull property="keeper">
+  	<isNull property="mobile">
+  	<isNull property="phone">
   	<isNull property="customerId">
+  	<isNull property="province">
+  	<isNull property="city">
+  	<isNull property="town">
   	<isNull property="system">
         <include refid="Common.validModify" />
     </isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
 	</isNull>
   </sql>
   

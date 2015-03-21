@@ -17,6 +17,9 @@ public class WarehouseManagerImpl implements WarehouseManager{
 	
 	@Override
 	public void create(WarehouseDO warehouseDO) {
+		if(warehouseDO.getCustomerId() == null){
+			warehouseDO.setCustomerId(0l);
+		}
 		warehouseDAO.insert(warehouseDO);
 	}
 

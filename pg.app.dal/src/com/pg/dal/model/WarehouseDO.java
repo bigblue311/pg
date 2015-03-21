@@ -24,6 +24,9 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	private String phone;	//联系电话
 	private Long customerId;//客户ID
 	private String comment;	//备注
+	private String province;//省
+	private String city;	//市
+	private String town;	//区
 	
 	public String getName() {
 		return name;
@@ -66,6 +69,24 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
 	}
 	public WarehouseQueryCondition toQueryCondition(){
 		WarehouseQueryCondition queryCondition = new WarehouseQueryCondition();

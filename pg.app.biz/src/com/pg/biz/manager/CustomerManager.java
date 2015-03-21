@@ -1,7 +1,11 @@
 package com.pg.biz.manager;
 
+import java.util.List;
+
 import com.pg.dal.model.CustomerDO;
+import com.pg.dal.query.CustomerQueryCondition;
 import com.victor.framework.common.shared.Result;
+import com.victor.framework.dal.basic.Paging;
 
 public interface CustomerManager {
 	
@@ -38,4 +42,18 @@ public interface CustomerManager {
 	 * @return
 	 */
 	Boolean checkExist(String mobile);
+	
+	/**
+	 * 根据查询条件获取
+	 * @param queryCondition
+	 * @return
+	 */
+	List<CustomerDO> getByCondition(CustomerQueryCondition queryCondition);
+	
+	/**
+	 * 获取分页数据
+	 * @param queryCondition
+	 * @return
+	 */
+	Paging<CustomerDO> getPage(CustomerQueryCondition queryCondition);
 }

@@ -25,6 +25,13 @@ public interface CustomerDAO {
 	 * @return
 	 */
 	CustomerDO getById(Long id);
+	
+	/**
+	 * 根据用户名和密码获取
+	 * @param customerDO
+	 * @return
+	 */
+	CustomerDO login(String mobile, String password);
 
 	/**
 	 * 根据查询条件获取

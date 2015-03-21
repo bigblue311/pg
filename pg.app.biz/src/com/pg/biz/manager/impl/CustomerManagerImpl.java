@@ -12,6 +12,7 @@ import com.victor.framework.common.shared.Result;
 import com.victor.framework.common.tools.LogTools;
 import com.victor.framework.common.tools.MD5;
 import com.victor.framework.common.tools.StringTools;
+import com.victor.framework.dal.basic.Paging;
 
 public class CustomerManagerImpl implements CustomerManager{
 
@@ -40,17 +41,12 @@ public class CustomerManagerImpl implements CustomerManager{
 		if(StringTools.isAnyEmpty(mobile,password)){
 			return Result.newInstance(null, "用户名或密码为空", false);
 		}
-		CustomerQueryCondition queryCondition = new CustomerQueryCondition();
-		queryCondition.setMobile(mobile).setPassword(MD5.getMD5(password));
-		List<CustomerDO> list = customerDAO.getByCondition(queryCondition);
-		if(list.isEmpty() || list.size() == 0){
+		password = MD5.getMD5(password);
+		CustomerDO customerDO = customerDAO.login(mobile, password);
+		if(customerDO == null){
 			return Result.newInstance(null, "用户名不存在或密码错误", false);
 		}
-		if(list.size() > 1){
-			logger.error("账号异常,发现多个相同的账号:"+mobile);
-			return Result.newInstance(null, "账号异常", false);
-		}
-		return Result.newInstance(list.get(0), "登录成功", true);
+		return Result.newInstance(customerDO, "登录成功", true);
 	}
 
 	@Override
@@ -59,5 +55,20 @@ public class CustomerManagerImpl implements CustomerManager{
 		queryCondition.setMobile(mobile);
 		List<CustomerDO> list = customerDAO.getByCondition(queryCondition);
 		return !list.isEmpty();
+	}
+
+	@Override
+	public List<CustomerDO> getByCondition(CustomerQueryCondition queryCondition) {
+		return customerDAO.getByCondition(queryCondition);
+	}
+
+	@Override
+	public Paging<CustomerDO> getPage(CustomerQueryCondition queryCondition) {
+		int totalSize = customerDAO.getCount(queryCondition);
+		@SuppressWarnings("unchecked")
+		Paging<CustomerDO> page = queryCondition.getPaging(totalSize, 5);
+		List<CustomerDO> list = customerDAO.getPage(queryCondition);
+		page.setData(list);
+		return page;
 	}
 }

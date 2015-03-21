@@ -10,4 +10,12 @@ public class CustomerDAOImpl extends EntityDAO<CustomerDO,CustomerQueryCondition
 	public CustomerDAOImpl() {
 		super(CustomerDO.class.getSimpleName());
 	}
+
+	@Override
+	public CustomerDO login(String mobile, String password) {
+		CustomerDO customerDO = new CustomerDO();
+		customerDO.setMobile(mobile);
+		customerDO.setPassword(password);
+		return super.queryForEntity("login", customerDO);
+	}
 }
