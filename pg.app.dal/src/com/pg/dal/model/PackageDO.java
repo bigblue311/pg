@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.pg.dal.enumerate.EnableEnum;
 import com.pg.dal.query.PackageQueryCondition;
+import com.victor.framework.annotation.EnumValue;
 import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.EntityDO;
 
@@ -18,6 +19,8 @@ public class PackageDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4950264146722336203L;
+	
+	@EnumValue
 	private String name;		//名称
 	private String title;		//标题
 	private String code;		//编号

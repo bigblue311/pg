@@ -1,6 +1,7 @@
 package com.pg.biz.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.WarehouseQueryCondition;
@@ -39,6 +40,12 @@ public interface WarehouseManager {
 	 * @return
 	 */
 	List<WarehouseDO> getByCustomerId(Long customerId);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getEnumMap(Long customerId);
 	
 	/**
 	 * 根据查询条件获取

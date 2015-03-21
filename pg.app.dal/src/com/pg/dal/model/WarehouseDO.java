@@ -3,6 +3,7 @@ package com.pg.dal.model;
 import java.io.Serializable;
 
 import com.pg.dal.query.WarehouseQueryCondition;
+import com.victor.framework.annotation.EnumValue;
 import com.victor.framework.dal.basic.EntityDO;
 
 /**
@@ -17,6 +18,7 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	 */
 	private static final long serialVersionUID = -690583555143238541L;
 	
+	@EnumValue
 	private String name;	//名称
 	private String address;	//地址
 	private String keeper;	//收件人

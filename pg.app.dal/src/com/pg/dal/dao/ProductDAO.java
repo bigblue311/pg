@@ -1,6 +1,7 @@
 package com.pg.dal.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.ProductDO;
 import com.pg.dal.query.ProductQueryCondition;
@@ -18,6 +19,12 @@ public interface ProductDAO {
 	 * @param ProductDO
 	 */
 	Boolean update(ProductDO ProductDO);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getEnumMap();
 	
 	/**
 	 * 软删除

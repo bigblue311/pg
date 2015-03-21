@@ -1,0 +1,562 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<div class="doc-content">
+	<form action="$admin.setTarget('publish.vm')" class="form-horizontal well" id="queryForm">
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">仓库：</label>
+				<div class="controls">
+					<select name="warehouseId">
+						<option selected value="">全部</option>
+						#foreach($warehouse in $warehouseEnum)
+						<option 
+							#if($!query.warehouseId)
+								#if($!query.warehouseId==$!warehouse.key)
+									selected
+								#end
+							#end 
+							value="$!warehouse.key">$!warehouse.value</option>
+						#end
+					</select>
+					<input type="hidden" name="page" id="page" value="$query.page">
+				</div>
+				<label class="control-label">产品(包)：</label>
+				<div class="controls">
+					<select id="q_prodType" name="prodType">
+						<option selected value="">全部</option>
+						#foreach($prodType in $prodTypeEnum)
+						<option 
+							#if($!query.prodType)
+								#if($!query.prodType==$!prodType.code)
+									selected
+								#end
+							#end 
+							value="$!prodType.code">$!prodType.desc</option>
+						#end
+					</select>
+					<select id="q_extendId" name="extendId">
+						<option selected value="">全部</option>
+						#if($!query.prodType)
+							#if($!query.prodType=='0')
+								#foreach($product in $productEnum)
+								<option 
+									#if($!query.extendId)
+										#if($!query.extendId==$!product.key)
+											selected
+										#end
+									#end 
+									value="$!product.key">$!product.value</option>
+								#end
+							#end
+							#if($!query.prodType=='1')
+								#foreach($package in $packageEnum)
+								<option 
+									#if($!query.extendId)
+										#if($!query.extendId==$!package.key)
+											selected
+										#end
+									#end 
+									value="$!package.key">$!package.value</option>
+								#end
+							#end
+						#end
+					</select>
+					<input type="text" class="control-text" name="extendCode" value="$query.extendCode" placeholder="产品编码">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">有(无)效：</label>
+				<div class="controls">
+					<select name="valid">
+						<option selected value="">全部</option>
+						#foreach($enable in $enableEnum)
+						<option 
+							#if($!query.valid)
+								#if($!query.valid==$!enable.code)
+									selected
+								#end
+							#end 
+							value="$!enable.code">$!enable.desc</option>
+						#end
+					</select>
+				</div>
+				<label class="control-label">发布时间：</label>
+				<div class="controls">
+					<input type="text" class="calendar" name="createStart" id="createStart" value="$!query.createStart">
+					至
+					<input type="text" class="calendar" name="createEnd" id="createEnd" value="$!query.createEnd">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-actions offset3">
+				<button class="button button-primary"><i class="icon-search icon-white"></i>搜索</button>
+				<button type="reset" class="button"><i class="icon-repeat"></i>重置</button>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript">
+		var Calendar = BUI.Calendar;
+		
+		var createStart = new Calendar.DatePicker({
+		  	trigger:'#createStart',
+		  	selectedDate : new Date(),
+		  	autoRender : true
+		});
+		
+		var createEnd = new Calendar.DatePicker({
+			trigger:'#createEnd',
+			selectedDate : new Date(),
+			autoRender : true
+		});
+		
+		jQuery(function(){
+			jQuery("#q_prodType").change(function(){
+				var prodType = jQuery(this).val();
+				jQuery("#q_extendId").empty();
+				jQuery("#q_extendId").append(createOption('','全部'));
+				if(prodType == '0'){
+					#foreach($product in $productEnum)
+						jQuery("#q_extendId").append(createOption('$product.key','$product.value'));
+					#end
+				}
+				if(prodType == '1'){
+					#foreach($package in $packageEnum)
+						jQuery("#q_extendId").append(createOption('$package.key','$package.value'));
+					#end
+				}
+			});
+		});
+		
+		function createOption(key, value){
+			return '<option value="'+key+'">'+value+'</option>';
+		}
+	</script>
+</div>
+<div id="grid"></div>
+$control.setTemplate("paging.vm")
+#set ($group = $form.publish.defaultInstance)
+<div id="editor" style="display:none">
+  <form action="$admin.setTarget('publish.vm')" method="post" id="actionFrom">
+  	$csrfToken.hiddenField
+  	<input type="hidden" id="action" name="action" value="publishAction"/>  
+	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
+	<input type="hidden" id="id" name="$group.id.key" value=""/>
+    <div class="row">
+      <div class="control-group">
+        <label class="control-label"><s>*</s>单价：</label>
+        <div class="controls">
+          <input type="text" id="price" name="$group.price.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" >
+        </div>
+        <label class="control-label"><s>*</s>单位：</label>
+		<div class="controls">
+			<input type="text" id="unit" name="$group.unit.key" class="input-normal control-text"
+			data-rules="{required:true}" data-messages="{required:'请输入单位'}">
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+		<label class="control-label"><s>*</s>库存：</label>
+		<div class="controls">
+			<input type="text" id="balance" name="$group.balance.key" class="input-normal control-text"
+			data-rules="{required:true,regexp:/^//d+$/}" data-messages="{required:'请输入库存',regexp:'必须为非负整数'}">
+		</div>
+		<label class="control-label"><s>*</s>最小预定量：</label>
+		<div class="controls">
+			<input type="text" id="limitBuy" name="$group.limitBuy.key" class="input-normal control-text"
+			data-rules="{required:true,regexp:/^//d+$/}" data-messages="{required:'请输入最小预定量',regexp:'必须为非负整数'}">
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+		<label class="control-label"><s>*</s>产品类型：</label>
+		<div class="controls">
+			<select id="prodType" name="$group.prodType.key">
+				#foreach($prodType in $prodTypeEnum)
+				<option value="$!prodType.code">$!prodType.desc</option>
+				#end
+			</select>
+		</div>
+		<label class="control-label"><s>*</s>产品(包)：</label>
+		<div class="controls">
+			<select id="extendId" name="$group.extendId.key">
+				#foreach($product in $productEnum)
+				<option value="$!product.key">$!product.value</option>
+				#end
+			</select>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+		<label class="control-label">仓库：</label>
+		<div class="controls">
+			<select id="warehouseId" name="$group.warehouseId.key">
+				<option selected value="">不限</option>
+				#foreach($warehouse in $warehouseEnum)
+				<option value="$!warehouse.key">$!warehouse.value</option>
+				#end
+			</select>
+		</div>
+		<label class="control-label"><s>*</s>是否有效：</label>
+        <div class="controls">
+          <select id="enable" name="$group.enable.key">
+				#foreach($enable in $enableEnum)
+				<option value="$!enable.code">$!enable.desc</option>
+				#end
+		  </select>
+        </div>
+      </div>
+    </div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">销售时间：</label>
+		<div class="controls">
+			<input type="text" class="calendar" name="$group.gmtValidFrom.key" id="validFrom">
+			至
+			<input type="text" class="calendar" name="$group.gmtValidTo.key" id="validTo">
+		</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="control-group">
+        <label class="control-label">备注：</label>
+        <div class="controls control-row4">
+          <textarea id="description" name="$group.description.key" class="input-large"></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+      var Grid = BUI.Grid,
+      Data = BUI.Data;
+      var Grid = Grid,
+      Store = Data.Store,
+      columns = [
+		{
+			title : 'id',
+			dataIndex : 'id',
+			visible: false
+		},{
+            title : '类型',
+            elCls: 'left',
+            dataIndex :'prodType',
+            renderer : function(val,obj,index){
+            	var prodType = obj.prodType;
+            	if(prodType == '0') return '产品';
+            	if(prodType == '1') return '产品包';
+            	return "未知";
+            },
+		    width:'10%'
+        },{
+            title : '产品(包)',
+            elCls: 'left',
+            dataIndex :'extendCode',
+            renderer : function(val,obj,index){
+            	var prodType = obj.prodType;
+            	var extendCode = obj.extendCode;
+            	var name = "";
+            	if(prodType == '0'){
+            		#foreach($product in $productEnum)
+            			if('$product.key' == obj.extendId){
+            				return '['+extendCode+']$product.value';
+            			}
+            		#end
+            	}
+				if(prodType == '1'){
+					#foreach($package in $packagetEnum)
+        				if('$package.key' == obj.extendId){
+        					return '['+extendCode+']$package.value';
+        				}
+        			#end
+            	}
+				return '['+extendCode+']';
+            },
+		    width:'15%'
+        },{
+            title : '单价',
+            elCls: 'left',
+            dataIndex :'price',
+            renderer: function (val,obj,index){
+            	return obj.price+"元每"+obj.unit+ " 最少预定"+obj.limitBuy+obj.unit;
+            },
+            width:'15%'
+        },{
+            title : '库存',
+            elCls: 'left',
+            dataIndex :'balance',
+            renderer: function (val,obj,index){
+            	#foreach($warehouse in $warehouseEnum)
+            		if(obj.warehouseId == '$!warehouse.key'){
+            			return '$!warehouse.value '+ obj.balance+" "+obj.unit;
+            		}
+				#end
+            	return obj.balance+" "+obj.unit;
+            },
+            width:'15%'
+        },{
+            title : '开始时间',
+            elCls: 'left',
+            dataIndex :'validFrom',
+            renderer:BUI.Grid.Format.datetimeRenderer,
+            width:'15%'
+        },{
+            title : '结束时间',
+            elCls: 'left',
+            dataIndex :'validTo',
+            renderer:BUI.Grid.Format.datetimeRenderer,
+            width:'15%'
+        },{
+            title : '是否有效',
+            elCls: 'left',
+            dataIndex :'enable',
+            renderer : function (val,obj,index){
+            	var valid = obj.valid;
+            	if(valid){
+            		return '<label style="color:green">有效</label>';
+            	} else {
+            		return '<label style="color:red">无效</label>';
+            	}
+            },
+            width:'5%'
+        },{
+			title : '操作',
+			elCls: 'center',
+			dataIndex : 'oper',
+			renderer : function(val,obj,index) {
+				var edit = '<span class="grid-command btn-edit">编辑</span>';
+				var del = '<span class="grid-command btn-del">删除</span>';
+				return edit+del;
+			},
+	        width:'10%'
+		}],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+      var store = new Store({
+        data : data
+      }),
+      cascade = new Grid.Plugins.Cascade({
+		    renderer : function(record){
+			    return '<div><p>&nbsp;描述：' + record.description + '</p></div>';
+		    }
+	  }),
+      grid = new Grid.Grid({
+        render:'#grid',
+        width:'100%',//这个属性一定要设置
+        columns : columns,
+        bbar : {
+        	items : [
+			{
+				btnCls : 'button button-small btn-add',
+				text : '<i class="icon-plus"></i>添加',
+				listeners : {
+					'click' : addFunction
+				}
+			}
+			]
+        },
+        plugins : [cascade],
+        store : store
+      });
+
+    grid.render();
+    
+	//创建编辑器
+    var editor = new BUI.Editor.DialogEditor({ 
+        contentId:'editor',
+        width : 600,
+        mask : true,
+        title : '商品发布',
+        form : {
+          srcNode : '#actionFrom'
+        },
+        success : function(){
+          this.accept();
+          jQuery("#actionFrom").submit();
+        }
+      });
+
+    editor.render();
+	
+	function addFunction(){
+		editor.show();
+		clearRecord('event_submit_do_update');
+	}
+	
+	jQuery(".btn-edit").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
+		editor.show();
+		bindRecord('event_submit_do_update');
+	});
+	
+	jQuery(".btn-del").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
+		BUI.Message.Confirm("确定删除该商品吗?", function() {
+			bindRecord('event_submit_do_delete');
+			jQuery("#actionFrom").submit();
+		}, 'question');
+	});
+	
+	function bindRecord(event){
+		copyCsrf();
+		var selections = grid.getSelection();
+    	var record = selections[0];
+    	var option = "";
+		
+    	var id = record.id;
+    	var price = record.price;
+    	var unit = record.unit;
+    	var balance = record.balance;
+    	var warehouseId = record.warehouseId;
+    	var description = record.description;
+    	var prodType = record.prodType;
+    	var extendId = record.extendId;
+    	var limitBuy = record.limitBuy;
+    	var validFrom = record.validFrom;
+    	var validTo = record.validTo;
+    	var enable = record.enable;
+
+    	jQuery("#id").val(id);
+    	jQuery("#action").val('publishAction');
+    	jQuery("#price").val(price);
+    	jQuery("#unit").val(unit);
+    	jQuery("#balance").val(balance);
+
+    	jQuery("#warehouseId").empty();
+    	#foreach($warehouse in $warehouseEnum)
+    		option = "<option ";
+			if(warehouseId == '$!warehouse.key'){
+				option += "selected";
+			}
+			option += " value='$!warehouse.key'>$!warehouse.value</option>";
+			jQuery("#warehouseId").append(option);
+		#end
+		
+    	jQuery("#description").val(description);
+		
+		jQuery("#prodType").empty();
+		#foreach($prodType in $prodTypeEnum)
+    		option = "<option ";
+			if(prodType == '$!prodType.code'){
+				option += "selected";
+			}
+			option += " value='$!prodType.code'>$!prodType.desc</option>";
+			jQuery("#prodType").append(option);
+		#end
+		
+		jQuery("#extendId").empty();
+		if(prodType == '0'){
+			#foreach($product in $productEnum)
+	    		option = "<option ";
+				if(extendId == '$!product.key'){
+					option += "selected";
+				}
+				option += " value='$!product.key'>$!product.value</option>";
+				jQuery("#extendId").append(option);
+			#end
+		}
+		if(prodType == '1'){
+			#foreach($package in $packageEnum)
+	    		option = "<option ";
+				if(extendId == '$!package.key'){
+					option += "selected";
+				}
+				option += " value='$!package.key'>$!package.value</option>";
+				jQuery("#extendId").append(option);
+			#end	
+		}
+		
+    	jQuery("#limitBuy").val(limitBuy);
+    	
+    	var validFromPicker = new Calendar.DatePicker({
+    	  	trigger:'#validFrom',
+    	  	selectedDate : new Date(),
+    	  	autoRender : true
+    	});
+    	
+    	var validToPicker = new Calendar.DatePicker({
+    		trigger:'#validTo',
+    		selectedDate : new Date(),
+    		autoRender : true
+    	});
+    	
+    	jQuery("#validFrom").val(validFrom.toDate().Format("yyyy-MM-dd"));
+    	jQuery("#validTo").val(validTo.toDate().Format("yyyy-MM-dd"));
+    	
+    	jQuery("#enable").empty();
+		#foreach($enable in $enableEnum)
+    		option = "<option ";
+			if(enable == '$!enable.code'){
+				option += "selected";
+			}
+			option += " value='$!enable.code'>$!enable.desc</option>";
+			jQuery("#enable").append(option);
+		#end
+		
+		jQuery("#prodType").change(function(){
+			var prodType = jQuery(this).val();
+			jQuery("#extendId").empty();
+			if(prodType == '0'){
+				#foreach($product in $productEnum)
+					jQuery("#extendId").append(createOption('$product.key','$product.value'));
+				#end
+			}
+			if(prodType == '1'){
+				#foreach($package in $packageEnum)
+					jQuery("#extendId").append(createOption('$package.key','$package.value'));
+				#end
+			}
+		});
+    	
+    	jQuery("#event").attr("name",event);
+    	jQuery("#event").val(true);
+    }
+	
+	function clearRecord(event){
+		copyCsrf();
+		jQuery("#prodType").change(function(){
+			var prodType = jQuery(this).val();
+			jQuery("#extendId").empty();
+			if(prodType == '0'){
+				#foreach($product in $productEnum)
+					jQuery("#extendId").append(createOption('$product.key','$product.value'));
+				#end
+			}
+			if(prodType == '1'){
+				#foreach($package in $packageEnum)
+					jQuery("#extendId").append(createOption('$package.key','$package.value'));
+				#end
+			}
+		});
+		var validFromPicker = new Calendar.DatePicker({
+    	  	trigger:'#validFrom',
+    	  	selectedDate : new Date(),
+    	  	autoRender : true
+    	});
+    	
+    	var validToPicker = new Calendar.DatePicker({
+    		trigger:'#validTo',
+    		selectedDate : new Date(),
+    		autoRender : true
+    	});
+    	jQuery("#action").val('publishAction');
+    	jQuery("#event").attr("name",event);
+    	jQuery("#event").val(true);
+    }
+	
+	function copyCsrf(){
+		var csrf = jQuery("input[name='_csrf_token']").val();
+		jQuery("input[name='_csrf_token']").each(function(){
+			jQuery(this).val(csrf);
+		});
+	}
+</script>

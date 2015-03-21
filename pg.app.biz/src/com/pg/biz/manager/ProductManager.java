@@ -1,6 +1,7 @@
 package com.pg.biz.manager;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.biz.model.PackageVO;
 import com.pg.biz.model.ProductVO;
@@ -39,6 +40,12 @@ public interface ProductManager {
 	 * @return
 	 */
 	ProductDO getProductById(Long id);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getProductEnumMap();
 	
 	/**
 	 * 根据PackageId获取
@@ -86,6 +93,12 @@ public interface ProductManager {
 	 * @return
 	 */
 	PackageDO getPackageById(Long id);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getPackageEnumMap();
 	
 	/**
 	 * 根据查询条件获取
@@ -149,6 +162,7 @@ public interface ProductManager {
 	 * @param publishQueryCondition
 	 * @return
 	 */
+	Paging<PublishDO> getPublishPage(PublishQueryCondition queryCondition);
 	Paging<ProductVO> getProductVOPage(PublishQueryCondition queryCondition);
 	Paging<PackageVO> getPackageVOPage(PublishQueryCondition queryCondition);
 }

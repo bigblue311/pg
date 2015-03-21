@@ -1,6 +1,7 @@
 package com.pg.dal.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.WarehouseQueryCondition;
@@ -19,6 +20,12 @@ public interface WarehouseDAO {
 	 */
 	Boolean update(WarehouseDO warehouseDO);
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getEnumMap(Long customerId);
 	/**
 	 * 根据ID获取
 	 * @param id

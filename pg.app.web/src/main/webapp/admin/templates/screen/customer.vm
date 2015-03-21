@@ -28,19 +28,7 @@
 			</div>
 		</div>
 	</form>
-</div>
-<div id="grid"></div>
-$control.setTemplate("paging.vm")
-#set ($group = $form.customer.defaultInstance)
-<form action="$admin.setTarget('customer.vm')" method="post" id="actionFrom">
-	$csrfToken.hiddenField
-	<input type="hidden" name="action" value="customerAction"/>  
-	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
-	<input type="hidden" id="id" name="$group.id.key" value=""/>
-	<input type="hidden" id="name" name="$group.name.key" value=""/>
-	<input type="hidden" id="mobile" name="$group.mobile.key" value=""/>
-</form>
-<script type="text/javascript">
+	<script type="text/javascript">
 		var Calendar = BUI.Calendar;
 		
 		var createStart = new Calendar.DatePicker({
@@ -54,7 +42,20 @@ $control.setTemplate("paging.vm")
 			  selectedDate : new Date(),
 			  autoRender : true
 		});
-	
+	</script>
+</div>
+<div id="grid"></div>
+$control.setTemplate("paging.vm")
+#set ($group = $form.customer.defaultInstance)
+<form action="$admin.setTarget('customer.vm')" method="post" id="actionFrom">
+	$csrfToken.hiddenField
+	<input type="hidden" name="action" value="customerAction"/>  
+	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
+	<input type="hidden" id="id" name="$group.id.key" value=""/>
+	<input type="hidden" id="name" name="$group.name.key" value=""/>
+	<input type="hidden" id="mobile" name="$group.mobile.key" value=""/>
+</form>
+<script type="text/javascript">
       var Grid = BUI.Grid,
       Data = BUI.Data;
       var Grid = Grid,

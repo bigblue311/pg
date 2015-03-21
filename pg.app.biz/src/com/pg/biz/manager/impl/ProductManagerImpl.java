@@ -1,6 +1,7 @@
 package com.pg.biz.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -274,5 +275,25 @@ public class ProductManagerImpl implements ProductManager{
 			return packageVO;
 		}
 		return null;
+	}
+
+	@Override
+	public Map<String, String> getProductEnumMap() {
+		return productDAO.getEnumMap();
+	}
+
+	@Override
+	public Map<String, String> getPackageEnumMap() {
+		return packageDAO.getEnumMap();
+	}
+
+	@Override
+	public Paging<PublishDO> getPublishPage(PublishQueryCondition queryCondition) {
+		int totalSize = publishDAO.getCount(queryCondition);
+		@SuppressWarnings("unchecked")
+		Paging<PublishDO> page = queryCondition.getPaging(totalSize, 5);
+		List<PublishDO> publishList = publishDAO.getPage(queryCondition);
+		page.setData(publishList);
+		return page;
 	}
 }

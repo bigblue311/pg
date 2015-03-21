@@ -228,11 +228,17 @@ $control.setTemplate("paging.vm")
 	}
 	
 	jQuery(".btn-edit").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
 		editor.show();
 		bindRecord('event_submit_do_update');
 	});
 	
 	jQuery(".btn-del").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
 		BUI.Message.Confirm("确定删除该仓库吗?", function() {
 			bindRecord('event_submit_do_delete');
 			jQuery("#actionFrom").submit();

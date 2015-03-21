@@ -134,5 +134,20 @@
 			<field name="city" displayName="市" />
 			<field name="town" displayName="区" />
 		</group>
+		
+		<group name="publish" extends="csrfCheck">
+			<field name="id" displayName="ID" />
+			<field name="price" displayName="价格" />
+			<field name="unit" displayName="单位" />
+			<field name="balance" displayName="库存" />
+			<field name="warehouseId" displayName="仓库ID" />
+			<field name="description" displayName="描述" />
+			<field name="prodType" displayName="外部类型" />
+			<field name="extendId" displayName="外部ID" />
+			<field name="limitBuy" displayName="最小预定量" />
+			<field name="gmtValidFrom" displayName="有效期开始" />
+			<field name="gmtValidTo" displayName="有效期结束" />
+			<field name="enable" displayName="是否有效" />
+		</group>
 	</services:form>
 </beans:beans>

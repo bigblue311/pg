@@ -1,6 +1,7 @@
 package com.pg.biz.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -58,6 +59,11 @@ public class WarehouseManagerImpl implements WarehouseManager{
 		List<WarehouseDO> list = warehouseDAO.getPage(queryCondition);
 		page.setData(list);
 		return page;
+	}
+
+	@Override
+	public Map<String, String> getEnumMap(Long customerId) {
+		return warehouseDAO.getEnumMap(customerId);
 	}
 
 }
