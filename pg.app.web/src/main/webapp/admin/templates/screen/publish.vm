@@ -163,12 +163,12 @@ $control.setTemplate("paging.vm")
 		<label class="control-label"><s>*</s>库存：</label>
 		<div class="controls">
 			<input type="text" id="balance" name="$group.balance.key" class="input-normal control-text"
-			data-rules="{required:true,regexp:/^//d+$/}" data-messages="{required:'请输入库存',regexp:'必须为非负整数'}">
+			data-rules="{required:true,regexp:/^[1-9]\d*|0$/}" data-messages="{required:'请输入库存',regexp:'必须为非负整数'}">
 		</div>
 		<label class="control-label"><s>*</s>最小预定量：</label>
 		<div class="controls">
 			<input type="text" id="limitBuy" name="$group.limitBuy.key" class="input-normal control-text"
-			data-rules="{required:true,regexp:/^//d+$/}" data-messages="{required:'请输入最小预定量',regexp:'必须为非负整数'}">
+			data-rules="{required:true,regexp:/^[1-9]\d*|0$/}" data-messages="{required:'请输入最小预定量',regexp:'必须为非负整数'}">
 		</div>
 	  </div>
 	</div>
@@ -234,6 +234,18 @@ $control.setTemplate("paging.vm")
   </form>
 </div>
 <script type="text/javascript">
+	var validFromPicker = new Calendar.DatePicker({
+	  	trigger:'#validFrom',
+	  	selectedDate : new Date(),
+	  	autoRender : true
+	});
+	
+	var validToPicker = new Calendar.DatePicker({
+		trigger:'#validTo',
+		selectedDate : new Date(),
+		autoRender : true
+	});
+
       var Grid = BUI.Grid,
       Data = BUI.Data;
       var Grid = Grid,
@@ -477,18 +489,6 @@ $control.setTemplate("paging.vm")
 		
     	jQuery("#limitBuy").val(limitBuy);
     	
-    	var validFromPicker = new Calendar.DatePicker({
-    	  	trigger:'#validFrom',
-    	  	selectedDate : new Date(),
-    	  	autoRender : true
-    	});
-    	
-    	var validToPicker = new Calendar.DatePicker({
-    		trigger:'#validTo',
-    		selectedDate : new Date(),
-    		autoRender : true
-    	});
-    	
     	jQuery("#validFrom").val(validFrom.toDate().Format("yyyy-MM-dd"));
     	jQuery("#validTo").val(validTo.toDate().Format("yyyy-MM-dd"));
     	
@@ -537,17 +537,6 @@ $control.setTemplate("paging.vm")
 				#end
 			}
 		});
-		var validFromPicker = new Calendar.DatePicker({
-    	  	trigger:'#validFrom',
-    	  	selectedDate : new Date(),
-    	  	autoRender : true
-    	});
-    	
-    	var validToPicker = new Calendar.DatePicker({
-    		trigger:'#validTo',
-    		selectedDate : new Date(),
-    		autoRender : true
-    	});
     	jQuery("#action").val('publishAction');
     	jQuery("#event").attr("name",event);
     	jQuery("#event").val(true);

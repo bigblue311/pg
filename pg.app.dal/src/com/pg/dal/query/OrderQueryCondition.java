@@ -79,69 +79,6 @@ public class OrderQueryCondition extends QueryCondition {
 		return getDouble("depositEnd");
 	}
 	
-	public OrderQueryCondition setProdType(String prodType) {
-		put("prodType",prodType);
-		return this;
-	}
-	
-	public String getProdType(){
-		return getString("prodType");
-	}
-	
-	public OrderQueryCondition setExtendId(Long extendId) {
-		put("extendId",extendId);
-		return this;
-	}
-	
-	public Long getExtendId(){
-		return getLong("extendId");
-	}
-	
-	public OrderQueryCondition setExtendCode(Long extendCode) {
-		put("extendCode",extendCode);
-		return this;
-	}
-	
-	public Long getExtendCode(){
-		return getLong("extendCode");
-	}
-	
-	public OrderQueryCondition setQuantityStart(Integer quantityStart) {
-		put("quantityStart",quantityStart);
-		return this;
-	}
-	
-	public Integer getQuantityStart(){
-		return getInteger("quantityStart");
-	}
-	
-	public OrderQueryCondition setQuantityEnd(Integer quantityEnd) {
-		put("quantityEnd",quantityEnd);
-		return this;
-	}
-	
-	public Integer getQuantityEnd(){
-		return getInteger("quantityEnd");
-	}
-	
-	public OrderQueryCondition setPriceStart(Double priceStart) {
-		put("priceStart",priceStart);
-		return this;
-	}
-	
-	public Double getPriceStart(){
-		return getDouble("priceStart");
-	}
-	
-	public OrderQueryCondition setPriceEnd(Double priceEnd) {
-		put("priceEnd",priceEnd);
-		return this;
-	}
-	
-	public Double getPriceEnd(){
-		return getDouble("priceEnd");
-	}
-	
 	public OrderQueryCondition setTotalPriceStart(Double totalPriceStart) {
 		put("totalPriceStart",totalPriceStart);
 		return this;

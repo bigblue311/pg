@@ -24,12 +24,6 @@ public class OrderDO extends EntityDO implements Serializable{
 	private String mobile;			//收货联系人手机
 	private Long customerId;		//客户ID
 	private Double deposit;			//定金
-	private String prodType;		//商品类型(商品/商品包)
-	private Long extendId;			//外部ID(商品/商品包)
-	private String extendCode;		//外部Code(商品/商品包)
-	private Integer quantity;		//数量
-	private String unit;			//单位
-	private Double price;			//单价
 	private Double totalPrice;		//总价(不含运费)
 	private Double transportFee;	//运费
 	private String transportCode;	//物流编号
@@ -77,42 +71,6 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setDeposit(Double deposit) {
 		this.deposit = deposit;
-	}
-	public String getProdType() {
-		return prodType;
-	}
-	public void setProdType(String prodType) {
-		this.prodType = prodType;
-	}
-	public Long getExtendId() {
-		return extendId;
-	}
-	public void setExtendId(Long extendId) {
-		this.extendId = extendId;
-	}
-	public String getExtendCode() {
-		return extendCode;
-	}
-	public void setExtendCode(String extendCode) {
-		this.extendCode = extendCode;
-	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-	public String getUnit() {
-		return unit;
-	}
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-	public Double getPrice() {
-		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
 	}
 	public Double getTotalPrice() {
 		return totalPrice;

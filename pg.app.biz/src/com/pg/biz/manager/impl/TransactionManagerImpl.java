@@ -14,16 +14,16 @@ import com.pg.dal.dao.OpLogDAO;
 import com.pg.dal.dao.OrderDAO;
 import com.pg.dal.dao.PackageDAO;
 import com.pg.dal.dao.ProductDAO;
+import com.pg.dal.dao.PurchaseDAO;
 import com.pg.dal.enumerate.OrderStatusEnum;
-import com.pg.dal.enumerate.ProdTypeEnum;
 import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.OpLogDO;
 import com.pg.dal.model.OrderDO;
-import com.pg.dal.model.PackageDO;
-import com.pg.dal.model.ProductDO;
+import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.OpLogQueryCondition;
 import com.pg.dal.query.OrderQueryCondition;
+import com.pg.dal.query.PurchaseQueryCondition;
 import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.Paging;
 
@@ -47,13 +47,21 @@ public class TransactionManagerImpl implements TransactionManager{
 	@Autowired
 	private ProductDAO productDAO;
 	
+	@Autowired
+	private PurchaseDAO purchaseDAO;
+	
 	@Override
-	public void create(OrderDO orderDO) {
+	public void createOrder(OrderDO orderDO) {
 		orderDAO.insert(orderDO);
 	}
 	
 	@Override
-	public void create(OrderDO orderDO, Long employeeId) {
+	public void createPurchase(PurchaseDO purchaseDO) {
+		purchaseDAO.insert(purchaseDO);
+	}
+	
+	@Override
+	public void createOrder(OrderDO orderDO, Long employeeId) {
 		if(orderDO != null){
 			Long orderId = orderDAO.insert(orderDO);
 			
@@ -69,9 +77,26 @@ public class TransactionManagerImpl implements TransactionManager{
 			opLogDAO.insert(opLogDO);
 		}
 	}
+	
+	@Override
+	public void createPurchase(PurchaseDO purchaseDO, Long employeeId) {
+		purchaseDAO.insert(purchaseDO);
+		Long orderId = purchaseDO.getOrderId();
+		
+		OpLogDO opLogDO = new OpLogDO();
+		opLogDO.setEmployeeId(employeeId);
+		opLogDO.setOrderId(orderId);
+		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		if(customerDO == null){
+			return;
+		}
+		String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]提交了购买"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
+		opLogDO.setAction(msg);
+		opLogDAO.insert(opLogDO);
+	}
 
 	@Override
-	public void update(OrderDO orderDO,Long employeeId) {
+	public void updateOrder(OrderDO orderDO,Long employeeId) {
 		if(orderDO != null){
 			OpLogDO opLogDO = new OpLogDO();
 			opLogDO.setEmployeeId(employeeId);
@@ -83,17 +108,34 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
-	public OrderDO getDOById(Long id) {
+	public void updatePurchase(PurchaseDO purchaseDO, Long employeeId) {
+		if(purchaseDO != null){
+			OpLogDO opLogDO = new OpLogDO();
+			opLogDO.setEmployeeId(employeeId);
+			opLogDO.setOrderId(purchaseDO.getId());
+			opLogDO.setAction(getOpLogAction(purchaseDO,employeeId));
+			opLogDAO.insert(opLogDO);
+			purchaseDAO.update(purchaseDO);
+		}
+	}
+	
+	@Override
+	public OrderDO getOrderDOById(Long id) {
 		return orderDAO.getById(id);
 	}
 	
 	@Override
-	public OrderVO getVOById(Long id) {
-		return DO2VO(getDOById(id));
+	public PurchaseDO getPurchaseDOById(Long id) {
+		return purchaseDAO.getById(id);
+	}
+	
+	@Override
+	public OrderVO getOrderVOById(Long id) {
+		return DO2VO(getOrderDOById(id));
 	}
 
 	@Override
-	public Paging<OrderDO> getDOPage(OrderQueryCondition queryCondition) {
+	public Paging<OrderDO> getOrderDOPage(OrderQueryCondition queryCondition) {
 		int totalSize = orderDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
 		Paging<OrderDO> page = queryCondition.getPaging(totalSize, 5);
@@ -103,7 +145,17 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
-	public Paging<OrderVO> getVOPage(OrderQueryCondition queryCondition) {
+	public Paging<PurchaseDO> getPurchaseDOPage(PurchaseQueryCondition queryCondition) {
+		int totalSize = purchaseDAO.getCount(queryCondition);
+		@SuppressWarnings("unchecked")
+		Paging<PurchaseDO> page = queryCondition.getPaging(totalSize, 5);
+		List<PurchaseDO> list = purchaseDAO.getPage(queryCondition);
+		page.setData(list);
+		return page;
+	}
+	
+	@Override
+	public Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition) {
 		int totalSize = orderDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
 		Paging<OrderVO> page = queryCondition.getPaging(totalSize, 5);
@@ -135,22 +187,11 @@ public class TransactionManagerImpl implements TransactionManager{
 		query.setOrderId(orderDO.getId());
 		List<OpLogDO> opList = opLogDAO.getByCondition(query);
 		orderVO.setOpLogList(opList);
-		if(ProdTypeEnum.商品.equals(orderDO.getProdType())){
-			ProductDO productDO = productDAO.getById(orderDO.getExtendId());
-			if(productDO == null){
-				return null;
-			}
-			orderVO.setName(productDO.getName());
-			orderVO.setTitle(productDO.getTitle());
-		}
-		if(ProdTypeEnum.商品包.equals(orderDO.getProdType())){
-			PackageDO packageDO = packageDAO.getById(orderDO.getExtendId());
-			if(packageDO == null){
-				return null;
-			}
-			orderVO.setName(packageDO.getName());
-			orderVO.setTitle(packageDO.getTitle());
-		}
+		
+		PurchaseQueryCondition queryCondition = new PurchaseQueryCondition();
+		queryCondition.setOrderId(orderDO.getId());
+		List<PurchaseDO> purchaseList = purchaseDAO.getByCondition(queryCondition);
+		orderVO.setPurchaseList(purchaseList);
 		return orderVO;
 	}
 
@@ -161,6 +202,22 @@ public class TransactionManagerImpl implements TransactionManager{
 		} else {
 			return employee.getName();
 		}
+	}
+	
+	private String getOpLogAction(PurchaseDO purchaseDO, Long employeeId){
+		if(purchaseDO == null){
+			return "";
+		}
+		Long id = purchaseDO.getId();
+		PurchaseDO originDO = purchaseDAO.getById(id);
+		String msg = getEmployeeName(employeeId)+"操作了";
+		if(purchaseDO.getQuantity() != null){
+			msg += "数量["+originDO.getQuantity()+"]:"+purchaseDO.getQuantity()+";";
+		}
+		if(purchaseDO.getPrice() != null){
+			msg += "单价["+originDO.getPrice()+"]:"+purchaseDO.getPrice()+";";
+		}
+		return msg;
 	}
 	
 	private String getOpLogAction(OrderDO orderDO, Long employeeId){
@@ -184,12 +241,6 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		if(orderDO.getDeposit()!=null){
 			msg += "定金["+originDO.getDeposit()+"]:"+orderDO.getDeposit()+";";
-		}
-		if(orderDO.getQuantity()!=null){
-			msg += "数量["+originDO.getQuantity()+"]:"+orderDO.getQuantity()+";";
-		}
-		if(orderDO.getPrice()!=null){
-			msg += "单价["+originDO.getPrice()+"]:"+orderDO.getPrice()+";";
 		}
 		if(orderDO.getTotalPrice()!=null){
 			msg += "单价["+originDO.getTotalPrice()+"]:"+orderDO.getTotalPrice()+";";

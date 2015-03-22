@@ -24,7 +24,7 @@ public class PublishFO extends PublishDO{
 	}
 	public void setGmtValidTo(String gmtValidTo) {
 		this.gmtValidTo = gmtValidTo;
-		this.setValidTo(DateTools.getDayEnd(StringToDate(gmtValidFrom)));
+		this.setValidTo(DateTools.getDayEnd(StringToDate(gmtValidTo)));
 	}
 	
 	protected Date StringToDate(String date){

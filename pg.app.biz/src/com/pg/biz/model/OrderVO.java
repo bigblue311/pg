@@ -6,6 +6,7 @@ import java.util.List;
 import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.model.OpLogDO;
+import com.pg.dal.model.PurchaseDO;
 
 public class OrderVO implements Serializable{
 	
@@ -17,8 +18,8 @@ public class OrderVO implements Serializable{
 	private OrderDO orderDO;
 	private CustomerDO customerDO;
 	private List<OpLogDO> opLogList;
-	private String name;
-	private String title;
+	private List<PurchaseDO> purchaseList;
+	
 	public OrderDO getOrderDO() {
 		return orderDO;
 	}
@@ -37,16 +38,10 @@ public class OrderVO implements Serializable{
 	public void setOpLogList(List<OpLogDO> opLogList) {
 		this.opLogList = opLogList;
 	}
-	public String getName() {
-		return name;
+	public List<PurchaseDO> getPurchaseList() {
+		return purchaseList;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setPurchaseList(List<PurchaseDO> purchaseList) {
+		this.purchaseList = purchaseList;
 	}
 }

@@ -19,12 +19,6 @@
     <result property="mobile" column="mobile"/>
     <result property="customerId" column="cutomer_id"/>
     <result property="deposit" column="deposit"/>
-    <result property="prodType" column="prod_type"/>
-    <result property="extendId" column="extend_id"/>
-    <result property="extendCode" column="extend_code"/>
-    <result property="quantity" column="quantity"/>
-    <result property="unit" column="unit"/>
-    <result property="price" column="price"/>
     <result property="totalPrice" column="total_price"/>
     <result property="transportFee" column="transport_fee"/>
     <result property="transportCode" column="transport_code"/>
@@ -44,12 +38,6 @@
       mobile,
       customer_id,
       deposit,
-      prod_type,
-      extend_id,
-      extend_code,
-      quantity,
-      unit,
-      price,
       total_price,
       transport_fee,
       transport_code,
@@ -58,8 +46,7 @@
     ) values (
       now(), now(),
       #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
-      #customerId#, #deposit#, #prodType#, #extendId#, #extendCode#,
-      #quantity#, #unit#, #price#, #totalPrice#, #transportFee#,
+      #customerId#, #deposit#, #totalPrice#, #transportFee#,
       #transportCode#, #status#, #comment#
     )
     ]]>
@@ -99,16 +86,6 @@
       <isNotEmpty property="deposite">  
          <![CDATA[   
            deposite = #deposite#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="quantity">  
-         <![CDATA[   
-           quantity = #quantity#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price">  
-         <![CDATA[   
-           price = #price#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="totalPrice">  
@@ -193,41 +170,6 @@
         	deposit <= #depositEnd#
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="prodType" prepend="and">
-        	<![CDATA[ 
-        	prod_type = #prodType#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="extendId" prepend="and">
-        	<![CDATA[ 
-        	extend_id = #extendId#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="extendCode" prepend="and">
-        	<![CDATA[ 
-        	extend_code = #extendCode#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="quantityStart" prepend="and">
-        	<![CDATA[ 
-        	quantity >= #quantityStart#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="quantityEnd" prepend="and">
-        	<![CDATA[ 
-        	quantity <= #quantityEnd#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="priceStart" prepend="and">
-        	<![CDATA[ 
-        	price >= #priceStart#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="priceEnd" prepend="and">
-        	<![CDATA[ 
-        	price <= #priceEnd#
-        	]]>
-	    </isNotEmpty>
 	    <isNotEmpty property="totalPriceStart" prepend="and">
         	<![CDATA[ 
         	total_price >= #totalPriceStart#
@@ -263,10 +205,34 @@
   </sql>
   
   <sql id="validate">
-  	<isNull property="name">
-  	<isNull property="role">
+  	<isNull property="addressFrom">
+  	<isNull property="addressTo">
+  	<isNull property="keeper">
+  	<isNull property="phone">
+  	<isNull property="mobile">
+  	<isNull property="customerId">
+  	<isNull property="depositStart">
+  	<isNull property="depositEnd">
+  	<isNull property="totalPriceStart">
+  	<isNull property="totalPriceEnd">
+  	<isNull property="transportFeeStart">
+  	<isNull property="transportFeeEnd">
+  	<isNull property="transportCode">
+  	<isNull property="status">
         <include refid="Common.validModify" />
     </isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
 	</isNull>
   </sql>
   

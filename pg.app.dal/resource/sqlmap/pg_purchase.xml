@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PurchaseDO">
+
+  <typeAlias alias="Purchase" type="com.pg.dal.model.PurchaseDO"/>
+
+  <resultMap id="RM" class="Purchase">
+    <result property="id" column="id"/>
+    <result property="gmtCreate" column="gmt_create"/>
+    <result property="gmtModify" column="gmt_modify"/>
+    <result property="customerId" column="customer_id"/>
+    <result property="prodType" column="prod_type"/>
+    <result property="extendId" column="extend_id"/>
+    <result property="extendCode" column="extend_code"/>
+    <result property="quantity" column="quantity"/>
+    <result property="unit" column="unit"/>
+    <result property="price" column="price"/>
+    <result property="orderId" column="order_id"/>
+    <result property="name" column="name"/>
+    <result property="title" column="title"/>
+    <result property="comment" column="comment"/>
+  </resultMap>
+
+  <insert id="insert" parameterClass="Purchase">
+    <![CDATA[
+    insert into pg_purchase (
+      gmt_create,
+      gmt_modify,
+      customer_id,
+      prod_type,
+      extend_id,
+      extend_code,
+      quantity,
+      unit,
+      price,
+      order_id,
+      name,
+      title,
+      comment
+    ) values (
+      now(), now(),
+      #customerId#, #prodType#, #extendId#, #extendCode#, #quantity#,
+      #unit#, #price#, #orderId#, #name#, #title#, #comment#
+    )
+    ]]>
+    <selectKey resultClass="long" keyProperty="id">    
+		<![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+	</selectKey>
+  </insert>
+  
+  <update id="update" parameterClass="Purchase">
+    update pg_purchase set 
+    <dynamic>
+      <isNotEmpty property="customerId">  
+         <![CDATA[   
+           customer_id = #customerId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="prodType">  
+         <![CDATA[   
+           prod_type = #prodType#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="extendId">  
+         <![CDATA[   
+           extend_id = #extendId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="extendCode">  
+         <![CDATA[   
+           extend_code = #extendCode#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="quantity">  
+         <![CDATA[   
+           quantity = #quantity#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="unit">  
+         <![CDATA[   
+           unit = #unit#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="price">  
+         <![CDATA[   
+           price = #price#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="orderId">  
+         <![CDATA[   
+           order_id = #orderId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="name">  
+         <![CDATA[   
+           name = #name#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="title">  
+         <![CDATA[   
+           title = #title#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="comment">  
+         <![CDATA[   
+           comment = #comment#,
+         ]]> 
+      </isNotEmpty>
+    </dynamic>
+    	gmt_modify = now()
+    where
+      id = #id#
+  </update>
+
+  <select id="getAll" resultMap="RM">
+    select * from pg_purchase  
+  </select>
+  
+  <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
+    select * from pg_purchase where id = #id#  
+  </select>
+  
+  <sql id="where">
+  	<include refid="validate" />
+  	<dynamic prepend="where">
+	    <isNotEmpty property="name" prepend="and">
+        	<![CDATA[ 
+        	name like concat('%',#name#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="customerId" prepend="and">
+        	<![CDATA[ 
+        	customer_id = #customerId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="prodType" prepend="and">
+        	<![CDATA[ 
+        	prod_type = #prodType#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendId" prepend="and">
+        	<![CDATA[ 
+        	extend_id = #extendId#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="extendCode" prepend="and">
+        	<![CDATA[ 
+        	extend_code = #extendCode#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="orderId" prepend="and">
+        	<![CDATA[ 
+        	order_id = #orderId#
+        	]]>
+	    </isNotEmpty>
+	    <include refid="Common.queryModify" />
+  	</dynamic>
+  </sql>
+  
+  <sql id="validate">
+  	<isNull property="name">
+  	<isNull property="customerId">
+  	<isNull property="prodType">
+  	<isNull property="extendId">
+  	<isNull property="extendCode">
+  	<isNull property="orderId">
+        <include refid="Common.validModify" />
+    </isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+  </sql>
+  
+  <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_purchase 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+  </select>
+  
+  <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
+    select * from pg_purchase 
+    <include refid="where" />
+    <include refid="Common.orderByModify" />
+    <include refid="Common.pageSql" />
+  </select>
+  
+  <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+    select count(*) from pg_purchase
+	<include refid="where" />
+  </select>
+</sqlMap>
