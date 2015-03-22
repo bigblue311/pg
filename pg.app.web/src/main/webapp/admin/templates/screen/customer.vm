@@ -62,9 +62,10 @@ $control.setTemplate("paging.vm")
       Store = Data.Store,
       columns = [
 		{
-			title : 'id',
+			title : 'ID',
+			elCls: 'center',
 			dataIndex : 'id',
-			visible: false
+			width: '5%'
 		},{
           title : '名称',
           elCls: 'left',
@@ -73,7 +74,7 @@ $control.setTemplate("paging.vm")
 				xtype : 'text',
 				rules : {required : true}
 		  },
-		  width:'35%'
+		  width:'30%'
         },{
           title : '手机',
           elCls: 'left',

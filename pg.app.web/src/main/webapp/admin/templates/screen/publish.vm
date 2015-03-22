@@ -252,9 +252,10 @@ $control.setTemplate("paging.vm")
       Store = Data.Store,
       columns = [
 		{
-			title : 'id',
+			title : 'ID',
+			elCls: 'center',
 			dataIndex : 'id',
-			visible: false
+			width:'5%'
 		},{
             title : '类型',
             elCls: 'left',
@@ -311,7 +312,7 @@ $control.setTemplate("paging.vm")
 				#end
             	return obj.balance+" "+obj.unit;
             },
-            width:'15%'
+            width:'10%'
         },{
             title : '开始时间',
             elCls: 'left',

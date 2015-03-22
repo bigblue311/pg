@@ -1,0 +1,219 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<div class="doc-content">
+	<form action="$admin.setTarget('purchase.vm')" class="form-horizontal well" id="queryForm">
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">订单ID：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="orderId" value="$!query.orderId">
+				</div>
+				<label class="control-label">客户ID：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="customerId" value="$!query.customerId">
+				</div>
+				<label class="control-label">交易日期：</label>
+				<div class="controls">
+					<input type="text" class="calendar" name="createStart" id="createStart" value="$!query.createStart">
+					至
+					<input type="text" class="calendar" name="createEnd" id="createEnd" value="$!query.createEnd">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">产品名称：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="name" value="$query.name">
+					<input type="hidden" name="page" id="page" value="$query.page">
+				</div>
+				<label class="control-label">产品类型：</label>
+				<div class="controls">
+				<select id="q_prodType" name="prodType">
+					<option selected value="">全部</option>
+					#foreach($prodType in $prodTypeEnum)
+					<option 
+						#if($!query.prodType)
+							#if($!query.prodType==$!prodType.code)
+								selected
+							#end
+						#end 
+						value="$!prodType.code">$!prodType.desc</option>
+					#end
+				</select>
+				<select id="q_extendId" name="extendId">
+					<option selected value="">全部</option>
+					#if($!query.prodType)
+						#if($!query.prodType=='0')
+							#foreach($product in $productEnum)
+							<option 
+								#if($!query.extendId)
+									#if($!query.extendId==$!product.key)
+										selected
+									#end
+								#end 
+								value="$!product.key">$!product.value</option>
+							#end
+						#end
+						#if($!query.prodType=='1')
+							#foreach($package in $packageEnum)
+							<option 
+								#if($!query.extendId)
+									#if($!query.extendId==$!package.key)
+										selected
+									#end
+								#end 
+								value="$!package.key">$!package.value</option>
+							#end
+						#end
+					#end
+				</select>
+				<input type="text" class="control-text" name="extendCode" value="$query.extendCode" placeholder="产品编码">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-actions offset3">
+				<button class="button button-primary"><i class="icon-search icon-white"></i>搜索</button>
+				<button type="reset" class="button"><i class="icon-repeat"></i>重置</button>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript">
+		var Calendar = BUI.Calendar;
+		
+		var createStart = new Calendar.DatePicker({
+		  trigger:'#createStart',
+		  selectedDate : new Date(),
+		  autoRender : true
+		});
+		
+		var createEnd = new Calendar.DatePicker({
+			  trigger:'#createEnd',
+			  selectedDate : new Date(),
+			  autoRender : true
+		});
+		
+		jQuery(function(){
+			jQuery("#q_prodType").change(function(){
+				var prodType = jQuery(this).val();
+				jQuery("#q_extendId").empty();
+				jQuery("#q_extendId").append(createOption('','全部'));
+				if(prodType == '0'){
+					#foreach($product in $productEnum)
+						jQuery("#q_extendId").append(createOption('$product.key','$product.value'));
+					#end
+				}
+				if(prodType == '1'){
+					#foreach($package in $packageEnum)
+						jQuery("#q_extendId").append(createOption('$package.key','$package.value'));
+					#end
+				}
+			});
+		});
+		
+		function createOption(key, value){
+			return '<option value="'+key+'">'+value+'</option>';
+		}
+	</script>
+</div>
+<div id="grid"></div>
+$control.setTemplate("paging.vm")
+<script type="text/javascript">
+      var Grid = BUI.Grid,
+      Data = BUI.Data;
+      var Grid = Grid,
+      Store = Data.Store,
+      columns = [
+		{
+			title : 'ID',
+			elCls: 'center',
+			dataIndex : 'id',
+			width:'5%'
+		},{
+            title : '交易时间',
+            elCls: 'left',
+            dataIndex :'gmtCreate',
+            renderer:BUI.Grid.Format.datetimeRenderer,
+            summary : false,
+            width:'15%'
+        },{
+            title : '类型',
+            elCls: 'left',
+            dataIndex :'prodType',
+            renderer : function(val,obj,index){
+            	var prodType = obj.prodType;
+            	if(prodType == '0') return '产品';
+            	if(prodType == '1') return '产品包';
+            	return "未知";
+            },
+            summary : false,
+		    width:'15%'
+        },{
+            title : '产品(包)',
+            elCls: 'left',
+            dataIndex :'extendCode',
+            renderer : function(val,obj,index){
+            	var prodType = obj.prodType;
+            	var extendCode = obj.extendCode;
+            	var name = "";
+            	if(prodType == '0'){
+            		#foreach($product in $productEnum)
+            			if('$product.key' == obj.extendId){
+            				return '['+extendCode+']$product.value';
+            			}
+            		#end
+            	}
+				if(prodType == '1'){
+					#foreach($package in $packagetEnum)
+        				if('$package.key' == obj.extendId){
+        					return '['+extendCode+']$package.value';
+        				}
+        			#end
+            	}
+				return '['+extendCode+']';
+            },
+            summary : false,
+		    width:'20%'
+        },{
+            title : '数量',
+            elCls: 'left',
+            dataIndex :'quantity',
+            summary : true,
+            width:'15%'
+        },{
+            title : '单价',
+            elCls: 'left',
+            dataIndex :'price',
+            summary : false,
+            width:'15%'
+        },{
+            title : '总价',
+            elCls: 'left',
+            dataIndex :'total',
+            renderer: function(val,obj,index){
+            	if(obj!=null){
+            		var price = obj.price;
+            		var quantity = obj.quantity;
+            		if(price != null && price.isNumber() && quantity !=null && quantity.isNumber()){
+            			return price * quantity;
+            		}
+            	}
+            	return 0;
+            }, 
+            summary : true,
+            width:'15%'
+        }],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+      var store = new Store({
+        data : data
+      }),
+      grid = new Grid.Grid({
+        render:'#grid',
+        width:'100%',//这个属性一定要设置
+        columns : columns,
+        plugins : [Grid.Plugins.Summary],
+        store : store
+      });
+
+    grid.render();
+</script>

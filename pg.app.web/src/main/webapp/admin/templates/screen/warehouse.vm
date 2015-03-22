@@ -125,9 +125,10 @@ $control.setTemplate("paging.vm")
       Store = Data.Store,
       columns = [
 		{
-			title : 'id',
+			title : 'ID',
+			elCls: 'center',
 			dataIndex : 'id',
-			visible: false
+			width:'5%'
 		},{
             title : '名称',
             elCls: 'left',
@@ -151,7 +152,7 @@ $control.setTemplate("paging.vm")
         },{
             title : '地址',
             elCls: 'left',
-            width:'25%',
+            width:'20%',
             renderer : function(val,obj,index){
             	if(obj != null){
             		var location = new Location();

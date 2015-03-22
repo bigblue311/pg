@@ -21,6 +21,7 @@ public enum SubMenuEnum {
 	客户仓库("subMenuCuWarehouse","客户仓库","/admin/warehouse",TopMenuEnum.物流管理),
 	
 	商品发布("subMenuPublish","商品发布","/admin/publish",TopMenuEnum.交易管理),
+	交易管理("subMenuPurchase","交易管理","/admin/purchase",TopMenuEnum.交易管理),
 	订单管理("subMenuOrder","订单管理","/admin/order",TopMenuEnum.交易管理);
 	
 	private SubMenuEnum(String code,String desc, String resource,TopMenuEnum topMenu){

@@ -7,6 +7,8 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.victor.framework.annotation.StaticCacheKey;
+import com.victor.framework.common.shared.Split;
+import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.EntityDAO;
 import com.victor.framework.dal.basic.EntityDO;
 import com.victor.framework.dal.basic.QueryCondition;
@@ -82,13 +84,21 @@ public abstract class StaticCache<entity extends EntityDO, query extends QueryCo
 	
 	protected String getKey(entity e){
 		Field[] fields = e.getClass().getDeclaredFields();
-		
+		List<String> result = Lists.newArrayList();
 		for(Field field : fields){
 			StaticCacheKey key = field.getAnnotation(StaticCacheKey.class);
 			if(key != null){
-				return getFiledValue(e,field);
+				String filedValue = getFiledValue(e,field);
+				if(StringTools.isNotEmpty(filedValue)){
+					result.add(filedValue);
+				}
 			}
 		}
-		return e.getId().toString();
+		if(result.isEmpty()){
+			return e.getId().toString();
+		} else {
+			return StringTools.join(Split.逗号, result.toArray());
+		}
+		
 	}
 }

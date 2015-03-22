@@ -133,6 +133,42 @@ public class OrderQueryCondition extends QueryCondition {
 		return getString("status");
 	}
 	
+	public void setCreateStart(String createStart){
+		put("createStart",createStart);
+		setGmtCreateStart(StringToDate(createStart));
+	}
+	
+	public String getCreateStart(){
+		return getString("createStart");
+	}
+	
+	public void setCreateEnd(String createEnd){
+		put("createEnd",createEnd);
+		setGmtCreateEnd(StringToDate(createEnd));
+	}
+	
+	public String getCreateEnd(){
+		return getString("createEnd");
+	}
+
+	public OrderQueryCondition setGmtCreateStart(Date from){
+		put("gmtCreateStart", DateTools.getDayBegin(from));
+		return this;
+	}
+	
+	public Date getGmtCreateStart(){
+		return getDate("gmtCreateStart");
+	}
+	
+	public OrderQueryCondition setGmtCreateEnd(Date to){
+		put("gmtCreateEnd", DateTools.getDayEnd(to));
+		return this;
+	}
+	
+	public Date getGmtCreateEnd(){
+		return getDate("gmtCreateEnd");
+	}
+	
 	@Override
 	public OrderQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));

@@ -19,9 +19,10 @@
       roleObj = #if($!{roleEnum})#noescape()$!{roleEnum}#end#else null #end,
       columns = [
 		{
-			title : 'id',
+			title : 'ID',
+			elCls: 'center',
 			dataIndex : 'id',
-			visible: false
+			width:'5%'
 		},{
           title : '姓名',
           elCls: 'left',
@@ -43,7 +44,7 @@
 		  renderer : function() {
 				return '*****';
 		  },
-          width:'30%'
+          width:'25%'
         },{
             title : '角色',
             elCls: 'left',

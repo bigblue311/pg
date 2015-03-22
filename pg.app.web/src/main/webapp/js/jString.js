@@ -6,6 +6,9 @@ String.prototype.contains = function(text){
 }
 
 String.prototype.isNumber = function(){
+	if(typeof(mydata)=='undefined'){ 
+		return false;
+	}
 	var r = /^[0-9]*[1-9][0-9]*$/
 	return r.test(this);
 }

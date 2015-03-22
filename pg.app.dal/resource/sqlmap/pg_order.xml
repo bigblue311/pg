@@ -200,6 +200,16 @@
         	status = #status#
         	]]>
 	    </isNotEmpty>
+	    <isNotNull property="gmtCreateStart" prepend="and">
+	    	<![CDATA[
+        	gmt_create >= #gmtCreateStart#
+        	 ]]>
+        </isNotNull>
+        <isNotNull property="gmtModifyEnd" prepend="and">
+	    	<![CDATA[
+        	gmt_create <= #gmtCreateEnd#
+        	 ]]>
+        </isNotNull>
 	    <include refid="Common.queryModify" />
   	</dynamic>
   </sql>

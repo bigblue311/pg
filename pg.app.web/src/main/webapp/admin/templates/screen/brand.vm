@@ -17,9 +17,10 @@
       Store = Data.Store,
       columns = [
 		{
-			title : 'id',
+			title : 'ID',
+			elCls: 'center',
 			dataIndex : 'id',
-			visible: false
+			width:'5%'
 		},{
           title : '品牌',
           elCls: 'left',
@@ -28,7 +29,7 @@
 				xtype : 'text',
 				rules : {required : true}
 		  },
-          width:'60%'
+          width:'55%'
         },{
 			title : '操作',
 			elCls: 'center',

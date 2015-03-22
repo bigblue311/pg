@@ -24,9 +24,10 @@ public enum ResourceEnum {
 	我的仓库(12l,"/admin/mywarehouse","我的仓库","管理我所拥有的发货仓库",SubMenuEnum.我的仓库,true),
 	客户仓库(13l,"/admin/warehouse","客户仓库","管理客户的发货仓库/地址",SubMenuEnum.客户仓库,true),
 	商品发布(14l,"/admin/publish","商品发布","将事先定义好的商品或者商品包发布到上架",SubMenuEnum.商品发布,true),
-	订单管理(15l,"/admin/order","订单管理","查询订单列表",SubMenuEnum.订单管理,true),
-	订单详情(16l,"/admin/orderdetail","订单详情","查看/修改订单详情",SubMenuEnum.订单管理,true),
-	出货单(17l,"/admin/orderprint","出货单","打印出货单",SubMenuEnum.订单管理,true);
+	交易管理(15l,"/admin/purchase","交易管理","查询订单商品列表",SubMenuEnum.交易管理,true),
+	订单管理(16l,"/admin/order","订单管理","查询订单列表",SubMenuEnum.订单管理,true),
+	订单详情(17l,"/admin/orderdetail","订单详情","查看/修改订单详情",SubMenuEnum.订单管理,true),
+	出货单(18l,"/admin/orderprint","出货单","打印出货单",SubMenuEnum.订单管理,true);
 	
 	private ResourceEnum(Long code,String resource,String name,String desc, SubMenuEnum subMenu, Boolean loginRequired){
 		this.code = code;

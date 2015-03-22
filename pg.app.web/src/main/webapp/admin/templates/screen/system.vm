@@ -15,10 +15,6 @@
       Store = Data.Store,
       columns = [
 		{
-			title : 'id',
-			dataIndex : 'id',
-			visible: false
-		},{
 	        title : '配置键',
 	        elCls: 'left',
 	        dataIndex :'configKey',

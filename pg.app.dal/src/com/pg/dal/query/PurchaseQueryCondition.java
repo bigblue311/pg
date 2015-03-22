@@ -61,6 +61,42 @@ public class PurchaseQueryCondition extends QueryCondition {
 		return getLong("orderId");
 	}
 	
+	public void setCreateStart(String createStart){
+		put("createStart",createStart);
+		setGmtCreateStart(StringToDate(createStart));
+	}
+	
+	public String getCreateStart(){
+		return getString("createStart");
+	}
+	
+	public void setCreateEnd(String createEnd){
+		put("createEnd",createEnd);
+		setGmtCreateEnd(StringToDate(createEnd));
+	}
+	
+	public String getCreateEnd(){
+		return getString("createEnd");
+	}
+
+	public PurchaseQueryCondition setGmtCreateStart(Date from){
+		put("gmtCreateStart", DateTools.getDayBegin(from));
+		return this;
+	}
+	
+	public Date getGmtCreateStart(){
+		return getDate("gmtCreateStart");
+	}
+	
+	public PurchaseQueryCondition setGmtCreateEnd(Date to){
+		put("gmtCreateEnd", DateTools.getDayEnd(to));
+		return this;
+	}
+	
+	public Date getGmtCreateEnd(){
+		return getDate("gmtCreateEnd");
+	}
+	
 	@Override
 	public PurchaseQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));
