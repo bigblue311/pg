@@ -61,6 +61,15 @@ public class OrderQueryCondition extends QueryCondition {
 		return getLong("customerId");
 	}
 	
+	public OrderQueryCondition setCustomerName(Long customerName) {
+		put("customerName",customerName);
+		return this;
+	}
+	
+	public Long getCutomerName(){
+		return getLong("customerName");
+	}
+	
 	public OrderQueryCondition setDepositStart(Double depositStart) {
 		put("depositStart",depositStart);
 		return this;

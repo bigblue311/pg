@@ -49,7 +49,7 @@
 $control.setTemplate("paging.vm")
 #set ($group = $form.warehouse.defaultInstance)
 <div id="editor" style="display:none">
-  <form action="$admin.setTarget('warehouse.vm')" method="post" id="actionFrom">
+  <form method="post" id="actionFrom">
   	$csrfToken.hiddenField
   	<input type="hidden" id="action" name="action" value="warehouseAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>

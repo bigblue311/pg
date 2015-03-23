@@ -25,7 +25,7 @@
 <div id="grid"></div>
 $control.setTemplate("paging.vm")
 #set ($group = $form.package.defaultInstance)
-<form action="$admin.setTarget('package.vm')" method="post" id="actionFrom">
+<form method="post" id="actionFrom">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="packageAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>

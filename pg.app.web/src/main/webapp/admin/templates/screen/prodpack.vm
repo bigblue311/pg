@@ -47,7 +47,7 @@
 	</tr>
 </table>
 #set ($group = $form.prodpack.defaultInstance)
-<form action="$admin.setTarget('prodpack.vm')?packageId=$!{packageId}" method="post" id="actionFrom">
+<form method="post" id="actionFrom">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="prodpackAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_create" value="true"/>

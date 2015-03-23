@@ -17,6 +17,7 @@ public class PurchaseDO extends EntityDO implements Serializable{
 	 */
 	private static final long serialVersionUID = 1814746324766240895L;
 	private Long 	customerId;		//客户ID
+	private String 	customerName;	//客户姓名
 	private String 	prodType;		//产品类型
 	private Long 	extendId;		//外部ID
 	private String 	extendCode;		//外部编号
@@ -34,6 +35,14 @@ public class PurchaseDO extends EntityDO implements Serializable{
 
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
+	}
+	
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public String getProdType() {

@@ -13,6 +13,7 @@
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
     <result property="customerId" column="customer_id"/>
+    <result property="customerName" column="customer_name"/>
     <result property="prodType" column="prod_type"/>
     <result property="extendId" column="extend_id"/>
     <result property="extendCode" column="extend_code"/>
@@ -31,6 +32,7 @@
       gmt_create,
       gmt_modify,
       customer_id,
+      customer_name,
       prod_type,
       extend_id,
       extend_code,
@@ -43,8 +45,8 @@
       comment
     ) values (
       now(), now(),
-      #customerId#, #prodType#, #extendId#, #extendCode#, #quantity#,
-      #unit#, #price#, #orderId#, #name#, #title#, #comment#
+      #customerId#, #customerName#, #prodType#, #extendId#, #extendCode#, 
+      #quantity#, #unit#, #price#, #orderId#, #name#, #title#, #comment#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -55,11 +57,6 @@
   <update id="update" parameterClass="Purchase">
     update pg_purchase set 
     <dynamic>
-      <isNotEmpty property="customerId">  
-         <![CDATA[   
-           customer_id = #customerId#,
-         ]]> 
-      </isNotEmpty>
       <isNotEmpty property="prodType">  
          <![CDATA[   
            prod_type = #prodType#,
@@ -88,11 +85,6 @@
       <isNotEmpty property="price">  
          <![CDATA[   
            price = #price#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="orderId">  
-         <![CDATA[   
-           order_id = #orderId#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="name">  
@@ -137,6 +129,11 @@
         	customer_id = #customerId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="customerName" prepend="and">
+        	<![CDATA[ 
+        	customer_name like concat('%',#customerName#,'%')
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="prodType" prepend="and">
         	<![CDATA[ 
         	prod_type = #prodType#
@@ -174,11 +171,13 @@
   <sql id="validate">
   	<isNull property="name">
   	<isNull property="customerId">
+  	<isNull property="customerName">
   	<isNull property="prodType">
   	<isNull property="extendId">
   	<isNull property="extendCode">
   	<isNull property="orderId">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
 	</isNull>
 	</isNull>

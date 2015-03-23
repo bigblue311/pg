@@ -34,7 +34,7 @@
 	</tr>
 </table>
 #set ($group = $form.resourceRole.defaultInstance)
-<form action="$admin.setTarget('resource.vm')?roleId=$!{roleId}" method="post" id="actionFrom">
+<form method="post" id="actionFrom">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="resourceRoleAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>

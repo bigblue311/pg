@@ -2,7 +2,6 @@ package com.pg.web.admin.webpage.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.citrus.turbine.Navigator;
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.CustomerManager;
 import com.pg.dal.model.CustomerDO;
@@ -14,7 +13,7 @@ public class CustomerAction {
 	@Autowired
 	private CustomerManager customerManager;
 	
-	public void doUpdate(@FormGroup("customer") CustomerDO customerDO, Navigator nav){
+	public void doUpdate(@FormGroup("customer") CustomerDO customerDO){
 		if(customerDO.getId() == null){
 			if(!customerManager.checkExist(customerDO.getMobile())){
 				generateDefaultPassword(customerDO);
@@ -30,7 +29,6 @@ public class CustomerAction {
 				}
 			}
 		}
-		nav.redirectTo("admin").withTarget("customer.vm");
 	}
 	
 	public void generateDefaultPassword(CustomerDO customerDO){

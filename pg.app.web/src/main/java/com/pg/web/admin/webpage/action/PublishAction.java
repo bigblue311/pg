@@ -2,7 +2,6 @@ package com.pg.web.admin.webpage.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.citrus.turbine.Navigator;
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.ProductManager;
 import com.pg.dal.enumerate.ProdTypeEnum;
@@ -16,7 +15,7 @@ public class PublishAction {
 	@Autowired
 	private ProductManager productManager;
 	
-	public void doUpdate(@FormGroup("publish") PublishFO publishFO, Navigator nav){
+	public void doUpdate(@FormGroup("publish") PublishFO publishFO){
 		PublishDO publishDO = publishFO.getDO();
 		getFull(publishDO);
 		if(publishDO.getId() == null){
@@ -24,7 +23,6 @@ public class PublishAction {
 		} else {
 			productManager.updatePublish(publishDO);
 		}
-		nav.redirectTo("admin").withTarget("publish.vm");
 	}
 	
 	private void getFull(PublishDO form){
@@ -38,8 +36,7 @@ public class PublishAction {
 		}
 	}
 	
-	public void doDelete(@FormGroup("publish") PublishFO publishFO, Navigator nav){
+	public void doDelete(@FormGroup("publish") PublishFO publishFO){
 		productManager.deletePublish(publishFO.getId());
-		nav.redirectTo("admin").withTarget("publish.vm");
 	}
 }

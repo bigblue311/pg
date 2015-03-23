@@ -1,7 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <div id="grid"></div>
 #set ($group = $form.category.defaultInstance)
-<form action="$admin.setTarget('category.vm')" method="post" id="actionFrom">
+<form action="" method="post" id="actionFrom">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="categoryAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>

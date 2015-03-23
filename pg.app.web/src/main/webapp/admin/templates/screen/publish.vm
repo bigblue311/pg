@@ -138,7 +138,7 @@
 $control.setTemplate("paging.vm")
 #set ($group = $form.publish.defaultInstance)
 <div id="editor" style="display:none">
-  <form action="$admin.setTarget('publish.vm')" method="post" id="actionFrom">
+  <form method="post" id="actionFrom">
   	$csrfToken.hiddenField
   	<input type="hidden" id="action" name="action" value="publishAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>

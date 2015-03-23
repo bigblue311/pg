@@ -43,7 +43,7 @@ public class EmployeeAction {
 		nav.redirectTo("admin").withTarget("login.vm");
 	}
 	
-	public void doUpdate(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav) {
+	public void doUpdate(@FormGroup("employee") EmployeeDO employeeDO) {
 		if(employeeDO.getId() == null ) {
 			String name = employeeDO.getName();
 			if(!employeeManager.checkExist(name)){
@@ -53,11 +53,9 @@ public class EmployeeAction {
 		} else {
 			employeeManager.update(employeeDO);
 		}
-		nav.redirectTo("admin").withTarget("employee.vm");
 	}
 	
-	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO, Navigator nav) {
+	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO) {
 		employeeManager.delete(employeeDO.getId());
-		nav.redirectTo("admin").withTarget("employee.vm");
 	}
 }

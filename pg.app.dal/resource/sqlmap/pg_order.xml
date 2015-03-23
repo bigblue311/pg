@@ -18,6 +18,7 @@
     <result property="phone" column="phone"/>
     <result property="mobile" column="mobile"/>
     <result property="customerId" column="cutomer_id"/>
+    <result property="customerName" column="cutomer_name"/>
     <result property="deposit" column="deposit"/>
     <result property="totalPrice" column="total_price"/>
     <result property="transportFee" column="transport_fee"/>
@@ -37,6 +38,7 @@
       phone,
       mobile,
       customer_id,
+      customer_name,
       deposit,
       total_price,
       transport_fee,
@@ -46,8 +48,8 @@
     ) values (
       now(), now(),
       #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
-      #customerId#, #deposit#, #totalPrice#, #transportFee#,
-      #transportCode#, #status#, #comment#
+      #customerId#, #customerName#, #deposit#, #totalPrice#, 
+      #transportFee#, #transportCode#, #status#, #comment#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -160,6 +162,11 @@
         	customer_id = #customerId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="customerName" prepend="and">
+        	<![CDATA[ 
+        	customer_name like concat('%',#customerName#,'%')
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="depositStart" prepend="and">
         	<![CDATA[ 
         	deposit >= #depositStart#
@@ -221,6 +228,7 @@
   	<isNull property="phone">
   	<isNull property="mobile">
   	<isNull property="customerId">
+  	<isNull property="customerName">
   	<isNull property="depositStart">
   	<isNull property="depositEnd">
   	<isNull property="totalPriceStart">
@@ -230,6 +238,7 @@
   	<isNull property="transportCode">
   	<isNull property="status">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
 	</isNull>
 	</isNull>

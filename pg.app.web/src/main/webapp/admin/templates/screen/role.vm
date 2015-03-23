@@ -1,7 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <div id="grid"></div>
 #set ($group = $form.role.defaultInstance)
-<form action="$admin.setTarget('role.vm')" method="post" id="actionFrom">
+<form method="post" id="actionFrom">
 	$csrfToken.hiddenField
 	<input type="hidden" name="action" value="roleAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
