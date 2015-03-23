@@ -57,7 +57,7 @@ public class OrderQueryCondition extends QueryCondition {
 		return this;
 	}
 	
-	public Long getCutomerId(){
+	public Long getCustomerId(){
 		return getLong("customerId");
 	}
 	

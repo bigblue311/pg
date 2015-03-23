@@ -96,12 +96,14 @@ $control.setTemplate("paging.vm")
 			dataIndex : 'oper',
 			renderer : function(val,obj,index) {
 				var warehouse = "";
+				var order = "";
 				if(obj != null){
 					var id = obj.id;
 					warehouse = '<span class="grid-command"><a href="$admin.setTarget("warehouse.vm")?customerId='+id+'">仓库</a></span>';
+					order = '<span class="grid-command"><a href="$admin.setTarget("order.vm")?customerId='+id+'">订单</a></span>';
 				}
 				var edit = '<span class="grid-command btn-edit">编辑</span>';
-				return warehouse+edit;
+				return edit+warehouse+order;
 			},
 	        width:'15%'
 		}],

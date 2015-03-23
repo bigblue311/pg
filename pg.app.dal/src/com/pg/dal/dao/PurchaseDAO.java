@@ -20,6 +20,12 @@ public interface PurchaseDAO {
 	Boolean update(PurchaseDO purchaseDO);
 	
 	/**
+	 * 删除对象
+	 * @param id
+	 */
+	Boolean delete(Long id);
+	
+	/**
 	 * 根据ID获取
 	 * @param id
 	 * @return

@@ -17,8 +17,8 @@
     <result property="keeper" column="keeper"/>
     <result property="phone" column="phone"/>
     <result property="mobile" column="mobile"/>
-    <result property="customerId" column="cutomer_id"/>
-    <result property="customerName" column="cutomer_name"/>
+    <result property="customerId" column="customer_id"/>
+    <result property="customerName" column="customer_name"/>
     <result property="deposit" column="deposit"/>
     <result property="totalPrice" column="total_price"/>
     <result property="transportFee" column="transport_fee"/>

@@ -32,6 +32,8 @@ public interface TransactionManager {
 	void updateOrder(OrderDO orderDO,Long employeeId);
 	void updatePurchase(PurchaseDO purchaseDO, Long employeeId);
 	
+	void deletePurchase(Long id);
+	
 	/**
 	 * 根据订单ID获取
 	 * @param id

@@ -37,7 +37,7 @@ public class PurchaseAction {
 		EmployeeDO loginedUser = AuthenticationToken.get(session);
 		getFull(purchaseDO);
 		if(purchaseDO.getId() == null){
-			transactionManager.createPurchase(purchaseDO);
+			transactionManager.createPurchase(purchaseDO,loginedUser.getId());
 		} else {
 			transactionManager.updatePurchase(purchaseDO,loginedUser.getId());
 		}
@@ -62,6 +62,6 @@ public class PurchaseAction {
 	}
 	
 	public void doDelete(@FormGroup("purchase") PurchaseDO purchaseDO){
-		productManager.deletePublish(purchaseDO.getId());
+		transactionManager.deletePurchase(purchaseDO.getId());
 	}
 }

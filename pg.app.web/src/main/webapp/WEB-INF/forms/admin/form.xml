@@ -167,8 +167,8 @@
 			<field name="addressFrom" displayName="发货地址" />
 			<field name="addressTo" displayName="收货地址" />
 			<field name="keeper" displayName="联系人" />
-			<field name="phone" displayName="联系电话" />
 			<field name="mobile" displayName="联系手机" />
+			<field name="phone" displayName="联系电话" />
 			<field name="deposite" displayName="定金" />
 			<field name="totalPrice" displayName="总价格" />
 			<field name="transportFee" displayName="物流费" />

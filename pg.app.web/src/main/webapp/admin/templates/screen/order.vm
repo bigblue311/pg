@@ -89,6 +89,103 @@
 </div>
 <div id="grid"></div>
 $control.setTemplate("paging.vm")
+#set ($group = $form.order.defaultInstance)
+<div id="editor" style="display:none">
+<form method="post" id="actionFrom">
+	$csrfToken.hiddenField
+	<input type="hidden" id="action" name="action" value="orderAction"/>  
+	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
+	<input type="hidden" id="id" name="$group.id.key" value=""/>
+	<input type="hidden" id="customerId" name="$group.customerId.key" value=""/>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">客户名称：</label>
+		<div class="controls">
+			<label id="customerName"></label>
+		</div>
+        <label class="control-label">订单状态：</label>
+        <div class="controls">
+          	<select id="status" name="$group.status.key">
+				#foreach($status in $statusEnum)
+				<option value="$!status.code">$!status.desc</option>
+				#end
+			</select>
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">定金：</label>
+		<div class="controls">
+			<input type="text" id="deposite" name="$group.deposite.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}">
+		</div>
+        <label class="control-label">交易金额：</label>
+        <div class="controls">
+          <input type="text" id="totalPrice" name="$group.totalPrice.key" class="input-normal control-text"
+          data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">物流费：</label>
+		<div class="controls">
+			<input type="text" id="transportFee" name="$group.transportFee.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}">
+		</div>
+        <label class="control-label">物流编号：</label>
+        <div class="controls">
+          <input type="text" id="transportCode" name="$group.transportCode.key" class="input-normal control-text">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">联系人：</label>
+		<div class="controls">
+			<input type="text" id="keeper" name="$group.keeper.key" class="input-normal control-text">
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">联系手机：</label>
+        <div class="controls">
+          <input type="text" id="mobile" name="$group.mobile.key" class="input-normal control-text">
+        </div>
+        <label class="control-label">联系电话：</label>
+        <div class="controls">
+          <input type="text" id="phone" name="$group.phone.key" class="input-normal control-text">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="control-group">
+	        <label class="control-label">发货地址：</label>
+	        <div class="controls">
+	          <input type="text" id="addressFrom" name="$group.addressFrom.key" class="input-large control-text">
+	        </div>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="control-group">
+	        <label class="control-label">收货地址：</label>
+			<div class="controls">
+				<input type="text" id="addressTo" name="$group.addressTo.key" class="input-large control-text">
+			</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">备注：</label>
+        <div class="controls control-row4">
+          <textarea id="comment" name="$group.comment.key" class="input-large"></textarea>
+        </div>
+      </div>
+    </div>
+</form>
+</div>
 <script type="text/javascript">
       var Grid = BUI.Grid,
       Data = BUI.Data;
@@ -96,7 +193,7 @@ $control.setTemplate("paging.vm")
       Store = Data.Store,
       statusObj = {
    	   		#foreach($status in $statusEnum)
-   			"$!status.key": "$!status.value"
+   			"$!status.code": "$!status.desc"
    				#if(${velocityCount} != $statusEnum.size())
    					,
    				#end
@@ -124,51 +221,30 @@ $control.setTemplate("paging.vm")
             title : '定金',
             elCls: 'left',
             dataIndex :'deposite',
-            editor : {
-				xtype : 'number',
-				rules : {required : true}
-		  	},
             summary : true,
 		    width:'10%'
         },{
         	title : '交易金额',
             elCls: 'left',
             dataIndex :'totalPrice',
-            editor : {
-				xtype : 'number',
-				rules : {required : true}
-		  	},
             summary : true,
 		    width:'10%'
         },{
         	title : '物流费',
             elCls: 'left',
             dataIndex :'transportFee',
-            editor : {
-				xtype : 'number',
-				rules : {required : true}
-		  	},
             summary : true,
 		    width:'10%'
         },{
             title : '物流编号',
             elCls: 'left',
             dataIndex :'transportCode',
-            editor : {
-				xtype : 'text',
-				rules : {required : true}
-		  	},
-            summary : true,
+            summary : false,
             width:'10%'
         },{
             title : '状态',
             elCls: 'left',
             dataIndex :'status',
-            editor : {
-  				xtype : 'select',
-  				items : statusObj,
-  				rules : {required : true}
-  		  	},
             renderer : Grid.Format.enumRenderer(statusObj),
             summary : false,
             width:'10%'
@@ -181,10 +257,10 @@ $control.setTemplate("paging.vm")
             		var result = 0;
             		var totalPrice = obj.totalPrice;
             		var transportFee = obj.transportFee;
-            		if(totalPrice != null && totalPrice.isNumber()){
+            		if(typeof(totalPrice) != 'undifined'){
             			result += totalPrice;
             		}
-            		if(transportFee != null && transportFee.isNumber()){
+            		if(typeof(transportFee) != 'undifined'){
             			result += transportFee;
             		}
             		return result;
@@ -210,10 +286,7 @@ $control.setTemplate("paging.vm")
 		}],
 		data = #if($!{list})#noescape()$!{list}#end#else null #end;
       var store = new Store({
-        data : data,
-        listeners : {
-        	'update' : updateFunction
-        }
+        data : data
       }),
       cascade = new Grid.Plugins.Cascade({
 		    renderer : function(record){
@@ -224,34 +297,130 @@ $control.setTemplate("paging.vm")
 			    return row;
 		    }
 	  }),
-      editing = new Grid.Plugins.RowEditing({
-			triggerCls : 'btn-edit',
-			triggerSelected : false
-	  }),
       grid = new Grid.Grid({
         render:'#grid',
         width:'100%',//这个属性一定要设置
         columns : columns,
         bbar : {
-        	items : [
-			{
-				btnCls : 'button button-small btn-add',
-				text : '<i class="icon-plus"></i>添加',
-				listeners : {
-					'click' : addFunction
-				}
-			}
-			]
+        	#if($query.customerId)
+        		items : 
+        		[{
+					btnCls : 'button button-small btn-add',
+					text : '<i class="icon-plus"></i>添加',
+					listeners : {
+						'click' : addFunction
+					}
+				}]
+        	#end
         },
-        plugins : [cascade,editing,Grid.Plugins.Summary],
+        plugins : [cascade,Grid.Plugins.Summary],
         store : store
       });
 
     grid.render();
     
+  	//创建编辑器
+    var editor = new BUI.Editor.DialogEditor({ 
+        contentId:'editor',
+        width : 600,
+        mask : true,
+        title : '订单修改',
+        form : {
+          srcNode : '#actionFrom'
+        },
+        success : function(){
+          this.accept();
+          jQuery("#actionFrom").submit();
+        }
+      });
+
+    editor.render();
+    
     function addFunction(){
+    	editor.show();
+		clearRecord('event_submit_do_update');
 	}
     
-    function updateFunction(e){
+    jQuery(".btn-edit").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
+		editor.show();
+		bindRecord('event_submit_do_update');
+	});
+    
+    function bindRecord(event){
+    	copyCsrf();
+		var selections = grid.getSelection();
+    	var record = selections[0];
+    	var option = "";
+    	
+    	var id = record.id;
+    	var customerName = record.customerName;
+    	jQuery("#customerName").empty().append(customerName);
+    	
+    	var addressFrom = record.addressFrom;
+    	var addressTo = record.addressTo;
+    	var keeper = record.keeper;
+    	var mobile = record.mobile;
+    	var phone = record.phone;
+    	var deposite = record.deposite;
+    	var totalPrice = record.totalPrice;
+    	var transportFee = record.transportFee;
+    	var transportCode = record.transportCode;
+    	var status = record.status;
+    	var comment = record.comment;
+    	var customerId = record.customerId;
+
+    	jQuery("#id").val(id);
+    	jQuery("#action").val('orderAction');
+    	jQuery("#addressFrom").val(addressFrom);
+    	jQuery("#addressTo").val(addressTo);
+    	jQuery("#keeper").val(keeper);
+    	jQuery("#mobile").val(mobile);
+    	jQuery("#phone").val(phone);
+    	jQuery("#deposite").val(deposite);
+    	jQuery("#totalPrice").val(totalPrice);
+    	jQuery("#transportFee").val(transportFee);
+    	jQuery("#transportCode").val(transportCode);
+		
+    	jQuery("#status").show();
+    	jQuery("#status").empty();
+		#foreach($status in $statusEnum)
+    		option = "<option ";
+			if(status == '$!status.code'){
+				option += "selected";
+			}
+			option += " value='$!status.code'>$!status.desc</option>";
+			jQuery("#status").append(option);
+		#end
+
+    	jQuery("#comment").val(comment);
+		jQuery("#customerId").val(customerId);
+		#if($query.customerId)
+			jQuery("#customerId").val('$query.customerId');
+		#end
+    	
+    	jQuery("#event").attr("name",event);
+		jQuery("#event").val(true);
     }
+    
+    function clearRecord(event){
+		copyCsrf();
+		jQuery("#customerName").empty().append('${customerName}');
+		jQuery("#status").hide();
+    	jQuery("#action").val('orderAction');
+    	jQuery("#event").attr("name",event);
+    	jQuery("#event").val(true);
+    	#if($query.customerId)
+			jQuery("#customerId").val('$query.customerId');
+		#end
+    }
+    
+    function copyCsrf(){
+		var csrf = jQuery("input[name='_csrf_token']").val();
+		jQuery("input[name='_csrf_token']").each(function(){
+			jQuery(this).val(csrf);
+		});
+	}
 </script>

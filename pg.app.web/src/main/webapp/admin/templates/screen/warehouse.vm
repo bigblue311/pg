@@ -205,7 +205,6 @@ $control.setTemplate("paging.vm")
 					}
 				}]
         	#end
-        	
         },
         plugins : [cascade],
         store : store

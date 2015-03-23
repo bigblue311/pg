@@ -82,6 +82,7 @@ public class TransactionManagerImpl implements TransactionManager{
 	public void createPurchase(PurchaseDO purchaseDO, Long employeeId) {
 		purchaseDAO.insert(purchaseDO);
 		Long orderId = purchaseDO.getOrderId();
+		recalculate(orderId);
 		
 		OpLogDO opLogDO = new OpLogDO();
 		opLogDO.setEmployeeId(employeeId);
@@ -116,6 +117,7 @@ public class TransactionManagerImpl implements TransactionManager{
 			opLogDO.setAction(getOpLogAction(purchaseDO,employeeId));
 			opLogDAO.insert(opLogDO);
 			purchaseDAO.update(purchaseDO);
+			recalculate(purchaseDO.getOrderId());
 		}
 	}
 	
@@ -265,4 +267,47 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		return msg;
 	}
+
+	@Override
+	public void deletePurchase(Long id) {
+		PurchaseDO purchaseDO = purchaseDAO.getById(id);
+		recalculate(purchaseDO.getOrderId());
+		purchaseDAO.delete(id);
+	}
+	
+	private void recalculate(Long orderId){
+		OrderDO order = orderDAO.getById(orderId);
+		if(order == null){
+			return;
+		}
+		PurchaseQueryCondition queryCondition = new PurchaseQueryCondition();
+		queryCondition.setOrderId(orderId);
+		List<PurchaseDO> list = purchaseDAO.getByCondition(queryCondition);
+		Double total = 0.0d;
+		for(PurchaseDO purchaseDO : list){
+			if(purchaseDO!=null && purchaseDO.getPrice()!=null && purchaseDO.getQuantity()!=null){
+				total += purchaseDO.getPrice() * purchaseDO.getQuantity();
+			}
+		}
+		order.setTotalPrice(total);
+		orderDAO.update(order);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

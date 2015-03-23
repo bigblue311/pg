@@ -8,9 +8,11 @@ import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.dataresolver.Params;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.pg.biz.manager.CustomerManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.dal.enumerate.OrderStatusEnum;
 import com.pg.dal.enumerate.ResourceEnum;
+import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.query.OrderQueryCondition;
 import com.pg.web.admin.model.json.CrumbJson;
@@ -21,21 +23,30 @@ public class Order {
 	@Autowired
 	private TransactionManager transactionManager;
 	
-	public void execute(@Params OrderQueryCondition query,
+	@Autowired
+	private CustomerManager customerManager;
+	
+	public void execute(@Params OrderQueryCondition queryCondition,
 						Context context) {
-		setCrumb(context);
+		setCrumb(context,queryCondition.getCustomerId());
 		Paging<OrderDO> pageList = Paging.emptyPage();
-		pageList = transactionManager.getOrderDOPage(query);
+		pageList = transactionManager.getOrderDOPage(queryCondition);
 		
-		context.put("query", query);
+		context.put("query", queryCondition);
 		context.put("paging", pageList);
 		context.put("list", JSONObject.toJSONString(pageList.getData()));
 		context.put("statusEnum", OrderStatusEnum.getAll());
 	}
 	
-	private void setCrumb(Context context){
+	private void setCrumb(Context context,Long customerId){
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.订单管理.getName(),ResourceEnum.订单管理.getUri()));
+		if(customerId != null) {
+			CustomerDO customerDO = customerManager.getById(customerId);
+			crumbs.add(new CrumbJson(customerDO.getName()+"的订单",ResourceEnum.订单管理.getUri()+"?customerId="+customerId));
+		
+			context.put("customerName", customerDO.getName());
+		}
 		context.put("crumbs", crumbs);
 		context.put("crumbDesc", ResourceEnum.订单管理.getDesc());
 	}

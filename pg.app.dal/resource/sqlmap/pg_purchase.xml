@@ -116,6 +116,10 @@
     select * from pg_purchase where id = #id#  
   </select>
   
+  <delete id="deleteById" parameterClass="java.lang.Long">
+    delete from pg_purchase where id = #id#
+  </delete>
+  
   <sql id="where">
   	<include refid="validate" />
   	<dynamic prepend="where">
