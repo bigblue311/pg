@@ -35,13 +35,6 @@ public interface WarehouseManager {
 	WarehouseDO getById(Long id);
 	
 	/**
-	 * 根据用户ID获取
-	 * @param customerId
-	 * @return
-	 */
-	List<WarehouseDO> getByCustomerId(Long customerId);
-	
-	/**
 	 * 
 	 * @return
 	 */

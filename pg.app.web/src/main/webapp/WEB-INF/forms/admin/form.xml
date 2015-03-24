@@ -169,7 +169,7 @@
 			<field name="keeper" displayName="联系人" />
 			<field name="mobile" displayName="联系手机" />
 			<field name="phone" displayName="联系电话" />
-			<field name="deposite" displayName="定金" />
+			<field name="deposit" displayName="定金" />
 			<field name="totalPrice" displayName="总价格" />
 			<field name="transportFee" displayName="物流费" />
 			<field name="transportCode" displayName="物流编码" />

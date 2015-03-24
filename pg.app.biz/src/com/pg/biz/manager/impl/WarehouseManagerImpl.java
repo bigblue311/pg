@@ -40,13 +40,6 @@ public class WarehouseManagerImpl implements WarehouseManager{
 	}
 
 	@Override
-	public List<WarehouseDO> getByCustomerId(Long customerId) {
-		WarehouseQueryCondition queryCondition = new WarehouseQueryCondition();
-		queryCondition.setCustomerId(customerId);
-		return warehouseDAO.getByCondition(queryCondition);
-	}
-
-	@Override
 	public List<WarehouseDO> getByCondition(WarehouseQueryCondition queryCondition) {
 		return warehouseDAO.getByCondition(queryCondition);
 	}
