@@ -14,6 +14,7 @@
     <result property="gmtModify" column="gmt_modify"/>
     <result property="customerId" column="customer_id"/>
     <result property="customerName" column="customer_name"/>
+    <result property="publishId" column="publish_id"/>
     <result property="prodType" column="prod_type"/>
     <result property="extendId" column="extend_id"/>
     <result property="extendCode" column="extend_code"/>
@@ -33,6 +34,7 @@
       gmt_modify,
       customer_id,
       customer_name,
+      publish_id,
       prod_type,
       extend_id,
       extend_code,
@@ -45,7 +47,7 @@
       comment
     ) values (
       now(), now(),
-      #customerId#, #customerName#, #prodType#, #extendId#, #extendCode#, 
+      #customerId#, #customerName#, #publishId#, #prodType#, #extendId#, #extendCode#, 
       #quantity#, #unit#, #price#, #orderId#, #name#, #title#, #comment#
     )
     ]]>
@@ -57,6 +59,11 @@
   <update id="update" parameterClass="Purchase">
     update pg_purchase set 
     <dynamic>
+      <isNotEmpty property="publishId">  
+         <![CDATA[   
+           publish_id = #publishId#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="prodType">  
          <![CDATA[   
            prod_type = #prodType#,
@@ -138,6 +145,11 @@
         	customer_name like concat('%',#customerName#,'%')
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="publishId" prepend="and">
+        	<![CDATA[ 
+        	publish_id = #publishId#
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="prodType" prepend="and">
         	<![CDATA[ 
         	prod_type = #prodType#
@@ -176,11 +188,13 @@
   	<isNull property="name">
   	<isNull property="customerId">
   	<isNull property="customerName">
+  	<isNull property="publishId">
   	<isNull property="prodType">
   	<isNull property="extendId">
   	<isNull property="extendCode">
   	<isNull property="orderId">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
 	</isNull>

@@ -85,9 +85,9 @@
            mobile = #mobile#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="deposite">  
+      <isNotEmpty property="deposit">  
          <![CDATA[   
-           deposite = #deposite#,
+           deposit = #deposit#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="totalPrice">  

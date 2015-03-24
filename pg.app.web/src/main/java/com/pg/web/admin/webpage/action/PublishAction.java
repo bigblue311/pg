@@ -29,10 +29,14 @@ public class PublishAction {
 		if(ProdTypeEnum.商品.getCode().equals(form.getProdType())){
 			ProductDO productDO = productManager.getProductById(form.getExtendId());
 			form.setExtendCode(productDO.getCode());
+			form.setName(productDO.getName());
+			form.setTitle(productDO.getTitle());
 		}
 		if(ProdTypeEnum.商品包.getCode().equals(form.getProdType())){
 			PackageDO packageDO = productManager.getPackageById(form.getExtendId());
 			form.setExtendCode(packageDO.getCode());
+			form.setName(packageDO.getName());
+			form.setTitle(packageDO.getTitle());
 		}
 	}
 	

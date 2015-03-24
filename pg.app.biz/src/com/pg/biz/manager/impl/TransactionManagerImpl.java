@@ -14,12 +14,14 @@ import com.pg.dal.dao.OpLogDAO;
 import com.pg.dal.dao.OrderDAO;
 import com.pg.dal.dao.PackageDAO;
 import com.pg.dal.dao.ProductDAO;
+import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.dao.PurchaseDAO;
 import com.pg.dal.enumerate.OrderStatusEnum;
 import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.OpLogDO;
 import com.pg.dal.model.OrderDO;
+import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.OpLogQueryCondition;
 import com.pg.dal.query.OrderQueryCondition;
@@ -48,6 +50,9 @@ public class TransactionManagerImpl implements TransactionManager{
 	private ProductDAO productDAO;
 	
 	@Autowired
+	private PublishDAO publishDAO;
+	
+	@Autowired
 	private PurchaseDAO purchaseDAO;
 	
 	@Override
@@ -72,7 +77,7 @@ public class TransactionManagerImpl implements TransactionManager{
 			if(customerDO == null){
 				return;
 			}
-			String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]提交了订单";
+			String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]提交了订单";
 			opLogDO.setAction(msg);
 			opLogDAO.insert(opLogDO);
 		}
@@ -91,9 +96,15 @@ public class TransactionManagerImpl implements TransactionManager{
 		if(customerDO == null){
 			return;
 		}
-		String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]提交了购买"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
+		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]购买了"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
+		
+		PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
+		if(publishDO.getBalance()!=null){
+			publishDO.setBalance(publishDO.getBalance() - purchaseDO.getQuantity());
+		}
+		publishDAO.update(publishDO);
 	}
 
 	@Override
@@ -111,6 +122,8 @@ public class TransactionManagerImpl implements TransactionManager{
 	@Override
 	public void updatePurchase(PurchaseDO purchaseDO, Long employeeId) {
 		if(purchaseDO != null){
+			PurchaseDO origin = purchaseDAO.getById(purchaseDO.getId());
+			
 			OpLogDO opLogDO = new OpLogDO();
 			opLogDO.setEmployeeId(employeeId);
 			opLogDO.setOrderId(purchaseDO.getId());
@@ -118,6 +131,12 @@ public class TransactionManagerImpl implements TransactionManager{
 			opLogDAO.insert(opLogDO);
 			purchaseDAO.update(purchaseDO);
 			recalculate(purchaseDO.getOrderId());
+			
+			PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
+			if(publishDO.getBalance()!=null){
+				publishDO.setBalance(publishDO.getBalance() + origin.getQuantity() - purchaseDO.getQuantity());
+			}
+			publishDAO.update(publishDO);
 		}
 	}
 	
@@ -211,8 +230,13 @@ public class TransactionManagerImpl implements TransactionManager{
 			return "";
 		}
 		Long id = purchaseDO.getId();
+		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		if(customerDO == null){
+			return "";
+		}
 		PurchaseDO originDO = purchaseDAO.getById(id);
-		String msg = getEmployeeName(employeeId)+"操作了";
+		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]操作了"+purchaseDO.getName();
+		
 		if(purchaseDO.getQuantity() != null){
 			msg += "数量["+originDO.getQuantity()+"]:"+purchaseDO.getQuantity()+";";
 		}
@@ -227,8 +251,12 @@ public class TransactionManagerImpl implements TransactionManager{
 			return "";
 		}
 		Long id = orderDO.getId();
-		OrderDO originDO = orderDAO.getById(id); 
-		String msg = getEmployeeName(employeeId)+"操作了";
+		OrderDO originDO = orderDAO.getById(id);
+		CustomerDO customerDO = customerDAO.getById(orderDO.getCustomerId());
+		if(customerDO == null){
+			return "";
+		}
+		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]操作了";
 		if(StringTools.isNotEmpty(orderDO.getAddressTo())){
 			msg += "收货仓库地址["+originDO.getAddressTo()+"]:"+orderDO.getAddressTo()+";";
 		}
@@ -269,10 +297,26 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 
 	@Override
-	public void deletePurchase(Long id) {
+	public void deletePurchase(Long id,Long employeeId) {
 		PurchaseDO purchaseDO = purchaseDAO.getById(id);
 		recalculate(purchaseDO.getOrderId());
+		OpLogDO opLogDO = new OpLogDO();
+		opLogDO.setEmployeeId(employeeId);
+		opLogDO.setOrderId(purchaseDO.getOrderId());
+		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		if(customerDO == null){
+			return;
+		}
+		String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]删除了"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
+		opLogDO.setAction(msg);
+		opLogDAO.insert(opLogDO);
 		purchaseDAO.delete(id);
+		
+		PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
+		if(publishDO.getBalance()!=null){
+			publishDO.setBalance(publishDO.getBalance() + purchaseDO.getQuantity());
+		}
+		publishDAO.update(publishDO);
 	}
 	
 	private void recalculate(Long orderId){
@@ -293,21 +337,3 @@ public class TransactionManagerImpl implements TransactionManager{
 		orderDAO.update(order);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

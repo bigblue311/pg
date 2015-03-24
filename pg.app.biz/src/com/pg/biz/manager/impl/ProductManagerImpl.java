@@ -296,4 +296,14 @@ public class ProductManagerImpl implements ProductManager{
 		page.setData(publishList);
 		return page;
 	}
+
+	@Override
+	public PublishDO getPublishById(Long id) {
+		return publishDAO.getById(id);
+	}
+
+	@Override
+	public Map<String, String> getPublishEnumMap() {
+		return publishDAO.getEnumMap();
+	}
 }

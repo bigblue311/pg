@@ -39,6 +39,10 @@ public class OpLogDO extends EntityDO implements Serializable{
 		this.orderId = orderId;
 	}
 	
+	public String getMsg(){
+		return action.replace(":", "->").replace(";", "<br>");
+	}
+	
 	public OpLogQueryCondition toQueryCondition(){
 		OpLogQueryCondition queryCondition = new OpLogQueryCondition();
 		queryCondition.setQueryMap(this.toMap());

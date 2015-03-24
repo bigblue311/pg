@@ -152,6 +152,19 @@ public interface ProductManager {
 	void updatePublish(PublishDO publishDO);
 	
 	/**
+	 * 根据ID获取
+	 * @param id
+	 * @return
+	 */
+	PublishDO getPublishById(Long id);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Map<String,String> getPublishEnumMap();
+	
+	/**
 	 * 删除一个商品/商品包
 	 * @param id
 	 */

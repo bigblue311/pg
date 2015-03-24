@@ -106,10 +106,6 @@ $control.setTemplate("paging.vm")
 	<input type="hidden" id="customerId" name="$group.customerId.key" value=""/>
 	<div class="row">
       <div class="control-group">
-        <label class="control-label">客户名称：</label>
-		<div class="controls">
-			<label id="customerName"></label>
-		</div>
         <label class="control-label">订单状态：</label>
         <div class="controls">
           	<select id="status" name="$group.status.key">
@@ -118,6 +114,10 @@ $control.setTemplate("paging.vm")
 				#end
 			</select>
         </div>
+        <label class="control-label">客户名称：</label>
+		<div class="controls">
+			<label id="customerName" style="position: relative;top: 2px;"></label>
+		</div>
 	  </div>
 	</div>
 	<div class="row">
@@ -171,7 +171,7 @@ $control.setTemplate("paging.vm")
 		<div class="control-group">
 	        <label class="control-label">发货地址：</label>
 	        <div class="controls">
-	          <input type="text" id="addressFrom" name="$group.addressFrom.key" class="input-large control-text addressFrom">
+	          <input type="text" id="addressFrom" name="$group.addressFrom.key" class="input-large control-text">
 	        </div>
 	    </div>
 	</div>
@@ -179,7 +179,7 @@ $control.setTemplate("paging.vm")
 		<div class="control-group">
 	        <label class="control-label">收货地址：</label>
 			<div class="controls">
-				<input type="text" id="addressTo" name="$group.addressTo.key" class="input-large control-text addressTo">
+				<input type="text" id="addressTo" name="$group.addressTo.key" class="input-large control-text">
 			</div>
 	  </div>
 	</div>

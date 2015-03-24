@@ -1,0 +1,306 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<script type="text/javascript" src="/js/Location/location.js"></script>
+#set ($orderGroup = $form.order.defaultInstance)
+#set ($orderDO = $order.orderDO)
+#set ($customerDO = $order.customerDO)
+#set ($opLogList = $order.opLogList)
+#set ($purchaseList = $order.purchaseList)
+<h1>订单详情</h1>
+<hr>
+<form method="post" class="form-horizontal">
+	$csrfToken.hiddenField
+	<input type="hidden" name="action" value="orderAction"/>  
+	<input type="hidden" name="event_submit_do_update" value="true"/>
+	<input type="hidden" name="$orderGroup.id.key" value="$!orderDO.id"/>
+	<input type="hidden" name="$orderGroup.customerId.key" value="$!orderDO.customerId"/>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">订单状态：</label>
+        <div class="controls">
+          	<select name="$orderGroup.status.key">
+				#foreach($status in $statusEnum)
+				<option
+				    #if($!orderDO.status == $status.code)
+				    	selected 
+				    #end 
+					value="$!status.code">$!status.desc</option>
+				#end
+			</select>
+        </div>
+        <label class="control-label">客户名称：</label>
+		<div class="controls">
+			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$!orderDO.customerName</label>
+		</div>
+		<label class="control-label">交易时间：</label>
+		<div class="controls">
+			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$dateTools.DateToString($!orderDO.gmtCreate)</label>
+		</div>
+		<label class="control-label">最后更新：</label>
+		<div class="controls">
+			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$dateTools.DateToString($!orderDO.gmtModify)</label>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">定金：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.deposit.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="$!orderDO.deposit">
+		</div>
+        <label class="control-label">交易金额：</label>
+        <div class="controls">
+          	<input type="text" name="$orderGroup.totalPrice.key" class="input-normal control-text"
+          	data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="$!orderDO.totalPrice">
+        </div>
+        <label class="control-label">物流费：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.transportFee.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="$!orderDO.transportFee">
+		</div>
+        <label class="control-label">物流编号：</label>
+        <div class="controls">
+          	<input type="text" name="$orderGroup.transportCode.key" class="input-normal control-text" value="$!orderDO.transportCode">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">联系人：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.keeper.key" class="input-normal control-text" value="$!orderDO.keeper">
+		</div>
+        <label class="control-label">联系手机：</label>
+        <div class="controls">
+          	<input type="text" name="$orderGroup.mobile.key" class="input-normal control-text" value="$!orderDO.mobile">
+        </div>
+        <label class="control-label">联系电话：</label>
+        <div class="controls">
+          	<input type="text" name="$orderGroup.phone.key" class="input-normal control-text" value="$!orderDO.phone">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="control-group">
+	        <label class="control-label">发货地址：</label>
+	        <div class="controls">
+	          	<input type="text" name="$orderGroup.addressFrom.key" class="input-large control-text" 
+	          	value="$!orderDO.addressFrom" style="margin-right: 110px;">
+	        </div>
+	        <label class="control-label">收货地址：</label>
+			<div class="controls">
+				<input type="text" name="$orderGroup.addressTo.key" class="input-large control-text" value="$!orderDO.addressTo">
+			</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">备注：</label>
+        <div class="controls control-row4">
+          <textarea name="$orderGroup.comment.key" class="input-large">$!orderDO.comment</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+		<div class="form-actions offset3">
+			<button class="button button-primary"><i class="icon-ok icon-white"></i>保存</button>
+			<button type="reset" class="button"><i class="icon-repeat"></i>重置</button>
+		</div>
+	</div>
+</form>
+#set ($group = $form.purchase.defaultInstance)
+<form method="post" id="actionFrom">
+	$csrfToken.hiddenField
+	<input type="hidden" name="action" value="purchaseAction"/>  
+	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
+	<input type="hidden" id="id" name="$group.id.key" value=""/>
+	<input type="hidden" id="publishId" name="$group.publishId.key" value=""/>
+	<input type="hidden" id="price" name="$group.price.key" value=""/>
+	<input type="hidden" id="quantity" name="$group.quantity.key" value=""/>
+	<input type="hidden" id="comment" name="$group.comment.key" value=""/>
+	<input type="hidden" id="customerId" name="$group.customerId.key" value="$!orderDO.customerId"/>
+	<input type="hidden" id="orderId" name="$group.orderId.key" value="$!orderDO.id"/>
+</form>
+<br><br>
+<h1>订单商品</h1>
+<hr>
+<div id="grid"></div>
+<script type="text/javascript">
+      var Grid = BUI.Grid,
+      Data = BUI.Data;
+      var Grid = Grid,
+      Store = Data.Store,
+      publishObj = #if($!{publishEnum})#noescape()$!{publishEnum}#end#else null #end,
+      columns = [
+		{
+			title : '客户名称',
+			elCls: 'left',
+			dataIndex : 'customerName',
+			width:'10%'
+		},{
+            title : '商品名称',
+            elCls: 'left',
+            dataIndex :'publishId',
+            editor : {
+				xtype : 'select',
+				items : publishObj,
+				rules : {required : true}
+			},
+			renderer : Grid.Format.enumRenderer(publishObj),
+		    width:'30%'
+        },{
+            title : '单价',
+            elCls: 'left',
+            dataIndex :'price',
+            editor : {
+				xtype : 'number',
+				rules : {required : true}
+		  	},
+            width:'10%'
+        },{
+            title : '数量',
+            elCls: 'left',
+            dataIndex :'quantity',
+            editor : {
+				xtype : 'number',
+				rules : {required : true}
+		  	},
+            width:'10%'
+        },{
+            title : '备注',
+            elCls: 'left',
+            dataIndex :'comment',
+            editor : {
+				xtype : 'text',
+				rules : {required : false}
+		  	},
+            width:'30%'
+        },{
+			title : '操作',
+			elCls: 'center',
+			dataIndex : 'oper',
+			renderer : function(val,obj,index) {
+				var edit = '<span class="grid-command btn-edit">编辑</span>';
+				var del = '<span class="grid-command btn-del">删除</span>';
+				return edit+del;
+			},
+	        width:'10%'
+		}],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+      var store = new Store({
+        data : data,
+        listeners : {
+        	'update' : updateFunction
+        }
+      }),
+      editing = new Grid.Plugins.RowEditing({
+			triggerCls : 'btn-edit',
+			triggerSelected : false
+	  }),
+      grid = new Grid.Grid({
+        render:'#grid',
+        width:'100%',//这个属性一定要设置
+        columns : columns,
+        bbar : {
+        	items : [
+			{
+				btnCls : 'button button-small btn-add',
+				text : '<i class="icon-plus"></i>添加',
+				listeners : {
+					'click' : addFunction
+				}
+			}
+			]
+        },
+        plugins : [editing],
+        store : store
+      });
+
+    grid.render();
+    
+    jQuery(".btn-del").click(function(){
+    	BUI.Message.Confirm("确定删除该订购记录吗?", function() {
+    		var selections = grid.getSelection();
+        	var record = selections[0];
+        	deleteFunction(record);
+		}, 'question');
+    });
+    
+  //添加记录
+	function addFunction() {
+		var newData = {};
+		store.addAt(newData, 0);
+		editing.edit(newData, 'id'); //添加记录后，直接编辑
+	}
+    
+    function updateFunction(e){
+    	var id = e.record.id;
+    	var publishId = e.record.publishId;
+    	var price = e.record.price;
+    	var comment = e.record.comment;
+    	var quantity = e.record.quantity;
+    	var event = "event_submit_do_update";
+    	jQuery("#id").val(id);
+    	jQuery("#publishId").val(publishId);
+    	jQuery("#price").val(price);
+    	jQuery("#comment").val(comment);
+    	jQuery("#quantity").val(quantity);
+    	jQuery("#event").attr("name",event);
+    	jQuery.ajax({
+    		type: "get",
+    		url: '/admin/api/checkBalance.json?purchaseId='+id+'&publishId='+publishId+'&quantity='+quantity,
+    		success:function(data, textStatus){
+    			if(data.success){
+    				jQuery("#actionFrom").submit();
+    			} else {
+    				alert(data.message);
+    			}
+    		}
+     	});
+    }
+    
+    function deleteFunction(record){
+    	var id = e.record.id;
+    	var publishId = e.record.publishId;
+    	var price = e.record.price;
+    	var comment = e.record.comment;
+    	var quantity = e.record.quantity;
+    	var event = "event_submit_do_delete";
+    	jQuery("#id").val(id);
+    	jQuery("#publishId").val(publishId);
+    	jQuery("#price").val(price);
+    	jQuery("#comment").val(comment);
+    	jQuery("#quantity").val(quantity);
+    	jQuery("#event").attr("name",event);
+    	jQuery("#actionFrom").submit();
+    }
+</script>
+<br><br>
+<h1>操作日志</h1>
+<hr>
+<div>
+	<table style="width:100%;">
+		#foreach($op in $opLogList)
+		<tr style="margin:5px;border-bottom:1px dashed lightgrey;">
+			<td style="vertical-align:top;width:150px;">
+				$dateTools.DateToString($op.gmtCreate)
+			</td>
+			<td>
+				#noescape()$op.getMsg()#end
+			</td>
+		</tr>
+		#end
+	</table>
+</div>
+<script type="text/javascript">
+jQuery(function(){
+	var customerId = jQuery("#customerId").val();
+	var location = new Location();
+	location.addressFrom("addressFrom",null);
+	location.addressTo("addressTo",customerId,function(obj){
+		jQuery("#keeper").val(keeper);
+ 		jQuery("#mobile").val(mobile);
+ 		jQuery("#phone").val(phone);
+	});
+});
+</script>

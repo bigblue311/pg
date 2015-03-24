@@ -34,6 +34,15 @@ public class PurchaseQueryCondition extends QueryCondition {
 		return getLong("customerName");
 	}
 	
+	public PurchaseQueryCondition setPublishId(Long publishId) {
+		put("publishId",publishId);
+		return this;
+	}
+	
+	public Long getPublishId(){
+		return getLong("publishId");
+	}
+	
 	public PurchaseQueryCondition setProdType(String prodType){
 		put("prodType",prodType);
 		return this;

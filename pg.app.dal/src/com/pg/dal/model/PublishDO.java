@@ -24,6 +24,8 @@ public class PublishDO extends EntityDO implements Serializable{
 	private String prodType;	//外部类型(商品/商品包)
 	private Long extendId;		//外部ID(商品/商品包)
 	private String extendCode;	//外部编码(商品/商品包)
+	private String 	name;		//产品名称
+	private String 	title;		//产品标题
 	private Long limitBuy;		//最小预定量
 	private Date validFrom;		//有效期开始
 	private Date validTo;		//有效期结束
@@ -76,6 +78,18 @@ public class PublishDO extends EntityDO implements Serializable{
 	}
 	public void setExtendCode(String extendCode) {
 		this.extendCode = extendCode;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getDescription() {
 		return description;

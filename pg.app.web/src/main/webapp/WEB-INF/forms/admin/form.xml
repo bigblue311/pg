@@ -152,11 +152,9 @@
 		
 		<group name="purchase" extends="csrfCheck">
 			<field name="id" displayName="ID" />
-			<field name="prodType" displayName="外部类型" />
-			<field name="extendId" displayName="外部ID" />
-			<field name="quantity" displayName="数量" />
-			<field name="unit" displayName="单位" />
+			<field name="publishId" displayName="商品ID" />
 			<field name="price" displayName="价格" />
+			<field name="quantity" displayName="数量" />
 			<field name="comment" displayName="备注" />
 			<field name="customerId" displayName="客户ID" />
 			<field name="orderId" displayName="订单ID" />

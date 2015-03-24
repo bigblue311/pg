@@ -43,6 +43,15 @@ public class PublishQueryCondition extends QueryCondition {
 		return getString("extendCode");
 	}
 	
+	public PublishQueryCondition setName(String name){
+		put("name", name);
+		return this;
+	}
+	
+	public String getName(){
+		return getString("name");
+	}
+	
 	public PublishQueryCondition setValid(Boolean valid) {
 		put("valid",valid);
 		return this;

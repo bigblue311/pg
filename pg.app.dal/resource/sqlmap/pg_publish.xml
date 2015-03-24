@@ -21,6 +21,8 @@
     <result property="prodType" column="prod_type"/>
     <result property="extendId" column="extend_id"/>
     <result property="extendCode" column="extend_code"/>
+    <result property="name" column="name"/>
+    <result property="title" column="title"/>
     <result property="limitBuy" column="limit_buy"/>
     <result property="validFrom" column="valid_from"/>
     <result property="validTo" column="valid_to"/>
@@ -41,6 +43,8 @@
       prod_type,
       extend_id,
       extend_code,
+      name,
+      title,
       limit_buy,
       valid_from,
       valid_to,
@@ -48,8 +52,9 @@
     ) values (
       now(), now(),
       #price#, #unit#, #balance#, #warehouseId#, #img#,
-      #description#, #prodType#, #extendId#, #extendCode#, #limitBuy#,
-      #validFrom#, #validTo#, #enable#
+      #description#, #prodType#, #extendId#, #extendCode#, 
+      #name#, #title#, #limitBuy#, #validFrom#, #validTo#, 
+      #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -105,6 +110,16 @@
            extend_code = #extendCode#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="name">  
+         <![CDATA[   
+           name = #name#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="title">  
+         <![CDATA[   
+           title = #title#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="limitBuy">  
          <![CDATA[   
            limit_buy = #limitBuy#,
@@ -154,6 +169,11 @@
   <sql id="where">
   	<include refid="validate" />
   	<dynamic prepend="where">
+  		<isNotEmpty property="name" prepend="and">
+        	<![CDATA[ 
+        	name like concat('%',#name#,'%')
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="warehouseId" prepend="and">
         	<![CDATA[ 
         	warehouse_id = #warehouseId#
@@ -191,6 +211,7 @@
   </sql>
   
   <sql id="validate">
+  	<isNull property="name">
   	<isNull property="warehouseId">
   	<isNull property="prodType">
   	<isNull property="extendId">
@@ -201,6 +222,7 @@
     </isNull>
     </isNull>
     </isNull>
+	</isNull>
 	</isNull>
   </sql>
   

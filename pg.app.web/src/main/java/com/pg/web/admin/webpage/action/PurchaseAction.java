@@ -14,6 +14,7 @@ import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.PackageDO;
 import com.pg.dal.model.ProductDO;
+import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.web.admin.common.AuthenticationToken;
 
@@ -47,6 +48,11 @@ public class PurchaseAction {
 		CustomerDO customer = customerManager.getById(from.getCustomerId());
 		from.setCustomerName(customer.getName());
 		
+		PublishDO publishDO = productManager.getPublishById(from.getPublishId());
+		from.setProdType(publishDO.getProdType());
+		from.setExtendId(publishDO.getExtendId());
+		from.setExtendCode(publishDO.getExtendCode());
+		
 		if(ProdTypeEnum.商品.getCode().equals(from.getProdType())){
 			ProductDO productDO = productManager.getProductById(from.getExtendId());
 			from.setExtendCode(productDO.getCode());
@@ -62,6 +68,7 @@ public class PurchaseAction {
 	}
 	
 	public void doDelete(@FormGroup("purchase") PurchaseDO purchaseDO){
-		transactionManager.deletePurchase(purchaseDO.getId());
+		EmployeeDO loginedUser = AuthenticationToken.get(session);
+		transactionManager.deletePurchase(purchaseDO.getId(),loginedUser.getId());
 	}
 }
