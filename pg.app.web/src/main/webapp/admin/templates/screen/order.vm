@@ -382,9 +382,9 @@ $control.setTemplate("paging.vm")
     	var location = new Location();
     	location.addressFrom("addressFrom",null);
 		location.addressTo("addressTo",customerId,function(obj){
-			jQuery("#keeper").val(keeper);
-     		jQuery("#mobile").val(mobile);
-     		jQuery("#phone").val(phone);
+			jQuery("#keeper").val(obj.keeper);
+	 		jQuery("#mobile").val(obj.mobile);
+	 		jQuery("#phone").val(obj.phone);
 		});
 
     	jQuery("#id").val(id);
@@ -433,9 +433,9 @@ $control.setTemplate("paging.vm")
     	#if($query.customerId)
 			jQuery("#customerId").val('$query.customerId');
 	    	location.addressTo("qAddressTo","$!query.customerId",function(obj){
-				jQuery("#keeper").val(keeper);
-	     		jQuery("#mobile").val(mobile);
-	     		jQuery("#phone").val(phone);
+				jQuery("#keeper").val(obj.keeper);
+	     		jQuery("#mobile").val(obj.mobile);
+	     		jQuery("#phone").val(obj.phone);
 			});
 		#end
     }

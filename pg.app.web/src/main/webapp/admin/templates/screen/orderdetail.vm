@@ -68,28 +68,29 @@
       <div class="control-group">
         <label class="control-label">联系人：</label>
 		<div class="controls">
-			<input type="text" name="$orderGroup.keeper.key" class="input-normal control-text" value="$!orderDO.keeper">
+			<input type="text" id="keeper" name="$orderGroup.keeper.key" class="input-normal control-text" value="$!orderDO.keeper">
 		</div>
         <label class="control-label">联系手机：</label>
         <div class="controls">
-          	<input type="text" name="$orderGroup.mobile.key" class="input-normal control-text" value="$!orderDO.mobile">
+          	<input type="text" id="mobile" name="$orderGroup.mobile.key" class="input-normal control-text" value="$!orderDO.mobile">
         </div>
         <label class="control-label">联系电话：</label>
         <div class="controls">
-          	<input type="text" name="$orderGroup.phone.key" class="input-normal control-text" value="$!orderDO.phone">
+          	<input type="text" id="phone" name="$orderGroup.phone.key" class="input-normal control-text" value="$!orderDO.phone">
         </div>
 	  </div>
 	</div>
 	<div class="row">
 		<div class="control-group">
 	        <label class="control-label">发货地址：</label>
-	        <div class="controls">
-	          	<input type="text" name="$orderGroup.addressFrom.key" class="input-large control-text" 
-	          	value="$!orderDO.addressFrom" style="margin-right: 110px;">
+	        <div class="controls" style="margin-right: 96px;">
+	          	<input type="text" id="addressFrom" name="$orderGroup.addressFrom.key" class="input-large control-text" 
+	          	value="$!orderDO.addressFrom">
 	        </div>
 	        <label class="control-label">收货地址：</label>
 			<div class="controls">
-				<input type="text" name="$orderGroup.addressTo.key" class="input-large control-text" value="$!orderDO.addressTo">
+				<input type="text" id="addressTo" name="$orderGroup.addressTo.key" class="input-large control-text" 
+				value="$!orderDO.addressTo">
 			</div>
 	  </div>
 	</div>
@@ -230,7 +231,7 @@
 	function addFunction() {
 		var newData = {};
 		store.addAt(newData, 0);
-		editing.edit(newData, 'id'); //添加记录后，直接编辑
+		editing.edit(newData, 'comment'); //添加记录后，直接编辑
 	}
     
     function updateFunction(e){
@@ -298,9 +299,9 @@ jQuery(function(){
 	var location = new Location();
 	location.addressFrom("addressFrom",null);
 	location.addressTo("addressTo",customerId,function(obj){
-		jQuery("#keeper").val(keeper);
- 		jQuery("#mobile").val(mobile);
- 		jQuery("#phone").val(phone);
+		jQuery("#keeper").val(obj.keeper);
+ 		jQuery("#mobile").val(obj.mobile);
+ 		jQuery("#phone").val(obj.phone);
 	});
 });
 </script>

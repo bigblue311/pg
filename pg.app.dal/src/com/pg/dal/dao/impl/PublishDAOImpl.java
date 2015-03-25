@@ -30,8 +30,8 @@ public class PublishDAOImpl extends EntityDAO<PublishDO,PublishQueryCondition> i
 		List<PublishDO> list = this.getByCondition(new PublishQueryCondition());
 		for(PublishDO e: list){
 			String value = e.getName();
-				   value+= " 库存 - "+(e.getBalance()==null?"不限":e.getBalance());
-				   value+= " 最大购买限制 - "+(e.getLimitBuy()==null?"不限":e.getLimitBuy());
+				   value+= "    [库存: "+(e.getBalance()==null?"不限":e.getBalance());
+				   value+= "    最小预定量: "+(e.getLimitBuy()==null?"不限":e.getLimitBuy())+"]";
 			map.put(getEnumKey(e), value);
 		}
 		return map;

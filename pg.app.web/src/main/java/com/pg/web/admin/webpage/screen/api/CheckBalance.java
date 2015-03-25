@@ -26,8 +26,8 @@ public class CheckBalance {
 		Long balance = publishDO.getBalance();
 		Long limitBuy = publishDO.getLimitBuy();
 		if(purchaseId == null){
-			if(limitBuy != null && quantity>limitBuy.intValue()){
-				return Result.newInstance(false, "超过了最大购买限制", false);
+			if(limitBuy != null && quantity<limitBuy.intValue()){
+				return Result.newInstance(false, "低于了最小预定量", false);
 			}
 			if(balance != null && quantity>balance.intValue()){
 				return Result.newInstance(false, "超过了库存剩余", false);
@@ -35,8 +35,8 @@ public class CheckBalance {
 			return Result.newInstance(true, "库存满足", true);
 		} else {
 			PurchaseDO purchaseDO = transactionManager.getPurchaseDOById(purchaseId);
-			if(limitBuy != null && quantity>limitBuy.intValue()){
-				return Result.newInstance(false, "超过了最大购买限制", false);
+			if(limitBuy != null && quantity<limitBuy.intValue()){
+				return Result.newInstance(false, "低于了最小预定量", false);
 			}
 			if(balance != null && (quantity-purchaseDO.getQuantity())>balance.intValue()){
 				return Result.newInstance(false, "超过了库存剩余", false);
