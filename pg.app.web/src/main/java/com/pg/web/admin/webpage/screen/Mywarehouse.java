@@ -36,6 +36,5 @@ public class Mywarehouse {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.我的仓库.getName(),ResourceEnum.我的仓库.getUri()));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.我的仓库.getDesc());
 	}
 }

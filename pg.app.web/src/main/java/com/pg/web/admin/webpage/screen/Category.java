@@ -47,6 +47,5 @@ public class Category {
 		crumbs.add(new CrumbJson(ResourceEnum.品类管理.getName(),ResourceEnum.品类管理.getUri()));
 		crumbs = Lists.reverse(crumbs);
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.品类管理.getDesc());
 	}
 }

@@ -1,5 +1,8 @@
 package com.pg.biz.manager;
 
+import java.util.List;
+
+import com.pg.biz.model.OrderStatisticVO;
 import com.pg.biz.model.OrderVO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.model.PurchaseDO;
@@ -56,4 +59,7 @@ public interface TransactionManager {
 	Paging<OrderDO> getOrderDOPage(OrderQueryCondition queryCondition);
 	Paging<PurchaseDO> getPurchaseDOPage(PurchaseQueryCondition queryCondition);
 	Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition);
+	
+	List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition);
+	OrderStatisticVO getTodayOrderStatistic();
 }

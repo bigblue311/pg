@@ -142,6 +142,11 @@ public class OrderQueryCondition extends QueryCondition {
 		return getString("status");
 	}
 	
+	public OrderQueryCondition status(String... status) {
+		put("statuses",status);
+		return this;
+	}
+	
 	public void setCreateStart(String createStart){
 		put("createStart",createStart);
 		setGmtCreateStart(StringToDate(createStart));

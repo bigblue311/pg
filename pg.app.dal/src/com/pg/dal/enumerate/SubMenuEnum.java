@@ -9,6 +9,7 @@ public enum SubMenuEnum {
 	后台账号("subMenuEmployee","后台账号","/admin/employee",TopMenuEnum.系统管理),
 	角色权限("subMenuResource","角色权限","/admin/role",TopMenuEnum.系统管理),
 	系统配置("subMenuSystem","系统配置","/admin/system",TopMenuEnum.系统管理),
+	系统通知("subMenuNews","系统通知","/admin/news",TopMenuEnum.系统管理),
 	
 	品牌管理("subMenuBrand","品牌管理","/admin/brand",TopMenuEnum.产品管理),
 	品类管理("subMenuCategory","品类管理","/admin/category",TopMenuEnum.产品管理),

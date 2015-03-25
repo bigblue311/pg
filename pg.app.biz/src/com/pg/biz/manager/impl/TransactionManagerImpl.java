@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.TransactionManager;
+import com.pg.biz.model.OrderAlertVO;
+import com.pg.biz.model.OrderStatisticVO;
 import com.pg.biz.model.OrderVO;
 import com.pg.dal.dao.CustomerDAO;
 import com.pg.dal.dao.EmployeeDAO;
@@ -26,6 +28,7 @@ import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.OpLogQueryCondition;
 import com.pg.dal.query.OrderQueryCondition;
 import com.pg.dal.query.PurchaseQueryCondition;
+import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.common.tools.StringTools;
 import com.victor.framework.dal.basic.Paging;
 
@@ -335,5 +338,54 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		order.setTotalPrice(total);
 		orderDAO.update(order);
+	}
+
+	@Override
+	public OrderStatisticVO getTodayOrderStatistic() {
+		OrderStatisticVO orderStatisticVO = new OrderStatisticVO();
+		List<OrderAlertVO> alertList = Lists.newArrayList();
+		OrderQueryCondition query = new OrderQueryCondition();
+		String[] statusValid = new String[]{OrderStatusEnum.确认.getCode(),
+											OrderStatusEnum.发货.getCode(),
+											OrderStatusEnum.收货.getCode(),
+											OrderStatusEnum.结算.getCode()};
+		
+		query.setGmtCreateStart(DateTools.today()).setGmtCreateStart(DateTools.today());
+		query.status(statusValid);
+		
+		Integer totalCount = orderDAO.getCount(query);
+		Double totalSale = orderDAO.getTotalSale(query);
+		Double totalDeposit = orderDAO.getTotalDeposit(query);
+		
+		orderStatisticVO.setTotalCount(totalCount);
+		orderStatisticVO.setTotalSale(totalSale);
+		orderStatisticVO.setTotalDeposit(totalDeposit);
+		
+		OrderQueryCondition queryToday = new OrderQueryCondition();
+		queryToday.setGmtCreateStart(DateTools.today()).setGmtCreateStart(DateTools.today());
+		for(OrderStatusEnum status : OrderStatusEnum.getAll()){
+			queryToday.setStatus(status.getCode());
+			Integer statusCount = orderDAO.getCount(query);
+			OrderAlertVO orderAlert = new OrderAlertVO();
+			if(statusCount == null){
+				orderAlert.setSuccess(false);
+				orderAlert.setMsg("系统错误,请速联系管理员!");
+			} else {
+				orderAlert.setSuccess(true);
+				orderAlert.setMsg("查询成功");
+			}
+			orderAlert.setCount(statusCount == null?0:statusCount.intValue());
+			orderAlert.setColor(status.getColor());
+			orderAlert.setStatusCode(status.getCode());
+			orderAlert.setStatusDesc(status.getDesc());
+			alertList.add(orderAlert);
+		}
+		orderStatisticVO.setStatusList(alertList);
+		return orderStatisticVO;
+	}
+
+	@Override
+	public List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition) {
+		return orderDAO.getByCondition(queryCondition);
 	}
 }

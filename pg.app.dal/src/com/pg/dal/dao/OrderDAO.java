@@ -34,6 +34,19 @@ public interface OrderDAO {
 	List<OrderDO> getByCondition(OrderQueryCondition queryCondition);
 	
 	/**
+	 * 查询总销售额
+	 * @param queryCondition
+	 * @return
+	 */
+	Double getTotalSale(OrderQueryCondition queryCondition);
+	
+	/**
+	 * 查询总定金
+	 * @param queryCondition
+	 * @return
+	 */
+	Double getTotalDeposit(OrderQueryCondition queryCondition);
+	/**
 	 * 获取分页数据
 	 * @param queryCondition
 	 * @return

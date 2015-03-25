@@ -45,6 +45,5 @@ public class Product {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.产品管理.getName(),ResourceEnum.产品管理.getUri()));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.产品管理.getDesc());
 	}
 }

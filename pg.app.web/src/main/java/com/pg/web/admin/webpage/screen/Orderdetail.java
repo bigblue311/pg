@@ -41,6 +41,5 @@ public class Orderdetail {
 			crumbs.add(new CrumbJson(ResourceEnum.订单详情.getName()+"["+id+"]",ResourceEnum.订单详情.getUri()+"?id="+id));
 		}
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.订单详情.getDesc());
 	}
 }

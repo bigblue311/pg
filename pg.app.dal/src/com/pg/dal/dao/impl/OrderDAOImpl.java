@@ -10,4 +10,28 @@ public class OrderDAOImpl extends EntityDAO<OrderDO,OrderQueryCondition> impleme
 	public OrderDAOImpl() {
 		super(OrderDO.class.getSimpleName());
 	}
+
+	@Override
+	public Double getTotalSale(OrderQueryCondition queryCondition) {
+		Object result = super.queryForEntity(OrderDO.class.getSimpleName(), 
+											 "getTotalSale",
+											 queryCondition.getQueryMap());
+		if(result!=null){
+			return (Double)result;
+		} else {
+			return 0d;
+		}
+	}
+
+	@Override
+	public Double getTotalDeposit(OrderQueryCondition queryCondition) {
+		Object result = super.queryForEntity(OrderDO.class.getSimpleName(), 
+				 							 "getTotalDeposit",
+				 							 queryCondition.getQueryMap());
+		if(result!=null){
+			return (Double)result;
+		} else {
+			return 0d;
+		}
+	}
 }

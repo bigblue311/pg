@@ -35,6 +35,5 @@ public class Package {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.产品打包.getName(),ResourceEnum.产品打包.getUri()));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.产品打包.getDesc());
 	}
 }

@@ -32,6 +32,5 @@ public class Employee {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.后台账号.getName(),ResourceEnum.后台账号.getUri()));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.后台账号.getDesc());
 	}
 }

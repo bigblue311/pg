@@ -46,6 +46,5 @@ public class Publish {
 		List<CrumbJson> crumbs = Lists.newLinkedList();
 		crumbs.add(new CrumbJson(ResourceEnum.商品发布.getName(),ResourceEnum.商品发布.getUri()));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.商品发布.getDesc());
 	}
 }

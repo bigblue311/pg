@@ -41,6 +41,5 @@ public class Customer {
 			}
 		}
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.客户查询.getDesc());
 	}
 }

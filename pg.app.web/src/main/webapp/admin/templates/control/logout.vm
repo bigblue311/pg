@@ -11,12 +11,16 @@
 	#end 
 </div>
 <ul id="js-news" class="js-hidden">
-    <li class="news-item"><a href="#">$!{crumbDesc}</a></li>
+	#if(${newsList})
+		#foreach($news in $newsList)
+			<li class="news-item">#if($!news.url)<a href="#noescape()$news.url#end">#end$!{news.msg}#if($news.url)</a>#end</li>
+		#end	
+	#end 
 </ul>
 <script type="text/javascript">
 	$(function () {
 	    $('#js-news').ticker({
-	    	titleText: '最新订单'
+	    	titleText: '系统通知'
 	    });
 	});
 </script>

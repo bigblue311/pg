@@ -45,6 +45,5 @@ public class Warehouse {
 			crumbs.add(new CrumbJson(customerDO.getName()+"的仓库",ResourceEnum.客户仓库.getUri()+"?customerId="+customerId));
 		}
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.客户仓库.getDesc());
 	}
 }

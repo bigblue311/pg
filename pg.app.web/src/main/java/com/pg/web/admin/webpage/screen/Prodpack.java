@@ -75,6 +75,5 @@ public class Prodpack {
 		PackageDO packageDO = productManager.getPackageById(packageId);
 		crumbs.add(new CrumbJson(packageDO.getName(),ResourceEnum.商品包关系.getUri()+"?packageId="+packageId));
 		context.put("crumbs", crumbs);
-		context.put("crumbDesc", ResourceEnum.商品包关系.getDesc());
 	}
 }
