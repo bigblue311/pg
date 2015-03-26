@@ -19,6 +19,7 @@
     <result property="mobile" column="mobile"/>
     <result property="customerId" column="customer_id"/>
     <result property="customerName" column="customer_name"/>
+    <result property="customerMobile" column="customer_mobile"/>
     <result property="deposit" column="deposit"/>
     <result property="totalPrice" column="total_price"/>
     <result property="transportFee" column="transport_fee"/>
@@ -39,6 +40,7 @@
       mobile,
       customer_id,
       customer_name,
+      customer_mobile,
       deposit,
       total_price,
       transport_fee,
@@ -48,8 +50,8 @@
     ) values (
       now(), now(),
       #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
-      #customerId#, #customerName#, #deposit#, #totalPrice#, 
-      #transportFee#, #transportCode#, #status#, #comment#
+      #customerId#, #customerName#, #customerMobile#, #deposit#, 
+      #totalPrice#, #transportFee#, #transportCode#, #status#, #comment#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -167,6 +169,11 @@
         	customer_name like concat('%',#customerName#,'%')
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="customerMobile" prepend="and">
+        	<![CDATA[ 
+        	customer_mobile like concat('%',#customerMobile#,'%')
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="depositStart" prepend="and">
         	<![CDATA[ 
         	deposit >= #depositStart#
@@ -218,7 +225,7 @@
         	gmt_create >= #gmtCreateStart#
         	 ]]>
         </isNotNull>
-        <isNotNull property="gmtModifyEnd" prepend="and">
+        <isNotNull property="gmtCreateEnd" prepend="and">
 	    	<![CDATA[
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
@@ -235,6 +242,7 @@
   	<isNull property="mobile">
   	<isNull property="customerId">
   	<isNull property="customerName">
+  	<isNull property="customerMobile">
   	<isNull property="depositStart">
   	<isNull property="depositEnd">
   	<isNull property="totalPriceStart">
@@ -246,6 +254,7 @@
         <include refid="Common.validModify" />
     </isNull>
     </isNull>
+	</isNull>
 	</isNull>
 	</isNull>
 	</isNull>

@@ -17,6 +17,26 @@ public class DateTools {
 		return new Date();
 	}
 	
+	public static Date monthStart(){
+		Date today = today();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+		cal.set(Calendar.DAY_OF_MONTH,1);
+		Date thisMonthStart = cal.getTime();
+		return getDayBegin(thisMonthStart);
+	}
+	
+	public static Date monthEnd(){
+		Date today = today();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(today);
+		cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)+1);
+		cal.set(Calendar.DAY_OF_MONTH,1);
+		Date nextMonthStart = getDayBegin(cal.getTime());
+		Long thisMonthEnd = nextMonthStart.getTime() - 1000;
+		return new Date(thisMonthEnd);
+	}
+	
 	public static int weekDay(){
 		Date today = today();
 		Calendar cal = Calendar.getInstance();
@@ -246,9 +266,5 @@ public class DateTools {
 			result.add(nextDate);
 		}
 		return result;
-	}
-	
-	public static void main(String[] args) throws Exception{
-		System.out.println(getDateTime(30*24*60*60*1000l));
 	}
 }

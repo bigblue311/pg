@@ -16,22 +16,19 @@ import com.alibaba.citrus.service.pipeline.Valve;
 import com.alibaba.citrus.turbine.TurbineRunDataInternal;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.pg.dal.cache.NewsCache;
 import com.pg.dal.enumerate.BooleanEnum;
 import com.pg.dal.enumerate.ExtensionEnum;
 import com.pg.dal.enumerate.OrderStatusEnum;
 import com.pg.dal.enumerate.ResourceEnum;
 import com.pg.dal.enumerate.SubMenuEnum;
 import com.pg.dal.enumerate.TopMenuEnum;
-import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
+import com.pg.dal.model.NewsDO;
 import com.pg.dal.model.OrderDO;
-import com.pg.dal.query.OrderQueryCondition;
-import com.pg.biz.manager.CustomerManager;
+import com.pg.biz.common.OrderMonitorCache;
 import com.pg.biz.manager.SecurityManager;
-import com.pg.biz.manager.TransactionManager;
 import com.pg.web.admin.common.AuthenticationToken;
-import com.pg.web.admin.common.SystemNews;
-import com.pg.web.admin.model.form.NewsFO;
 import com.pg.web.admin.model.json.NewsJson;
 import com.pg.web.admin.model.json.SubMenuJson;
 import com.pg.web.admin.model.json.TopMenuJson;
@@ -53,10 +50,7 @@ public class ResourceValve implements Valve{
 	private SecurityManager securityManager;
 	
 	@Autowired
-	private TransactionManager transactionManager;
-	
-	@Autowired
-	private CustomerManager customerManager;
+	private NewsCache newsCache;
 	
 	@Override
 	public void invoke(PipelineContext pipelineContext) throws Exception {
@@ -186,16 +180,10 @@ public class ResourceValve implements Valve{
 	}
 	
 	private void loadPendingOrders(TurbineRunDataInternal rundata){
-		OrderQueryCondition queryCondition = new OrderQueryCondition();
-		queryCondition.status(OrderStatusEnum.提交.getCode());
-		List<OrderDO> list = transactionManager.getOrderDOList(queryCondition);
+		List<OrderDO> list = OrderMonitorCache.getOrderList();
 		List<NewsJson> result = Lists.newLinkedList();
 		for(OrderDO orderDO : list){
 			if(orderDO == null){
-				continue;
-			}
-			CustomerDO customerDO = customerManager.getById(orderDO.getCustomerId());
-			if(customerDO == null){
 				continue;
 			}
 			OrderStatusEnum status = OrderStatusEnum.getByCode(orderDO.getStatus());
@@ -204,13 +192,17 @@ public class ResourceValve implements Valve{
 			}
 			NewsJson news = new NewsJson();
 			news.setUrl("/admin/orderdetail.htm?id="+orderDO.getId());
-			news.setMsg("[订单]"+customerDO.getName()+" ["+customerDO.getMobile()+"] 的订单 [共"+orderDO.getTotalPrice()+"元] "+status.getDesc());
+			String msg = DateTools.DateToString(orderDO.getGmtCreate());
+				  msg += " [订单]"+orderDO.getCustomerName();
+				  msg += " ["+orderDO.getCustomerMobile()+"] 的订单 [共"+orderDO.getTotalPrice()+"元] ";
+				  msg += status.getDesc();
+			news.setMsg(msg);
 			result.add(news);
 		}
-		for(NewsFO newsFO : SystemNews.getAll()){
+		for(NewsDO newsDO : newsCache.cacheValues()){
 			NewsJson news = new NewsJson();
-			news.setMsg("["+newsFO.getType()+"]"+newsFO.getNews());
-			if(BooleanEnum.是.getCode().equals(newsFO.getTop())){
+			news.setMsg(DateTools.DateToString(newsDO.getGmtCreate())+" ["+newsDO.getType()+"]"+newsDO.getNews());
+			if(BooleanEnum.是.getCode().equals(newsDO.getTop())){
 				result.add(0, news);
 			} else {
 				result.add(news);

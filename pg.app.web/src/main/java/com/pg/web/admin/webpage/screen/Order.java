@@ -47,6 +47,7 @@ public class Order {
 			crumbs.add(new CrumbJson(customerDO.getName()+"的订单",ResourceEnum.订单管理.getUri()+"?customerId="+customerId));
 		
 			context.put("customerName", customerDO.getName());
+			context.put("customerMobile", customerDO.getMobile());
 		}
 		context.put("crumbs", crumbs);
 	}

@@ -13,7 +13,7 @@
 			url: "$admin.setTarget('/api/getOrderStatistic.json')?timestamp="+timestamp,
 			success:function(data, textStatus){
 				var itemList = "<p><i class='icon-time'></i> "+currentTime()+"</p>";
-					itemList+= "<p><i class='icon-globe'></i> 今日销售("+data.totalSale+"元)</p>";
+					itemList+= "<p><i class='icon-globe'></i> 本月销售("+data.totalSale+"元)</p>";
 					itemList+= "<p><i class='icon-globe'></i> 总定金额("+data.totalDeposit+"元)</p>";							
 					itemList+= "<ul>";
 				var blinkRequired = false;

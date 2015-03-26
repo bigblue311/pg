@@ -90,7 +90,11 @@ public class EntityDAO<Entity extends EntityDO, Query extends QueryCondition> {
 		for(Method method : methods){
 			if(method.getName().equalsIgnoreCase("get"+field.getName())){
 				try {
-					return method.invoke(e, new Object[0]).toString();
+					Object obj = method.invoke(e, new Object[0]);
+					if(obj == null){
+						return "";
+					}
+					return obj.toString();
 				} catch (IllegalAccessException e1) {
 					return e.getId().toString();
 				} catch (IllegalArgumentException e1) {

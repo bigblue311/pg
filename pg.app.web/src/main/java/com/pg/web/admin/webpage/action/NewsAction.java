@@ -1,21 +1,25 @@
 package com.pg.web.admin.webpage.action;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
-import com.pg.web.admin.common.SystemNews;
-import com.pg.web.admin.model.form.NewsFO;
-import com.victor.framework.common.tools.DateTools;
+import com.pg.dal.cache.NewsCache;
+import com.pg.dal.model.NewsDO;
 
 public class NewsAction {
 	
-	public void doUpdate(@FormGroup("systemNews") NewsFO newsFO) {
-		if(newsFO.getId() == null ) {
-			Long id = DateTools.getRandomId();
-			newsFO.setId(id);
+	@Autowired
+	private NewsCache newsCache;
+	
+	public void doUpdate(@FormGroup("systemNews") NewsDO newsDO) {
+		if(newsDO.getId() == null ) {
+			newsCache.insertDB(newsDO);
+		} else {
+			newsCache.updateDB(newsDO);
 		}
-		SystemNews.putNews(newsFO);
 	}
 	
-	public void doDelete(@FormGroup("systemNews") NewsFO newsFO) {
-		SystemNews.delNews(newsFO);
+	public void doDelete(@FormGroup("systemNews") NewsDO newsDO) {
+		newsCache.deleteDB(newsDO.getId());
 	}
 }

@@ -30,11 +30,13 @@
     
     <bean id="recycleTempFilesTask" class="com.pg.biz.scheduler.task.RecycleTempFilesTask"/>
     
+    <bean id="orderStatisticTask" class="com.pg.biz.scheduler.task.OrderStatisticTask"/>
+    
     <bean id="scheduler" class="com.pg.biz.scheduler.Scheduler" >
 		<property name="tasks">
               <list>
-                    <!-- <ref bean="recycleTempFilesTask" /> -->
-               </list>
+              	<ref bean="orderStatisticTask" />
+              </list>
   		</property>
     </bean>
 </beans>

@@ -1,23 +1,24 @@
-package com.pg.web.admin.model.form;
+package com.pg.dal.model;
 
 import java.io.Serializable;
 
-public class NewsFO implements Serializable{
+import com.victor.framework.dal.basic.EntityDO;
+
+/**
+ * 系统消息
+ * @author victorhan
+ *
+ */
+public class NewsDO extends EntityDO implements Serializable{
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 559486951700328388L;
-	private Long id;
+	private static final long serialVersionUID = -5187342639075908283L;
 	private String news;
 	private String type;
 	private String top;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getNews() {
 		return news;
 	}

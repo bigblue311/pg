@@ -61,5 +61,5 @@ public interface TransactionManager {
 	Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition);
 	
 	List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition);
-	OrderStatisticVO getTodayOrderStatistic();
+	OrderStatisticVO getMonthOrderStatistic();
 }

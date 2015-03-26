@@ -29,7 +29,8 @@
         </div>
         <label class="control-label">客户名称：</label>
 		<div class="controls">
-			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$!orderDO.customerName</label>
+			<label style="position: relative;top: 2px;min-width: 70px;display: inline-block;">$!orderDO.customerName</label>&nbsp;&nbsp;
+			<label style="position: relative;top: 2px;min-width: 70px;display: inline-block;">$!orderDO.customerMobile</label>
 		</div>
 		<label class="control-label">交易时间：</label>
 		<div class="controls">

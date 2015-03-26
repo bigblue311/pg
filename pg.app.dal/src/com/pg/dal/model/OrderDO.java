@@ -24,6 +24,7 @@ public class OrderDO extends EntityDO implements Serializable{
 	private String mobile;			//收货联系人手机
 	private Long customerId;		//客户ID
 	private String customerName;	//客户姓名
+	private String customerMobile;	//客户电话
 	private Double deposit;			//定金
 	private Double totalPrice;		//总价(不含运费)
 	private Double transportFee;	//运费
@@ -72,6 +73,12 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+	public String getCustomerMobile() {
+		return customerMobile;
+	}
+	public void setCustomerMobile(String customerMobile) {
+		this.customerMobile = customerMobile;
 	}
 	public Double getDeposit() {
 		return deposit;

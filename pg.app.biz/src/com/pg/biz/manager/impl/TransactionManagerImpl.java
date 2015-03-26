@@ -341,7 +341,7 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 
 	@Override
-	public OrderStatisticVO getTodayOrderStatistic() {
+	public OrderStatisticVO getMonthOrderStatistic() {
 		OrderStatisticVO orderStatisticVO = new OrderStatisticVO();
 		List<OrderAlertVO> alertList = Lists.newArrayList();
 		OrderQueryCondition query = new OrderQueryCondition();
@@ -350,7 +350,7 @@ public class TransactionManagerImpl implements TransactionManager{
 											OrderStatusEnum.收货.getCode(),
 											OrderStatusEnum.结算.getCode()};
 		
-		query.setGmtCreateStart(DateTools.today()).setGmtCreateStart(DateTools.today());
+		query.setGmtCreateStart(DateTools.monthStart()).setGmtCreateEnd(DateTools.monthEnd());
 		query.status(statusValid);
 		
 		Integer totalCount = orderDAO.getCount(query);
@@ -362,7 +362,7 @@ public class TransactionManagerImpl implements TransactionManager{
 		orderStatisticVO.setTotalDeposit(totalDeposit);
 		
 		OrderQueryCondition queryToday = new OrderQueryCondition();
-		queryToday.setGmtCreateStart(DateTools.today()).setGmtCreateStart(DateTools.today());
+		queryToday.setGmtCreateStart(DateTools.monthStart()).setGmtCreateEnd(DateTools.monthEnd());
 		for(OrderStatusEnum status : OrderStatusEnum.getAll()){
 			queryToday.setStatus(status.getCode());
 			Integer statusCount = orderDAO.getCount(query);

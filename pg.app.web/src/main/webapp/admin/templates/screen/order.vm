@@ -10,6 +10,10 @@
 					<input type="hidden" name="page" id="page" value="$query.page">
 					<input type="hidden" name="customerId" value="$query.customerId">
 				</div>
+				<label class="control-label">客户手机：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="customerMobile" value="$!query.customerMobile">
+				</div>
 				<label class="control-label">联系人：</label>
 				<div class="controls">
 					<input type="text" class="control-text" name="keeper" value="$!query.keeper">
@@ -116,7 +120,8 @@ $control.setTemplate("paging.vm")
         </div>
         <label class="control-label">客户名称：</label>
 		<div class="controls">
-			<label id="customerName" style="position: relative;top: 2px;"></label>
+			<label id="customerName" style="position: relative;top: 2px;"></label>&nbsp;&nbsp;
+			<label id="customerMobile" style="position: relative;top: 2px;"></label>
 		</div>
 	  </div>
 	</div>
@@ -215,7 +220,13 @@ $control.setTemplate("paging.vm")
 		},{
 			title : '客户名称',
 			elCls: 'left',
-			dataIndex : 'customerName',
+			dataIndex : 'customer',
+			renderer : function(val,obj,index){
+				if(obj != null){
+					return obj.customerName + " " +obj.customerMobile;
+				}
+				return "";
+			},
 			width:'10%'
 		},{
             title : '交易时间',
@@ -364,7 +375,9 @@ $control.setTemplate("paging.vm")
     	
     	var id = record.id;
     	var customerName = record.customerName;
+    	var customerMobile = record.customerMobile;
     	jQuery("#customerName").empty().append(customerName);
+    	jQuery("#customerMobile").empty().append(customerMobile);
     	
     	var addressFrom = record.addressFrom;
     	var addressTo = record.addressTo;
@@ -426,6 +439,8 @@ $control.setTemplate("paging.vm")
 		location.addressFrom("addressFrom",null);
 		
 		jQuery("#customerName").empty().append('${customerName}');
+		jQuery("#customerMobile").empty().append('${customerMobile}');
+		
 		jQuery("#status").hide();
     	jQuery("#action").val('orderAction');
     	jQuery("#event").attr("name",event);

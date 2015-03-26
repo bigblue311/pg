@@ -70,6 +70,15 @@ public class OrderQueryCondition extends QueryCondition {
 		return getLong("customerName");
 	}
 	
+	public OrderQueryCondition setCustomerMobile(Long customerMobile) {
+		put("customerMobile",customerMobile);
+		return this;
+	}
+	
+	public Long getCutomerMobile(){
+		return getLong("customerMobile");
+	}
+	
 	public OrderQueryCondition setDepositStart(Double depositStart) {
 		put("depositStart",depositStart);
 		return this;

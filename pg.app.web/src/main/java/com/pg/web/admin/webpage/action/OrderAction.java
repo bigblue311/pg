@@ -45,5 +45,6 @@ public class OrderAction {
 	private void getFull(OrderDO from){
 		CustomerDO customer = customerManager.getById(from.getCustomerId());
 		from.setCustomerName(customer.getName());
+		from.setCustomerMobile(customer.getMobile());
 	}
 }
