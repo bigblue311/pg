@@ -28,7 +28,17 @@ public enum ResourceEnum {
 	交易管理(16l,"/admin/purchase","交易管理","查询订单商品列表",SubMenuEnum.交易管理,true),
 	订单管理(17l,"/admin/order","订单管理","查询订单列表",SubMenuEnum.订单管理,true),
 	订单详情(18l,"/admin/orderdetail","订单详情","查看/修改订单详情",SubMenuEnum.订单管理,true),
-	出货单(19l,"/admin/orderprint","出货单","打印出货单",SubMenuEnum.订单管理,true);
+	
+	产品导出(19l,"/admin/export/product","产品导出","导出查询结果",SubMenuEnum.产品管理,true),
+	产品包导出(20l,"/admin/export/package","产品包导出","导出查询结果",SubMenuEnum.产品管理,true),
+	客户信息导出(21l,"/admin/export/customer","客户信息导出","导出目前拥有的客户",SubMenuEnum.客户查询,true),
+	我的仓库导出(22l,"/admin/export/mywarehouse","我的仓库导出","导出我所拥有的发货仓库",SubMenuEnum.我的仓库,true),
+	客户仓库导出(23l,"/admin/export/warehouse","客户仓库导出","导出客户的发货仓库/地址信息",SubMenuEnum.客户仓库,true),
+	商品发布导出(24l,"/admin/export/publish","商品发布导出","导出将事先定义好的商品或者商品包发布信息",SubMenuEnum.商品发布,true),
+	交易记录导出(25l,"/admin/export/purchase","交易记录导出","导出订单商品列表",SubMenuEnum.交易管理,true),
+	订单记录导出(26l,"/admin/export/order","订单记录导出","导出订单列表",SubMenuEnum.订单管理,true),
+	订单详情导出(27l,"/admin/export/orderdetail","订单详情导出","导出订单详情",SubMenuEnum.订单管理,true),
+	;
 	
 	private ResourceEnum(Long code,String resource,String name,String desc, SubMenuEnum subMenu, Boolean loginRequired){
 		this.code = code;

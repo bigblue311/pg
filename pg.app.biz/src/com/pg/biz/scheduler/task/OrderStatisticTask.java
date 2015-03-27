@@ -18,7 +18,7 @@ public class OrderStatisticTask extends ScheduledTask{
 	private static LogTools log = new LogTools(OrderStatisticTask.class);
 	
 	public OrderStatisticTask() {
-		super(1L,TimeUnit.MINUTES);
+		super(15L,TimeUnit.MINUTES);
 	}
 	
 	@Autowired

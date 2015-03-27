@@ -58,10 +58,26 @@
     </appender> 
     
     <!--myibatis log configure--> 
-    <logger name="com.apache.ibatis" level="TRACE">
+    <logger name="com.ibatis" level="INFO">
     	<appender-ref ref="STDOUT" />
         <appender-ref ref="IBATIS" />
     </logger>
+    
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="INFO">
+    	<appender-ref ref="STDOUT" />
+        <appender-ref ref="IBATIS" />
+    </logger>
+    
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="INFO">
+    	<appender-ref ref="STDOUT" />
+        <appender-ref ref="IBATIS" />
+    </logger>
+    
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="INFO">
+    	<appender-ref ref="STDOUT" />
+        <appender-ref ref="IBATIS" />
+    </logger>
+    
     <logger name="java.sql.Connection" level="WARN">
     	<appender-ref ref="STDOUT" />
         <appender-ref ref="IBATIS" />

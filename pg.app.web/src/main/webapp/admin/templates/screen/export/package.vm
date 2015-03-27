@@ -1,0 +1,86 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<div id="grid"></div>
+<script type="text/javascript">
+	var Grid = BUI.Grid,
+	Data = BUI.Data;
+	var Grid = Grid,
+	Store = Data.Store,
+	columns = [
+		{
+			title : '序号',
+			dataIndex : 'id',
+			renderer : function(val,obj,index) {
+				return index+1;
+			},
+	        width:'5%'
+		},{
+            title : '创建时间',
+            elCls: 'left',
+            dataIndex :'gmtCreate',
+            renderer:BUI.Grid.Format.datetimeRenderer,
+            summary : false,
+            width:'10%'
+        },{
+	    title : '名称',
+	    elCls: 'left',
+	    dataIndex :'name',
+	    width:'15%'
+	  },{
+	    title : '标题',
+	    elCls: 'left',
+	    dataIndex :'title',
+	    width:'15%'
+	  },{
+	    title : '编号',
+	    elCls: 'left',
+	    dataIndex :'code',
+	    width:'15%'
+	  },{
+	    title : '描述',
+	    elCls: 'left',
+	    dataIndex :'description',
+	    width:'30%'
+	  }],
+	data = #if($!{list})#noescape()$!{list}#end#else null #end;
+	var store = new Store({
+	  data : data
+	}),
+	grid = new Grid.Grid({
+	  render:'#grid',
+	  width:'100%',//这个属性一定要设置
+	  columns : columns,
+	  tbar : {
+      	items : [
+			{
+				btnCls : 'button button-small',
+				text : '<a href="$admin.setTarget("package.vm")">返回</a>'
+			},{
+				btnCls : 'button button-small',
+				text : '<i class="icon-print"></i>打印',
+				listeners : {
+					'click' : printFunction
+				}
+			}]
+      },
+      bbar : {
+      	items : [
+			{
+				btnCls : 'button button-small',
+				text : '<a href="$admin.setTarget("package.vm")">返回</a>'
+			},{
+				btnCls : 'button button-small',
+				text : '<i class="icon-print"></i>打印',
+				listeners : {
+					'click' : printFunction
+				}
+			}]
+      },
+	  store : store
+	});
+	
+	grid.render();
+      
+    function printFunction(){
+    	window.print();
+    }
+</script>

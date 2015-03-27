@@ -5,13 +5,13 @@
 			<div class="control-group">
 				<label class="control-label">名称：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="name" value="$query.name">
-					<input type="hidden" name="packageId" id="packageId" value="$query.packageId">
-					<input type="hidden" name="page" id="page" value="$query.page">
+					<input type="text" class="control-text" name="name" value="$!query.name">
+					<input type="hidden" name="packageId" id="packageId" value="$!query.packageId">
+					<input type="hidden" name="page" id="page" value="$!query.page">
 				</div>
 				<label class="control-label">编码：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="code" value="$query.code">
+					<input type="text" class="control-text" name="code" value="$!query.code">
 				</div>
 				<label class="control-label">品牌：</label>
 				<div class="controls">
@@ -19,11 +19,9 @@
 						<option selected value="">全部</option>
 						#foreach($brand in $brandEnum)
 						<option 
-							#if($!query.brandId)
-								#if($!query.brandId==$!brand.key)
-									selected
-								#end
-							#end 
+							#if($!query.brandId==$!brand.key)
+								selected
+							#end
 							value="$!brand.key">$!brand.value</option>
 						#end
 					</select>
@@ -34,11 +32,9 @@
 						<option selected value="">全部</option>
 						#foreach($category in $categoryEnum)
 						<option 
-							#if($!query.categoryId)
-								#if($!query.categoryId==$!category.key)
-									selected
-								#end
-							#end 
+							#if($!query.categoryId==$!category.key)
+								selected
+							#end
 							value="$!category.key">$!category.value</option>
 						#end
 					</select>
@@ -188,6 +184,12 @@ $control.setTemplate("paging.vm")
 				listeners : {
 					'click' : addFunction
 				}
+			},{
+				btnCls : 'button button-small',
+				text : '<i class="icon-print"></i>打印搜索结果',
+				listeners : {
+					'click' : exportFunction
+				}
 			}
 			]
         },
@@ -238,5 +240,10 @@ $control.setTemplate("paging.vm")
     	jQuery("#id").val(id);
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();
+    }
+    
+    function exportFunction(){
+    	jQuery("#queryForm").attr("action","$admin.setTarget('/export/product.vm')");
+    	jQuery("#queryForm").submit();
     }
 </script>

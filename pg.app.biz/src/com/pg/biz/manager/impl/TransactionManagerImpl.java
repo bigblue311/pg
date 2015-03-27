@@ -361,11 +361,11 @@ public class TransactionManagerImpl implements TransactionManager{
 		orderStatisticVO.setTotalSale(totalSale);
 		orderStatisticVO.setTotalDeposit(totalDeposit);
 		
-		OrderQueryCondition queryToday = new OrderQueryCondition();
-		queryToday.setGmtCreateStart(DateTools.monthStart()).setGmtCreateEnd(DateTools.monthEnd());
+		OrderQueryCondition queryMonth = new OrderQueryCondition();
+		queryMonth.setGmtCreateStart(DateTools.monthStart()).setGmtCreateEnd(DateTools.monthEnd());
 		for(OrderStatusEnum status : OrderStatusEnum.getAll()){
-			queryToday.setStatus(status.getCode());
-			Integer statusCount = orderDAO.getCount(query);
+			queryMonth.setStatus(status.getCode());
+			Integer statusCount = orderDAO.getCount(queryMonth);
 			OrderAlertVO orderAlert = new OrderAlertVO();
 			if(statusCount == null){
 				orderAlert.setSuccess(false);
@@ -387,5 +387,10 @@ public class TransactionManagerImpl implements TransactionManager{
 	@Override
 	public List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition) {
 		return orderDAO.getByCondition(queryCondition);
+	}
+
+	@Override
+	public List<PurchaseDO> getPurchaseDOByCondition(PurchaseQueryCondition queryCondition) {
+		return purchaseDAO.getByCondition(queryCondition);
 	}
 }

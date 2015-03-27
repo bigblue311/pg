@@ -176,6 +176,7 @@ public interface ProductManager {
 	 * @return
 	 */
 	Paging<PublishDO> getPublishPage(PublishQueryCondition queryCondition);
+	List<PublishDO> getPublishByCondition(PublishQueryCondition queryCondition);
 	Paging<ProductVO> getProductVOPage(PublishQueryCondition queryCondition);
 	Paging<PackageVO> getPackageVOPage(PublishQueryCondition queryCondition);
 }

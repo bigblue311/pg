@@ -23,7 +23,7 @@
 		<!-- 资源访问控制 -->
         <valve class="com.pg.web.admin.pipeline.ResourceValve" 
         	   xmlns="http://www.alibaba.com/schema/services/pipeline/valves"/>
-
+        	   
         <!-- 分析URL，取得target。 -->
         <pl-valves:analyzeURL />
         

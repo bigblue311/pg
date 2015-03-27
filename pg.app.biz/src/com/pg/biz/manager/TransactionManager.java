@@ -57,6 +57,7 @@ public interface TransactionManager {
 	 * @return
 	 */
 	Paging<OrderDO> getOrderDOPage(OrderQueryCondition queryCondition);
+	List<PurchaseDO> getPurchaseDOByCondition(PurchaseQueryCondition queryCondition);
 	Paging<PurchaseDO> getPurchaseDOPage(PurchaseQueryCondition queryCondition);
 	Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition);
 	

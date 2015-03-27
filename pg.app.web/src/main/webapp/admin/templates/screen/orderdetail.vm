@@ -107,6 +107,7 @@
 		<div class="form-actions offset3">
 			<button class="button button-primary"><i class="icon-ok icon-white"></i>保存</button>
 			<button type="reset" class="button"><i class="icon-repeat"></i>重置</button>
+			<a href="$admin.setTarget('/export/orderdetail.vm')?id=$!orderDO.id">&nbsp;打印出货单</a>
 		</div>
 	</div>
 </form>

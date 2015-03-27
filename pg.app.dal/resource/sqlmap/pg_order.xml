@@ -214,12 +214,6 @@
         	status = #status#
         	]]>
 	    </isNotEmpty>
-	     <isNotEmpty property="statuses" prepend="and">
-        	status in 
-        	<iterate open="(" close=")" conjunction="," property="statuses"> 
-		    	#statuses[]#
-		    </iterate>
-	    </isNotEmpty>
 	    <isNotNull property="gmtCreateStart" prepend="and">
 	    	<![CDATA[
         	gmt_create >= #gmtCreateStart#
@@ -230,6 +224,12 @@
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
         </isNotNull>
+        <isNotEmpty property="statuses" prepend="and">
+        	status in 
+        	<iterate open="(" close=")" conjunction="," property="statuses"> 
+		    	#statuses[]#
+		    </iterate>
+	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
   	</dynamic>
   </sql>
@@ -251,7 +251,13 @@
   	<isNull property="transportFeeEnd">
   	<isNull property="transportCode">
   	<isNull property="status">
+  	<isNull property="statuses">
+  	<isNull property="gmtCreateStart">
+  	<isNull property="gmtCreateEnd">
         <include refid="Common.validModify" />
+    </isNull>
+    </isNull>
+    </isNull>
     </isNull>
     </isNull>
 	</isNull>

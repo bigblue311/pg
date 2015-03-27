@@ -306,4 +306,9 @@ public class ProductManagerImpl implements ProductManager{
 	public Map<String, String> getPublishEnumMap() {
 		return publishDAO.getEnumMap();
 	}
+
+	@Override
+	public List<PublishDO> getPublishByCondition(PublishQueryCondition queryCondition) {
+		return publishDAO.getByCondition(queryCondition);
+	}
 }

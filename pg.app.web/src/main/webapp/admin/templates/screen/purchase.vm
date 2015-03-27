@@ -218,8 +218,24 @@ $control.setTemplate("paging.vm")
         width:'100%',//这个属性一定要设置
         columns : columns,
         plugins : [Grid.Plugins.Summary],
-        store : store
+        store : store,
+        bbar : {
+        	items : [
+			{
+				btnCls : 'button button-small',
+				text : '<i class="icon-print"></i>打印搜索结果',
+				listeners : {
+					'click' : exportFunction
+				}
+			}
+			]
+        },
       });
 
     grid.render();
+    
+    function exportFunction(){
+    	jQuery("#queryForm").attr("action","$admin.setTarget('/export/purchase.vm')");
+    	jQuery("#queryForm").submit();
+    }
 </script>

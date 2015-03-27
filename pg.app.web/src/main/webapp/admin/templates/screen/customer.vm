@@ -131,6 +131,12 @@ $control.setTemplate("paging.vm")
 					listeners : {
 						'click' : addFunction
 					}
+				},{
+					btnCls : 'button button-small',
+					text : '<i class="icon-print"></i>打印搜索结果',
+					listeners : {
+						'click' : exportFunction
+					}
 				}
 			]
         	#end
@@ -158,5 +164,10 @@ $control.setTemplate("paging.vm")
     	jQuery("#mobile").val(mobile);
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();
+    }
+    
+    function exportFunction(){
+    	jQuery("#queryForm").attr("action","$admin.setTarget('/export/customer.vm')");
+    	jQuery("#queryForm").submit();
     }
 </script>
