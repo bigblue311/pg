@@ -17,7 +17,7 @@
 							value="$!warehouse.key">$!warehouse.value</option>
 						#end
 					</select>
-					<input type="hidden" name="page" id="page" value="$query.page">
+					<input type="hidden" name="page" id="page" value="$!query.page">
 				</div>
 				<label class="control-label">产品(包)：</label>
 				<div class="controls">
@@ -60,7 +60,7 @@
 							#end
 						#end
 					</select>
-					<input type="text" class="control-text" name="extendCode" value="$query.extendCode" placeholder="产品编码">
+					<input type="text" class="control-text" name="extendCode" value="$!query.extendCode" placeholder="产品编码">
 				</div>
 			</div>
 		</div>

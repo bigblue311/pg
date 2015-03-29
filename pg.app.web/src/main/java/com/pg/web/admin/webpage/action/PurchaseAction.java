@@ -1,6 +1,5 @@
 package com.pg.web.admin.webpage.action;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ import com.pg.web.admin.common.AuthenticationToken;
 public class PurchaseAction {
 	@Autowired
 	private HttpSession session;
-	
-	@Autowired
-	private HttpServletResponse response;
 	
 	@Autowired
 	private TransactionManager transactionManager;
@@ -52,6 +48,7 @@ public class PurchaseAction {
 		from.setProdType(publishDO.getProdType());
 		from.setExtendId(publishDO.getExtendId());
 		from.setExtendCode(publishDO.getExtendCode());
+		from.setUnit(publishDO.getUnit());
 		
 		if(ProdTypeEnum.商品.getCode().equals(from.getProdType())){
 			ProductDO productDO = productManager.getProductById(from.getExtendId());

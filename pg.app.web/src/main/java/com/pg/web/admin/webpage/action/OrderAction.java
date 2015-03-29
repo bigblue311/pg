@@ -1,13 +1,11 @@
 package com.pg.web.admin.webpage.action;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
 import com.pg.biz.manager.CustomerManager;
-import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.dal.enumerate.OrderStatusEnum;
 import com.pg.dal.model.CustomerDO;
@@ -20,13 +18,7 @@ public class OrderAction {
 	private HttpSession session;
 	
 	@Autowired
-	private HttpServletResponse response;
-	
-	@Autowired
 	private TransactionManager transactionManager;
-	
-	@Autowired
-	private ProductManager productManager;
 	
 	@Autowired
 	private CustomerManager customerManager;

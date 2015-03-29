@@ -5,21 +5,21 @@
 			<div class="control-group">
 				<label class="control-label">仓库名称：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="name" value="$query.name">
-					<input type="hidden" name="page" id="page" value="$query.page">
+					<input type="text" class="control-text" name="name" value="$!query.name">
+					<input type="hidden" name="page" id="page" value="$!query.page">
 					<input type="hidden" name="system" value="true">
 				</div>
 				<label class="control-label">联系人：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="keeper" value="$query.keeper">
+					<input type="text" class="control-text" name="keeper" value="$!query.keeper">
 				</div>
 				<label class="control-label">联系手机：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="mobile" value="$query.mobile">
+					<input type="text" class="control-text" name="mobile" value="$!query.mobile">
 				</div>
 				<label class="control-label">联系电话：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="phone" value="$query.phone">
+					<input type="text" class="control-text" name="phone" value="$!query.phone">
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 				</div>
 				<label class="control-label">地址：</label>
 				<div class="controls">
-					<input type="text" class="control-text input-large" name="address" value="$query.address">
+					<input type="text" class="control-text input-large" name="address" value="$!query.address">
 				</div>
 			</div>
 		</div>
@@ -116,7 +116,7 @@ $control.setTemplate("paging.vm")
 <script type="text/javascript" src="/js/Location/location.js"></script>
 <script type="text/javascript">
 	jQuery(function(){
-		showLocation('q_province','q_city','q_town','$query.province','$query.city','$query.town');
+		showLocation('q_province','q_city','q_town','$!query.province','$!query.city','$!query.town');
 	});
 	
       var Grid = BUI.Grid,

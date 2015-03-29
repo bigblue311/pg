@@ -193,7 +193,11 @@
   	<isNull property="extendId">
   	<isNull property="extendCode">
   	<isNull property="orderId">
+  	<isNull property="gmtCreateStart">
+  	<isNull property="gmtModifyEnd">
         <include refid="Common.validModify" />
+    </isNull>
+    </isNull>
     </isNull>
     </isNull>
     </isNull>

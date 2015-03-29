@@ -5,13 +5,13 @@
 			<div class="control-group">
 				<label class="control-label">名称：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="name" value="$query.name">
-					<input type="hidden" name="page" id="page" value="$query.page">
-					<input type="hidden" name="id" value="$query.id">
+					<input type="text" class="control-text" name="name" value="$!query.name">
+					<input type="hidden" name="page" id="page" value="$!query.page">
+					<input type="hidden" name="id" value="$!query.id">
 				</div>
 				<label class="control-label">手机：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="mobile" value="$query.mobile">
+					<input type="text" class="control-text" name="mobile" value="$!query.mobile">
 				</div>
 				<label class="control-label">注册时间：</label>
 				<div class="controls">
@@ -123,7 +123,7 @@ $control.setTemplate("paging.vm")
         width:'100%',//这个属性一定要设置
         columns : columns,
         bbar : {
-        	#if(!$query.id)
+        	#if(!$!query.id)
         	items : [
 				{
 					btnCls : 'button button-small',

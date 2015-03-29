@@ -46,8 +46,8 @@ public class StringTools {
 		for(int i=1;i<str.length;i++){
 			String each = str[i].toString().trim();
 			if(isNotEmpty(each)){
-				sb.append(each);
 				sb.append(seperate);
+				sb.append(each);
 			}
 		}
 		return sb.toString();

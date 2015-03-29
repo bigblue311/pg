@@ -1,0 +1,150 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<script type="text/javascript" src="/js/Location/location.js"></script>
+#set ($orderDO = $order.orderDO)
+#set ($customerDO = $order.customerDO)
+#set ($opLogList = $order.opLogList)
+#set ($purchaseList = $order.purchaseList)
+<style>
+	.form-horizontal label{
+		position: relative;
+		top: 2px;
+		min-width: 150px;
+		display: inline-block;
+	}
+</style>
+<h1>订单详情</h1>
+<hr>
+<form method="post" class="form-horizontal">
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">订单状态：</label>
+        <div class="controls">
+				#foreach($status in $statusEnum)
+				    #if($!orderDO.status == $status.code)
+				    	<label style="">$!status.desc</label>
+				    #end 
+				#end
+        </div>
+        <label class="control-label">客户名称：</label>
+		<div class="controls">
+			<label>$!orderDO.customerName($!orderDO.customerMobile)</label>
+		</div>
+		<label class="control-label">交易时间：</label>
+		<div class="controls">
+			<label>$dateTools.DateToString($!orderDO.gmtCreate)</label>
+		</div>
+		<label class="control-label">最后更新：</label>
+		<div class="controls">
+			<label>$dateTools.DateToString($!orderDO.gmtModify)</label>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">定金：</label>
+		<div class="controls">
+			<label>$!orderDO.deposit</label>
+		</div>
+        <label class="control-label">交易金额：</label>
+        <div class="controls">
+        	<label>$!orderDO.totalPrice</label>
+        </div>
+        <label class="control-label">物流费：</label>
+		<div class="controls">
+			<label>$!orderDO.transportFee</label>
+		</div>
+        <label class="control-label">物流编号：</label>
+        <div class="controls">
+        	<label>$!orderDO.transportCode</label>
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">联系人：</label>
+		<div class="controls">
+			<label>$!orderDO.keeper</label>
+		</div>
+        <label class="control-label">联系手机：</label>
+        <div class="controls">
+        	<label>$!orderDO.mobile</label>
+        </div>
+        <label class="control-label">联系电话：</label>
+        <div class="controls">
+        	<label>$!orderDO.phone</label>
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="control-group">
+	        <label class="control-label">发货地址：</label>
+	        <div class="controls" style="margin-right: 96px;">
+	          	<label>$!orderDO.addressFrom</label>
+	        </div>
+	        <label class="control-label">收货地址：</label>
+			<div class="controls">
+				<label>$!orderDO.addressTo</label>
+			</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">备注：</label>
+        <div class="controls control-row4">
+        	<label>$!orderDO.comment</label>
+        </div>
+      </div>
+    </div>
+</form>
+#set ($group = $form.purchase.defaultInstance)
+<br><br>
+<h1>订单商品</h1>
+<hr>
+<div id="grid"></div>
+<script type="text/javascript">
+      var Grid = BUI.Grid,
+      Data = BUI.Data;
+      var Grid = Grid,
+      Store = Data.Store,
+      publishObj = #if($!{publishEnum})#noescape()$!{publishEnum}#end#else null #end,
+      columns = [
+		{
+			title : '客户名称',
+			elCls: 'left',
+			dataIndex : 'customerName',
+			width:'20%'
+		},{
+            title : '商品名称',
+            elCls: 'left',
+            dataIndex :'publishId',
+			renderer : Grid.Format.enumRenderer(publishObj),
+		    width:'30%'
+        },{
+            title : '单价',
+            elCls: 'left',
+            dataIndex :'price',
+            width:'10%'
+        },{
+            title : '数量',
+            elCls: 'left',
+            dataIndex :'quantity',
+            width:'10%'
+        },{
+            title : '备注',
+            elCls: 'left',
+            dataIndex :'comment',
+            width:'30%'
+        }],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+      var store = new Store({
+        data : data
+      }),
+      grid = new Grid.Grid({
+        render:'#grid',
+        width:'100%',//这个属性一定要设置
+        columns : columns,
+        store : store
+      });
+
+    grid.render();
+</script>

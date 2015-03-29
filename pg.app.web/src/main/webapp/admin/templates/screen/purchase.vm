@@ -6,8 +6,8 @@
 				<label class="control-label">订单ID：</label>
 				<div class="controls">
 					<input type="text" class="control-text" name="orderId" value="$!query.orderId">
-					<input type="hidden" name="page" id="page" value="$query.page">
-					<input type="hidden" name="customerId" value="$query.customerId">
+					<input type="hidden" name="page" id="page" value="$!query.page">
+					<input type="hidden" name="customerId" value="$!query.customerId">
 				</div>
 				<label class="control-label">客户名称：</label>
 				<div class="controls">
@@ -25,7 +25,7 @@
 			<div class="control-group">
 				<label class="control-label">产品名称：</label>
 				<div class="controls">
-					<input type="text" class="control-text" name="name" value="$query.name">
+					<input type="text" class="control-text" name="name" value="$!query.name">
 				</div>
 				<label class="control-label">产品类型：</label>
 				<div class="controls">
@@ -68,7 +68,7 @@
 						#end
 					#end
 				</select>
-				<input type="text" class="control-text" name="extendCode" value="$query.extendCode" placeholder="产品编码">
+				<input type="text" class="control-text" name="extendCode" value="$!query.extendCode" placeholder="产品编码">
 				</div>
 			</div>
 		</div>
@@ -140,7 +140,6 @@ $control.setTemplate("paging.vm")
             elCls: 'left',
             dataIndex :'gmtCreate',
             renderer:BUI.Grid.Format.datetimeRenderer,
-            summary : false,
             width:'10%'
         },{
             title : '类型',
@@ -152,7 +151,6 @@ $control.setTemplate("paging.vm")
             	if(prodType == '1') return '产品包';
             	return "未知";
             },
-            summary : false,
 		    width:'10%'
         },{
             title : '产品(包)',
@@ -178,35 +176,30 @@ $control.setTemplate("paging.vm")
             	}
 				return '['+extendCode+']';
             },
-            summary : false,
 		    width:'20%'
         },{
             title : '数量',
             elCls: 'left',
             dataIndex :'quantity',
-            summary : true,
             width:'15%'
         },{
             title : '单价',
             elCls: 'left',
             dataIndex :'price',
-            summary : false,
             width:'15%'
         },{
             title : '总价',
             elCls: 'left',
-            dataIndex :'total',
             renderer: function(val,obj,index){
             	if(obj!=null){
             		var price = obj.price;
             		var quantity = obj.quantity;
-            		if(price != null && price.isNumber() && quantity !=null && quantity.isNumber()){
+            		if(price != null && quantity !=null){
             			return price * quantity;
             		}
             	}
             	return 0;
             }, 
-            summary : true,
             width:'15%'
         }],
 		data = #if($!{list})#noescape()$!{list}#end#else null #end;
@@ -217,7 +210,6 @@ $control.setTemplate("paging.vm")
         render:'#grid',
         width:'100%',//这个属性一定要设置
         columns : columns,
-        plugins : [Grid.Plugins.Summary],
         store : store,
         bbar : {
         	items : [

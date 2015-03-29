@@ -208,9 +208,9 @@ public abstract class QueryCondition {
 		try {
 			toDate = DateTools.StringToDate(date);
 		} catch (Exception e) {
-			toDate = DateTools.today();
+			toDate = null;
 		}
-		return toDate==null?DateTools.today():toDate;
+		return toDate;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

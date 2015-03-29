@@ -7,8 +7,8 @@
 				<label class="control-label">客户姓名：</label>
 				<div class="controls">
 					<input type="text" class="control-text" name="customerName" value="$!query.customerName">
-					<input type="hidden" name="page" id="page" value="$query.page">
-					<input type="hidden" name="customerId" value="$query.customerId">
+					<input type="hidden" name="page" id="page" value="$!query.page">
+					<input type="hidden" name="customerId" value="$!query.customerId">
 				</div>
 				<label class="control-label">客户手机：</label>
 				<div class="controls">
@@ -320,7 +320,7 @@ $control.setTemplate("paging.vm")
         width:'100%',//这个属性一定要设置
         columns : columns,
         bbar : {
-        	#if($query.customerId)
+        	#if($!query.customerId)
         		items : 
         		[{
 					btnCls : 'button button-small btn-add',
@@ -431,8 +431,8 @@ $control.setTemplate("paging.vm")
 
     	jQuery("#comment").val(comment);
 		jQuery("#customerId").val(customerId);
-		#if($query.customerId)
-			jQuery("#customerId").val('$query.customerId');
+		#if($!query.customerId)
+			jQuery("#customerId").val('$!query.customerId');
 		#end
     	
     	jQuery("#event").attr("name",event);
@@ -451,8 +451,8 @@ $control.setTemplate("paging.vm")
     	jQuery("#action").val('orderAction');
     	jQuery("#event").attr("name",event);
     	jQuery("#event").val(true);
-    	#if($query.customerId)
-			jQuery("#customerId").val('$query.customerId');
+    	#if($!query.customerId)
+			jQuery("#customerId").val('$!query.customerId');
 	    	location.addressTo("qAddressTo","$!query.customerId",function(obj){
 				jQuery("#keeper").val(obj.keeper);
 	     		jQuery("#mobile").val(obj.mobile);

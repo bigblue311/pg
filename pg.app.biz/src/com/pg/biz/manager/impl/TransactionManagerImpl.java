@@ -14,8 +14,6 @@ import com.pg.dal.dao.CustomerDAO;
 import com.pg.dal.dao.EmployeeDAO;
 import com.pg.dal.dao.OpLogDAO;
 import com.pg.dal.dao.OrderDAO;
-import com.pg.dal.dao.PackageDAO;
-import com.pg.dal.dao.ProductDAO;
 import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.dao.PurchaseDAO;
 import com.pg.dal.enumerate.OrderStatusEnum;
@@ -45,12 +43,6 @@ public class TransactionManagerImpl implements TransactionManager{
 	
 	@Autowired
 	private CustomerDAO customerDAO;
-	
-	@Autowired
-	private PackageDAO packageDAO;
-	
-	@Autowired
-	private ProductDAO productDAO;
 	
 	@Autowired
 	private PublishDAO publishDAO;
