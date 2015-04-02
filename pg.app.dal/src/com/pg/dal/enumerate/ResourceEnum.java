@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 public enum ResourceEnum {
 	
+	帮助(-4l,"/admin/help","帮助","帮助页面",null,false),
 	没有权限(-3l,"/admin/nopermision","没有权限","没有权限的提示页面",null,false),
 	根目录(-2l,"/admin","根目录","默认页面",null,false),
 	默认页(-1l,"/admin/","默认页","默认页面",null,false),

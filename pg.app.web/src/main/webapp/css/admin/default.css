@@ -34,3 +34,16 @@ a:hover{
 .linkBtn{
 	cursor:pointer;
 }
+
+#goTop{
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#goTop:hover{
+  background:#f8f0db;
+}

@@ -1,0 +1,417 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<style>
+#help p {
+	margin-left: 20px;
+}
+
+#help ul li {
+	list-style: circle;
+	margin-left: 40px;
+}
+
+#help .sign {
+	color: red;
+	font-style: italic;
+}
+
+#help .question {
+	color: darkgreen;
+	font-style: italic;
+}
+
+#help .answer {
+	color: brown;
+	font-style: italic;
+	margin-bottom: 20px;
+}
+
+#help .good {
+	color: darkblue;
+	font-style: italic;
+}
+
+#help .warn {
+	color: darkorange;
+	font-style: italic;
+}
+
+#help i {
+	margin-right: 5px;
+}
+
+#help .auxiliary-text {
+	font-style: italic;
+}
+
+#help blockquote {
+	margin-left: 22px;
+}
+
+#help blockquote p {
+	font-size: 12px;
+}
+
+#help h1 {
+	background: #f8f0db;
+	border: 1px solid #eee;
+	padding: 5px;
+	padding-left: 10px;
+	margin-top: 50px;
+}
+
+#help h2 {
+	margin-top: 50px;
+}
+
+#help h1 i {
+	float: right;
+	position: relative;
+	top: 4px;
+	cursor: pointer;
+}
+</style>
+<script>
+	jQuery(function() {
+		jQuery("#help h1 i").click(function() {
+			if (jQuery(this).hasClass("icon-plus")) {
+				jQuery(this).removeClass("icon-plus");
+				jQuery(this).addClass("icon-minus");
+			} else {
+				jQuery(this).addClass("icon-plus");
+				jQuery(this).removeClass("icon-minus");
+			}
+			jQuery(this).parent().next().next().toggle();
+		});
+	});
+</script>
+<div id="help">
+	<h1>
+		帮助文档标签<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">整个说明文档中会有以下几类标签,分别代表了几种不同类型的说明,适合快速阅读</p>
+	<div>
+	<p class="sign">
+		<i class="icon-tag"></i>这个标记表示名词解释
+	</p>
+	<p class="question">
+		<i class="icon-question-sign"></i>这个标记表示常见问题
+	</p>
+	<p class="answer">
+		<i class="icon-pencil"></i>这个标记表示对常见问题的回答
+	</p>
+	<p class="good">
+		<i class="icon-thumbs-up"></i>这个标记表示这是最佳使用习惯
+	</p>
+	<p class="warn">
+		<i class="icon-thumbs-down"></i>这个标记表示这是不推荐的设置或操作
+	</p>
+	</div>
+	<h1>
+		常见问答<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">整理了一些常见的问题和解答</p>
+	<div>
+		
+	</div>
+	<h1>
+		菜单栏与顶栏<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">左侧的菜单栏与顶部的工具栏使用说明</p>
+	<div>
+		<h2>左边菜单</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+		</p>
+		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<ul>
+			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
+			<li><b>产品管理</b>: 登录时所用的密码</li>
+			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
+			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
+			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+		</ul>
+		<h2>交易统计</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+		</p>
+		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<ul>
+			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
+			<li><b>产品管理</b>: 登录时所用的密码</li>
+			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
+			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
+			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+		</ul>
+		<h2>顶部导航</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+		</p>
+		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<ul>
+			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
+			<li><b>产品管理</b>: 登录时所用的密码</li>
+			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
+			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
+			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+		</ul>
+		<h2>系统通知</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+		</p>
+		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<ul>
+			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
+			<li><b>产品管理</b>: 登录时所用的密码</li>
+			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
+			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
+			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+		</ul>
+		<h2>个人菜单</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+		</p>
+		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<ul>
+			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
+			<li><b>产品管理</b>: 登录时所用的密码</li>
+			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
+			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
+			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+		</ul>
+	</div>
+	<h1>
+		系统管理<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">系统管理模块主要是负责管理系统的一些基础配置,其中包括:
+		后台账号;角色权限;系统配置和系统通知. 通常该模块有管理员负责</p>
+	<div>
+		<h2>后台账号</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>账号: 系统登录用户的一个账号.
+		</p>
+		<p class="auxiliary-text">后台账号主要负责 开通/关闭
+			后台后台工作人员的内部员工账号.同时也可以通过该页面为用户修改登录名,登录密码和角色.</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>保护自己的密码.及时修改防止泄露.
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>开放,共享一个账号是不建议的.每个人的订单操作都会有记录,不然无法跟踪订单后台修改记录
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>姓名</b>: 即用户登录名,支持中文</li>
+			<li><b>密码</b>: 登录时所用的密码</li>
+			<li><b>角色</b>: 用户所拥有的角色权限</li>
+		</ul>
+
+		<h2>角色权限</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>角色: 系统登录用户在团队中的分工体现,一个角色只有拥有明确的资源绑定才有意义.
+		</p>
+		<p class="auxiliary-text">系统默认有一个"系统管理员"角色,该角色是系统初始化时的默认角色,不可被编辑,删除.拥有所有的访问权限,是本系统最大的权限拥有者.</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 权限所保护的是什么资源
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 每一个页面都针对了一类操作,权限即对这些页面访问的控制.
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>为系统配置一个系统管理员,以防万一.
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>推荐配置方案:
+			</p>
+			<ul>
+				<li>系统管理员角色 负责整体把控</li>
+				<li>管理员角色 主要负责商品和仓库的管理</li>
+				<li>客户经理 负责日常订单处理</li>
+			</ul>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>过度的权限开放,是不太合适的.
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>角色</b>: 角色的名称</li>
+			<li><b>说明</b>: 仅用于解释该角色,无其他作用</li>
+			<li><b>权限管理</b>: 用于对选定的角色 添加/取消 资源的访问授权</li>
+		</ul>
+
+		<h2>系统配置</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>配置:
+			系统运行的一些参数配置,通常会有一些开关,绑定账号,电话号码等参数,通常由系统管理员配置.
+		</p>
+		<p class="auxiliary-text">开关类型,用 ON/OFF 表示 ON: 打开 OFF: 关闭</p>
+		<p class="auxiliary-text">
+			日期类型,用 hh(24):mm:ss 表示, 注意格式完整如 晚上6点应表示为18:00:00,而并非<label>18:00</label>,注意输入法全角半角
+		</p>
+		<p class="auxiliary-text">数字类型,使用数字格式,不需要前面+0或者用,分割等</p>
+		<p class="auxiliary-text">电话类型,使用数字格式,不需要前面+0,+86或者用"-"分割等.</p>
+		<blockquote>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>修改时千万注意格式正确和输入法问题.当数字等不要使用中文格式
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>配置键</b>: 无法修改,且为英文字符</li>
+			<li><b>配置值</b>: 配置的内容</li>
+			<li><b>说明</b>: 对该配置内容的说明</li>
+		</ul>
+
+		<h2>系统通知</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>通知:
+			主要是一些告知信息,在系统顶部滚动展示,让内部员工都知道,例如XXX商品暂停出货或需要另收服务费等.
+		</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>准确的描述,能有效的主管,销售之间降低沟通成本
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>发布时间</b>: 系统通知发布的时间</li>
+			<li><b>类型</b>: 通知的类型</li>
+			<li><b>是否置顶</b>: 第一条滚动展示,多条置顶以此类推</li>
+			<li><b>通知内容</b>: 活动通知的内容</li>
+		</ul>
+	</div>
+	<h1>
+		产品管理<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">产品管理是对当前所拥有的 产品/产品包 进行分类和管理</p>
+	<div>
+		<h2>品牌管理</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>品牌:
+			通俗的可以理解为生产商的一个视觉形象标识.一个大的品牌下面可以拥有诸多小品牌,如宝洁下拥有飘柔、舒肤佳、玉兰油、帮宝适等小品牌.
+		</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>按社会认知去划分品牌,是最有效和合理的
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>品牌的划分太细或太粗都会对用户的搜索造成困扰
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>ID</b>: 品牌的唯一标识,这里的ID仅局限于本系统内,与外部标识无任何关联</li>
+			<li><b>品牌</b>: 品牌的名称</li>
+		</ul>
+		<h2>品类管理</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>品类:
+			更多是按产品的功能做一个划分,如肥皂,洗发水,沐浴露.一个品类下面也可以分小品类,如洗发水下可以分舒缓肌肤,补水,脆弱开叉护理,定型丰盈,蓬松,改善毛躁.
+		</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>按平时销售习惯去划分,会比较合理
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>品类的划分太细或太粗都会对用户的搜索和理解造成困扰
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>ID</b>: 品牌的唯一标识,这里的ID仅局限于本系统内,与外部标识无任何关联</li>
+			<li><b>品类</b>: 品类的名称</li>
+		</ul>
+		<h2>产品管理</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>产品:
+			是指够提供给市场，被人们使用和消费，并能满足人们某种需求的任何东西.这里单指这样东西本身固有的属性,例如尺寸,颜色等一旦被生产出来就不会发生变化的属性.而价格则不算产品的属性.
+		</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 名称与标题有什么区别?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 名称是指在口头沟通当中所用的称呼,例如"可口可乐罐装";
+				而标题通常是带有产品属性描述的展示性文字,例如"可口可乐 红色春节包装 330ML".
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>名称应更符合平时口头交流习惯,而标题则适合页面展示,尽量用较短的属性标签来描述该产品.
+				适合的命名会让产品的检索更快速,有效.
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>尽量在标题中体现商品的属性,配合品牌,品类的标识,让客户的检索更方便,易懂
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>名称和标题不要一样
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>名称</b>: 在口头沟通当中所用的称呼,例如"可口可乐罐装"</li>
+			<li><b>标题</b>: 标题通常是带有产品属性描述的展示性文字,例如"可口可乐 红色春节包装 330ML"</li>
+			<li><b>编号</b>: 通常产品的生产商有自己的一个产品编码</li>
+			<li><b>品牌</b>: 产品所属的品牌</li>
+			<li><b>品类</b>: 产品所属的品类</li>
+			<li><b>描述</b>: 更详细的商品描述信息,可以带广告词或者适合季节,假期,活动等推广,关联信息</li>
+		</ul>
+		<h2>产品打包</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>产品包: 是产品的一个集合.可以是一个礼包,绑定等.
+		</p>
+		<p class="auxiliary-text">先添加一个产品包,然后往里面添加商品,必须要确定包含商品的数量和计量单位,1包和1打还是有很大区别的</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 名称与标题有什么区别?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 名称是指在口头沟通当中所用的称呼,例如"可口可乐罐装";
+				而标题通常是带有产品属性描述的展示性文字,例如"可口可乐 红色春节包装 330ML".
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>名称应更符合平时口头交流习惯,而标题则适合页面展示,尽量用较短的属性标签来描述该产品.
+				适合的命名会让产品的检索更快速,有效.
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>尽量在标题中体现商品的属性,配合品牌,品类的标识,让客户的检索更方便,易懂
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>名称和标题不要一样
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>计量单位可以使用例如 小瓶 瓶/10ml 包/100g 等准确的描述
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>使用较模糊的计量表达
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>名称</b>: 在口头沟通当中所用的称呼,例如"可口可乐罐装"</li>
+			<li><b>标题</b>: 标题通常是带有产品属性描述的展示性文字,例如"可口可乐 红色春节包装 330ML"</li>
+			<li><b>编号</b>: 通常产品的生产商有自己的一个产品编码</li>
+			<li><b>描述</b>: 更详细的商品描述信息,可以带广告词或者适合季节,假期,活动等推广,关联信息</li>
+			<li><b>产品数量</b>: 一个包中包含的产品数量</li>
+			<li><b>计量单位</b>: 常用的计量单位,如瓶,罐,听,包,打,箱. 最好有更细的规格表述如 /10ml /100g 等</li>
+		</ul>
+	</div>
+	<h1>
+		客户管理<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">对系统的注册会员进行管理<br>TODO: 这里需要根据实际需要添加字段,另外需要客户行为的一些统计数据,例如登录次数,浏览深度等</p>
+	<div>
+		<h2>客户查询</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>客户: 交易双方中的买方
+		</p>
+		<p class="auxiliary-text">客户查询是系统中非常重要的一个入口,先定位到一个客户,然后跟着修改这个客户所对应的仓库和订单</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>尽量收集和维护客户的基本信息
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>信息随意且混乱
+			</p>
+			<p class="warn">
+				<i class="icon-thumbs-down"></i>过分的收集客户信息,会增加客户的操作成本,通常客户对自己的个人信息是非常谨慎的,过分的收集会导致客户怀疑和反感
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>姓名</b>: 客户的称呼</li>
+			<li><b>手机号码</b>: 客户主要的联系方式</li>
+			<li><b>注册时间</b>: 客户的注册时间</li>
+		</ul>
+	</div>
+</div>

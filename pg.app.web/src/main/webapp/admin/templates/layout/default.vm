@@ -31,5 +31,8 @@ $control.setTemplate("resource.vm")
 <div style="text-align:center;">
 	${copyright}
 </div>
+<div id="goTop" onclick="javascript:window.scrollTo(0,0);">
+	<i class="icon-chevron-up"></i>返回顶部
+</div>
 </body>
 </html>
