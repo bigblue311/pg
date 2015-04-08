@@ -11,28 +11,23 @@
 
 #help .sign {
 	color: red;
-	font-style: italic;
 }
 
 #help .question {
 	color: darkgreen;
-	font-style: italic;
 }
 
 #help .answer {
 	color: brown;
-	font-style: italic;
 	margin-bottom: 20px;
 }
 
 #help .good {
 	color: darkblue;
-	font-style: italic;
 }
 
 #help .warn {
 	color: darkorange;
-	font-style: italic;
 }
 
 #help i {
@@ -40,7 +35,6 @@
 }
 
 #help .auxiliary-text {
-	font-style: italic;
 }
 
 #help blockquote {

@@ -8,6 +8,8 @@
 		display: inline-block;
 	}
 </style>
+<div><a href='#' onclick='javascript:history.go(-2)'>返回</a>&nbsp;<a href='#' onclick='javascript: window.print();'>打印</a></div>
+<br>
 <h1>订单详情</h1>
 <hr>
 <form class="form-horizontal">
@@ -28,10 +30,6 @@
 		<label class="control-label">交易时间：</label>
 		<div class="controls">
 			<label>$dateTools.DateToString($!orderDO.gmtCreate)</label>
-		</div>
-		<label class="control-label">最后更新：</label>
-		<div class="controls">
-			<label>$dateTools.DateToString($!orderDO.gmtModify)</label>
 		</div>
 	  </div>
 	</div>
