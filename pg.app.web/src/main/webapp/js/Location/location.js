@@ -484,7 +484,7 @@ function addressBook(json,id, func){
                  	}
                 }
            }],
-           gridSystem = new Grid.SimpleGrid({
+           grid = new Grid.SimpleGrid({
              columns : columns,
              innerBorder : false,
              elStyle : {'cursor':'pointer'},
@@ -505,12 +505,12 @@ function addressBook(json,id, func){
              },
              items : json
            }),
-           pickerSystem = new Picker.ListPicker({
+           picker = new Picker.ListPicker({
              trigger : '#'+id,  
              width:500,  //指定宽度
-             children : [gridSystem] //配置picker内的列表
+             children : [grid] //配置picker内的列表
            });
-           pickerSystem.render();
+   		   picker.render();
 	});
 }
 

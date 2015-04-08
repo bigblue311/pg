@@ -88,9 +88,10 @@
 	<input type="hidden" id="orderId" name="$group.orderId.key" value="$!orderDO.id"/>
     <div class="row">
       <div class="control-group">
-      	<label class="control-label">发布ID：</label>
+      	<label class="control-label">商品名称：</label>
 		<div class="controls">
-			<input type="text" id="publishId" name="$group.publishId.key" class="input-normal control-text" value="">
+			<input type="hidden" id="publishId" name="$group.publishId.key" class="input-normal control-text" value="">
+			<input type="text" id="name" class="input-normal control-text" value="">
 		</div>
         <label class="control-label">单价：</label>
 		<div class="controls">
@@ -354,6 +355,7 @@
     	var transportFee = record.transportFee;
     	var transportCode = record.transportCode;
     	var publishId = record.publishId;
+    	var name = record.name;
     	var price = record.price;
     	var quantity = record.quantity;
     	var comment = record.comment;
@@ -368,6 +370,7 @@
     	jQuery("#transportFee").val(transportFee);
     	jQuery("#transportCode").val(transportCode);
     	jQuery("#publishId").val(publishId);
+    	jQuery("#name").val(name);
     	jQuery("#price").val(price);
     	jQuery("#quantity").val(quantity);
     	jQuery("#comment").val(comment);
@@ -375,6 +378,7 @@
     	jQuery("#orderId").val('$!orderDO.id');
     	jQuery("#event").attr("name",event);
     	jQuery("#event").val(true);
+    	addPublishPicker();
     }
 	
 	function clearRecord(event){
@@ -389,6 +393,7 @@
     	jQuery("#transportFee").val('');
     	jQuery("#transportCode").val('');
     	jQuery("#publishId").val('');
+    	jQuery("#name").val('');
     	jQuery("#price").val('');
     	jQuery("#quantity").val('');
     	jQuery("#customerId").val('$!orderDO.customerId');
@@ -397,12 +402,91 @@
     	showLocation('province','city','town');
     	jQuery("#event").attr("name",event);
     	jQuery("#event").val(true);
+    	addPublishPicker();
     }
 	
 	function copyCsrf(){
 		var csrf = jQuery("input[name='_csrf_token']").val();
 		jQuery("input[name='_csrf_token']").each(function(){
 			jQuery(this).val(csrf);
+		});
+	}
+	
+	function addPublishPicker(){
+		jQuery.ajax({
+			type: "get",
+			url: '/admin/api/getPublish.json',
+			success:function(data, textStatus){
+				if(data.success){
+					publisPicker(data.dataObject,"name",function(obj){
+						jQuery("#publishId").val(obj.id);
+					});
+				}
+			}
+	 	});
+	}
+	
+	function publisPicker(json ,id, func){
+		if(typeof(jQuery("#"+id).next()) == "undefined"){
+			jQuery("#"+id).after("<span class='icon-list-alt' style='cursor:pointer; position: relative;left: -20px;'></span>");
+		} else {
+			if(!jQuery("#"+id).next().hasClass("icon-list-alt")){
+				jQuery("#"+id).after("<span class='icon-list-alt' style='cursor:pointer; position: relative;left: -20px;'></span>");
+			}
+		}
+		BUI.use(['bui/picker','bui/grid'],function(Picker,Grid){
+	   		var columns = [{
+	                 title : '商品名称',
+	                 elCls: 'left',
+	                 dataIndex :'name',
+	                 width:'15%'
+	             },{
+	                 title : '库存',
+	                 elCls: 'left',
+	                 dataIndex :'balance',
+	                 width:'15%',
+	                 renderer : function(val,obj,index){
+	                	 if(obj == null){
+	                		 return "不限";
+	                	 } else {
+	                		 return obj.balance;
+	                	 }
+	                 }
+	             },{
+	                 title : '最小预定量',
+	                 elCls: 'left',
+	                 dataIndex :'limitBuy',
+	                 width:'15%',
+	                 renderer : function(val,obj,index){
+	                	 if(obj == null){
+	                		 return "不限";
+	                	 } else {
+	                		 return obj.limitBuy;
+	                	 }
+	                 }
+	             }],
+	           grid = new Grid.SimpleGrid({
+	             columns : columns,
+	             innerBorder : false,
+	             elStyle : {'cursor':'pointer'},
+	             textGetter: function(obj){ //返回选中的文本
+	            	 if(obj != null){
+		        		if(func != null){
+		        			func(obj);
+		        		}
+	              		return  obj.name;
+	              	} else {
+	              		return "";
+	              	}
+	             },
+	             items : json
+	           }),
+	           picker = new Picker.ListPicker({
+	             trigger : '#'+id,  
+	             width:500,  //指定宽度
+	             children : [grid] //配置picker内的列表
+	           });
+	   		   picker.render();
 		});
 	}
 </script>

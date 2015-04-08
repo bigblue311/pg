@@ -160,6 +160,12 @@
 		<p class="answer">
 			<i class="icon-pencil"></i>答: 复制页面上的表格中的数据,直接粘贴到Excel即可
 		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 为什么我有时候点表格中的编辑或删除没有反应?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 编辑和删除按钮需要先选中列,然后再触发按钮点击,所以第一次只是选中了列,点第二次才能触发.
+		</p>
 	</div>
 	<h1>
 		菜单栏与顶栏<i class="icon-minus"></i>
