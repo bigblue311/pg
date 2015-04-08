@@ -14,58 +14,11 @@
 				<div class="controls">
 					<input type="text" class="control-text" name="customerMobile" value="$!query.customerMobile">
 				</div>
-				<label class="control-label">联系人：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="keeper" value="$!query.keeper">
-				</div>
 				<label class="control-label">交易日期：</label>
 				<div class="controls">
 					<input type="text" class="calendar" name="createStart" id="createStart" value="$!query.createStart">
 					至
 					<input type="text" class="calendar" name="createEnd" id="createEnd" value="$!query.createEnd">
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="control-group">
-				<label class="control-label">联系人手机：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="mobile" value="$!query.mobile">
-				</div>
-				<label class="control-label">联系人电话：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="phone" value="$!query.phone">
-				</div>
-				<label class="control-label">收货地址：</label>
-				<div class="controls">
-					<input type="text" class="control-text input-large" id="qAddressTo" name="addressTo" value="$!query.addressTo">
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="control-group">
-				<label class="control-label">物流编号：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="transportCode" value="$!query.transportCode">
-				</div>
-				<label class="control-label">状态：</label>
-				<div class="controls">
-					<select name="status">
-					<option selected value="">全部</option>
-					#foreach($status in $statusEnum)
-					<option 
-						#if($!query.status)
-							#if($!query.status==$!status.code)
-								selected
-							#end
-						#end 
-						value="$!status.code">$!status.desc</option>
-					#end
-				</select>
-				</div>
-				<label class="control-label">发货地址：</label>
-				<div class="controls">
-					<input type="text" class="control-text input-large" id="qAddressFrom" name="addressFrom" value="$!query.addressFrom">
 				</div>
 			</div>
 		</div>
@@ -91,10 +44,6 @@
 			  selectedDate : new Date(),
 			  autoRender : true
 		});
-		
-		var location = new Location();
-		location.addressFrom("qAddressFrom",null);
-		location.addressTo("qAddressTo","$!query.customerId",null);
 	});
 	</script>
 </div>
@@ -137,55 +86,11 @@ $control.setTemplate("paging.vm")
           <input type="text" id="totalPrice" name="$group.totalPrice.key" class="input-normal control-text"
           data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}">
         </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">物流费：</label>
+        <label class="control-label">物流费合计：</label>
 		<div class="controls">
 			<input type="text" id="transportFee" name="$group.transportFee.key" class="input-normal control-text"
 			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}">
 		</div>
-        <label class="control-label">物流编号：</label>
-        <div class="controls">
-          <input type="text" id="transportCode" name="$group.transportCode.key" class="input-normal control-text">
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">联系人：</label>
-		<div class="controls">
-			<input type="text" id="keeper" name="$group.keeper.key" class="input-normal control-text">
-		</div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">联系手机：</label>
-        <div class="controls">
-          <input type="text" id="mobile" name="$group.mobile.key" class="input-normal control-text">
-        </div>
-        <label class="control-label">联系电话：</label>
-        <div class="controls">
-          <input type="text" id="phone" name="$group.phone.key" class="input-normal control-text">
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-		<div class="control-group">
-	        <label class="control-label">发货地址：</label>
-	        <div class="controls">
-	          <input type="text" id="addressFrom" name="$group.addressFrom.key" class="input-large control-text">
-	        </div>
-	    </div>
-	</div>
-	<div class="row">
-		<div class="control-group">
-	        <label class="control-label">收货地址：</label>
-			<div class="controls">
-				<input type="text" id="addressTo" name="$group.addressTo.key" class="input-large control-text">
-			</div>
 	  </div>
 	</div>
 	<div class="row">
@@ -223,7 +128,7 @@ $control.setTemplate("paging.vm")
 			dataIndex : 'customer',
 			renderer : function(val,obj,index){
 				if(obj != null){
-					return obj.customerName + " " +obj.customerMobile;
+					return obj.customerName + "("+obj.customerMobile+")";
 				}
 				return "";
 			},
@@ -253,12 +158,6 @@ $control.setTemplate("paging.vm")
             dataIndex :'transportFee',
             summary : true,
 		    width:'10%'
-        },{
-            title : '物流编号',
-            elCls: 'left',
-            dataIndex :'transportCode',
-            summary : false,
-            width:'10%'
         },{
             title : '状态',
             elCls: 'left',
@@ -308,10 +207,7 @@ $control.setTemplate("paging.vm")
       }),
       cascade = new Grid.Plugins.Cascade({
 		    renderer : function(record){
-			    var row = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
-			    row += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
-			    row += '<div><p>&nbsp;联系人：' + record.keeper + ' ' + record.mobile + ' ' + record.phone + '</p></div>';
-			    row += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
+			    var row = '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
 			    return row;
 		    }
 	  }),
@@ -385,38 +281,18 @@ $control.setTemplate("paging.vm")
     	jQuery("#customerName").empty().append(customerName);
     	jQuery("#customerMobile").empty().append(customerMobile);
     	
-    	var addressFrom = record.addressFrom;
-    	var addressTo = record.addressTo;
-    	var keeper = record.keeper;
-    	var mobile = record.mobile;
-    	var phone = record.phone;
     	var deposit = record.deposit;
     	var totalPrice = record.totalPrice;
     	var transportFee = record.transportFee;
-    	var transportCode = record.transportCode;
     	var status = record.status;
     	var comment = record.comment;
     	var customerId = record.customerId;
     	
-    	var location = new Location();
-    	location.addressFrom("addressFrom",null);
-		location.addressTo("addressTo",customerId,function(obj){
-			jQuery("#keeper").val(obj.keeper);
-	 		jQuery("#mobile").val(obj.mobile);
-	 		jQuery("#phone").val(obj.phone);
-		});
-
     	jQuery("#id").val(id);
     	jQuery("#action").val('orderAction');
-    	jQuery("#addressFrom").val(addressFrom);
-    	jQuery("#addressTo").val(addressTo);
-    	jQuery("#keeper").val(keeper);
-    	jQuery("#mobile").val(mobile);
-    	jQuery("#phone").val(phone);
     	jQuery("#deposit").val(deposit);
     	jQuery("#totalPrice").val(totalPrice);
     	jQuery("#transportFee").val(transportFee);
-    	jQuery("#transportCode").val(transportCode);
 		
     	jQuery("#status").show();
     	jQuery("#status").empty();
@@ -441,9 +317,7 @@ $control.setTemplate("paging.vm")
     
     function clearRecord(event){
 		copyCsrf();
-		var location = new Location();
-		location.addressFrom("addressFrom",null);
-		
+
 		jQuery("#customerName").empty().append('${customerName}');
 		jQuery("#customerMobile").empty().append('${customerMobile}');
 		
@@ -453,11 +327,6 @@ $control.setTemplate("paging.vm")
     	jQuery("#event").val(true);
     	#if($!query.customerId)
 			jQuery("#customerId").val('$!query.customerId');
-	    	location.addressTo("qAddressTo","$!query.customerId",function(obj){
-				jQuery("#keeper").val(obj.keeper);
-	     		jQuery("#mobile").val(obj.mobile);
-	     		jQuery("#phone").val(obj.phone);
-			});
 		#end
     }
     

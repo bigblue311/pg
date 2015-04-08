@@ -111,7 +111,55 @@
 	</h1>
 	<p class="auxiliary-text">整理了一些常见的问题和解答</p>
 	<div>
-		
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 权限所保护的是什么资源
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 每一个页面都针对了一类操作,权限即对这些页面访问的控制.
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 名称与标题有什么区别?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 名称是指在口头沟通当中所用的称呼,例如"可口可乐罐装";
+			而标题通常是带有产品属性描述的展示性文字,例如"可口可乐 红色春节包装 330ML".
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 如何为客户添加/编辑仓库?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 最好的方式是首先进入客户管理,找到该客户,然后点击"仓库"链接,查看该客户拥有的仓库,这样就可以为客户添加新的仓库,关于编辑,直接可以在客户仓库一栏中直接编辑.
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 产品与商品有什么区别?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 产品是一旦被生产就被确定的属性如规格,尺寸等不变信息;而商品是指在产品基础上用于交易的属性,是随着市场和销售的变化而变化的属性,例如价格,库存等
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 一笔订单的由哪些部分组成?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 由订单基础信息,物流信息,交易信息和后台操作日志组成
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 如何为客户提交一个订单?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 首先进入客户管理,找到该客户,然后点击"订单"链接,查看该客户拥有的订单,这样就可以为客户添加新的订单,点击详情,可以再次修改这个订单.
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 如何打印一个导出结果?
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 在浏览器中,选择打印此页面即可
+		</p>
+		<p class="question">
+			<i class="icon-question-sign"></i>问: 如何导出查询结果到Excel
+		</p>
+		<p class="answer">
+			<i class="icon-pencil"></i>答: 复制页面上的表格中的数据,直接粘贴到Excel即可
+		</p>
 	</div>
 	<h1>
 		菜单栏与顶栏<i class="icon-minus"></i>
@@ -124,59 +172,44 @@
 		</p>
 		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
 		<ul>
-			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
-			<li><b>产品管理</b>: 登录时所用的密码</li>
-			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
-			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
-			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+			<li><b>系统管理</b>: 权限,账号和系统参数配置</li>
+			<li><b>产品管理</b>: 品牌,品类以及产品的管理</li>
+			<li><b>客户管理</b>: 注册用户的管理</li>
+			<li><b>物流管理</b>: 对于收,发地址,仓库的管理</li>
+			<li><b>交易管理</b>: 发布商品和订单,交易的管理</li>
 		</ul>
 		<h2>交易统计</h2>
 		<p class="sign">
-			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+			<i class="icon-tag"></i>实时交易系统统计.
 		</p>
-		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
+		<p class="auxiliary-text">统计数据每15分钟刷新一次</p>
 		<ul>
-			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
-			<li><b>产品管理</b>: 登录时所用的密码</li>
-			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
-			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
-			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+			<li><b>本月销售</b>: 本月的销售金额(已确认,已发货,已收货,已结算)</li>
+			<li><b>总定金额</b>: 本月的收取的总定金额(已确认,已发货,已收货,已结算)</li>
+			<li><b>有效订单</b>: 本月有效的订单数(已确认,已发货,已收货,已结算)</li>
+			<li><b>已提交</b>: 本月已提交的订单</li>
+			<li><b>已确认</b>: 本月已确认的订单</li>
+			<li><b>已发货</b>: 本月已发货的订单</li>
+			<li><b>已收货</b>: 本月已收货的订单</li>
+			<li><b>已结算</b>: 本月已结算的订单</li>
+			<li><b>已取消</b>: 本月已取消的订单</li>
 		</ul>
 		<h2>顶部导航</h2>
 		<p class="sign">
-			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+			<i class="icon-tag"></i>当前页面的导航信息
 		</p>
-		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
-		<ul>
-			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
-			<li><b>产品管理</b>: 登录时所用的密码</li>
-			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
-			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
-			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
-		</ul>
 		<h2>系统通知</h2>
 		<p class="sign">
-			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+			<i class="icon-tag"></i>主要是一些告知信息,在系统顶部滚动展示,让内部员工都知道,例如XXX商品暂停出货或需要另收服务费等.
 		</p>
-		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
-		<ul>
-			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
-			<li><b>产品管理</b>: 登录时所用的密码</li>
-			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
-			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
-			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
-		</ul>
 		<h2>个人菜单</h2>
 		<p class="sign">
-			<i class="icon-tag"></i>指页面最左边的操作菜单,所有操作的入口.
+			<i class="icon-tag"></i>指页面右上角的操作菜单,所有操作的入口.
 		</p>
-		<p class="auxiliary-text">不同的角色看到的菜单是不一样的.</p>
 		<ul>
-			<li><b>系统管理</b>: 即用户登录名,支持中文</li>
-			<li><b>产品管理</b>: 登录时所用的密码</li>
-			<li><b>客户管理</b>: 用户所拥有的角色权限</li>
-			<li><b>物流管理</b>: 用户所拥有的角色权限</li>
-			<li><b>交易管理</b>: 用户所拥有的角色权限</li>
+			<li><b>登录信息</b>: 当前的登录用户</li>
+			<li><b>注销</b>: 注销登录状态</li>
+			<li><b>帮助</b>: 显示帮助文档</li>
 		</ul>
 	</div>
 	<h1>
@@ -204,7 +237,6 @@
 			<li><b>密码</b>: 登录时所用的密码</li>
 			<li><b>角色</b>: 用户所拥有的角色权限</li>
 		</ul>
-
 		<h2>角色权限</h2>
 		<p class="sign">
 			<i class="icon-tag"></i>角色: 系统登录用户在团队中的分工体现,一个角色只有拥有明确的资源绑定才有意义.
@@ -412,6 +444,141 @@
 			<li><b>姓名</b>: 客户的称呼</li>
 			<li><b>手机号码</b>: 客户主要的联系方式</li>
 			<li><b>注册时间</b>: 客户的注册时间</li>
+		</ul>
+	</div>
+	<h1>
+		物流管理<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">对发货地址(仓库)和送货地址(仓库)进行管理</p>
+	<div>
+		<h2>我的仓库</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>仓库: 指的是一个物流地址,可以是仓库,门店等用于商品物流仓储,仓库的联系人可能是客户,也可能是该客户的员工或合作伙伴
+		</p>
+		<p class="auxiliary-text">我的仓库是我的个人出货地址,一方面方便客户了解发货地址,另一方面方便自己物流管理</p>
+		<blockquote>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>维护好我的仓库,使商品进出一目了然
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>姓名</b>: 仓库的称呼</li>
+			<li><b>联系人</b>: 仓库管理员的名字</li>
+			<li><b>联系手机</b>: 仓库管理员的手机号码</li>
+			<li><b>联系电话</b>: 仓库管理员的固定电话</li>
+			<li><b>地址</b>: 仓库的地址</li>
+			<li><b>备注</b>: 描述信息</li>
+		</ul>
+		<h2>客户仓库</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>仓库: 指的是一个物流地址,可以是仓库,门店等用于商品物流仓储,仓库的联系人可能是客户,也可能是该客户的员工或合作伙伴
+		</p>
+		<p class="auxiliary-text">客户仓库是买家的个人收货物流地址</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 如何为客户添加/编辑仓库?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 最好的方式是首先进入客户管理,找到该客户,然后点击"仓库"链接,查看该客户拥有的仓库,这样就可以为客户添加新的仓库,关于编辑,直接可以在客户仓库一栏中直接编辑.
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>维护好客户的仓库,使商品进出一目了然
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>姓名</b>: 仓库的称呼</li>
+			<li><b>联系人</b>: 仓库管理员的名字</li>
+			<li><b>联系手机</b>: 仓库管理员的手机号码</li>
+			<li><b>联系电话</b>: 仓库管理员的固定电话</li>
+			<li><b>地址</b>: 仓库的地址</li>
+			<li><b>备注</b>: 描述信息</li>
+		</ul>
+	</div>
+	<h1>
+		交易管理<i class="icon-minus"></i>
+	</h1>
+	<p class="auxiliary-text">从产品的发布到提交订单,确认订单,发货,订单结算等操作</p>
+	<div>
+		<h2>商品发布</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>商品: 用于交易的产品,在产品基础上增加了价格,库存数量,最小购买量,上下架时间和状态属性
+		</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 产品与商品有什么区别?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 产品是一旦被生产就被确定的属性如规格,尺寸等不变信息;而商品是指在产品基础上用于交易的属性,是随着市场和销售的变化而变化的属性,例如价格,库存等
+			</p>
+			<p class="good">
+				<i class="icon-thumbs-up"></i>一个商品如果存在于多个仓库,最好能发布多个商品以区分
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>类型</b>: 产品/产品包</li>
+			<li><b>产品(包)</b>: 产品的编号以及名称</li>
+			<li><b>单价</b>: 单价以及最少预定数量</li>
+			<li><b>单位</b>: 计量单位</li>
+			<li><b>库存</b>: 库存数量</li>
+			<li><b>最小预定量</b>: 最小的预定数量,这是一个预定下限</li>
+			<li><b>仓库</b>: 该商品所处仓库</li>
+			<li><b>是否有效</b>: 该商品信息是否有效</li>
+			<li><b>销售时间</b>: 该商品信息有效时间范围</li>
+			<li><b>备注</b>: 备注信息</li>
+		</ul>
+		<h2>交易管理</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>交易: 一个商品的买卖指一笔交易,一个订单当中可能包含多个商品的买卖(交易)
+		</p>
+		<p class="auxiliary-text">交易信息是最小的一个交易元素,而一笔订单由多个交易组成</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 交易信息如何修改?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 在交易菜单中是无法修改信息的,需要到订单管理中,找到所属的订单,然后点击详情进进行编辑
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>客户姓名</b>: 客户的称呼</li>
+			<li><b>交易时间</b>: 交易发生的时间</li>
+			<li><b>类型</b>: 产品/产品包</li>
+			<li><b>产品(包)</b>: 产品/产品包的名称</li>
+			<li><b>数量</b>: 产品/产品包的数量</li>
+			<li><b>单价</b>: 成交时的价格</li>
+			<li><b>总价</b>: 数量*单价</li>
+			<li><b>物流编号</b>: 物流公司所给的编号</li>
+			<li><b>物流费</b>: 物流过程所产生的费用</li>
+			<li><b>发货地址</b>: 该交易商品的出货地址,由商品发布时确定</li>
+			<li><b>收货地址</b>: 该交易商品的收货地址,由客户提供</li>
+		</ul>
+		<h2>订单管理</h2>
+		<p class="sign">
+			<i class="icon-tag"></i>订单: 一笔订单,由多笔商品交易组成
+		</p>
+		<p class="auxiliary-text">一笔订单,由多笔商品交易组成,通常结算是按订单来结算的而不是交易</p>
+		<blockquote>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 一笔订单的由哪些部分组成?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 由订单基础信息,物流信息,交易信息和后台操作日志组成
+			</p>
+			<p class="question">
+				<i class="icon-question-sign"></i>问: 如何为客户提交一个订单?
+			</p>
+			<p class="answer">
+				<i class="icon-pencil"></i>答: 首先进入客户管理,找到该客户,然后点击"订单"链接,查看该客户拥有的订单,这样就可以为客户添加新的订单,点击详情,可以再次修改这个订单.
+			</p>
+		</blockquote>
+		<ul>
+			<li><b>客户姓名</b>: 客户的称呼</li>
+			<li><b>交易时间</b>: 交易发生的时间</li>
+			<li><b>最后更新</b>: 订单最后更新时间</li>
+			<li><b>定金</b>: 支付的定金</li>
+			<li><b>交易金额</b>: 所有交易金额的综合</li>
+			<li><b>物流费</b>: 物流费用</li>
+			<li><b>备注</b>: 备注信息</li>
 		</ul>
 	</div>
 </div>

@@ -14,6 +14,13 @@
     <result property="gmtModify" column="gmt_modify"/>
     <result property="customerId" column="customer_id"/>
     <result property="customerName" column="customer_name"/>
+    <result property="addressFrom" column="address_from"/>
+    <result property="addressTo" column="address_to"/>
+    <result property="keeper" column="keeper"/>
+    <result property="phone" column="phone"/>
+    <result property="mobile" column="mobile"/>
+    <result property="transportFee" column="transport_fee"/>
+    <result property="transportCode" column="transport_code"/>
     <result property="publishId" column="publish_id"/>
     <result property="prodType" column="prod_type"/>
     <result property="extendId" column="extend_id"/>
@@ -34,6 +41,13 @@
       gmt_modify,
       customer_id,
       customer_name,
+      address_from,
+      address_to,
+      keeper,
+      phone,
+      mobile,
+      transport_fee,
+      transport_code,
       publish_id,
       prod_type,
       extend_id,
@@ -47,7 +61,10 @@
       comment
     ) values (
       now(), now(),
-      #customerId#, #customerName#, #publishId#, #prodType#, #extendId#, #extendCode#, 
+      #customerId#, #customerName#, 
+      #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
+      #transportFee#, #transportCode#,
+      #publishId#, #prodType#, #extendId#, #extendCode#, 
       #quantity#, #unit#, #price#, #orderId#, #name#, #title#, #comment#
     )
     ]]>
@@ -59,6 +76,41 @@
   <update id="update" parameterClass="Purchase">
     update pg_purchase set 
     <dynamic>
+      <isNotEmpty property="addressFrom">  
+         <![CDATA[   
+           address_from = #addressFrom#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="addressTo">  
+         <![CDATA[   
+           address_to = #addressTo#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="keeper">  
+         <![CDATA[   
+           keeper = #keeper#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="phone">  
+         <![CDATA[   
+           phone = #phone#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="mobile">  
+         <![CDATA[   
+           mobile = #mobile#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="transportFee">  
+         <![CDATA[   
+           transport_fee = #transportFee#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="transportCode">  
+         <![CDATA[   
+           transport_code = #transportCode#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="publishId">  
          <![CDATA[   
            publish_id = #publishId#,
@@ -145,6 +197,46 @@
         	customer_name like concat('%',#customerName#,'%')
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="addressFrom" prepend="and">
+        	<![CDATA[ 
+        	address_from like concat('%',#addressFrom#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="addressTo" prepend="and">
+        	<![CDATA[ 
+        	address_to like concat('%',#addressTo#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="keeper" prepend="and">
+        	<![CDATA[ 
+        	keeper like concat('%',#keeper#,'%')
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="phone" prepend="and">
+        	<![CDATA[ 
+        	phone = #phone#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="mobile" prepend="and">
+        	<![CDATA[ 
+        	mobile = #mobile#
+        	]]>
+	    </isNotEmpty>
+	     <isNotEmpty property="transportFeeStart" prepend="and">
+        	<![CDATA[ 
+        	transport_fee >= #transportFeeStart#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="transportFeeEnd" prepend="and">
+        	<![CDATA[ 
+        	transport_fee <= #transportFeeEnd#
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="transportCode" prepend="and">
+        	<![CDATA[ 
+        	transport_code = #transportCode#
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="publishId" prepend="and">
         	<![CDATA[ 
         	publish_id = #publishId#
@@ -188,6 +280,14 @@
   	<isNull property="name">
   	<isNull property="customerId">
   	<isNull property="customerName">
+  	<isNull property="addressFrom">
+  	<isNull property="addressTo">
+  	<isNull property="keeper">
+  	<isNull property="phone">
+  	<isNull property="mobile">
+  	<isNull property="transportFeeStart">
+  	<isNull property="transportFeeEnd">
+  	<isNull property="transportCode">
   	<isNull property="publishId">
   	<isNull property="prodType">
   	<isNull property="extendId">
@@ -197,6 +297,14 @@
   	<isNull property="gmtModifyEnd">
         <include refid="Common.validModify" />
     </isNull>
+    </isNull>
+    </isNull>
+    </isNull>
+    </isNull>
+	</isNull>
+	</isNull>
+	</isNull>
+	</isNull>
     </isNull>
     </isNull>
     </isNull>

@@ -420,7 +420,6 @@ Location.prototype.fillOption = function(el_id , loc_id , selected_id) {
 }
 
 Location.prototype.addressFrom = function(id,func){
-	var system = {};
 	jQuery.ajax({
 		type: "get",
 		url: '/admin/api/getWarehouse.json?system=true',
@@ -433,7 +432,6 @@ Location.prototype.addressFrom = function(id,func){
 }
 
 Location.prototype.addressTo = function(id,customerId,func){
-	var system = {};
 	jQuery.ajax({
 		type: "get",
 		url: '/admin/api/getWarehouse.json?customerId='+customerId,
@@ -447,10 +445,10 @@ Location.prototype.addressTo = function(id,customerId,func){
 
 function addressBook(json,id, func){
 	if(typeof(jQuery("#"+id).next()) == "undefined"){
-		jQuery("#"+id).after("<span class='icon-list-alt' style='position: relative;left: -20px;'></span>");
+		jQuery("#"+id).after("<span class='icon-list-alt' style='cursor:pointer; position: relative;left: -20px;'></span>");
 	} else {
 		if(!jQuery("#"+id).next().hasClass("icon-list-alt")){
-			jQuery("#"+id).after("<span class='icon-list-alt' style='position: relative;left: -20px;'></span>");
+			jQuery("#"+id).after("<span class='icon-list-alt' style='cursor:pointer; position: relative;left: -20px;'></span>");
 		}
 	}
 	BUI.use(['bui/picker','bui/grid'],function(Picker,Grid){

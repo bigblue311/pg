@@ -45,16 +45,14 @@ public class Order {
 
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
-		pairs.add(new NameValuePair("创建时间","10%"));
-		pairs.add(new NameValuePair("发货地址","11%"));
-		pairs.add(new NameValuePair("收货地址","11%"));
-		pairs.add(new NameValuePair("收货人","10%"));
-		pairs.add(new NameValuePair("客户","10%"));
-		pairs.add(new NameValuePair("定金","5%"));
-		pairs.add(new NameValuePair("总价","5%"));
-		pairs.add(new NameValuePair("运费","5%"));
-		pairs.add(new NameValuePair("状态","5%"));
-		pairs.add(new NameValuePair("备注","15%"));
+		pairs.add(new NameValuePair("创建时间","15%"));
+		pairs.add(new NameValuePair("客户","7%"));
+		pairs.add(new NameValuePair("定金","10%"));
+		pairs.add(new NameValuePair("总价","10%"));
+		pairs.add(new NameValuePair("运费","10%"));
+		pairs.add(new NameValuePair("合计","10%"));
+		pairs.add(new NameValuePair("状态","10%"));
+		pairs.add(new NameValuePair("备注","25%"));
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -98,13 +96,11 @@ public class Order {
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
 		out.write("<td>"+DateTools.DateToString(orderDO.getGmtCreate())+"</td>");
-		out.write("<td>"+orderDO.getAddressFrom()+"</td>");
-		out.write("<td>"+orderDO.getAddressTo()+"</td>");
-		out.write("<td>"+getContact(orderDO)+"</td>");
 		out.write("<td>"+getCustomer(orderDO)+"</td>");
 		out.write("<td>"+orderDO.getDeposit()+"</td>");
 		out.write("<td>"+orderDO.getTotalPrice()+"</td>");
-		out.write("<td>"+getTransport(orderDO)+"</td>");
+		out.write("<td>"+orderDO.getTransportFee()+"</td>");
+		out.write("<td>"+getTotal(orderDO)+"</td>");
 		out.write("<td>"+OrderStatusEnum.getByCode(orderDO.getStatus())+"</td>");
 		out.write("<td>"+orderDO.getComment()+"</td>");
 		out.write("</tr>");
@@ -112,10 +108,6 @@ public class Order {
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
-	}
-	
-	private String getContact(OrderDO orderDO){
-		return orderDO.getKeeper() + "("+orderDO.getMobile()+" "+orderDO.getPhone()+")";
 	}
 	
 	private String getCustomer(OrderDO orderDO){
@@ -129,7 +121,7 @@ public class Order {
 		return customerDO.getName() + "("+customerDO.getMobile()+")";
 	}
 	
-	private String getTransport(OrderDO orderDO){
-		return orderDO.getTransportFee() + "("+orderDO.getTransportCode()+")";
+	private String getTotal(OrderDO orderDO){
+		return orderDO.getTotalPrice() + orderDO.getTransportFee() + "";
 	}
 }

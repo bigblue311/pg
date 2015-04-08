@@ -54,45 +54,11 @@
           	<input type="text" name="$orderGroup.totalPrice.key" class="input-normal control-text"
           	data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="$!orderDO.totalPrice">
         </div>
-        <label class="control-label">物流费：</label>
+        <label class="control-label">物流费合计：</label>
 		<div class="controls">
 			<input type="text" name="$orderGroup.transportFee.key" class="input-normal control-text"
 			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="$!orderDO.transportFee">
 		</div>
-        <label class="control-label">物流编号：</label>
-        <div class="controls">
-          	<input type="text" name="$orderGroup.transportCode.key" class="input-normal control-text" value="$!orderDO.transportCode">
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">联系人：</label>
-		<div class="controls">
-			<input type="text" id="keeper" name="$orderGroup.keeper.key" class="input-normal control-text" value="$!orderDO.keeper">
-		</div>
-        <label class="control-label">联系手机：</label>
-        <div class="controls">
-          	<input type="text" id="mobile" name="$orderGroup.mobile.key" class="input-normal control-text" value="$!orderDO.mobile">
-        </div>
-        <label class="control-label">联系电话：</label>
-        <div class="controls">
-          	<input type="text" id="phone" name="$orderGroup.phone.key" class="input-normal control-text" value="$!orderDO.phone">
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-		<div class="control-group">
-	        <label class="control-label">发货地址：</label>
-	        <div class="controls" style="margin-right: 96px;">
-	          	<input type="text" id="addressFrom" name="$orderGroup.addressFrom.key" class="input-large control-text" 
-	          	value="$!orderDO.addressFrom">
-	        </div>
-	        <label class="control-label">收货地址：</label>
-			<div class="controls">
-				<input type="text" id="addressTo" name="$orderGroup.addressTo.key" class="input-large control-text" 
-				value="$!orderDO.addressTo">
-			</div>
 	  </div>
 	</div>
 	<div class="row">
@@ -112,18 +78,86 @@
 	</div>
 </form>
 #set ($group = $form.purchase.defaultInstance)
-<form method="post" id="actionFrom">
-	$csrfToken.hiddenField
-	<input type="hidden" name="action" value="purchaseAction"/>  
+<div id="editor" style="display:none">
+  <form method="post" id="actionFrom">
+  	$csrfToken.hiddenField
+  	<input type="hidden" id="action" name="action" value="purchaseAction"/>  
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
 	<input type="hidden" id="id" name="$group.id.key" value=""/>
-	<input type="hidden" id="publishId" name="$group.publishId.key" value=""/>
-	<input type="hidden" id="price" name="$group.price.key" value=""/>
-	<input type="hidden" id="quantity" name="$group.quantity.key" value=""/>
-	<input type="hidden" id="comment" name="$group.comment.key" value=""/>
 	<input type="hidden" id="customerId" name="$group.customerId.key" value="$!orderDO.customerId"/>
 	<input type="hidden" id="orderId" name="$group.orderId.key" value="$!orderDO.id"/>
-</form>
+    <div class="row">
+      <div class="control-group">
+      	<label class="control-label">发布ID：</label>
+		<div class="controls">
+			<input type="text" id="publishId" name="$group.publishId.key" class="input-normal control-text" value="">
+		</div>
+        <label class="control-label">单价：</label>
+		<div class="controls">
+			<input type="text" id="price" name="$group.price.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="">
+		</div>
+        <label class="control-label">数量：</label>
+        <div class="controls">
+          	<input type="text" id="quantity" name="$group.quantity.key" class="input-normal control-text" 
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">物流费：</label>
+		<div class="controls">
+			<input type="text" id="transportFee" name="$group.transportFee.key" class="input-normal control-text"
+			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="">
+		</div>
+        <label class="control-label">物流编号：</label>
+        <div class="controls">
+          	<input type="text" id="transportCode" name="$group.transportCode.key" class="input-normal control-text" value="">
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+		<div class="control-group">
+	        <label class="control-label">发货地址：</label>
+	        <div class="controls" style="margin-right: 96px;">
+	          	<input type="text" id="addressFrom" name="$group.addressFrom.key" class="input-large control-text" 
+	          	value="">
+	        </div>
+	        <label class="control-label">收货地址：</label>
+			<div class="controls">
+				<input type="text" id="addressTo" name="$group.addressTo.key" class="input-large control-text" 
+				value="">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+      	<label class="control-label">联系人：</label>
+		<div class="controls">
+			<input type="text" id="keeper" name="$group.keeper.key" class="input-normal control-text">
+		</div>
+		<label class="control-label">联系手机：</label>
+		<div class="controls">
+			<input type="text" id="mobile" name="$group.mobile.key" class="input-normal control-text" 
+			data-rules="{regexp:/^(1(([35][0-9])|(47)|[5][036789]|[8][012346789]))\d{8}$/}" data-messages="{regexp:'请输入正确的手机号码'}">
+		</div>
+		<label class="control-label">联系电话：</label>
+		<div class="controls">
+			<input type="text" id="phone" name="$group.phone.key" class="input-normal control-text">
+		</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="control-group">
+        <label class="control-label">备注：</label>
+        <div class="controls control-row4">
+          <textarea id="comment" name="$group.comment.key" class="input-large"></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 <br><br>
 <h1>订单商品</h1>
 <hr>
@@ -135,75 +169,121 @@
       Store = Data.Store,
       publishObj = #if($!{publishEnum})#noescape()$!{publishEnum}#end#else null #end,
       columns = [
-		{
+	  {
+		  	title : 'ID',
+			elCls: 'center',
+			dataIndex : 'id',
+			width:'5%'
+	  },{
 			title : '客户名称',
 			elCls: 'left',
 			dataIndex : 'customerName',
 			width:'10%'
-		},{
-            title : '商品名称',
-            elCls: 'left',
-            dataIndex :'publishId',
-            editor : {
-				xtype : 'select',
-				items : publishObj,
-				rules : {required : true}
-			},
-			renderer : Grid.Format.enumRenderer(publishObj),
-		    width:'30%'
-        },{
-            title : '单价',
-            elCls: 'left',
-            dataIndex :'price',
-            editor : {
-				xtype : 'number',
-				rules : {required : true}
-		  	},
-            width:'10%'
-        },{
-            title : '数量',
-            elCls: 'left',
-            dataIndex :'quantity',
-            editor : {
-				xtype : 'number',
-				rules : {required : true}
-		  	},
-            width:'10%'
-        },{
-            title : '备注',
-            elCls: 'left',
-            dataIndex :'comment',
-            editor : {
-				xtype : 'text',
-				rules : {required : false}
-		  	},
-            width:'30%'
-        },{
-			title : '操作',
-			elCls: 'center',
-			dataIndex : 'oper',
-			renderer : function(val,obj,index) {
+	  },{
+	        title : '交易时间',
+	        elCls: 'left',
+	        dataIndex :'gmtCreate',
+	        renderer:BUI.Grid.Format.datetimeRenderer,
+	        width:'15%'
+      },{
+	        title : '类型',
+	        elCls: 'left',
+	        dataIndex :'prodType',
+	        renderer : function(val,obj,index){
+	        	var prodType = obj.prodType;
+	        	if(prodType == '0') return '产品';
+	        	if(prodType == '1') return '产品包';
+	        	return "未知";
+	        },
+		    width:'5%'
+      },{
+	        title : '产品(包)',
+	        elCls: 'left',
+	        dataIndex :'extendCode',
+	        renderer : function(val,obj,index){
+	         	var prodType = obj.prodType;
+	         	var extendCode = obj.extendCode;
+	         	var name = "";
+	         	if(prodType == '0'){
+	         		#foreach($product in $productEnum)
+	         			if('$product.key' == obj.extendId){
+	         				return '['+extendCode+']$product.value';
+	         			}
+	         		#end
+	         	}
+				if(prodType == '1'){
+					#foreach($package in $packagetEnum)
+	     				if('$package.key' == obj.extendId){
+	     					return '['+extendCode+']$package.value';
+	     				}
+	     			#end
+	         	}
+				return '['+extendCode+']';
+	         },
+		     width:'10%'
+       },{
+	         title : '数量',
+	         elCls: 'left',
+	         dataIndex :'quantity',
+	         width:'10%'
+       },{
+	         title : '单价',
+	         elCls: 'left',
+	         dataIndex :'price',
+	         width:'10%'
+       },{
+	         title : '物流费',
+	         elCls: 'left',
+	         dataIndex :'transportFee',
+	         width:'10%'
+       },{
+	         title : '物流编号',
+	         elCls: 'left',
+	         dataIndex :'transportCode',
+	         width:'10%'
+       },{
+	         title : '总价',
+	         elCls: 'left',
+	         renderer: function(val,obj,index){
+	         	if(obj!=null){
+	           		var price = obj.price;
+	           		var quantity = obj.quantity;
+	           		if(price != null && quantity !=null){
+	           			return price * quantity;
+	           		}
+	           	}
+	           	return 0;
+	         }, 
+	         width:'5%'
+       },{
+		 	title : '操作',
+		 	elCls: 'center',
+		 	dataIndex : 'oper',
+		 	renderer : function(val,obj,index) {
 				var edit = '<span class="grid-command btn-edit">编辑</span>';
 				var del = '<span class="grid-command btn-del">删除</span>';
 				return edit+del;
-			},
-	        width:'10%'
-		}],
-		data = #if($!{list})#noescape()$!{list}#end#else null #end;
+		 	},
+	     	width:'10%'
+			}],
+			data = #if($!{list})#noescape()$!{list}#end#else null #end;
       var store = new Store({
-        data : data,
-        listeners : {
-        	'update' : updateFunction
-        }
+        	data : data
       }),
-      editing = new Grid.Plugins.RowEditing({
-			triggerCls : 'btn-edit',
-			triggerSelected : false
+      cascade = new Grid.Plugins.Cascade({
+		    renderer : function(record){
+			    var row = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
+			    row += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
+			    row += '<div><p>&nbsp;联系方式：' + record.keeper + ' ' + record.mobile+' ' + record.phone + '</p></div>';
+			    row += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
+			    return row;
+		    }
 	  }),
       grid = new Grid.Grid({
         render:'#grid',
         width:'100%',//这个属性一定要设置
         columns : columns,
+        store : store,
         bbar : {
         	items : [
 			{
@@ -215,68 +295,116 @@
 			}
 			]
         },
-        plugins : [editing],
-        store : store
+        plugins : [cascade]
       });
 
     grid.render();
     
-    jQuery(".btn-del").click(function(){
-    	BUI.Message.Confirm("确定删除该订购记录吗?", function() {
-    		var selections = grid.getSelection();
-        	var record = selections[0];
-        	deleteFunction(record);
-		}, 'question');
-    });
+  	//创建编辑器
+    var editor = new BUI.Editor.DialogEditor({ 
+        contentId:'editor',
+        width : 600,
+        mask : true,
+        title : '交易管理',
+        form : {
+          srcNode : '#actionFrom'
+        },
+        success : function(){
+          this.accept();
+          jQuery("#actionFrom").submit();
+        }
+      });
+
+    editor.render();
     
-  //添加记录
-	function addFunction() {
-		var newData = {};
-		store.addAt(newData, 0);
-		editing.edit(newData, 'comment'); //添加记录后，直接编辑
+    function addFunction(){
+		editor.show();
+		clearRecord('event_submit_do_update');
 	}
     
-    function updateFunction(e){
-    	var id = e.record.id;
-    	var publishId = e.record.publishId;
-    	var price = e.record.price;
-    	var comment = e.record.comment;
-    	var quantity = e.record.quantity;
-    	var event = "event_submit_do_update";
-    	jQuery("#id").val(id);
-    	jQuery("#publishId").val(publishId);
-    	jQuery("#price").val(price);
-    	jQuery("#comment").val(comment);
-    	jQuery("#quantity").val(quantity);
-    	jQuery("#event").attr("name",event);
-    	jQuery.ajax({
-    		type: "get",
-    		url: '/admin/api/checkBalance.json?purchaseId='+id+'&publishId='+publishId+'&quantity='+quantity,
-    		success:function(data, textStatus){
-    			if(data.success){
-    				jQuery("#actionFrom").submit();
-    			} else {
-    				alert(data.message);
-    			}
-    		}
-     	});
-    }
+    jQuery(".btn-edit").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
+		editor.show();
+		bindRecord('event_submit_do_update');
+	});
     
-    function deleteFunction(record){
-    	var id = e.record.id;
-    	var publishId = e.record.publishId;
-    	var price = e.record.price;
-    	var comment = e.record.comment;
-    	var quantity = e.record.quantity;
-    	var event = "event_submit_do_delete";
+    jQuery(".btn-del").click(function(){
+		if(grid.getSelection().length == 0){
+			return;
+		}
+		BUI.Message.Confirm("确定删除该订购记录吗?", function() {
+			bindRecord('event_submit_do_delete');
+			jQuery("#actionFrom").submit();
+		}, 'question');
+	});
+    
+    function bindRecord(event){
+		copyCsrf();
+		var selections = grid.getSelection();
+    	var record = selections[0];
+		
+    	var id = record.id;
+    	var addressFrom = record.addressFrom;
+    	var addressTo = record.addressTo;
+    	var keeper = record.keeper;
+    	var mobile = record.mobile;
+    	var phone = record.phone;
+    	var transportFee = record.transportFee;
+    	var transportCode = record.transportCode;
+    	var publishId = record.publishId;
+    	var price = record.price;
+    	var quantity = record.quantity;
+    	var comment = record.comment;
+
     	jQuery("#id").val(id);
+    	jQuery("#action").val('purchaseAction');
+    	jQuery("#addressFrom").val(addressFrom);
+    	jQuery("#addressTo").val(addressTo);
+    	jQuery("#keeper").val(keeper);
+    	jQuery("#mobile").val(mobile);
+    	jQuery("#phone").val(phone);
+    	jQuery("#transportFee").val(transportFee);
+    	jQuery("#transportCode").val(transportCode);
     	jQuery("#publishId").val(publishId);
     	jQuery("#price").val(price);
-    	jQuery("#comment").val(comment);
     	jQuery("#quantity").val(quantity);
+    	jQuery("#comment").val(comment);
+    	jQuery("#customerId").val('$!orderDO.customerId');
+    	jQuery("#orderId").val('$!orderDO.id');
     	jQuery("#event").attr("name",event);
-    	jQuery("#actionFrom").submit();
+    	jQuery("#event").val(true);
     }
+	
+	function clearRecord(event){
+		copyCsrf();
+    	jQuery("#id").val('');
+    	jQuery("#action").val('purchaseAction');
+    	jQuery("#addressFrom").val('');
+    	jQuery("#addressTo").val('');
+    	jQuery("#keeper").val('');
+    	jQuery("#mobile").val('');
+    	jQuery("#phone").val('');
+    	jQuery("#transportFee").val('');
+    	jQuery("#transportCode").val('');
+    	jQuery("#publishId").val('');
+    	jQuery("#price").val('');
+    	jQuery("#quantity").val('');
+    	jQuery("#customerId").val('$!orderDO.customerId');
+    	jQuery("#orderId").val('$!orderDO.id');
+    	jQuery("#comment").val('');
+    	showLocation('province','city','town');
+    	jQuery("#event").attr("name",event);
+    	jQuery("#event").val(true);
+    }
+	
+	function copyCsrf(){
+		var csrf = jQuery("input[name='_csrf_token']").val();
+		jQuery("input[name='_csrf_token']").each(function(){
+			jQuery(this).val(csrf);
+		});
+	}
 </script>
 <br><br>
 <h1>操作日志</h1>
@@ -297,7 +425,7 @@
 </div>
 <script type="text/javascript">
 jQuery(function(){
-	var customerId = jQuery("#customerId").val();
+	var customerId = '$!orderDO.customerId';
 	var location = new Location();
 	location.addressFrom("addressFrom",null);
 	location.addressTo("addressTo",customerId,function(obj){

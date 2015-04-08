@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 public enum ProdTypeEnum {
-	商品("0","商品"),
-	商品包("1","商品包");
+	产品("0","产品"),
+	产品包("1","产品包");
 	
 	private String code;
 	private String desc;

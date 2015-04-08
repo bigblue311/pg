@@ -17,51 +17,15 @@ public class OrderDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6072027456711318024L;
-	private String addressFrom;		//发货仓库
-	private String addressTo;		//收货仓库
-	private String keeper;			//收货联系人
-	private String phone;			//收货联系人电话
-	private String mobile;			//收货联系人手机
 	private Long customerId;		//客户ID
 	private String customerName;	//客户姓名
 	private String customerMobile;	//客户电话
 	private Double deposit;			//定金
 	private Double totalPrice;		//总价(不含运费)
 	private Double transportFee;	//运费
-	private String transportCode;	//物流编号
 	private String status;			//状态
 	private String comment;			//备注
 	
-	public String getAddressFrom() {
-		return addressFrom;
-	}
-	public void setAddressFrom(String addressFrom) {
-		this.addressFrom = addressFrom;
-	}
-	public String getAddressTo() {
-		return addressTo;
-	}
-	public void setAddressTo(String addressTo) {
-		this.addressTo = addressTo;
-	}
-	public String getKeeper() {
-		return keeper;
-	}
-	public void setKeeper(String keeper) {
-		this.keeper = keeper;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getMobile() {
-		return mobile;
-	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
 	public Long getCustomerId() {
 		return customerId;
 	}
@@ -97,12 +61,6 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setTransportFee(Double transportFee) {
 		this.transportFee = transportFee;
-	}
-	public String getTransportCode() {
-		return transportCode;
-	}
-	public void setTransportCode(String transportCode) {
-		this.transportCode = transportCode;
 	}
 	public String getStatus() {
 		return status;

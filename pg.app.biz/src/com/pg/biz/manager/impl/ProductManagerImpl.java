@@ -186,7 +186,7 @@ public class ProductManagerImpl implements ProductManager{
 
 	@Override
 	public Paging<ProductVO> getProductVOPage(PublishQueryCondition queryCondition) {
-		queryCondition.setProdType(ProdTypeEnum.商品.getCode());
+		queryCondition.setProdType(ProdTypeEnum.产品.getCode());
 		int totalSize = publishDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
 		Paging<ProductVO> page = queryCondition.getPaging(totalSize, 5);
@@ -207,7 +207,7 @@ public class ProductManagerImpl implements ProductManager{
 		if(publishDO == null) {
 			return null;
 		}
-		if(ProdTypeEnum.商品.getCode().equals(publishDO.getProdType())){
+		if(ProdTypeEnum.产品.getCode().equals(publishDO.getProdType())){
 			ProductVO productVO = new ProductVO();
 			productVO.setPublishDO(publishDO);
 			
@@ -231,7 +231,7 @@ public class ProductManagerImpl implements ProductManager{
 
 	@Override
 	public Paging<PackageVO> getPackageVOPage(PublishQueryCondition queryCondition) {
-		queryCondition.setProdType(ProdTypeEnum.商品包.getCode());
+		queryCondition.setProdType(ProdTypeEnum.产品包.getCode());
 		int totalSize = publishDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
 		Paging<PackageVO> page = queryCondition.getPaging(totalSize, 5);
@@ -252,7 +252,7 @@ public class ProductManagerImpl implements ProductManager{
 		if(publishDO == null) {
 			return null;
 		}
-		if(ProdTypeEnum.商品包.getCode().equals(publishDO.getProdType())){
+		if(ProdTypeEnum.产品包.getCode().equals(publishDO.getProdType())){
 			PackageVO packageVO = new PackageVO();
 			packageVO.setPublishDO(publishDO);
 			

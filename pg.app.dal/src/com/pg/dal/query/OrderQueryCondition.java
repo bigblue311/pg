@@ -7,51 +7,6 @@ import com.victor.framework.dal.basic.QueryCondition;
 
 public class OrderQueryCondition extends QueryCondition {
 	
-	public OrderQueryCondition setAddressFrom(String addressFrom) {
-		put("addressFrom",addressFrom);
-		return this;
-	}
-	
-	public String getAddressFrom(){
-		return getString("addressFrom");
-	}
-	
-	public OrderQueryCondition setAddressTo(String addressTo) {
-		put("addressTo",addressTo);
-		return this;
-	}
-	
-	public String getAddressTo(){
-		return getString("addressTo");
-	}
-	
-	public OrderQueryCondition setKeeper(String keeper) {
-		put("keeper",keeper);
-		return this;
-	}
-	
-	public String getKeeper(){
-		return getString("keeper");
-	}
-	
-	public OrderQueryCondition setPhone(String phone) {
-		put("phone",phone);
-		return this;
-	}
-	
-	public String getPhone(){
-		return getString("phone");
-	}
-	
-	public OrderQueryCondition setMobile(String mobile) {
-		put("mobile",mobile);
-		return this;
-	}
-	
-	public String getMobile(){
-		return getString("mobile");
-	}
-	
 	public OrderQueryCondition setCustomerId(Long customerId) {
 		put("customerId",customerId);
 		return this;
@@ -131,15 +86,6 @@ public class OrderQueryCondition extends QueryCondition {
 	
 	public Double getTransportFeeEnd(){
 		return getDouble("transportFeeEnd");
-	}
-	
-	public OrderQueryCondition setTransportCode(Double transportCode) {
-		put("transportCode",transportCode);
-		return this;
-	}
-	
-	public String getTransportCode(){
-		return getString("transportCode");
 	}
 	
 	public OrderQueryCondition setStatus(String status) {

@@ -34,6 +34,78 @@ public class PurchaseQueryCondition extends QueryCondition {
 		return getLong("customerName");
 	}
 	
+	public PurchaseQueryCondition setAddressFrom(String addressFrom) {
+		put("addressFrom",addressFrom);
+		return this;
+	}
+	
+	public String getAddressFrom(){
+		return getString("addressFrom");
+	}
+	
+	public PurchaseQueryCondition setAddressTo(String addressTo) {
+		put("addressTo",addressTo);
+		return this;
+	}
+	
+	public String getAddressTo(){
+		return getString("addressTo");
+	}
+	
+	public PurchaseQueryCondition setKeeper(String keeper) {
+		put("keeper",keeper);
+		return this;
+	}
+	
+	public String getKeeper(){
+		return getString("keeper");
+	}
+	
+	public PurchaseQueryCondition setPhone(String phone) {
+		put("phone",phone);
+		return this;
+	}
+	
+	public String getPhone(){
+		return getString("phone");
+	}
+	
+	public PurchaseQueryCondition setMobile(String mobile) {
+		put("mobile",mobile);
+		return this;
+	}
+	
+	public String getMobile(){
+		return getString("mobile");
+	}
+	
+	public PurchaseQueryCondition setTransportFeeStart(Double transportFeeStart) {
+		put("transportFeeStart",transportFeeStart);
+		return this;
+	}
+	
+	public Double setTransportFeeStart(){
+		return getDouble("transportFeeStart");
+	}
+	
+	public PurchaseQueryCondition setTransportFeeEnd(Double transportFeeEnd) {
+		put("transportFeeEnd",transportFeeEnd);
+		return this;
+	}
+	
+	public Double getTransportFeeEnd(){
+		return getDouble("transportFeeEnd");
+	}
+	
+	public PurchaseQueryCondition setTransportCode(Double transportCode) {
+		put("transportCode",transportCode);
+		return this;
+	}
+	
+	public String getTransportCode(){
+		return getString("transportCode");
+	}
+	
 	public PurchaseQueryCondition setPublishId(Long publishId) {
 		put("publishId",publishId);
 		return this;

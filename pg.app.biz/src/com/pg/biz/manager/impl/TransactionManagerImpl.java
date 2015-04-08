@@ -231,7 +231,24 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		PurchaseDO originDO = purchaseDAO.getById(id);
 		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]操作了"+purchaseDO.getName();
-		
+		if(StringTools.isNotEmpty(purchaseDO.getAddressTo())){
+			msg += "收货仓库地址["+originDO.getAddressTo()+"]:"+purchaseDO.getAddressTo()+";";
+		}
+		if(StringTools.isNotEmpty(purchaseDO.getKeeper())){
+			msg += "收货仓库联系人["+originDO.getKeeper()+"]:"+purchaseDO.getKeeper()+";";
+		}
+		if(StringTools.isNotEmpty(purchaseDO.getPhone())){
+			msg += "收货仓库联系人电话["+originDO.getPhone()+"]:"+purchaseDO.getPhone()+";";
+		}
+		if(StringTools.isNotEmpty(purchaseDO.getMobile())){
+			msg += "收货仓库联系人手机["+originDO.getMobile()+"]:"+purchaseDO.getMobile()+";";
+		}
+		if(purchaseDO.getTransportFee()!=null){
+			msg += "物流费["+originDO.getTransportFee()+"]:"+purchaseDO.getTransportFee()+";";
+		}
+		if(StringTools.isNotEmpty(purchaseDO.getTransportCode())){
+			msg += "物流编号["+originDO.getTransportCode()+"]:"+purchaseDO.getTransportCode()+";";
+		}
 		if(purchaseDO.getQuantity() != null){
 			msg += "数量["+originDO.getQuantity()+"]:"+purchaseDO.getQuantity()+";";
 		}
@@ -252,18 +269,6 @@ public class TransactionManagerImpl implements TransactionManager{
 			return "";
 		}
 		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]操作了";
-		if(StringTools.isNotEmpty(orderDO.getAddressTo())){
-			msg += "收货仓库地址["+originDO.getAddressTo()+"]:"+orderDO.getAddressTo()+";";
-		}
-		if(StringTools.isNotEmpty(orderDO.getKeeper())){
-			msg += "收货仓库联系人["+originDO.getKeeper()+"]:"+orderDO.getKeeper()+";";
-		}
-		if(StringTools.isNotEmpty(orderDO.getPhone())){
-			msg += "收货仓库联系人电话["+originDO.getPhone()+"]:"+orderDO.getPhone()+";";
-		}
-		if(StringTools.isNotEmpty(orderDO.getMobile())){
-			msg += "收货仓库联系人手机["+originDO.getMobile()+"]:"+orderDO.getMobile()+";";
-		}
 		if(orderDO.getDeposit()!=null){
 			msg += "定金["+originDO.getDeposit()+"]:"+orderDO.getDeposit()+";";
 		}
@@ -272,9 +277,6 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		if(orderDO.getTransportFee()!=null){
 			msg += "物流费["+originDO.getTransportFee()+"]:"+orderDO.getTransportFee()+";";
-		}
-		if(StringTools.isNotEmpty(orderDO.getTransportCode())){
-			msg += "物流编号["+originDO.getTransportCode()+"]:"+orderDO.getTransportCode()+";";
 		}
 		if(StringTools.isNotEmpty(orderDO.getStatus())){
 			try {
@@ -323,12 +325,17 @@ public class TransactionManagerImpl implements TransactionManager{
 		queryCondition.setOrderId(orderId);
 		List<PurchaseDO> list = purchaseDAO.getByCondition(queryCondition);
 		Double total = 0.0d;
+		Double totalTransportFee = 0.0d;
 		for(PurchaseDO purchaseDO : list){
 			if(purchaseDO!=null && purchaseDO.getPrice()!=null && purchaseDO.getQuantity()!=null){
 				total += purchaseDO.getPrice() * purchaseDO.getQuantity();
 			}
+			if(purchaseDO!=null && purchaseDO.getTransportFee()!=null){
+				totalTransportFee += purchaseDO.getTransportFee();
+			}
 		}
 		order.setTotalPrice(total);
+		order.setTransportFee(totalTransportFee);
 		orderDAO.update(order);
 	}
 

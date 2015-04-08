@@ -44,15 +44,19 @@ public class Purchase {
 		
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
-		pairs.add(new NameValuePair("创建时间","15%"));
-		pairs.add(new NameValuePair("名称","10%"));
-		pairs.add(new NameValuePair("标题","10%"));
-		pairs.add(new NameValuePair("编号","10%"));
-		pairs.add(new NameValuePair("客户","7%"));
+		pairs.add(new NameValuePair("创建时间","10%"));
+		pairs.add(new NameValuePair("名称","5%"));
+		pairs.add(new NameValuePair("标题","5%"));
+		pairs.add(new NameValuePair("编号","5%"));
+		pairs.add(new NameValuePair("客户","12%"));
 		pairs.add(new NameValuePair("单价","5%"));
 		pairs.add(new NameValuePair("数量","5%"));
 		pairs.add(new NameValuePair("总价","5%"));
-		pairs.add(new NameValuePair("备注","30%"));
+		pairs.add(new NameValuePair("运费","5%"));
+		pairs.add(new NameValuePair("发货地址","7%"));
+		pairs.add(new NameValuePair("收货地址","8%"));
+		pairs.add(new NameValuePair("收货人","10%"));
+		pairs.add(new NameValuePair("备注","10%"));
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -103,12 +107,24 @@ public class Purchase {
 		out.write("<td>"+purchaseDO.getPrice()+"元/"+purchaseDO.getUnit()+"</td>");
 		out.write("<td>"+purchaseDO.getQuantity()+purchaseDO.getUnit()+"</td>");
 		out.write("<td>"+getTotal(purchaseDO)+"</td>");
+		out.write("<td>"+getTransport(purchaseDO)+"</td>");
+		out.write("<td>"+purchaseDO.getAddressFrom()+"</td>");
+		out.write("<td>"+purchaseDO.getAddressTo()+"</td>");
+		out.write("<td>"+getContact(purchaseDO)+"</td>");
 		out.write("<td>"+purchaseDO.getComment()+"</td>");
 		out.write("</tr>");
 	}
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
+	}
+	
+	private String getContact(PurchaseDO purchaseDO){
+		return purchaseDO.getKeeper() + "("+purchaseDO.getMobile()+" "+purchaseDO.getPhone()+")";
+	}
+	
+	private String getTransport(PurchaseDO purchaseDO){
+		return purchaseDO.getTransportFee() + "("+purchaseDO.getTransportCode()+")";
 	}
 	
 	private String getCustomer(PurchaseDO purchaseDO){

@@ -50,13 +50,13 @@ public class PurchaseAction {
 		from.setExtendCode(publishDO.getExtendCode());
 		from.setUnit(publishDO.getUnit());
 		
-		if(ProdTypeEnum.商品.getCode().equals(from.getProdType())){
+		if(ProdTypeEnum.产品.getCode().equals(from.getProdType())){
 			ProductDO productDO = productManager.getProductById(from.getExtendId());
 			from.setExtendCode(productDO.getCode());
 			from.setName(productDO.getName());
 			from.setTitle(productDO.getTitle());
 		}
-		if(ProdTypeEnum.商品包.getCode().equals(from.getProdType())){
+		if(ProdTypeEnum.产品包.getCode().equals(from.getProdType())){
 			PackageDO packageDO = productManager.getPackageById(from.getExtendId());
 			from.setExtendCode(packageDO.getCode());
 			from.setName(packageDO.getName());
