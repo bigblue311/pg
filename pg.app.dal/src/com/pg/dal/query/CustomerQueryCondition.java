@@ -34,6 +34,15 @@ public class CustomerQueryCondition extends QueryCondition {
 		return getString("mobile");
 	}
 	
+	public CustomerQueryCondition setEmployeeId(Long employeeId) {
+		put("employeeId",employeeId);
+		return this;
+	}
+	
+	public Long getEmployeeId(){
+		return getLong("employeeId");
+	}
+	
 	public void setCreateStart(String createStart){
 		put("createStart",createStart);
 		setGmtCreateStart(StringToDate(createStart));

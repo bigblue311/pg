@@ -23,8 +23,6 @@ public class PackageDO extends EntityDO implements Serializable{
 	@EnumValue
 	private String name;		//名称
 	private String title;		//标题
-	private String code;		//编号
-	private String img;			//图片
 	private String description;	//描述
 	private String enable;		//有效
 	
@@ -39,18 +37,6 @@ public class PackageDO extends EntityDO implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getImg() {
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
 	}
 	public String getDescription() {
 		return description;

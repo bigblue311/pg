@@ -25,15 +25,6 @@ public class PackageQueryCondition extends QueryCondition {
 		return getString("title");
 	}
 	
-	public PackageQueryCondition setCode(String code) {
-		put("code",code);
-		return this;
-	}
-	
-	public String getCode(){
-		return getString("code");
-	}
-	
 	@Override
 	public PackageQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));

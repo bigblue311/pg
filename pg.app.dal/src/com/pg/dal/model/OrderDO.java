@@ -17,9 +17,10 @@ public class OrderDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6072027456711318024L;
-	private Long customerId;		//客户ID
+	private Long   customerId;		//客户ID
 	private String customerName;	//客户姓名
 	private String customerMobile;	//客户电话
+	private String customerIdCard;	//客户身份证号
 	private Double deposit;			//定金
 	private Double totalPrice;		//总价(不含运费)
 	private Double transportFee;	//运费
@@ -43,6 +44,12 @@ public class OrderDO extends EntityDO implements Serializable{
 	}
 	public void setCustomerMobile(String customerMobile) {
 		this.customerMobile = customerMobile;
+	}
+	public String getCustomerIdCard() {
+		return customerIdCard;
+	}
+	public void setCustomerIdCard(String customerIdCard) {
+		this.customerIdCard = customerIdCard;
 	}
 	public Double getDeposit() {
 		return deposit;

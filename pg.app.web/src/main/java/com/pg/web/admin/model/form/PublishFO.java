@@ -40,19 +40,15 @@ public class PublishFO extends PublishDO{
 	public PublishDO getDO(){
 		PublishDO publisDO = new PublishDO();
 		publisDO.setId(getId());
-		publisDO.setPrice(getPrice());
-		publisDO.setUnit(getUnit());
-		publisDO.setBalance(getBalance());
+		publisDO.setDiscount(getDiscount());
 		publisDO.setWarehouseId(getWarehouseId());
-		publisDO.setImg(getImg());
-		publisDO.setDescription(getDescription());
-		publisDO.setProdType(getProdType());
-		publisDO.setExtendId(getExtendId());
-		publisDO.setExtendCode(getExtendCode());
-		publisDO.setLimitBuy(getLimitBuy());
+		publisDO.setPackageId(getPackageId());
+		publisDO.setLimitBuyQuantity(getLimitBuyQuantity());
+		publisDO.setLimitBuyPrice(getLimitBuyPrice());
 		publisDO.setValidFrom(getValidFrom());
 		publisDO.setValidTo(getValidTo());
 		publisDO.setEnable(getEnable());
+		publisDO.setDescription(getDescription());
 		return publisDO;
 	}
 }

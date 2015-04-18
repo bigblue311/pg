@@ -2,11 +2,13 @@ package com.pg.biz.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.model.OpLogDO;
 import com.pg.dal.model.PurchaseDO;
+import com.pg.dal.model.PurchaseItemDO;
 
 public class OrderVO implements Serializable{
 	
@@ -18,7 +20,7 @@ public class OrderVO implements Serializable{
 	private OrderDO orderDO;
 	private CustomerDO customerDO;
 	private List<OpLogDO> opLogList;
-	private List<PurchaseDO> purchaseList;
+	private Map<PurchaseDO,List<PurchaseItemDO>> purchaseMap;
 	
 	public OrderDO getOrderDO() {
 		return orderDO;
@@ -38,10 +40,10 @@ public class OrderVO implements Serializable{
 	public void setOpLogList(List<OpLogDO> opLogList) {
 		this.opLogList = opLogList;
 	}
-	public List<PurchaseDO> getPurchaseList() {
-		return purchaseList;
+	public Map<PurchaseDO, List<PurchaseItemDO>> getPurchaseMap() {
+		return purchaseMap;
 	}
-	public void setPurchaseList(List<PurchaseDO> purchaseList) {
-		this.purchaseList = purchaseList;
+	public void setPurchaseMap(Map<PurchaseDO, List<PurchaseItemDO>> purchaseMap) {
+		this.purchaseMap = purchaseMap;
 	}
 }

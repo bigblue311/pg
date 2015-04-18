@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 import com.pg.dal.dao.PublishDAO;
+import com.pg.dal.model.PackageDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.query.PublishQueryCondition;
 import com.victor.framework.dal.basic.EntityDAO;
@@ -29,9 +30,14 @@ public class PublishDAOImpl extends EntityDAO<PublishDO,PublishQueryCondition> i
 		Map<String,String> map = Maps.newLinkedHashMap();
 		List<PublishDO> list = this.getByCondition(new PublishQueryCondition());
 		for(PublishDO e: list){
-			String value = e.getName();
-				   value+= "    [库存: "+(e.getBalance()==null?"不限":e.getBalance());
-				   value+= "    最小预定量: "+(e.getLimitBuy()==null?"不限":e.getLimitBuy())+"]";
+			Object obj = super.getById(PackageDO.class.getSimpleName(), e.getPackageId());
+			if(obj == null){
+				continue;
+			}
+			PackageDO packageDO = (PackageDO)obj;
+			String value = packageDO.getName();
+				   value+= "    [最小预定量: "+(e.getLimitBuyQuantity()==null?"不限":e.getLimitBuyQuantity())+"箱";
+				   value+= "    最小预定额: "+(e.getLimitBuyPrice()==null?"不限":e.getLimitBuyPrice())+"元]";
 			map.put(getEnumKey(e), value);
 		}
 		return map;

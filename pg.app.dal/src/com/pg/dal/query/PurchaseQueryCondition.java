@@ -34,6 +34,15 @@ public class PurchaseQueryCondition extends QueryCondition {
 		return getLong("customerName");
 	}
 	
+	public PurchaseQueryCondition setCustomerMobile(Long customerMobile) {
+		put("customerMobile",customerMobile);
+		return this;
+	}
+	
+	public Long getCutomerMobile(){
+		return getLong("customerMobile");
+	}
+	
 	public PurchaseQueryCondition setAddressFrom(String addressFrom) {
 		put("addressFrom",addressFrom);
 		return this;
@@ -115,31 +124,13 @@ public class PurchaseQueryCondition extends QueryCondition {
 		return getLong("publishId");
 	}
 	
-	public PurchaseQueryCondition setProdType(String prodType){
-		put("prodType",prodType);
+	public PurchaseQueryCondition setPackageId(Long packageId) {
+		put("packageId",packageId);
 		return this;
 	}
 	
-	public String getProdType(){
-		return getString("prodType");
-	}
-	
-	public PurchaseQueryCondition setExtendId(Long extendId) {
-		put("extendId",extendId);
-		return this;
-	}
-	
-	public Long getExtendId(){
-		return getLong("extendId");
-	}
-	
-	public PurchaseQueryCondition setExtendCode(String extendCode) {
-		put("extendCode",extendCode);
-		return this;
-	}
-	
-	public String getExtendCode(){
-		return getString("extendCode");
+	public Long getPackageId(){
+		return getLong("packageId");
 	}
 	
 	public PurchaseQueryCondition setOrderId(Long orderId) {

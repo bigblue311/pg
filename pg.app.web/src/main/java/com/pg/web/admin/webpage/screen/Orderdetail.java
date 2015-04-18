@@ -12,7 +12,6 @@ import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.biz.model.OrderVO;
 import com.pg.dal.enumerate.OrderStatusEnum;
-import com.pg.dal.enumerate.ProdTypeEnum;
 import com.pg.dal.enumerate.ResourceEnum;
 import com.pg.web.admin.model.json.CrumbJson;
 
@@ -31,8 +30,7 @@ public class Orderdetail {
 		
 		context.put("order", order);
 		context.put("statusEnum", OrderStatusEnum.getAll());
-		context.put("list", JSONObject.toJSONString(order.getPurchaseList()));
-		context.put("prodTypeEnum", ProdTypeEnum.getAll());
+		context.put("list", JSONObject.toJSONString(order.getPurchaseMap().keySet()));
 		context.put("productEnum", productManager.getProductEnumMap().entrySet());
 		context.put("packageEnum", productManager.getPackageEnumMap().entrySet());
 	}

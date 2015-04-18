@@ -12,9 +12,12 @@
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
-    <result property="name" column="name"/>
     <result property="mobile" column="mobile"/>
     <result property="password" column="password"/>
+    <result property="name" column="name"/>
+    <result property="idCard" column="id_card"/>
+    <result property="employeeId" column="employee_id"/>
+    <result property="wechatId" column="wechat_id"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Customer">
@@ -23,11 +26,15 @@
       gmt_create,
       gmt_modify,
       name,
+      id_card
       mobile,
-      password
+      password,
+      employee_id,
+      wechat_id
     ) values (
       now(), now(),
-      #name#, #mobile#, #password#
+      #name#, #idCard# ,#mobile#, #password#,
+      #employeeId#, #wechatId#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -43,6 +50,11 @@
            name = #name#,
          ]]> 
       </isNotEmpty>
+      <isNotEmpty property="idCard">  
+         <![CDATA[   
+           id_card = #idCard#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="mobile">  
          <![CDATA[   
            mobile = #mobile#,
@@ -51,6 +63,16 @@
       <isNotEmpty property="password">  
          <![CDATA[   
            password = #password#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="employeeId">  
+         <![CDATA[   
+           employee_id = #employeeId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="wechatId">  
+         <![CDATA[   
+           wechat_id = #wechatId#,
          ]]> 
       </isNotEmpty>
     </dynamic>
@@ -89,12 +111,17 @@
         	mobile like concat('%',#mobile#,'%')
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="employeeId" prepend="and">
+        	<![CDATA[ 
+        	employee_id = #employeeId#
+        	]]>
+	    </isNotEmpty>
 	    <isNotNull property="gmtCreateStart" prepend="and">
 	    	<![CDATA[
         	gmt_create >= #gmtCreateStart#
         	 ]]>
         </isNotNull>
-        <isNotNull property="gmtModifyEnd" prepend="and">
+        <isNotNull property="gmtCreateEnd" prepend="and">
 	    	<![CDATA[
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
@@ -106,9 +133,11 @@
   <sql id="validate">
   	<isNull property="name">
   	<isNull property="mobile">
+  	<isNull property="employeeId">
   	<isNull property="gmtCreateStart">
 	<isNull property="gmtCreateEnd">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
    	</isNull>
     </isNull>

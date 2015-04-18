@@ -21,7 +21,7 @@ public class EmployeeDO extends EntityDO implements Serializable{
 	
 	private String name;			//登录名
 	private String password; 		//密码
-	private Long role;				//角色
+	private Long roleId;			//角色
 	private String enable;			//有效
 	
 	public String getName() {
@@ -36,11 +36,11 @@ public class EmployeeDO extends EntityDO implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Long getRole() {
-		return role;
+	public Long getRoleId() {
+		return roleId;
 	}
-	public void setRole(Long role) {
-		this.role = role;
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 	public String getEnable() {
 		return enable;

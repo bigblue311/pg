@@ -53,7 +53,7 @@
 			<field name="id" displayName="ID" />
 			<field name="name" displayName="姓名" />
 			<field name="password" displayName="密码" />
-			<field name="role" displayName="角色" />
+			<field name="roleId" displayName="角色" />
 			<field name="enable" displayName="是否有效" />
 		</group>
 		
@@ -126,6 +126,8 @@
 			<field name="id" displayName="ID" />
 			<field name="name" displayName="名称" />
 			<field name="mobile" displayName="电话" />
+			<field name="idCard" displayName="身份证号" />
+			<field name="employeeId" displayName="归属坐席" />
 		</group>
 		
 		<group name="warehouse" extends="csrfCheck">
@@ -133,6 +135,7 @@
 			<field name="name" displayName="名称" />
 			<field name="address" displayName="地址" />
 			<field name="keeper" displayName="联系人" />
+			<field name="keeperIdCard" displayName="联系人身份证" />
 			<field name="mobile" displayName="手机" />
 			<field name="phone" displayName="电话" />
 			<field name="customerId" displayName="客户ID" />

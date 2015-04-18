@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.pg.biz.manager.CustomerManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.dal.model.CustomerDO;
+import com.pg.dal.model.OrderDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.PurchaseQueryCondition;
 import com.victor.framework.common.tools.DateTools;
@@ -102,10 +103,10 @@ public class Purchase {
 		out.write("<td>"+DateTools.DateToString(purchaseDO.getGmtCreate())+"</td>");
 		out.write("<td>"+purchaseDO.getName()+"</td>");
 		out.write("<td>"+purchaseDO.getTitle()+"</td>");
-		out.write("<td>"+purchaseDO.getExtendCode()+"</td>");
-		out.write("<td>"+getCustomer(purchaseDO)+"</td>");
-		out.write("<td>"+purchaseDO.getPrice()+"元/"+purchaseDO.getUnit()+"</td>");
-		out.write("<td>"+purchaseDO.getQuantity()+purchaseDO.getUnit()+"</td>");
+//		out.write("<td>"+purchaseDO.getExtendCode()+"</td>");
+//		out.write("<td>"+getCustomer(purchaseDO)+"</td>");
+//		out.write("<td>"+purchaseDO.getPrice()+"元/"+purchaseDO.getUnit()+"</td>");
+//		out.write("<td>"+purchaseDO.getQuantity()+purchaseDO.getUnit()+"</td>");
 		out.write("<td>"+getTotal(purchaseDO)+"</td>");
 		out.write("<td>"+getTransport(purchaseDO)+"</td>");
 		out.write("<td>"+purchaseDO.getAddressFrom()+"</td>");
@@ -131,7 +132,11 @@ public class Purchase {
 		if(purchaseDO == null) {
 			return "";
 		}
-		CustomerDO customerDO = customerManager.getById(purchaseDO.getCustomerId());
+		OrderDO orderDO = transactionManager.getOrderDOById(purchaseDO.getOrderId());
+		if(orderDO == null){
+			return "";
+		}
+		CustomerDO customerDO = customerManager.getById(orderDO.getCustomerId());
 		if(customerDO == null) {
 			return "";
 		}
@@ -142,11 +147,12 @@ public class Purchase {
 		if(purchaseDO == null){
 			return "";
 		}
-		Double price = purchaseDO.getPrice();
-		Integer quantity = purchaseDO.getQuantity();
-		if(price == null || quantity == null){
-			return "";
-		}
-		return (price*quantity)+"";
+//		Double price = purchaseDO.getPrice();
+//		Integer quantity = purchaseDO.getQuantity();
+//		if(price == null || quantity == null){
+//			return "";
+//		}
+//		return (price*quantity)+"";
+		return "";
 	}
 }

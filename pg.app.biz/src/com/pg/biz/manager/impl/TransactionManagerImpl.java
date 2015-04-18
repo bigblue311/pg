@@ -1,11 +1,13 @@
 package com.pg.biz.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.biz.model.OrderAlertVO;
 import com.pg.biz.model.OrderStatisticVO;
@@ -14,17 +16,18 @@ import com.pg.dal.dao.CustomerDAO;
 import com.pg.dal.dao.EmployeeDAO;
 import com.pg.dal.dao.OpLogDAO;
 import com.pg.dal.dao.OrderDAO;
-import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.dao.PurchaseDAO;
+import com.pg.dal.dao.PurchaseItemDAO;
 import com.pg.dal.enumerate.OrderStatusEnum;
 import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.OpLogDO;
 import com.pg.dal.model.OrderDO;
-import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.PurchaseDO;
+import com.pg.dal.model.PurchaseItemDO;
 import com.pg.dal.query.OpLogQueryCondition;
 import com.pg.dal.query.OrderQueryCondition;
+import com.pg.dal.query.PurchaseItemQueryCondition;
 import com.pg.dal.query.PurchaseQueryCondition;
 import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.common.tools.StringTools;
@@ -45,10 +48,10 @@ public class TransactionManagerImpl implements TransactionManager{
 	private CustomerDAO customerDAO;
 	
 	@Autowired
-	private PublishDAO publishDAO;
+	private PurchaseDAO purchaseDAO;
 	
 	@Autowired
-	private PurchaseDAO purchaseDAO;
+	private PurchaseItemDAO purchaseItemDAO;
 	
 	@Override
 	public void createOrder(OrderDO orderDO) {
@@ -79,7 +82,7 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
-	public void createPurchase(PurchaseDO purchaseDO, Long employeeId) {
+	public void createPurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId) {
 		purchaseDAO.insert(purchaseDO);
 		Long orderId = purchaseDO.getOrderId();
 		recalculate(orderId);
@@ -87,19 +90,13 @@ public class TransactionManagerImpl implements TransactionManager{
 		OpLogDO opLogDO = new OpLogDO();
 		opLogDO.setEmployeeId(employeeId);
 		opLogDO.setOrderId(orderId);
-		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		CustomerDO customerDO = customerDAO.getById(customerId);
 		if(customerDO == null){
 			return;
 		}
-		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]购买了"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
+		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]购买了"+purchaseDO.getName();
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
-		
-		PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
-		if(publishDO.getBalance()!=null){
-			publishDO.setBalance(publishDO.getBalance() - purchaseDO.getQuantity());
-		}
-		publishDAO.update(publishDO);
 	}
 
 	@Override
@@ -115,23 +112,15 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
-	public void updatePurchase(PurchaseDO purchaseDO, Long employeeId) {
+	public void updatePurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId) {
 		if(purchaseDO != null){
-			PurchaseDO origin = purchaseDAO.getById(purchaseDO.getId());
-			
 			OpLogDO opLogDO = new OpLogDO();
 			opLogDO.setEmployeeId(employeeId);
 			opLogDO.setOrderId(purchaseDO.getId());
-			opLogDO.setAction(getOpLogAction(purchaseDO,employeeId));
+			opLogDO.setAction(getOpLogAction(purchaseDO,employeeId,customerId));
 			opLogDAO.insert(opLogDO);
 			purchaseDAO.update(purchaseDO);
 			recalculate(purchaseDO.getOrderId());
-			
-			PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
-			if(publishDO.getBalance()!=null){
-				publishDO.setBalance(publishDO.getBalance() + origin.getQuantity() - purchaseDO.getQuantity());
-			}
-			publishDAO.update(publishDO);
 		}
 	}
 	
@@ -207,7 +196,14 @@ public class TransactionManagerImpl implements TransactionManager{
 		PurchaseQueryCondition queryCondition = new PurchaseQueryCondition();
 		queryCondition.setOrderId(orderDO.getId());
 		List<PurchaseDO> purchaseList = purchaseDAO.getByCondition(queryCondition);
-		orderVO.setPurchaseList(purchaseList);
+		Map<PurchaseDO, List<PurchaseItemDO>> purchaseMap = Maps.newHashMap();
+		for(PurchaseDO purchaseDO : purchaseList){
+			PurchaseItemQueryCondition purchaseItemQueryCondition = new PurchaseItemQueryCondition();
+			purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
+			List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
+			purchaseMap.put(purchaseDO, purchaseItemlist);
+		}
+		orderVO.setPurchaseMap(purchaseMap);
 		return orderVO;
 	}
 
@@ -220,12 +216,12 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 	}
 	
-	private String getOpLogAction(PurchaseDO purchaseDO, Long employeeId){
+	private String getOpLogAction(PurchaseDO purchaseDO, Long employeeId, Long customerId){
 		if(purchaseDO == null){
 			return "";
 		}
 		Long id = purchaseDO.getId();
-		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		CustomerDO customerDO = customerDAO.getById(customerId);
 		if(customerDO == null){
 			return "";
 		}
@@ -248,12 +244,6 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		if(StringTools.isNotEmpty(purchaseDO.getTransportCode())){
 			msg += "物流编号["+originDO.getTransportCode()+"]:"+purchaseDO.getTransportCode()+";";
-		}
-		if(purchaseDO.getQuantity() != null){
-			msg += "数量["+originDO.getQuantity()+"]:"+purchaseDO.getQuantity()+";";
-		}
-		if(purchaseDO.getPrice() != null){
-			msg += "单价["+originDO.getPrice()+"]:"+purchaseDO.getPrice()+";";
 		}
 		return msg;
 	}
@@ -294,26 +284,20 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 
 	@Override
-	public void deletePurchase(Long id,Long employeeId) {
+	public void deletePurchase(Long id,Long employeeId,Long customerId) {
 		PurchaseDO purchaseDO = purchaseDAO.getById(id);
 		recalculate(purchaseDO.getOrderId());
 		OpLogDO opLogDO = new OpLogDO();
 		opLogDO.setEmployeeId(employeeId);
 		opLogDO.setOrderId(purchaseDO.getOrderId());
-		CustomerDO customerDO = customerDAO.getById(purchaseDO.getCustomerId());
+		CustomerDO customerDO = customerDAO.getById(customerId);
 		if(customerDO == null){
 			return;
 		}
-		String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]删除了"+purchaseDO.getName()+"["+purchaseDO.getExtendCode()+"]";
+		String msg = getEmployeeName(employeeId)+"为客户["+customerDO.getMobile()+"]删除了"+purchaseDO.getName();
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
 		purchaseDAO.delete(id);
-		
-		PublishDO publishDO = publishDAO.getById(purchaseDO.getPublishId());
-		if(publishDO.getBalance()!=null){
-			publishDO.setBalance(publishDO.getBalance() + purchaseDO.getQuantity());
-		}
-		publishDAO.update(publishDO);
 	}
 	
 	private void recalculate(Long orderId){
@@ -327,10 +311,18 @@ public class TransactionManagerImpl implements TransactionManager{
 		Double total = 0.0d;
 		Double totalTransportFee = 0.0d;
 		for(PurchaseDO purchaseDO : list){
-			if(purchaseDO!=null && purchaseDO.getPrice()!=null && purchaseDO.getQuantity()!=null){
-				total += purchaseDO.getPrice() * purchaseDO.getQuantity();
+			if(purchaseDO == null){
+				continue;
 			}
-			if(purchaseDO!=null && purchaseDO.getTransportFee()!=null){
+			PurchaseItemQueryCondition purchaseItemQueryCondition = new PurchaseItemQueryCondition();
+			purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
+			List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
+			for(PurchaseItemDO purchaseItemDO : purchaseItemlist){
+				if(purchaseItemDO!=null && purchaseItemDO.getPrice()!=null && purchaseItemDO.getQuantity()!=null){
+					total += purchaseItemDO.getPrice() * purchaseItemDO.getQuantity();
+				}
+			}
+			if(purchaseDO.getTransportFee()!=null){
 				totalTransportFee += purchaseDO.getTransportFee();
 			}
 		}

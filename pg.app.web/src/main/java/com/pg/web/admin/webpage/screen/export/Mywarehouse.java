@@ -31,9 +31,6 @@ public class Mywarehouse {
 	@Autowired
 	private WarehouseManager warehouseManager;
 	
-//	@Autowired
-//	private CustomerManager customerManager;
-	
 	@Autowired
 	private LocationCache locationCache;
 	
@@ -49,11 +46,12 @@ public class Mywarehouse {
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
 		pairs.add(new NameValuePair("名称","12%"));
-		pairs.add(new NameValuePair("省","10%"));
-		pairs.add(new NameValuePair("市","10%"));
-		pairs.add(new NameValuePair("区","10%"));
+		pairs.add(new NameValuePair("省","5%"));
+		pairs.add(new NameValuePair("市","5%"));
+		pairs.add(new NameValuePair("区","5%"));
 		pairs.add(new NameValuePair("地址","15%"));
 		pairs.add(new NameValuePair("联系人","15%"));
+		pairs.add(new NameValuePair("身份证","15%"));
 		pairs.add(new NameValuePair("备注","25%"));
 		printTableHead(out,pairs);
 		
@@ -103,7 +101,7 @@ public class Mywarehouse {
 		out.write("<td>"+getTown(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getAddress()+"</td>");
 		out.write("<td>"+getContact(warehouseDO)+"</td>");
-		//out.write("<td>"+getCustomerName(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseDO.getKeeperIdCard()+"</td>");
 		out.write("<td>"+warehouseDO.getComment()+"</td>");
 		out.write("</tr>");
 	}
@@ -148,15 +146,4 @@ public class Mywarehouse {
 	private String getContact(WarehouseDO warehouseDO){
 		return warehouseDO.getKeeper() + "("+warehouseDO.getMobile()+" "+warehouseDO.getPhone()+")";
 	}
-	
-//	private String getCustomerName(WarehouseDO warehouseDO){
-//		if(warehouseDO == null) {
-//			return "";
-//		}
-//		CustomerDO customerDO = customerManager.getById(warehouseDO.getCustomerId());
-//		if(customerDO == null) {
-//			return "";
-//		}
-//		return customerDO.getName() + "("+customerDO.getMobile()+")";
-//	}
 }

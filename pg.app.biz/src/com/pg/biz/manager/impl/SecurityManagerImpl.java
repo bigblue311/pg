@@ -76,7 +76,7 @@ public class SecurityManagerImpl implements SecurityManager{
 			if(employeeDO == null) {
 				return false;
 			}
-			Long roleId = employeeDO.getRole();
+			Long roleId = employeeDO.getRoleId();
 			if(roleId == null){
 				return false;
 			}

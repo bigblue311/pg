@@ -15,113 +15,88 @@ public class PublishDO extends EntityDO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 308922163884509394L;
-	private Double price;		//单价
-	private String unit;		//单位
-	private Long balance;		//库存
-	private Long warehouseId;	//仓库ID
-	private String img;			//图片
-	private String description;	//描述
-	private String prodType;	//外部类型(商品/商品包)
-	private Long extendId;		//外部ID(商品/商品包)
-	private String extendCode;	//外部编码(商品/商品包)
-	private String 	name;		//产品名称
-	private String 	title;		//产品标题
-	private Long limitBuy;		//最小预定量
-	private Date validFrom;		//有效期开始
-	private Date validTo;		//有效期结束
-	private String enable;		//有效
+	private Double 	discount;			//折扣
+	private Long 	warehouseId;		//仓库ID
+	private Long 	packageId;			//商品包ID
+	private Integer limitBuyQuantity;	//最小预定量
+	private Double	limitBuyPrice;		//最小购买金额
+	private Date 	validFrom;			//有效期开始
+	private Date 	validTo;			//有效期结束
+	private String 	enable;				//有效
+	private String 	description;		//描述
 	
-	public Double getPrice() {
-		return price;
+	public Double getDiscount() {
+		return discount;
 	}
-	public void setPrice(Double price) {
-		this.price = price;
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
-	public String getUnit() {
-		return unit;
-	}
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-	public Long getBalance() {
-		return balance;
-	}
-	public void setBalance(Long balance) {
-		this.balance = balance;
-	}
+
 	public Long getWarehouseId() {
 		return warehouseId;
 	}
+
 	public void setWarehouseId(Long warehouseId) {
 		this.warehouseId = warehouseId;
 	}
-	public String getImg() {
-		return img;
+
+	public Long getPackageId() {
+		return packageId;
 	}
-	public void setImg(String img) {
-		this.img = img;
+
+	public void setPackageId(Long packageId) {
+		this.packageId = packageId;
 	}
-	public String getProdType() {
-		return prodType;
+
+	public Integer getLimitBuyQuantity() {
+		return limitBuyQuantity;
 	}
-	public void setProdType(String prodType) {
-		this.prodType = prodType;
+
+	public void setLimitBuyQuantity(Integer limitBuyQuantity) {
+		this.limitBuyQuantity = limitBuyQuantity;
 	}
-	public Long getExtendId() {
-		return extendId;
+
+	public Double getLimitBuyPrice() {
+		return limitBuyPrice;
 	}
-	public void setExtendId(Long extendId) {
-		this.extendId = extendId;
+
+	public void setLimitBuyPrice(Double limitBuyPrice) {
+		this.limitBuyPrice = limitBuyPrice;
 	}
-	public String getExtendCode() {
-		return extendCode;
-	}
-	public void setExtendCode(String extendCode) {
-		this.extendCode = extendCode;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Long getLimitBuy() {
-		return limitBuy;
-	}
-	public void setLimitBuy(Long limitBuy) {
-		this.limitBuy = limitBuy;
-	}
+
 	public Date getValidFrom() {
 		return validFrom;
 	}
+
 	public void setValidFrom(Date validFrom) {
 		this.validFrom = validFrom;
 	}
+
 	public Date getValidTo() {
 		return validTo;
 	}
+
 	public void setValidTo(Date validTo) {
 		this.validTo = validTo;
 	}
+
 	public String getEnable() {
 		return enable;
 	}
+
 	public void setEnable(String enable) {
 		this.enable = enable;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public boolean isValid(){
 		if(StringTools.isEmpty(enable)){
 			return false;

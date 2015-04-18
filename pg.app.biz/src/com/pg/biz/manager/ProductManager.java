@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.pg.biz.model.PackageVO;
-import com.pg.biz.model.ProductVO;
 import com.pg.dal.model.PackageDO;
 import com.pg.dal.model.ProdPackDO;
 import com.pg.dal.model.ProductDO;
@@ -177,6 +176,5 @@ public interface ProductManager {
 	 */
 	Paging<PublishDO> getPublishPage(PublishQueryCondition queryCondition);
 	List<PublishDO> getPublishByCondition(PublishQueryCondition queryCondition);
-	Paging<ProductVO> getProductVOPage(PublishQueryCondition queryCondition);
 	Paging<PackageVO> getPackageVOPage(PublishQueryCondition queryCondition);
 }

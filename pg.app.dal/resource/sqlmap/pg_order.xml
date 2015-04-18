@@ -15,6 +15,7 @@
     <result property="customerId" column="customer_id"/>
     <result property="customerName" column="customer_name"/>
     <result property="customerMobile" column="customer_mobile"/>
+    <result property="customerIdCard" column="customer_id_card"/>
     <result property="deposit" column="deposit"/>
     <result property="totalPrice" column="total_price"/>
     <result property="transportFee" column="transport_fee"/>
@@ -30,6 +31,7 @@
       customer_id,
       customer_name,
       customer_mobile,
+      customer_id_card,
       deposit,
       total_price,
       transport_fee,
@@ -37,8 +39,8 @@
       comment
     ) values (
       now(), now(),
-      #customerId#, #customerName#, #customerMobile#, #deposit#, 
-      #totalPrice#, #transportFee#, #status#, #comment#
+      #customerId#, #customerName#, #customerMobile#, #customerIdCard#,
+      #deposit#, #totalPrice#, #transportFee#, #status#, #comment#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    

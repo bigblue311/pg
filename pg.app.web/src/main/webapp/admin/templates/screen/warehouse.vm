@@ -60,14 +60,22 @@ $control.setTemplate("paging.vm")
         <label class="control-label"><s>*</s>名称：</label>
         <div class="controls">
           <input type="text" id="name" name="$group.name.key" data-rules="{required:true}" 
-          data-messages="{required:'请输入仓库名称'}" class="input-normal control-text">
+          data-messages="{required:'请输入仓库名称'}" class="input-large control-text">
         </div>
-        <label class="control-label">联系人：</label>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+      	<label class="control-label">联系人：</label>
 		<div class="controls">
 			<input type="text" id="keeper" name="$group.keeper.key" class="input-normal control-text">
 		</div>
-	  </div>
-	</div>
+        <label class="control-label">身份证：</label>
+        <div class="controls">
+			<input type="text" id="keeperIdCard" name="$group.keeperIdCard.key" class="input-normal control-text">
+		</div>
+      </div>
+    </div>
 	<div class="row">
       <div class="control-group">
 		<label class="control-label">联系手机：</label>
@@ -133,17 +141,22 @@ $control.setTemplate("paging.vm")
             title : '名称',
             elCls: 'left',
             dataIndex :'name',
-		    width:'15%'
+		    width:'10%'
         },{
             title : '联系人',
             elCls: 'left',
             dataIndex :'keeper',
+            width:'10%'
+        },{
+            title : '身份证',
+            elCls: 'left',
+            dataIndex :'keeperIdCard',
             width:'15%'
         },{
             title : '联系手机',
             elCls: 'left',
             dataIndex :'mobile',
-            width:'15%'
+            width:'10%'
         },{
             title : '联系电话',
             elCls: 'left',
@@ -267,6 +280,7 @@ $control.setTemplate("paging.vm")
     	var name = record.name;
     	var address = record.address;
     	var keeper = record.keeper;
+    	var keeperIdCard = record.keeperIdCard;
     	var mobile = record.mobile;
     	var phone = record.phone;
     	var customerId = record.customerId;
@@ -280,6 +294,7 @@ $control.setTemplate("paging.vm")
     	jQuery("#name").val(name);
     	jQuery("#address").val(address);
     	jQuery("#keeper").val(keeper);
+    	jQuery("#keeperIdCard").val(keeperIdCard);
     	jQuery("#mobile").val(mobile);
     	jQuery("#phone").val(phone);
     	jQuery("#customerId").val(customerId);
@@ -296,6 +311,7 @@ $control.setTemplate("paging.vm")
     	jQuery("#name").val('');
     	jQuery("#address").val('');
     	jQuery("#keeper").val('');
+    	jQuery("#keeperIdCard").val('');
     	jQuery("#mobile").val('');
     	jQuery("#phone").val('');
     	jQuery("#customerId").val('$!query.customerId');

@@ -12,13 +12,14 @@
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
+    <result property="name" column="name"/>
     <result property="address" column="address"/>
     <result property="keeper" column="keeper"/>
+    <result property="keeperIdCard" column="keeper_id_card"/>
     <result property="mobile" column="mobile"/>
     <result property="phone" column="phone"/>
     <result property="customerId" column="customer_id"/>
     <result property="comment" column="comment"/>
-    <result property="name" column="name"/>
     <result property="province" column="province"/>
     <result property="city" column="city"/>
     <result property="town" column="town"/>
@@ -31,6 +32,7 @@
       gmt_modify,
       address,
       keeper,
+      keeper_id_card,
       mobile,
       phone,
       customer_id,
@@ -41,7 +43,7 @@
       town
     ) values (
       now(), now(),
-      #address#, #keeper#, #mobile#, #phone#, #customerId#,
+      #address#, #keeper#, #keeperIdCard#, #mobile#, #phone#, #customerId#,
       #comment#, #name#, #province#, #city#, #town#
     )
     ]]>
@@ -61,6 +63,11 @@
       <isNotEmpty property="keeper">  
          <![CDATA[   
            keeper = #keeper#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="keeperIdCard">  
+         <![CDATA[   
+           keeper_id_card = #keeperIdCard#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="mobile">  

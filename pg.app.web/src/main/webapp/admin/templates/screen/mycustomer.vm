@@ -13,9 +13,9 @@
 				<div class="controls">
 					<input type="text" class="control-text" name="mobile" value="$!query.mobile">
 				</div>
-				<label class="control-label">归属：</label>
+				<label class="control-label">归属坐席：</label>
 				<div class="controls">
-					<select name="employeeId">
+					<select disabled>
 						<option selected value="">全部</option>
 						#foreach($employee in $employeeEnum)
 						<option 
@@ -25,6 +25,7 @@
 							value="$!employee.id">$!employee.name</option>
 						#end
 					</select>
+					<input type="hidden" name="employeeId" value="$!query.employeeId"/>
 				</div>
 				<label class="control-label">注册时间：</label>
 				<div class="controls">
@@ -66,7 +67,7 @@ $control.setTemplate("paging.vm")
 	<input type="hidden" id="event" name="event_submit_do_update" value="true"/>
 	<input type="hidden" id="id" name="$group.id.key" value=""/>
 	<input type="hidden" id="name" name="$group.name.key" value=""/>
-	<input type="hidden" id="employeeId" name="$group.employeeId.key" value=""/>
+	<input type="hidden" id="employeeId" name="$group.employeeId.key" value="$!query.employeeId"/>
 	<input type="hidden" id="idCard" name="$group.idCard.key" value=""/>
 	<input type="hidden" id="mobile" name="$group.mobile.key" value=""/>
 </form>
@@ -125,10 +126,6 @@ $control.setTemplate("paging.vm")
             title : '归属坐席',
             elCls: 'left',
             dataIndex :'employeeId',
-            editor : {
-  				xtype : 'select',
-  				items : employeeObj
-  		  	},
   		  	renderer : Grid.Format.enumRenderer(employeeObj),
             width:'10%'
         },{
@@ -199,7 +196,7 @@ $control.setTemplate("paging.vm")
     	var id = e.record.id;
     	var name = e.record.name;
     	var mobile = e.record.mobile;
-    	var employeeId = e.record.employeeId;
+    	var employeeId = $!query.employeeId;
     	var idCard = e.record.idCard;
     	var event = "event_submit_do_update";
     	jQuery("#id").val(id);

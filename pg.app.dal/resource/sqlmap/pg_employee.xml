@@ -13,7 +13,7 @@
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
     <result property="name" column="name"/>
-    <result property="role" column="role"/>
+    <result property="roleId" column="role_id"/>
     <result property="password" column="password"/>
     <result property="enable" column="enable"/>
   </resultMap>
@@ -24,12 +24,12 @@
       gmt_create,
       gmt_modify,
       name,
-      role,
+      role_id,
       password,
       enable
     ) values (
       now(), now(),
-      #name#, #role#, #password#, #enable#
+      #name#, #roleId#, #password#, #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -45,9 +45,9 @@
            name = #name#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="role">  
+      <isNotEmpty property="roleId">  
          <![CDATA[   
-           role = #role#,
+           role_id = #roleId#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="password">  
@@ -90,9 +90,9 @@
         	name like concat('%',#name#,'%')
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="role" prepend="and">
+	    <isNotEmpty property="roleId" prepend="and">
         	<![CDATA[ 
-        	role = #role#
+        	role_id = #roleId#
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="enable" prepend="and">
@@ -111,7 +111,7 @@
   
   <sql id="validate">
   	<isNull property="name">
-  	<isNull property="role">
+  	<isNull property="roleId">
   	<isNull property="enable">
   	<isNull property="password">
         <include refid="Common.validModify" />

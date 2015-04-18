@@ -25,7 +25,7 @@ public interface TransactionManager {
 	 * @param employeeId
 	 */
 	void createOrder(OrderDO orderDO, Long employeeId);
-	void createPurchase(PurchaseDO purchaseDO, Long employeeId);
+	void createPurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId);
 	
 	/**
 	 * 更新订单
@@ -33,14 +33,14 @@ public interface TransactionManager {
 	 * @param employeeId
 	 */
 	void updateOrder(OrderDO orderDO,Long employeeId);
-	void updatePurchase(PurchaseDO purchaseDO, Long employeeId);
+	void updatePurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId);
 	
 	/**
 	 * 删除一个购买
 	 * @param id
 	 * @param employeeId
 	 */
-	void deletePurchase(Long id,Long employeeId);
+	void deletePurchase(Long id,Long employeeId,Long customerId);
 	
 	/**
 	 * 根据订单ID获取

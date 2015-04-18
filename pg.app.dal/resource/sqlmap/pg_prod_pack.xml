@@ -14,8 +14,6 @@
     <result property="gmtModify" column="gmt_modify"/>
     <result property="packageId" column="package_id"/>
     <result property="productId" column="product_id"/>
-    <result property="quantity"  column="quantity"/>
-    <result property="unit" 	 column="unit"/>
   </resultMap>
 
   <insert id="insert" parameterClass="ProdPack">
@@ -24,12 +22,10 @@
       gmt_create,
       gmt_modify,
       package_id,
-      product_id,
-      quantity,
-      unit
+      product_id
     ) values (
       now(), now(),
-      #packageId#, #productId#, #quantity#, #unit#
+      #packageId#, #productId#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -48,16 +44,6 @@
       <isNotEmpty property="productId">  
          <![CDATA[   
            product_id = #productId#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="quantity">  
-         <![CDATA[   
-           quantity = #quantity#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="unit">  
-         <![CDATA[   
-           unit = #unit#,
          ]]> 
       </isNotEmpty>
     </dynamic>

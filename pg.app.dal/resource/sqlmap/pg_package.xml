@@ -14,8 +14,6 @@
     <result property="gmtModify" column="gmt_modify"/>
     <result property="name" column="name"/>
     <result property="title" column="title"/>
-    <result property="code" column="code"/>
-    <result property="img" column="img"/>
     <result property="description" column="description"/>
     <result property="enable" column="enable"/>
   </resultMap>
@@ -27,14 +25,12 @@
       gmt_modify,
       name,
       title,
-      code,
-      img,
       description,
       enable
     ) values (
       now(), now(),
-      #name#, #title#, #code#, #img#, #description#,
-      #enable#
+      #name#, #title#, 
+      #description#, #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -53,16 +49,6 @@
       <isNotEmpty property="title">  
          <![CDATA[   
            title = #title#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="code">  
-         <![CDATA[   
-           code = #code#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="img">  
-         <![CDATA[   
-           img = #img#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="description">  
@@ -110,11 +96,6 @@
         	title like concat('%',#title#,'%')
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="code" prepend="and">
-        	<![CDATA[ 
-        	code = #code#
-        	]]>
-	    </isNotEmpty>
 	    <isNotEmpty property="enable" prepend="and">
         	<![CDATA[ 
         	enable = #enable#
@@ -127,10 +108,8 @@
   <sql id="validate">
   	<isNull property="name">
   	<isNull property="title">
-  	<isNull property="code">
   	<isNull property="enable">
         <include refid="Common.validModify" />
-    </isNull>
     </isNull>
     </isNull>
 	</isNull>

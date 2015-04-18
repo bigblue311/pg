@@ -25,13 +25,13 @@ public class EmployeeQueryCondition extends QueryCondition {
 		return getString("password");
 	}
 	
-	public EmployeeQueryCondition setRole(String role) {
-		put("role",role);
+	public EmployeeQueryCondition setRoleId(String roleId) {
+		put("roleId",roleId);
 		return this;
 	}
 	
 	public String getRole(){
-		return getString("role");
+		return getString("roleId");
 	}
 	
 	@Override

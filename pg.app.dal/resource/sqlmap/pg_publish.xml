@@ -12,21 +12,15 @@
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
-    <result property="price" column="price"/>
-    <result property="unit" column="unit"/>
-    <result property="balance" column="balance"/>
+    <result property="discount" column="discount"/>
     <result property="warehouseId" column="warehouse_id"/>
-    <result property="img" column="img"/>
-    <result property="description" column="description"/>
-    <result property="prodType" column="prod_type"/>
-    <result property="extendId" column="extend_id"/>
-    <result property="extendCode" column="extend_code"/>
-    <result property="name" column="name"/>
-    <result property="title" column="title"/>
-    <result property="limitBuy" column="limit_buy"/>
+    <result property="packageId" column="package_id"/>
+    <result property="limitBuyQuantity" column="limit_buy_quantity"/>
+    <result property="limitBuyPrice" column="limit_buy_price"/>
     <result property="validFrom" column="valid_from"/>
     <result property="validTo" column="valid_to"/>
     <result property="enable" column="enable"/>
+    <result property="description" column="description"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Publish">
@@ -34,27 +28,19 @@
     insert into pg_publish (
       gmt_create,
       gmt_modify,
-      price,
-      unit,
-      balance,
+      discount,
       warehouse_id,
-      img,
-      description,
-      prod_type,
-      extend_id,
-      extend_code,
-      name,
-      title,
-      limit_buy,
+      package_id,
+      limit_buy_quantity,
+      limit_buy_price,
       valid_from,
       valid_to,
-      enable
+      enable,
+      description
     ) values (
       now(), now(),
-      #price#, #unit#, #balance#, #warehouseId#, #img#,
-      #description#, #prodType#, #extendId#, #extendCode#, 
-      #name#, #title#, #limitBuy#, #validFrom#, #validTo#, 
-      #enable#
+      #discount#, #warehouseId#, #packageId#, #limitBuyQuantity#, #limitBuyPrice#,
+      #validFrom#, #validTo#,#enable#,#description#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -65,19 +51,9 @@
   <update id="update" parameterClass="Publish">
     update pg_publish set 
     <dynamic>
-      <isNotEmpty property="price">  
+      <isNotEmpty property="discount">  
          <![CDATA[   
-           price = #price#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="unit">  
-         <![CDATA[   
-           unit = #unit#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="balance">  
-         <![CDATA[   
-           balance = #balance#,
+           discount = #discount#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="warehouseId">  
@@ -85,44 +61,19 @@
            warehouse_id = #warehouseId#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="img">  
+      <isNotEmpty property="packageId">  
          <![CDATA[   
-           img = #img#,
+           package_id = #packageId#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="description">  
+      <isNotEmpty property="limitBuyQuantity">  
          <![CDATA[   
-           description = #description#,
+           limit_buy_quantity = #limitBuyQuantity#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="prodType">  
+      <isNotEmpty property="limitBuyPrice">  
          <![CDATA[   
-           prod_type = #prodType#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="extendId">  
-         <![CDATA[   
-           extend_id = #extendId#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="extendCode">  
-         <![CDATA[   
-           extend_code = #extendCode#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="name">  
-         <![CDATA[   
-           name = #name#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="title">  
-         <![CDATA[   
-           title = #title#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="limitBuy">  
-         <![CDATA[   
-           limit_buy = #limitBuy#,
+           limit_buy_price = #limitBuyPrice#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="validFrom">  
@@ -138,6 +89,11 @@
       <isNotEmpty property="enable">  
          <![CDATA[   
            enable = #enable#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="description">  
+         <![CDATA[   
+           description = #description#,
          ]]> 
       </isNotEmpty>
     </dynamic>
@@ -169,40 +125,40 @@
   <sql id="where">
   	<include refid="validate" />
   	<dynamic prepend="where">
-  		<isNotEmpty property="name" prepend="and">
-        	<![CDATA[ 
-        	name like concat('%',#name#,'%')
-        	]]>
-	    </isNotEmpty>
 	    <isNotEmpty property="warehouseId" prepend="and">
         	<![CDATA[ 
         	warehouse_id = #warehouseId#
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="prodType" prepend="and">
+	    <isNotEmpty property="packageId" prepend="and">
         	<![CDATA[ 
-        	prod_type = #prodType#
+        	package_id = #packageId#
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="extendId" prepend="and">
+	    <isNotEmpty property="name" prepend="and">
         	<![CDATA[ 
-        	extend_id = #extendId#
+        	package_id in (select id from pg_package where name like concat('%',#name#,'%'))
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="extendCode" prepend="and">
-        	<![CDATA[ 
-        	extend_code = #extendCode#
-        	]]>
-	    </isNotEmpty>
+	    <isNotNull property="gmtCreateStart" prepend="and">
+	    	<![CDATA[
+        	gmt_create >= #gmtCreateStart#
+        	 ]]>
+        </isNotNull>
+        <isNotNull property="gmtCreateEnd" prepend="and">
+	    	<![CDATA[
+        	gmt_create <= #gmtCreateEnd#
+        	 ]]>
+        </isNotNull>
 	    <isNotNull property="valid">
 	    	<isEqual property="valid" compareValue="true" prepend="and">
 	    	<![CDATA[
-        	(valid_from < now() and valid_to > now() and enable = '0' and balance > 0)
+        	(valid_from < now() and valid_to > now() and enable = '0')
         	 ]]>
         	</isEqual>
         	<isEqual property="valid" compareValue="false" prepend="and">
 	    	<![CDATA[
-        	(valid_from > now() or valid_to < now() or enable = '1' or balance <= 0)
+        	(valid_from > now() or valid_to < now() or enable = '1')
         	 ]]>
         	</isEqual>
 	    </isNotNull>
@@ -211,17 +167,17 @@
   </sql>
   
   <sql id="validate">
-  	<isNull property="name">
   	<isNull property="warehouseId">
-  	<isNull property="prodType">
-  	<isNull property="extendId">
-  	<isNull property="extendCode">
+  	<isNull property="packageId">
+  	<isNull property="name">
+  	<isNull property="gmtCreateStart">
+  	<isNull property="gmtCreateEnd">
   	<isNull property="valid">
         <include refid="Common.validModify" />
     </isNull>
     </isNull>
     </isNull>
-    </isNull>
+	</isNull>
 	</isNull>
 	</isNull>
   </sql>

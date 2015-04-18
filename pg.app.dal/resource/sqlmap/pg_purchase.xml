@@ -12,25 +12,18 @@
     <result property="id" column="id"/>
     <result property="gmtCreate" column="gmt_create"/>
     <result property="gmtModify" column="gmt_modify"/>
-    <result property="customerId" column="customer_id"/>
-    <result property="customerName" column="customer_name"/>
+    <result property="orderId" column="order_id"/>
+    <result property="publishId" column="publish_id"/>
+    <result property="name" column="name"/>
+    <result property="title" column="title"/>
     <result property="addressFrom" column="address_from"/>
     <result property="addressTo" column="address_to"/>
     <result property="keeper" column="keeper"/>
+    <result property="keeperIdCard" column="keeper_id_card"/>
     <result property="phone" column="phone"/>
     <result property="mobile" column="mobile"/>
     <result property="transportFee" column="transport_fee"/>
     <result property="transportCode" column="transport_code"/>
-    <result property="publishId" column="publish_id"/>
-    <result property="prodType" column="prod_type"/>
-    <result property="extendId" column="extend_id"/>
-    <result property="extendCode" column="extend_code"/>
-    <result property="quantity" column="quantity"/>
-    <result property="unit" column="unit"/>
-    <result property="price" column="price"/>
-    <result property="orderId" column="order_id"/>
-    <result property="name" column="name"/>
-    <result property="title" column="title"/>
     <result property="comment" column="comment"/>
   </resultMap>
 
@@ -39,33 +32,23 @@
     insert into pg_purchase (
       gmt_create,
       gmt_modify,
-      customer_id,
-      customer_name,
+      order_id,
+      publish_id,
+      name,
+      title,
       address_from,
       address_to,
       keeper,
+      keeper_id_card,
       phone,
       mobile,
       transport_fee,
       transport_code,
-      publish_id,
-      prod_type,
-      extend_id,
-      extend_code,
-      quantity,
-      unit,
-      price,
-      order_id,
-      name,
-      title,
       comment
     ) values (
-      now(), now(),
-      #customerId#, #customerName#, 
-      #addressFrom#, #addressTo#, #keeper#, #phone#, #mobile#,
-      #transportFee#, #transportCode#,
-      #publishId#, #prodType#, #extendId#, #extendCode#, 
-      #quantity#, #unit#, #price#, #orderId#, #name#, #title#, #comment#
+      now(), now(),#orderId#, #publishId#,#name#, #title#,
+      #addressFrom#, #addressTo#, #keeper#, #keeperIdCard#,
+      #phone#, #mobile#, #transportFee#, #transportCode#,#comment#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -76,6 +59,16 @@
   <update id="update" parameterClass="Purchase">
     update pg_purchase set 
     <dynamic>
+      <isNotEmpty property="name">  
+         <![CDATA[   
+           name = #name#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="title">  
+         <![CDATA[   
+           title = #title#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="addressFrom">  
          <![CDATA[   
            address_from = #addressFrom#,
@@ -89,6 +82,11 @@
       <isNotEmpty property="keeper">  
          <![CDATA[   
            keeper = #keeper#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="keeperIdCard">  
+         <![CDATA[   
+           keeper_id_card = #keeperIdCard#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="phone">  
@@ -109,51 +107,6 @@
       <isNotEmpty property="transportCode">  
          <![CDATA[   
            transport_code = #transportCode#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="publishId">  
-         <![CDATA[   
-           publish_id = #publishId#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="prodType">  
-         <![CDATA[   
-           prod_type = #prodType#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="extendId">  
-         <![CDATA[   
-           extend_id = #extendId#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="extendCode">  
-         <![CDATA[   
-           extend_code = #extendCode#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="quantity">  
-         <![CDATA[   
-           quantity = #quantity#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="unit">  
-         <![CDATA[   
-           unit = #unit#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price">  
-         <![CDATA[   
-           price = #price#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="name">  
-         <![CDATA[   
-           name = #name#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="title">  
-         <![CDATA[   
-           title = #title#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="comment">  
@@ -189,12 +142,17 @@
 	    </isNotEmpty>
 	    <isNotEmpty property="customerId" prepend="and">
         	<![CDATA[ 
-        	customer_id = #customerId#
+        	order_id in (select id from pg_order where customer_id = #customerId#)
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="customerName" prepend="and">
         	<![CDATA[ 
-        	customer_name like concat('%',#customerName#,'%')
+        	order_id in (select id from pg_order where customer_name like concat('%',#customerName#,'%'))
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="customerMobile" prepend="and">
+        	<![CDATA[ 
+        	order_id in (select id from pg_order where customer_mobile = #customerMobile#)
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="addressFrom" prepend="and">
@@ -242,19 +200,9 @@
         	publish_id = #publishId#
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="prodType" prepend="and">
+	    <isNotEmpty property="packageId" prepend="and">
         	<![CDATA[ 
-        	prod_type = #prodType#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="extendId" prepend="and">
-        	<![CDATA[ 
-        	extend_id = #extendId#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="extendCode" prepend="and">
-        	<![CDATA[ 
-        	extend_code = #extendCode#
+        	publish_id in (select id from pg_publish where package_id = #packageId#)
         	]]>
 	    </isNotEmpty>
 	    <isNotEmpty property="orderId" prepend="and">
@@ -267,7 +215,7 @@
         	gmt_create >= #gmtCreateStart#
         	 ]]>
         </isNotNull>
-        <isNotNull property="gmtModifyEnd" prepend="and">
+        <isNotNull property="gmtCreateEnd" prepend="and">
 	    	<![CDATA[
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
@@ -289,9 +237,7 @@
   	<isNull property="transportFeeEnd">
   	<isNull property="transportCode">
   	<isNull property="publishId">
-  	<isNull property="prodType">
-  	<isNull property="extendId">
-  	<isNull property="extendCode">
+  	<isNull property="packageId">
   	<isNull property="orderId">
   	<isNull property="gmtCreateStart">
   	<isNull property="gmtModifyEnd">
@@ -304,12 +250,10 @@
 	</isNull>
 	</isNull>
 	</isNull>
-	</isNull>
     </isNull>
     </isNull>
     </isNull>
     </isNull>
-	</isNull>
 	</isNull>
 	</isNull>
 	</isNull>

@@ -53,9 +53,10 @@ public class Warehouse {
 		pairs.add(new NameValuePair("省","5%"));
 		pairs.add(new NameValuePair("市","5%"));
 		pairs.add(new NameValuePair("区","5%"));
-		pairs.add(new NameValuePair("地址","15%"));
+		pairs.add(new NameValuePair("地址","10%"));
 		pairs.add(new NameValuePair("联系人","15%"));
-		pairs.add(new NameValuePair("客户信息","15%"));
+		pairs.add(new NameValuePair("身份证","10%"));
+		pairs.add(new NameValuePair("客户信息","10%"));
 		pairs.add(new NameValuePair("备注","25%"));
 		printTableHead(out,pairs);
 		
@@ -105,6 +106,7 @@ public class Warehouse {
 		out.write("<td>"+getTown(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getAddress()+"</td>");
 		out.write("<td>"+getContact(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseDO.getKeeperIdCard()+"</td>");
 		out.write("<td>"+getCustomer(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getComment()+"</td>");
 		out.write("</tr>");

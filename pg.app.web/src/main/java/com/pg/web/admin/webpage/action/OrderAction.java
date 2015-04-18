@@ -38,5 +38,6 @@ public class OrderAction {
 		CustomerDO customer = customerManager.getById(from.getCustomerId());
 		from.setCustomerName(customer.getName());
 		from.setCustomerMobile(customer.getMobile());
+		from.setCustomerIdCard(customer.getIdCard());
 	}
 }

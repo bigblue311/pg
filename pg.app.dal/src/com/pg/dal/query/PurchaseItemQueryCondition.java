@@ -5,9 +5,9 @@ import java.util.Date;
 import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.dal.basic.QueryCondition;
 
-public class ProductQueryCondition extends QueryCondition {
+public class PurchaseItemQueryCondition extends QueryCondition {
 	
-	public ProductQueryCondition setName(String name) {
+	public PurchaseItemQueryCondition setName(String name) {
 		put("name",name);
 		return this;
 	}
@@ -16,7 +16,7 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("name");
 	}
 	
-	public ProductQueryCondition setTitle(String title) {
+	public PurchaseItemQueryCondition setTitle(String title) {
 		put("title",title);
 		return this;
 	}
@@ -25,7 +25,7 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("title");
 	}
 	
-	public ProductQueryCondition setCode(String code) {
+	public PurchaseItemQueryCondition setCode(String code) {
 		put("code",code);
 		return this;
 	}
@@ -34,7 +34,7 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("code");
 	}
 	
-	public ProductQueryCondition setBarcode(String barcode) {
+	public PurchaseItemQueryCondition setBarcode(String barcode) {
 		put("barcode",barcode);
 		return this;
 	}
@@ -43,7 +43,7 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("barcode");
 	}
 	
-	public ProductQueryCondition setBoxcode(String boxcode) {
+	public PurchaseItemQueryCondition setBoxcode(String boxcode) {
 		put("boxcode",boxcode);
 		return this;
 	}
@@ -52,34 +52,16 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("boxcode");
 	}
 	
-	public ProductQueryCondition setPackageId(Long packageId) {
-		put("packageId",packageId);
+	public PurchaseItemQueryCondition setPurchaseId(Long purchaseId) {
+		put("purchaseId",purchaseId);
 		return this;
 	}
 	
-	public Long getPackageId(){
-		return getLong("packageId");
+	public Long getPurchaseId(){
+		return getLong("purchaseId");
 	}
 	
-	public ProductQueryCondition setNotInPackageId(Long packageId) {
-		put("notInPackageId",packageId);
-		return this;
-	}
-	
-	public Long getNotInPackageId(){
-		return getLong("notInPackageId");
-	}
-	
-	public ProductQueryCondition setPublishId(Long publishId) {
-		put("publishId",publishId);
-		return this;
-	}
-	
-	public Long getPublishId(){
-		return getLong("publishId");
-	}
-	
-	public ProductQueryCondition setBrandId(Long brandId) {
+	public PurchaseItemQueryCondition setBrandId(Long brandId) {
 		put("brandId",brandId);
 		return this;
 	}
@@ -88,7 +70,7 @@ public class ProductQueryCondition extends QueryCondition {
 		return getLong("brandId");
 	}
 	
-	public ProductQueryCondition setCategoryId(Long categoryId) {
+	public PurchaseItemQueryCondition setCategoryId(Long categoryId) {
 		put("categoryId",categoryId);
 		return this;
 	}
@@ -98,25 +80,25 @@ public class ProductQueryCondition extends QueryCondition {
 	}
 	
 	@Override
-	public ProductQueryCondition setGmtModifyStart(Date from){
+	public PurchaseItemQueryCondition setGmtModifyStart(Date from){
 		put("gmtModifyStart", DateTools.getDayBegin(from));
 		return this;
 	}
 	
 	@Override
-	public ProductQueryCondition setGmtModifyEnd(Date to){
+	public PurchaseItemQueryCondition setGmtModifyEnd(Date to){
 		put("gmtModifyEnd", DateTools.getDayEnd(to));
 		return this;
 	}
 	
 	@Override
-	public ProductQueryCondition setStart(int start){
+	public PurchaseItemQueryCondition setStart(int start){
 		put("start", start);
 		return this;
 	}
 	
 	@Override
-	public ProductQueryCondition setPageSize(int pageSize){
+	public PurchaseItemQueryCondition setPageSize(int pageSize){
 		put("pageSize", pageSize);
 		return this;
 	}

@@ -19,16 +19,17 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	private static final long serialVersionUID = -690583555143238541L;
 	
 	@EnumValue
-	private String name;	//名称
-	private String address;	//地址
-	private String keeper;	//收件人
-	private String mobile;	//手机号码
-	private String phone;	//联系电话
-	private Long customerId;//客户ID
-	private String comment;	//备注
-	private String province;//省
-	private String city;	//市
-	private String town;	//区
+	private String 	name;			//名称
+	private String 	address;		//地址
+	private String 	keeper;			//收件人
+	private String 	keeperIdCard;	//收件人身份证
+	private String 	mobile;			//手机号码
+	private String 	phone;			//联系电话
+	private Long 	customerId;		//客户ID
+	private String 	comment;		//备注
+	private String 	province;		//省
+	private String 	city;			//市
+	private String 	town;			//区
 	
 	public String getName() {
 		return name;
@@ -47,6 +48,12 @@ public class WarehouseDO extends EntityDO implements Serializable{
 	}
 	public void setKeeper(String keeper) {
 		this.keeper = keeper;
+	}
+	public String getKeeperIdCard() {
+		return keeperIdCard;
+	}
+	public void setKeeperIdCard(String keeperIdCard) {
+		this.keeperIdCard = keeperIdCard;
 	}
 	public String getMobile() {
 		return mobile;

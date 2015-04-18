@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.TransactionManager;
-import com.pg.dal.enumerate.ProdTypeEnum;
 import com.pg.dal.enumerate.ResourceEnum;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.PurchaseQueryCondition;
@@ -34,7 +33,6 @@ public class Purchase {
 		context.put("query", query);
 		context.put("paging", pageList);
 		context.put("list", JSONObject.toJSONString(pageList.getData()));
-		context.put("prodTypeEnum", ProdTypeEnum.getAll());
 		context.put("productEnum", productManager.getProductEnumMap().entrySet());
 		context.put("packageEnum", productManager.getPackageEnumMap().entrySet());
 	}

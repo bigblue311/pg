@@ -47,12 +47,18 @@ public class EmployeeAction {
 		if(employeeDO.getId() == null ) {
 			String name = employeeDO.getName();
 			if(!employeeManager.checkExist(name)){
-				employeeDO.setPassword(MD5.getMD5(employeeDO.getPassword()));
+				employeeDO.setPassword(MD5.getMD5("123456"));
 				employeeManager.create(employeeDO);
 			}
 		} else {
 			employeeManager.update(employeeDO);
 		}
+	}
+	
+	public void doResetPwd(@FormGroup("employee") EmployeeDO employeeDO) {
+		String password = MD5.getMD5(employeeDO.getPassword());
+		employeeDO.setPassword(password);
+		employeeManager.update(employeeDO);
 	}
 	
 	public void doDelete(@FormGroup("employee") EmployeeDO employeeDO) {

@@ -17,6 +17,7 @@ public enum SubMenuEnum {
 	产品打包("subMenuPackage","产品打包","/admin/package",TopMenuEnum.产品管理),
 	
 	客户查询("subMenuCustomer","客户查询","/admin/customer",TopMenuEnum.客户管理),
+	我的客户("subMenuMyCustomer","我的客户","/admin/mycustomer",TopMenuEnum.客户管理),
 	
 	我的仓库("subMenuMyWarehouse","我的仓库","/admin/mywarehouse",TopMenuEnum.物流管理),
 	客户仓库("subMenuCuWarehouse","客户仓库","/admin/warehouse",TopMenuEnum.物流管理),

@@ -4,11 +4,11 @@
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="ProductDO">
+<sqlMap namespace="PurchaseItemDO">
 
-  <typeAlias alias="Product" type="com.pg.dal.model.ProductDO"/>
+  <typeAlias alias="PurchaseItem" type="com.pg.dal.model.PurchaseItemDO"/>
 
-  <resultMap id="RM" class="Product">
+  <resultMap id="RM" class="PurchaseItem">
     <result property="id" 			column="id"/>
     <result property="gmtCreate" 	column="gmt_create"/>
     <result property="gmtModify" 	column="gmt_modify"/>
@@ -22,23 +22,20 @@
     <result property="spec" 		column="spec"/>
     <result property="packageSpec" 	column="package_spec"/>
     <result property="msu" 			column="msu"/>
-    <result property="price3500" 	column="price_3500"/>
-    <result property="price2000" 	column="price_2000"/>
-    <result property="price800" 	column="price_800"/>
-    <result property="price200" 	column="price_200"/>
-    <result property="price100" 	column="price_100"/>
-    <result property="priceSugg" 	column="price_sugg"/>
+    <result property="price" 		column="price"/>
+    <result property="quantity" 	column="quantity"/>
     <result property="cubage" 		column="cubage"/>
     <result property="weight" 		column="weight"/>
     <result property="validFrom" 	column="valid_from"/>
     <result property="expTo" 		column="exp_to"/>
-    <result property="enable" 		column="enable"/>
     <result property="description" 	column="description"/>
+    <result property="purchaseId" 	column="purchase_id"/>
+    <result property="productId" 	column="product_id"/>
   </resultMap>
 
-  <insert id="insert" parameterClass="Product">
+  <insert id="insert" parameterClass="PurchaseItem">
     <![CDATA[
-    insert into pg_product (
+    insert into pg_purchase_item (
       gmt_create,
       gmt_modify,
       name,
@@ -51,24 +48,20 @@
       spec,
    	  package_spec,
       msu,
-      price_3500,
-      price_2000,
-      price_800,
-      price_200,
-      price_100,
-      price_sugg,
+      price,
+      quantity,
       cubage,
       weight,
       valid_from,
       exp_to,
-      enable,
-      description
+      description,
+      purchase_id,
+      product_id
     ) values (
       now(), now(), #name#, #title#,#brandId#, #categoryId#,
-       #code#, #barcode#, #boxcode#, #spec#, #packageSpec#, #msu#,
-       #price3500#, #price2000#, #price800#, #price200#, 
-       #price100#, #priceSugg#, #cubage#, #weight#, #validFrom#, 
-       #expTo#, #enable#, #description#
+      #code#, #barcode#, #boxcode#, #spec#, #packageSpec#, #msu#,
+      #price#, #cubage#, #weight#, #validFrom#, #expTo#,
+      #description#, #purchaseId#, #productId#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -76,8 +69,8 @@
 	</selectKey>
   </insert>
   
-  <update id="update" parameterClass="Product">
-    update pg_product set 
+  <update id="update" parameterClass="PurchaseItem">
+    update pg_purchase_item set 
     <dynamic>
       <isNotEmpty property="name">  
          <![CDATA[   
@@ -129,34 +122,9 @@
            msu = #msu#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="price3500">  
+      <isNotEmpty property="price">  
          <![CDATA[   
-           price_3500 = #price3500#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price2000">  
-         <![CDATA[   
-           price_2000 = #price2000#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price800">  
-         <![CDATA[   
-           price_800 = #price800#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price200">  
-         <![CDATA[   
-           price_200 = #price200#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="price100">  
-         <![CDATA[   
-           price_100 = #price100#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="priceSugg">  
-         <![CDATA[   
-           price_sugg = #priceSugg#,
+           price = #price#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="cubage">  
@@ -179,14 +147,19 @@
            exp_to = #expTo#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="enable">  
-         <![CDATA[   
-           enable = #enable#,
-         ]]> 
-      </isNotEmpty>
       <isNotEmpty property="description">  
          <![CDATA[   
            description = #description#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="purchaseId">  
+         <![CDATA[   
+           purchase_id = #purchaseId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="productId">  
+         <![CDATA[   
+           product_id = #productId#,
          ]]> 
       </isNotEmpty>
     </dynamic>
@@ -195,20 +168,12 @@
       id = #id#
   </update>
   
-  <update id="softDeleteById" parameterClass="java.lang.Long">
-  	update pg_product set enable = '1' where id = #id#
-  </update>
-  
-  <update id="recoverById" parameterClass="java.lang.Long">
-  	update pg_product set enable = '0' where id = #id#
-  </update>
-  
   <select id="getAll" resultMap="RM">
-    select * from pg_product  
+    select * from pg_purchase_item  
   </select>
   
   <select id="getById" parameterClass="java.lang.Long" resultMap="RM">
-    select * from pg_product where id = #id#  
+    select * from pg_purchase_item where id = #id#  
   </select>
   
   <sql id="where">
@@ -249,27 +214,9 @@
         	category_id = #categoryId#
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="packageId" prepend="and">
+	    <isNotEmpty property="purchaseId" prepend="and">
         	<![CDATA[ 
-        	id in (select product_id from pg_prod_pack where package_id = #packageId#)
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="notInPackageId" prepend="and">
-        	<![CDATA[ 
-        	id not in (select product_id from pg_prod_pack where package_id = #notInPackageId#)
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="publishId" prepend="and">
-        	<![CDATA[ 
-        	id in (
-        		select product_id from pg_prod_pack where package_id in 
-        		(select package_id from pg_publish where id = #publishId#)
-        	) 
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="enable" prepend="and">
-        	<![CDATA[ 
-        	enable = #enable#
+        	purchaseId = #purchaseId#
         	]]>
 	    </isNotEmpty>
 	    <include refid="Common.queryModify" />
@@ -284,14 +231,8 @@
   	<isNull property="boxcode">
   	<isNull property="brandId">
   	<isNull property="categoryId">
-  	<isNull property="packageId">
-  	<isNull property="notInPackageId">
-  	<isNull property="publishId">
-  	<isNull property="enable">
+  	<isNull property="purchaseId">
         <include refid="Common.validModify" />
-    </isNull>
-    </isNull>
-    </isNull>
     </isNull>
     </isNull>
     </isNull>
@@ -303,20 +244,20 @@
   </sql>
   
   <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">
-    select * from pg_product 
+    select * from pg_purchase_item 
     <include refid="where" />
     <include refid="Common.orderByModify" />
   </select>
   
   <select id="getPage" parameterClass="java.util.HashMap" resultMap="RM">
-    select * from pg_product 
+    select * from pg_purchase_item 
     <include refid="where" />
     <include refid="Common.orderByModify" />
     <include refid="Common.pageSql" />
   </select>
   
   <select id="getCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
-    select count(*) from pg_product
+    select count(*) from pg_purchase_item
 	<include refid="where" />
   </select>
 </sqlMap>

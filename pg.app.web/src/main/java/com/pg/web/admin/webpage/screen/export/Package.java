@@ -89,7 +89,6 @@ public class Package {
 		out.write("<td>"+DateTools.DateToString(packageDO.getGmtCreate())+"</td>");
 		out.write("<td>"+packageDO.getName()+"</td>");
 		out.write("<td>"+packageDO.getTitle()+"</td>");
-		out.write("<td>"+packageDO.getCode()+"</td>");
 		out.write("<td>"+packageDO.getDescription()+"</td>");
 		out.write("</tr>");
 	}

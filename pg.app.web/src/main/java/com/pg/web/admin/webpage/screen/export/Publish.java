@@ -97,13 +97,13 @@ public class Publish {
 		}
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
-		out.write("<td>"+publishDO.getName()+"</td>");
-		out.write("<td>"+publishDO.getTitle()+"</td>");
-		out.write("<td>"+publishDO.getExtendCode()+"</td>");
-		out.write("<td>"+publishDO.getPrice()+"元/"+publishDO.getUnit()+"</td>");
-		out.write("<td>"+publishDO.getBalance()+publishDO.getUnit()+"</td>");
-		out.write("<td>"+getWarehouse(publishDO)+"</td>");
-		out.write("<td>"+publishDO.getLimitBuy()+"</td>");
+//		out.write("<td>"+publishDO.getName()+"</td>");
+//		out.write("<td>"+publishDO.getTitle()+"</td>");
+//		out.write("<td>"+publishDO.getExtendCode()+"</td>");
+//		out.write("<td>"+publishDO.getPrice()+"元/"+publishDO.getUnit()+"</td>");
+//		out.write("<td>"+publishDO.getBalance()+publishDO.getUnit()+"</td>");
+//		out.write("<td>"+getWarehouse(publishDO)+"</td>");
+//		out.write("<td>"+publishDO.getLimitBuy()+"</td>");
 		out.write("<td>"+DateTools.DateToString(publishDO.getValidFrom()) +" - "+ DateTools.DateToString(publishDO.getValidTo()) +"</td>");
 		out.write("<td>"+EnableEnum.getByCode(publishDO.getEnable())+"</td>");
 		out.write("<td>"+publishDO.getDescription()+"</td>");

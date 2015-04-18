@@ -13,7 +13,9 @@ import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.dataresolver.Params;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.CustomerManager;
+import com.pg.biz.manager.EmployeeManager;
 import com.pg.dal.model.CustomerDO;
+import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.query.CustomerQueryCondition;
 import com.victor.framework.common.tools.DateTools;
 import com.victor.framework.dal.basic.Paging;
@@ -29,6 +31,9 @@ public class Customer {
 	@Autowired
 	private CustomerManager customerManager;
 	
+	@Autowired
+	private EmployeeManager employeeManager;
+	
 	public void execute(@Params CustomerQueryCondition queryCondition,
 						Context context) throws Exception{
 		buffered.setBuffering(false);
@@ -39,9 +44,11 @@ public class Customer {
 
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
-		pairs.add(new NameValuePair("注册时间","35%"));
-		pairs.add(new NameValuePair("称呼","40%"));
-		pairs.add(new NameValuePair("电话号码","22%"));
+		pairs.add(new NameValuePair("注册时间","15%"));
+		pairs.add(new NameValuePair("称呼","20%"));
+		pairs.add(new NameValuePair("身份证号","20%"));
+		pairs.add(new NameValuePair("电话号码","20%"));
+		pairs.add(new NameValuePair("归属坐席","22%"));
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -86,11 +93,25 @@ public class Customer {
 		out.write("<td style='text-align:center'>"+count+"</td>");
 		out.write("<td>"+DateTools.DateToString(customerDO.getGmtCreate())+"</td>");
 		out.write("<td>"+customerDO.getName()+"</td>");
+		out.write("<td>"+customerDO.getIdCard()+"</td>");
 		out.write("<td>"+customerDO.getMobile()+"</td>");
+		out.write("<td>"+getEmployeeName(customerDO.getEmployeeId())+"</td>");
 		out.write("</tr>");
 	}
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
+	}
+	
+	private String getEmployeeName(Long employeeId){
+		if(employeeId == null){
+			return "";
+		}
+		EmployeeDO employeeDO = employeeManager.getById(employeeId);
+		if(employeeDO == null){
+			return "";
+		} else {
+			return employeeDO.getName();
+		}
 	}
 }

@@ -36,6 +36,7 @@
   	<sqlMap resource="sqlmap/pg_prod_pack.xml"/>
   	<sqlMap resource="sqlmap/pg_product.xml"/>
   	<sqlMap resource="sqlmap/pg_publish.xml"/>
+  	<sqlMap resource="sqlmap/pg_purchase_item.xml"/>
   	<sqlMap resource="sqlmap/pg_purchase.xml"/>
   	<sqlMap resource="sqlmap/pg_resource_role.xml"/>
   	<sqlMap resource="sqlmap/pg_role.xml"/>

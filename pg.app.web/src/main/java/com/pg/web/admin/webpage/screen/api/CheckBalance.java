@@ -6,7 +6,6 @@ import com.alibaba.citrus.turbine.dataresolver.Param;
 import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.dal.model.PublishDO;
-import com.pg.dal.model.PurchaseDO;
 import com.victor.framework.common.shared.Result;
 
 public class CheckBalance {
@@ -23,25 +22,17 @@ public class CheckBalance {
 		if(publishDO == null || !publishDO.isValid()){
 			return Result.newInstance(false, "该商品已下架", false);
 		}
-		Long balance = publishDO.getBalance();
-		Long limitBuy = publishDO.getLimitBuy();
+		Integer limitBuy = publishDO.getLimitBuyQuantity();
 		if(purchaseId == null){
 			if(limitBuy != null && quantity<limitBuy.intValue()){
 				return Result.newInstance(false, "低于了最小预定量", false);
 			}
-			if(balance != null && quantity>balance.intValue()){
-				return Result.newInstance(false, "超过了库存剩余", false);
-			}
-			return Result.newInstance(true, "库存满足", true);
+			return Result.newInstance(true, "可以购买", true);
 		} else {
-			PurchaseDO purchaseDO = transactionManager.getPurchaseDOById(purchaseId);
 			if(limitBuy != null && quantity<limitBuy.intValue()){
 				return Result.newInstance(false, "低于了最小预定量", false);
 			}
-			if(balance != null && (quantity-purchaseDO.getQuantity())>balance.intValue()){
-				return Result.newInstance(false, "超过了库存剩余", false);
-			}
-			return Result.newInstance(true, "库存满足", true);
+			return Result.newInstance(true, "可以购买", true);
 		}
 	}
 }

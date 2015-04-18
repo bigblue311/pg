@@ -1,5 +1,7 @@
 package com.pg.web.admin.webpage.action;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
@@ -12,6 +14,9 @@ public class CustomerAction {
 	
 	@Autowired
 	private CustomerManager customerManager;
+	
+	@Autowired
+	private HttpSession session;
 	
 	public void doUpdate(@FormGroup("customer") CustomerDO customerDO){
 		if(customerDO.getId() == null){
@@ -31,7 +36,7 @@ public class CustomerAction {
 		}
 	}
 	
-	public void generateDefaultPassword(CustomerDO customerDO){
+	private void generateDefaultPassword(CustomerDO customerDO){
 		String mobile = customerDO.getMobile();
 		mobile = StringTools.reverse(mobile);
 		mobile = StringTools.subStr(mobile, 0, 6);

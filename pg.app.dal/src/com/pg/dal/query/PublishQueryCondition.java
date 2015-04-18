@@ -16,31 +16,13 @@ public class PublishQueryCondition extends QueryCondition {
 		return getLong("warehouseId");
 	}
 	
-	public PublishQueryCondition setProdType(String prodType) {
-		put("prodType",prodType);
+	public PublishQueryCondition setPackageId(Long packageId) {
+		put("packageId",packageId);
 		return this;
 	}
 	
-	public String getProdType(){
-		return getString("prodType");
-	}
-	
-	public PublishQueryCondition setExtendId(Long extendId) {
-		put("extendId",extendId);
-		return this;
-	}
-	
-	public Long getExtendId(){
-		return getLong("extendId");
-	}
-	
-	public PublishQueryCondition setExtendCode(String extendCode) {
-		put("extendCode",extendCode);
-		return this;
-	}
-	
-	public String getExtendCode(){
-		return getString("extendCode");
+	public Long getPackageId(){
+		return getLong("packageId");
 	}
 	
 	public PublishQueryCondition setName(String name){

@@ -21,7 +21,6 @@ public class PackageVO implements Serializable{
 	private PublishDO publishDO;
 	private WarehouseDO warehouseDO;
 	
-	private String img;
 	private String description;
 	private Boolean valid;
 	
@@ -48,21 +47,6 @@ public class PackageVO implements Serializable{
 	}
 	public void setWarehouseDO(WarehouseDO warehouseDO) {
 		this.warehouseDO = warehouseDO;
-	}
-	public String getImg() {
-		if(StringTools.isNotEmpty(img)){
-			return img;
-		}
-		if(publishDO!=null && StringTools.isNotEmpty(publishDO.getImg())){
-			return publishDO.getImg();
-		}
-		if(packageDO!=null && StringTools.isNotEmpty(packageDO.getImg())){
-			return packageDO.getImg();
-		}
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
 	}
 	public String getDescription() {
 		if(StringTools.isNotEmpty(description)){

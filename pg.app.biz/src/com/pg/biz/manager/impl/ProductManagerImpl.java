@@ -9,7 +9,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.ProductManager;
 import com.pg.biz.model.PackageVO;
-import com.pg.biz.model.ProductVO;
 import com.pg.dal.dao.PackageDAO;
 import com.pg.dal.dao.ProdPackDAO;
 import com.pg.dal.dao.ProductDAO;
@@ -20,7 +19,6 @@ import com.pg.dal.model.ProductDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.dao.PublishDAO;
-import com.pg.dal.enumerate.ProdTypeEnum;
 import com.pg.dal.query.PackageQueryCondition;
 import com.pg.dal.query.ProdPackQueryCondition;
 import com.pg.dal.query.ProductQueryCondition;
@@ -185,53 +183,7 @@ public class ProductManagerImpl implements ProductManager{
 	}
 
 	@Override
-	public Paging<ProductVO> getProductVOPage(PublishQueryCondition queryCondition) {
-		queryCondition.setProdType(ProdTypeEnum.产品.getCode());
-		int totalSize = publishDAO.getCount(queryCondition);
-		@SuppressWarnings("unchecked")
-		Paging<ProductVO> page = queryCondition.getPaging(totalSize, 5);
-		List<PublishDO> publishList = publishDAO.getPage(queryCondition);
-		List<ProductVO> productList = Lists.transform(publishList, new Function<PublishDO,ProductVO>(){
-
-			@Override
-			public ProductVO apply(PublishDO publishDO) {
-				return ProductDO2VO(publishDO);
-			}
-			
-		});
-		page.setData(productList);
-		return page;
-	}
-	
-	private ProductVO ProductDO2VO(PublishDO publishDO){
-		if(publishDO == null) {
-			return null;
-		}
-		if(ProdTypeEnum.产品.getCode().equals(publishDO.getProdType())){
-			ProductVO productVO = new ProductVO();
-			productVO.setPublishDO(publishDO);
-			
-			Long productId = publishDO.getExtendId();
-			ProductDO productDO = productDAO.getById(productId);
-			if(productDO==null){
-				return null;
-			}
-			productVO.setProductDO(productDO);
-			
-			Long warehouseID = publishDO.getWarehouseId();
-			WarehouseDO warehouseDO = warehouseDAO.getById(warehouseID);
-			if(warehouseDO == null){
-				return null;
-			}
-			productVO.setWarehouseDO(warehouseDO);
-			return productVO;
-		}
-		return null;
-	}
-
-	@Override
 	public Paging<PackageVO> getPackageVOPage(PublishQueryCondition queryCondition) {
-		queryCondition.setProdType(ProdTypeEnum.产品包.getCode());
 		int totalSize = publishDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
 		Paging<PackageVO> page = queryCondition.getPaging(totalSize, 5);
@@ -252,29 +204,26 @@ public class ProductManagerImpl implements ProductManager{
 		if(publishDO == null) {
 			return null;
 		}
-		if(ProdTypeEnum.产品包.getCode().equals(publishDO.getProdType())){
-			PackageVO packageVO = new PackageVO();
-			packageVO.setPublishDO(publishDO);
-			
-			Long packageId = publishDO.getExtendId();
-			PackageDO packageDO = packageDAO.getById(packageId);
-			if(packageDO==null){
-				return null;
-			}
-			packageVO.setPackageDO(packageDO);
-			
-			List<ProductDO> productList = getProductByPackageId(packageId);
-			packageVO.setProductList(productList);
-			
-			Long warehouseID = publishDO.getWarehouseId();
-			WarehouseDO warehouseDO = warehouseDAO.getById(warehouseID);
-			if(warehouseDO == null){
-				return null;
-			}
-			packageVO.setWarehouseDO(warehouseDO);
-			return packageVO;
+		PackageVO packageVO = new PackageVO();
+		packageVO.setPublishDO(publishDO);
+		
+		Long packageId = publishDO.getPackageId();
+		PackageDO packageDO = packageDAO.getById(packageId);
+		if(packageDO==null){
+			return null;
 		}
-		return null;
+		packageVO.setPackageDO(packageDO);
+		
+		List<ProductDO> productList = getProductByPackageId(packageId);
+		packageVO.setProductList(productList);
+		
+		Long warehouseID = publishDO.getWarehouseId();
+		WarehouseDO warehouseDO = warehouseDAO.getById(warehouseID);
+		if(warehouseDO == null){
+			return null;
+		}
+		packageVO.setWarehouseDO(warehouseDO);
+		return packageVO;
 	}
 
 	@Override
