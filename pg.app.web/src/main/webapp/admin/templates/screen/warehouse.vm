@@ -244,7 +244,7 @@ $control.setTemplate("paging.vm")
           this.accept();
           jQuery("#actionFrom").submit();
         }
-      });
+    });
 
     editor.render();
 	

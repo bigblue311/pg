@@ -15,6 +15,7 @@ public enum SubMenuEnum {
 	品类管理("subMenuCategory","品类管理","/admin/category",TopMenuEnum.产品管理),
 	产品管理("subMenuProduct","产品管理","/admin/product",TopMenuEnum.产品管理),
 	产品打包("subMenuPackage","产品打包","/admin/package",TopMenuEnum.产品管理),
+	商品发布("subMenuPublish","商品发布","/admin/publish",TopMenuEnum.产品管理),
 	
 	客户查询("subMenuCustomer","客户查询","/admin/customer",TopMenuEnum.客户管理),
 	我的客户("subMenuMyCustomer","我的客户","/admin/mycustomer",TopMenuEnum.客户管理),
@@ -22,7 +23,6 @@ public enum SubMenuEnum {
 	我的仓库("subMenuMyWarehouse","我的仓库","/admin/mywarehouse",TopMenuEnum.物流管理),
 	客户仓库("subMenuCuWarehouse","客户仓库","/admin/warehouse",TopMenuEnum.物流管理),
 	
-	商品发布("subMenuPublish","商品发布","/admin/publish",TopMenuEnum.交易管理),
 	交易管理("subMenuPurchase","交易管理","/admin/purchase",TopMenuEnum.交易管理),
 	订单管理("subMenuOrder","订单管理","/admin/order",TopMenuEnum.交易管理);
 	

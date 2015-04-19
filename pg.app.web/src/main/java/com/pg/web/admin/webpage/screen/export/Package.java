@@ -41,8 +41,7 @@ public class Package {
 		pairs.add(new NameValuePair("","3%"));
 		pairs.add(new NameValuePair("创建时间","15%"));
 		pairs.add(new NameValuePair("名称","10%"));
-		pairs.add(new NameValuePair("标题","10%"));
-		pairs.add(new NameValuePair("编号","10%"));
+		pairs.add(new NameValuePair("标题","20%"));
 		pairs.add(new NameValuePair("描述","52%"));
 		printTableHead(out,pairs);
 		

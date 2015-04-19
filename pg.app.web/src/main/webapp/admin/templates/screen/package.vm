@@ -8,10 +8,6 @@
 					<input type="text" class="control-text" name="name" value="$!query.name">
 					<input type="hidden" name="page" id="page" value="$!query.page">
 				</div>
-				<label class="control-label">编码：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="code" value="$!query.code">
-				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -32,7 +28,6 @@ $control.setTemplate("paging.vm")
 	<input type="hidden" id="id" name="$group.id.key" value=""/>
 	<input type="hidden" id="name" name="$group.name.key" value=""/>
 	<input type="hidden" id="title" name="$group.title.key" value=""/>
-	<input type="hidden" id="code" name="$group.code.key" value=""/>
 	<input type="hidden" id="description" name="$group.description.key" value=""/>
 	<input type="hidden" id="enable" name="$group.enable.key" value="0"/>
 </form>
@@ -55,7 +50,7 @@ $control.setTemplate("paging.vm")
 				xtype : 'text',
 				rules : {required : true}
 		  },
-          width:'15%'
+          width:'20%'
         },{
           title : '标题',
           elCls: 'left',
@@ -64,16 +59,7 @@ $control.setTemplate("paging.vm")
   				xtype : 'text',
   				rules : {required : true}
   		  },
-          width:'15%'
-        },{
-          title : '编号',
-          elCls: 'left',
-          dataIndex :'code',
-          editor : {
-				xtype : 'text',
-				rules : {required : true}
-		  },
-          width:'15%'
+          width:'25%'
         },{
           title : '描述',
           elCls: 'left',
@@ -156,13 +142,11 @@ $control.setTemplate("paging.vm")
     	var id = e.record.id;
     	var name = e.record.name;
     	var title = e.record.title;
-    	var code = e.record.code;
     	var description = e.record.description;
     	var event = "event_submit_do_update";
     	jQuery("#id").val(id);
     	jQuery("#name").val(name);
     	jQuery("#title").val(title);
-    	jQuery("#code").val(code);
     	jQuery("#description").val(description);
     	jQuery("#event").attr("name",event);
     	jQuery("#actionFrom").submit();

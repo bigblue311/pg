@@ -16,6 +16,11 @@ public class PublishQueryCondition extends QueryCondition {
 		return getLong("warehouseId");
 	}
 	
+	public PublishQueryCondition setEnable(String enable){
+		put("enable",enable);
+		return this;
+	}
+	
 	public PublishQueryCondition setPackageId(Long packageId) {
 		put("packageId",packageId);
 		return this;

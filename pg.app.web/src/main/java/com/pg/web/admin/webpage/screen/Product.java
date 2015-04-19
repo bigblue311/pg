@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.pg.biz.manager.BrandManager;
 import com.pg.biz.manager.CategoryManager;
 import com.pg.biz.manager.ProductManager;
+import com.pg.dal.enumerate.EnableEnum;
 import com.pg.dal.enumerate.ResourceEnum;
 import com.pg.dal.model.ProductDO;
 import com.pg.dal.query.ProductQueryCondition;
@@ -37,6 +38,7 @@ public class Product {
 		context.put("query", query);
 		context.put("paging", pageList);
 		context.put("list", JSONObject.toJSONString(pageList.getData()));
+		context.put("enableEnum", EnableEnum.getAll());
 		context.put("brandEnum", brandManager.getEnumMap().entrySet());
 		context.put("categoryEnum", categoryManager.getEnumMap().entrySet());
 	}

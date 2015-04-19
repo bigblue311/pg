@@ -48,14 +48,29 @@ public class Product {
 		PrintWriter out = response.getWriter(); 
 
 		List<NameValuePair> pairs = Lists.newArrayList();
-		pairs.add(new NameValuePair("","3%"));
-		pairs.add(new NameValuePair("创建时间","15%"));
-		pairs.add(new NameValuePair("名称","10%"));
-		pairs.add(new NameValuePair("标题","10%"));
-		pairs.add(new NameValuePair("编号","10%"));
-		pairs.add(new NameValuePair("品牌","10%"));
-		pairs.add(new NameValuePair("品类","10%"));
-		pairs.add(new NameValuePair("描述","32%"));
+		pairs.add(new NameValuePair("","50px"));
+		pairs.add(new NameValuePair("创建时间","150px"));
+		pairs.add(new NameValuePair("名称","150px"));
+		pairs.add(new NameValuePair("标题","150px"));
+		pairs.add(new NameValuePair("品牌","150px"));
+		pairs.add(new NameValuePair("品类","150px"));
+		pairs.add(new NameValuePair("编号","150px"));
+		pairs.add(new NameValuePair("条形码","150px"));
+		pairs.add(new NameValuePair("箱码","150px"));
+		pairs.add(new NameValuePair("规则","150px"));
+		pairs.add(new NameValuePair("包装系数","150px"));
+		pairs.add(new NameValuePair("MSU","150px"));
+		pairs.add(new NameValuePair("3500箱价格","150px"));
+		pairs.add(new NameValuePair("2000箱价格","150px"));
+		pairs.add(new NameValuePair("800箱价格","150px"));
+		pairs.add(new NameValuePair("200箱价格","150px"));
+		pairs.add(new NameValuePair("100箱价格","150px"));
+		pairs.add(new NameValuePair("建议售价","150px"));
+		pairs.add(new NameValuePair("体积","150px"));
+		pairs.add(new NameValuePair("重量(公斤/箱)","150px"));
+		pairs.add(new NameValuePair("生效日期","150px"));
+		pairs.add(new NameValuePair("保质期","150px"));
+		pairs.add(new NameValuePair("描述","300px"));
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -82,7 +97,7 @@ public class Product {
 	
 	private void printTableHead(PrintWriter out,List<NameValuePair> pairs) throws Exception{
 		out.write("<div><a href='#' onclick='javascript:history.go(-2)'>返回</a>&nbsp;<a href='#' onclick='javascript: window.print();'>打印</a></div>");
-		out.write("<table>");
+		out.write("<table style='width:3500px;'>");
 		out.write("<tr class='head'>");
 		for(NameValuePair head : pairs){
 			out.write("<td style='width:"+head.getValue()+"'>"+head.getName()+"</td>");
@@ -101,9 +116,24 @@ public class Product {
 		out.write("<td>"+DateTools.DateToString(productDO.getGmtCreate())+"</td>");
 		out.write("<td>"+productDO.getName()+"</td>");
 		out.write("<td>"+productDO.getTitle()+"</td>");
-		out.write("<td>"+productDO.getCode()+"</td>");
 		out.write("<td>"+getBrandName(productDO)+"</td>");
 		out.write("<td>"+getCategoryName(productDO)+"</td>");
+		out.write("<td>"+productDO.getCode()+"</td>");
+		out.write("<td>"+productDO.getBarcode()+"</td>");
+		out.write("<td>"+productDO.getBoxcode()+"</td>");
+		out.write("<td>"+productDO.getSpec()+"</td>");
+		out.write("<td>"+productDO.getPackageSpec()+"</td>");
+		out.write("<td>"+productDO.getMsu()+"</td>");
+		out.write("<td>"+productDO.getPrice3500()+"</td>");
+		out.write("<td>"+productDO.getPrice2000()+"</td>");
+		out.write("<td>"+productDO.getPrice800()+"</td>");
+		out.write("<td>"+productDO.getPrice200()+"</td>");
+		out.write("<td>"+productDO.getPrice100()+"</td>");
+		out.write("<td>"+productDO.getPriceSugg()+"</td>");
+		out.write("<td>"+productDO.getCubage()+"</td>");
+		out.write("<td>"+productDO.getWeight()+"</td>");
+		out.write("<td>"+DateTools.DateToString(productDO.getValidFrom())+"</td>");
+		out.write("<td>"+DateTools.DateToString(productDO.getExpTo())+"</td>");
 		out.write("<td>"+productDO.getDescription()+"</td>");
 		out.write("</tr>");
 	}

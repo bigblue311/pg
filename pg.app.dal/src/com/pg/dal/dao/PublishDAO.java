@@ -24,9 +24,15 @@ public interface PublishDAO {
 	 * 删除对象
 	 * @param id
 	 */
-	Boolean delete(Long id);
-	Boolean deleteByPackageId(Long packageId);
-	Boolean deleteByProductId(Long productId);
+	/**
+	 * 软删除
+	 * @param id
+	 * @return
+	 */
+	Boolean softDelete(Long id);
+	Boolean softDeleteByPackageId(Long packageId);
+	
+	Boolean recover(Long id);
 	
 	/**
 	 * 根据ID获取

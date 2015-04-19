@@ -102,18 +102,18 @@
       id = #id#
   </update>
   
-  <delete id="deleteById" parameterClass="java.lang.Long">
-    delete from pg_publish where id = #id#
-  </delete>
+  <update id="softDeleteById" parameterClass="java.lang.Long">
+  	update pg_publish set enable = '1' where id = #id#
+  </update>
   
-  <delete id="deleteByPackageId" parameterClass="java.lang.Long">
-    delete from pg_publish where extend_id = #packageId# and prod_type = '1'
-  </delete>
+  <update id="softDeleteByPackageId" parameterClass="java.lang.Long">
+  	update pg_publish set enable = '1' where package_id = #packageId#
+  </update>
   
-  <delete id="deleteByProductId" parameterClass="java.lang.Long">
-    delete from pg_publish where extend_id = #productId# and prod_type = '0'
-  </delete>
-
+  <update id="recoverById" parameterClass="java.lang.Long">
+  	update pg_publish set enable = '0' where id = #id#
+  </update>
+  
   <select id="getAll" resultMap="RM">
     select * from pg_publish  
   </select>
@@ -150,6 +150,11 @@
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
         </isNotNull>
+        <isNotNull property="enable" prepend="and">
+	    	<![CDATA[
+        	enable = #enable#
+        	 ]]>
+        </isNotNull>
 	    <isNotNull property="valid">
 	    	<isEqual property="valid" compareValue="true" prepend="and">
 	    	<![CDATA[
@@ -172,8 +177,10 @@
   	<isNull property="name">
   	<isNull property="gmtCreateStart">
   	<isNull property="gmtCreateEnd">
+  	<isNull property="enable">
   	<isNull property="valid">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
     </isNull>

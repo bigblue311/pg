@@ -32,6 +32,7 @@ public interface ProductManager {
 	 * @param id
 	 */
 	void deleteProduct(Long id);
+	void recoverProduct(Long id);
 	
 	/**
 	 * 根据ID获取商品
@@ -168,6 +169,7 @@ public interface ProductManager {
 	 * @param id
 	 */
 	void deletePublish(Long id);
+	void recoverPublish(Long id);
 	
 	/**
 	 * 根据查询条件获取

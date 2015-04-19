@@ -113,6 +113,22 @@ public class PublishDO extends EntityDO implements Serializable{
 		return true;
 	}
 	
+	public String getValidStr(){
+		if(StringTools.isEmpty(enable)){
+			return "无效";
+		}
+		if(EnableEnum.无效.getCode().equals(enable)){
+			return "无效";
+		}
+		if(validFrom != null && DateTools.today().before(validFrom)){
+			return "未开始销售";
+		}
+		if(validTo != null && DateTools.today().after(validTo)){
+			return "销售结束";
+		}
+		return "有效";
+	}
+	
 	public PublishQueryCondition toQueryCondition(){
 		PublishQueryCondition queryCondition = new PublishQueryCondition();
 		queryCondition.setQueryMap(this.toMap());

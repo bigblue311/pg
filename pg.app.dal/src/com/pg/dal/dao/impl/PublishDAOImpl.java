@@ -1,5 +1,6 @@
 package com.pg.dal.dao.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,24 +9,28 @@ import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.model.PackageDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.query.PublishQueryCondition;
+import com.victor.framework.common.tools.LogTools;
 import com.victor.framework.dal.basic.EntityDAO;
 
 public class PublishDAOImpl extends EntityDAO<PublishDO,PublishQueryCondition> implements PublishDAO{
 
+	private static LogTools log = new LogTools(PublishDAOImpl.class);
+	
 	public PublishDAOImpl() {
 		super(PublishDO.class.getSimpleName());
 	}
 
 	@Override
-	public Boolean deleteByPackageId(Long packageId) {
-		return super.deleteBySID("deleteByPackageId", packageId);
+	public Boolean softDeleteByPackageId(Long packageId) {
+		try {
+			getSqlMapClient().update(super.getNamespace()+".softDeleteByPackageId", packageId);
+			return true;
+		} catch (SQLException e) {
+			log.error("SQL执行失败", super.getNamespace()+":"+packageId, e);
+			return false;
+		}
 	}
 
-	@Override
-	public Boolean deleteByProductId(Long productId) {
-		return super.deleteBySID("deleteByProductId", productId);
-	}
-	
 	public Map<String,String> getEnumMap(){
 		Map<String,String> map = Maps.newLinkedHashMap();
 		List<PublishDO> list = this.getByCondition(new PublishQueryCondition());

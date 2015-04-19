@@ -24,4 +24,8 @@ public class PublishAction {
 	public void doDelete(@FormGroup("publish") PublishFO publishFO){
 		productManager.deletePublish(publishFO.getId());
 	}
+	
+	public void doRecover(@FormGroup("publish") PublishFO publishFO){
+		productManager.recoverPublish(publishFO.getId());
+	}
 }

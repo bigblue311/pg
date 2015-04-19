@@ -48,6 +48,11 @@ public class ProductQueryCondition extends QueryCondition {
 		return this;
 	}
 	
+	public ProductQueryCondition setEnable(String enable){
+		put("enable",enable);
+		return this;
+	}
+	
 	public String getBoxcode(){
 		return getString("boxcode");
 	}

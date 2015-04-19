@@ -35,7 +35,6 @@ public class Publish {
 		context.put("paging", pageList);
 		context.put("list", JSONObject.toJSONString(pageList.getData()));
 		context.put("enableEnum", EnableEnum.getAll());
-		context.put("productEnum", productManager.getProductEnumMap().entrySet());
 		context.put("packageEnum", productManager.getPackageEnumMap().entrySet());
 		context.put("warehouseEnum", warehouseManager.getEnumMap(0l).entrySet());
 	}

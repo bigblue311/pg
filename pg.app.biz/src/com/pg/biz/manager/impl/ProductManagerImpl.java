@@ -55,7 +55,11 @@ public class ProductManagerImpl implements ProductManager{
 	@Override
 	public void deleteProduct(Long id) {
 		productDAO.softDelete(id);
-		publishDAO.deleteByProductId(id);
+	}
+	
+	@Override
+	public void recoverProduct(Long id) {
+		productDAO.recover(id);
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class ProductManagerImpl implements ProductManager{
 	@Override
 	public void deletePackage(Long id) {
 		packageDAO.softDelete(id);
-		publishDAO.deleteByPackageId(id);
+		publishDAO.softDeleteByPackageId(id);
 	}
 
 	@Override
@@ -179,7 +183,12 @@ public class ProductManagerImpl implements ProductManager{
 
 	@Override
 	public void deletePublish(Long id) {
-		publishDAO.delete(id);
+		publishDAO.softDelete(id);
+	}
+	
+	@Override
+	public void recoverPublish(Long id) {
+		publishDAO.recover(id);
 	}
 
 	@Override

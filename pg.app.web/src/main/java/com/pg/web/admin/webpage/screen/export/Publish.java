@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.WarehouseManager;
 import com.pg.dal.enumerate.EnableEnum;
+import com.pg.dal.model.PackageDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.PublishQueryCondition;
@@ -45,14 +46,11 @@ public class Publish {
 		
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
-		pairs.add(new NameValuePair("名称","10%"));
-		pairs.add(new NameValuePair("标题","10%"));
-		pairs.add(new NameValuePair("编号","5%"));
-		pairs.add(new NameValuePair("单价","5%"));
-		pairs.add(new NameValuePair("库存","5%"));
+		pairs.add(new NameValuePair("产品包","15%"));
+		pairs.add(new NameValuePair("折扣","5%"));
+		pairs.add(new NameValuePair("预定限制","15%"));
 		pairs.add(new NameValuePair("仓库","12%"));
-		pairs.add(new NameValuePair("起订量","5%"));
-		pairs.add(new NameValuePair("销售时间","15%"));
+		pairs.add(new NameValuePair("销售时间","25%"));
 		pairs.add(new NameValuePair("状态","5%"));
 		pairs.add(new NameValuePair("描述","20%"));
 		printTableHead(out,pairs);
@@ -97,13 +95,10 @@ public class Publish {
 		}
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
-//		out.write("<td>"+publishDO.getName()+"</td>");
-//		out.write("<td>"+publishDO.getTitle()+"</td>");
-//		out.write("<td>"+publishDO.getExtendCode()+"</td>");
-//		out.write("<td>"+publishDO.getPrice()+"元/"+publishDO.getUnit()+"</td>");
-//		out.write("<td>"+publishDO.getBalance()+publishDO.getUnit()+"</td>");
-//		out.write("<td>"+getWarehouse(publishDO)+"</td>");
-//		out.write("<td>"+publishDO.getLimitBuy()+"</td>");
+		out.write("<td>"+getName(publishDO)+"</td>");
+		out.write("<td>"+publishDO.getDiscount()+"</td>");
+		out.write("<td>"+getLimitBuy(publishDO)+"</td>");
+		out.write("<td>"+getWarehouse(publishDO)+"</td>");
 		out.write("<td>"+DateTools.DateToString(publishDO.getValidFrom()) +" - "+ DateTools.DateToString(publishDO.getValidTo()) +"</td>");
 		out.write("<td>"+EnableEnum.getByCode(publishDO.getEnable())+"</td>");
 		out.write("<td>"+publishDO.getDescription()+"</td>");
@@ -112,6 +107,27 @@ public class Publish {
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
+	}
+	
+	private String getName(PublishDO publishDO){
+		if(publishDO == null || publishDO.getPackageId() == null){
+			return "";
+		}
+		PackageDO packageDO = productManager.getPackageById(publishDO.getPackageId());
+		if(packageDO == null){
+			return "";
+		} else {
+			return packageDO.getName();
+		}
+	}
+	
+	private String getLimitBuy(PublishDO publishDO){
+		if(publishDO == null){
+			return "";
+		}
+		String limitBuyQuantity = publishDO.getLimitBuyQuantity() == null ? "不限":publishDO.getLimitBuyQuantity().toString();
+		String limitBuyPrice = publishDO.getLimitBuyPrice() == null ? "不限":publishDO.getLimitBuyPrice().toString();
+		return limitBuyQuantity+"箱 "+limitBuyPrice+"万元";
 	}
 	
 	private String getWarehouse(PublishDO publishDO){
