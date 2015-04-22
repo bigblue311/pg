@@ -51,6 +51,21 @@
   <update id="update" parameterClass="Order">
     update pg_order set 
     <dynamic>
+      <isNotEmpty property="customerName">  
+         <![CDATA[   
+           customer_name = #customerName#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="customerMobile">  
+         <![CDATA[   
+           customer_mobile = #customerMobile#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="customerIdCard">  
+         <![CDATA[   
+           customer_id_card = #customerIdCard#,
+         ]]> 
+      </isNotEmpty>
       <isNotEmpty property="deposit">  
          <![CDATA[   
            deposit = #deposit#,

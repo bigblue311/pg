@@ -67,10 +67,21 @@ $control.setTemplate("paging.vm")
 				#end
 			</select>
         </div>
-        <label class="control-label">客户名称：</label>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">客户姓名：</label>
 		<div class="controls">
-			<label id="customerName" style="position: relative;top: 2px;"></label>&nbsp;&nbsp;
-			<label id="customerMobile" style="position: relative;top: 2px;"></label>
+			<input type="text" id="customerName" name="$group.customerName.key" class="input-normal control-text">
+		</div>
+        <label class="control-label">客户手机：</label>
+        <div class="controls">
+          <input type="text" id="customerMobile" name="$group.customerMobile.key" class="input-normal control-text">
+        </div>
+        <label class="control-label">身份证：</label>
+		<div class="controls">
+			<input type="text" id="customerIdCard" name="$group.customerIdCard.key" class="input-normal control-text">
 		</div>
 	  </div>
 	</div>
@@ -121,6 +132,7 @@ $control.setTemplate("paging.vm")
 			title : 'ID',
 			elCls: 'center',
 			dataIndex : 'id',
+			summary : false,
 			width:'5%'
 		},{
 			title : '客户名称',
@@ -132,7 +144,14 @@ $control.setTemplate("paging.vm")
 				}
 				return "";
 			},
+			summary : false,
 			width:'10%'
+		},{
+			title : '身份证',
+			elCls: 'left',
+			dataIndex : 'customerIdCard',
+			summary : false,
+			width:'15%'
 		},{
             title : '交易时间',
             elCls: 'left',
@@ -145,19 +164,19 @@ $control.setTemplate("paging.vm")
             elCls: 'left',
             dataIndex :'deposit',
             summary : true,
-		    width:'10%'
+		    width:'5%'
         },{
         	title : '交易金额',
             elCls: 'left',
             dataIndex :'totalPrice',
             summary : true,
-		    width:'10%'
+		    width:'5%'
         },{
         	title : '物流费',
             elCls: 'left',
             dataIndex :'transportFee',
             summary : true,
-		    width:'10%'
+		    width:'5%'
         },{
             title : '状态',
             elCls: 'left',
@@ -196,7 +215,7 @@ $control.setTemplate("paging.vm")
 					var id = obj.id;
 					detail = '<span class="grid-command"><a href="$admin.setTarget("orderdetail.vm")?id='+id+'">详情</a></span>';
 				}
-				var edit = '<span class="grid-command btn-edit">编辑</span>';
+				var edit = '<span class="grid-command btn-edit" onclick="updateFunction('+index+')">编辑</span>';
 				return detail+edit;
 			},
 			width:'15%'
@@ -261,26 +280,19 @@ $control.setTemplate("paging.vm")
 		clearRecord('event_submit_do_update');
 	}
     
-    jQuery(".btn-edit").click(function(){
-		if(grid.getSelection().length == 0){
-			return;
-		}
+    function updateFunction(index){
 		editor.show();
-		bindRecord('event_submit_do_update');
-	});
+		bindRecord(index,'event_submit_do_update');
+	}
     
-    function bindRecord(event){
+    function bindRecord(index,event){
     	copyCsrf();
-		var selections = grid.getSelection();
-    	var record = selections[0];
-    	var option = "";
+    	var record = grid.getItemAt(index);
     	
     	var id = record.id;
     	var customerName = record.customerName;
     	var customerMobile = record.customerMobile;
-    	jQuery("#customerName").empty().append(customerName);
-    	jQuery("#customerMobile").empty().append(customerMobile);
-    	
+    	var customerIdCard = record.customerIdCard;
     	var deposit = record.deposit;
     	var totalPrice = record.totalPrice;
     	var transportFee = record.transportFee;
@@ -290,21 +302,13 @@ $control.setTemplate("paging.vm")
     	
     	jQuery("#id").val(id);
     	jQuery("#action").val('orderAction');
+    	jQuery("#customerName").val(customerName);
+    	jQuery("#customerMobile").val(customerMobile);
+    	jQuery("#customerIdCard").val(customerIdCard);
     	jQuery("#deposit").val(deposit);
     	jQuery("#totalPrice").val(totalPrice);
     	jQuery("#transportFee").val(transportFee);
-		
-    	jQuery("#status").show();
-    	jQuery("#status").empty();
-		#foreach($status in $statusEnum)
-    		option = "<option ";
-			if(status == '$!status.code'){
-				option += "selected";
-			}
-			option += " value='$!status.code'>$!status.desc</option>";
-			jQuery("#status").append(option);
-		#end
-
+    	jQuery("#status").val(status);
     	jQuery("#comment").val(comment);
 		jQuery("#customerId").val(customerId);
 		#if($!query.customerId)
@@ -318,8 +322,9 @@ $control.setTemplate("paging.vm")
     function clearRecord(event){
 		copyCsrf();
 
-		jQuery("#customerName").empty().append('${customerName}');
-		jQuery("#customerMobile").empty().append('${customerMobile}');
+		jQuery("#customerName").val('${customerName}');
+		jQuery("#customerMobile").val('${customerMobile}');
+		jQuery("#customerIdCard").val('${customerIdCard}');
 		
 		jQuery("#status").hide();
     	jQuery("#action").val('orderAction');

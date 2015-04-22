@@ -216,7 +216,7 @@
 	    </isNotEmpty>
 	    <isNotEmpty property="purchaseId" prepend="and">
         	<![CDATA[ 
-        	purchaseId = #purchaseId#
+        	purchase_id = #purchaseId#
         	]]>
 	    </isNotEmpty>
 	    <include refid="Common.queryModify" />

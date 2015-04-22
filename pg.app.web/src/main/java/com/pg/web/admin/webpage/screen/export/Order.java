@@ -12,10 +12,8 @@ import com.alibaba.citrus.service.requestcontext.buffered.BufferedRequestContext
 import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.dataresolver.Params;
 import com.google.common.collect.Lists;
-import com.pg.biz.manager.CustomerManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.dal.enumerate.OrderStatusEnum;
-import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.query.OrderQueryCondition;
 import com.victor.framework.common.tools.DateTools;
@@ -32,9 +30,6 @@ public class Order {
 	@Autowired
 	private TransactionManager transactionManager;
 	
-	@Autowired
-	private CustomerManager customerManager;
-	
 	public void execute(@Params OrderQueryCondition queryCondition,
 						Context context) throws Exception{
 		buffered.setBuffering(false);
@@ -47,11 +42,13 @@ public class Order {
 		pairs.add(new NameValuePair("","3%"));
 		pairs.add(new NameValuePair("创建时间","15%"));
 		pairs.add(new NameValuePair("客户","7%"));
-		pairs.add(new NameValuePair("定金","10%"));
-		pairs.add(new NameValuePair("总价","10%"));
-		pairs.add(new NameValuePair("运费","10%"));
-		pairs.add(new NameValuePair("合计","10%"));
-		pairs.add(new NameValuePair("状态","10%"));
+		pairs.add(new NameValuePair("电话","10%"));
+		pairs.add(new NameValuePair("身份证","15%"));
+		pairs.add(new NameValuePair("定金","5%"));
+		pairs.add(new NameValuePair("总价","5%"));
+		pairs.add(new NameValuePair("运费","5%"));
+		pairs.add(new NameValuePair("合计","5%"));
+		pairs.add(new NameValuePair("状态","5%"));
 		pairs.add(new NameValuePair("备注","25%"));
 		printTableHead(out,pairs);
 		
@@ -96,7 +93,9 @@ public class Order {
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
 		out.write("<td>"+DateTools.DateToString(orderDO.getGmtCreate())+"</td>");
-		out.write("<td>"+getCustomer(orderDO)+"</td>");
+		out.write("<td>"+orderDO.getCustomerName()+"</td>");
+		out.write("<td>"+orderDO.getCustomerMobile()+"</td>");
+		out.write("<td>"+orderDO.getCustomerIdCard()+"</td>");
 		out.write("<td>"+orderDO.getDeposit()+"</td>");
 		out.write("<td>"+orderDO.getTotalPrice()+"</td>");
 		out.write("<td>"+orderDO.getTransportFee()+"</td>");
@@ -108,17 +107,6 @@ public class Order {
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
-	}
-	
-	private String getCustomer(OrderDO orderDO){
-		if(orderDO == null) {
-			return "";
-		}
-		CustomerDO customerDO = customerManager.getById(orderDO.getCustomerId());
-		if(customerDO == null) {
-			return "";
-		}
-		return customerDO.getName() + "("+customerDO.getMobile()+")";
 	}
 	
 	private String getTotal(OrderDO orderDO){

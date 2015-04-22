@@ -3,15 +3,16 @@
 	<form action="$admin.setTarget('purchase.vm')" class="form-horizontal well" id="queryForm">
 		<div class="row">
 			<div class="control-group">
-				<label class="control-label">订单ID：</label>
-				<div class="controls">
-					<input type="text" class="control-text" name="orderId" value="$!query.orderId">
-					<input type="hidden" name="page" id="page" value="$!query.page">
-					<input type="hidden" name="customerId" value="$!query.customerId">
-				</div>
 				<label class="control-label">客户名称：</label>
 				<div class="controls">
 					<input type="text" class="control-text" name="customerName" value="$!query.customerName">
+					<input type="hidden" name="orderId" value="$!query.orderId">
+					<input type="hidden" name="page" id="page" value="$!query.page">
+					<input type="hidden" name="customerId" value="$!query.customerId">
+				</div>
+				<label class="control-label">客户电话：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="customerMobile" value="$!query.customerMobile">
 				</div>
 				<label class="control-label">交易日期：</label>
 				<div class="controls">
@@ -27,48 +28,40 @@
 				<div class="controls">
 					<input type="text" class="control-text" name="name" value="$!query.name">
 				</div>
-				<label class="control-label">产品类型：</label>
+				<label class="control-label">产品包：</label>
 				<div class="controls">
-				<select id="q_prodType" name="prodType">
-					<option selected value="">全部</option>
-					#foreach($prodType in $prodTypeEnum)
-					<option 
-						#if($!query.prodType)
-							#if($!query.prodType==$!prodType.code)
-								selected
-							#end
-						#end 
-						value="$!prodType.code">$!prodType.desc</option>
-					#end
-				</select>
-				<select id="q_extendId" name="extendId">
-					<option selected value="">全部</option>
-					#if($!query.prodType)
-						#if($!query.prodType=='0')
-							#foreach($product in $productEnum)
-							<option 
-								#if($!query.extendId)
-									#if($!query.extendId==$!product.key)
-										selected
-									#end
-								#end 
-								value="$!product.key">$!product.value</option>
-							#end
+					<select name="packageId">
+						<option selected value="">全部</option>
+						#foreach($package in $packageEnum)
+						<option 
+							#if($!query.packageId)
+								#if($!query.packageId==$!package.key)
+									selected
+								#end
+							#end 
+							value="$!package.key">$!package.value</option>
 						#end
-						#if($!query.prodType=='1')
-							#foreach($package in $packageEnum)
-							<option 
-								#if($!query.extendId)
-									#if($!query.extendId==$!package.key)
-										selected
-									#end
-								#end 
-								value="$!package.key">$!package.value</option>
-							#end
-						#end
-					#end
-				</select>
-				<input type="text" class="control-text" name="extendCode" value="$!query.extendCode" placeholder="产品编码">
+					</select>
+				</div>
+				<label class="control-label">物流编号：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="transportCode" value="$!query.transportCode">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="control-group">
+				<label class="control-label">联系人：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="keeper" value="$!query.keeper">
+				</div>
+				<label class="control-label">联系手机：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="mobile" value="$!query.mobile">
+				</div>
+				<label class="control-label">联系电话：</label>
+				<div class="controls">
+					<input type="text" class="control-text" name="phone" value="$!query.phone">
 				</div>
 			</div>
 		</div>
@@ -93,32 +86,14 @@
 			  selectedDate : new Date(),
 			  autoRender : true
 		});
-		
-		jQuery(function(){
-			jQuery("#q_prodType").change(function(){
-				var prodType = jQuery(this).val();
-				jQuery("#q_extendId").empty();
-				jQuery("#q_extendId").append(createOption('','全部'));
-				if(prodType == '0'){
-					#foreach($product in $productEnum)
-						jQuery("#q_extendId").append(createOption('$product.key','$product.value'));
-					#end
-				}
-				if(prodType == '1'){
-					#foreach($package in $packageEnum)
-						jQuery("#q_extendId").append(createOption('$package.key','$package.value'));
-					#end
-				}
-			});
-		});
-		
-		function createOption(key, value){
-			return '<option value="'+key+'">'+value+'</option>';
-		}
 	</script>
 </div>
 <div id="grid"></div>
 $control.setTemplate("paging.vm")
+<div id="detail" style="display:none">
+	<form method="post" id="detailFrom">
+	</form>
+</div>
 <script type="text/javascript">
       var Grid = BUI.Grid,
       Data = BUI.Data;
@@ -131,10 +106,10 @@ $control.setTemplate("paging.vm")
 			dataIndex : 'id',
 			width:'5%'
 		},{
-			title : '客户名称',
+			title : '产品包名称',
 			elCls: 'left',
-			dataIndex : 'customerName',
-			width:'10%'
+			dataIndex : 'name',
+			width:'15%'
 		},{
             title : '交易时间',
             elCls: 'left',
@@ -142,56 +117,20 @@ $control.setTemplate("paging.vm")
             renderer:BUI.Grid.Format.datetimeRenderer,
             width:'15%'
         },{
-            title : '类型',
+            title : '客户',
             elCls: 'left',
-            dataIndex :'prodType',
+            dataIndex :'customerName',
             renderer : function(val,obj,index){
-            	var prodType = obj.prodType;
-            	if(prodType == '0') return '产品';
-            	if(prodType == '1') return '产品包';
-            	return "未知";
+            	var customerName = obj.customerName;
+            	var customerMobile = obj.customerMobile;
+            	return customerName+"("+customerMobile+")";
             },
-		    width:'5%'
-        },{
-            title : '产品(包)',
-            elCls: 'left',
-            dataIndex :'extendCode',
-            renderer : function(val,obj,index){
-            	var prodType = obj.prodType;
-            	var extendCode = obj.extendCode;
-            	var name = "";
-            	if(prodType == '0'){
-            		#foreach($product in $productEnum)
-            			if('$product.key' == obj.extendId){
-            				return '['+extendCode+']$product.value';
-            			}
-            		#end
-            	}
-				if(prodType == '1'){
-					#foreach($package in $packagetEnum)
-        				if('$package.key' == obj.extendId){
-        					return '['+extendCode+']$package.value';
-        				}
-        			#end
-            	}
-				return '['+extendCode+']';
-            },
-		    width:'10%'
-        },{
-            title : '数量',
-            elCls: 'left',
-            dataIndex :'quantity',
-            width:'10%'
-        },{
-            title : '单价',
-            elCls: 'left',
-            dataIndex :'price',
-            width:'10%'
+		    width:'15%'
         },{
             title : '物流费',
             elCls: 'left',
             dataIndex :'transportFee',
-            width:'10%'
+            width:'15%'
         },{
             title : '物流编号',
             elCls: 'left',
@@ -201,16 +140,20 @@ $control.setTemplate("paging.vm")
             title : '总价',
             elCls: 'left',
             renderer: function(val,obj,index){
+            	var total = 0;
             	if(obj!=null){
-            		var price = obj.price;
-            		var quantity = obj.quantity;
-            		if(price != null && quantity !=null){
-            			return price * quantity;
+            		var items = obj.itemList;
+            		for(var item in items){
+            			var price = item.price;
+                		var quantity = item.quantity;
+                		if(price != null && quantity !=null){
+                			total += price * quantity;
+                		}
             		}
             	}
-            	return 0;
+            	return total;
           	}, 
-            width:'5%'
+            width:'10%'
         },{
 			title : '操作',
 			elCls: 'center',
@@ -218,9 +161,10 @@ $control.setTemplate("paging.vm")
 			renderer : function(val,obj,index) {
 				var orderId = obj.orderId;
 				var detail = '<a href="$admin.setTarget('orderdetail.vm')?id='+orderId+'">详情</a>';
+				detail += ' <span class="grid-command" onclick="showDetail('+obj.itemList+')">明细</span>';
 				return detail;
 			},
-	        width:'10%'
+	        width:'15%'
 		}],
 		data = #if($!{list})#noescape()$!{list}#end#else null #end;
       var store = new Store({
@@ -230,7 +174,7 @@ $control.setTemplate("paging.vm")
 		    renderer : function(record){
 			    var result = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
 			    result += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
-			    result += '<div><p>&nbsp;联系方式：' + record.keeper + ' ' + record.mobile+' ' + record.phone + '</p></div>';
+			    result += '<div><p>&nbsp;联系方式：' + record.keeper + '('+record.keeperIdCard+') ' + record.mobile+' ' + record.phone + '</p></div>';
 			    result += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
 			    return result;
 		    }
@@ -255,6 +199,31 @@ $control.setTemplate("paging.vm")
       });
 
     grid.render();
+    
+  	//创建编辑器
+    var detail = new BUI.Editor.DialogEditor({ 
+        contentId:'detail',
+        width : 650,
+        mask : true,
+        title : '成交明细',
+        form : {
+          srcNode : '#detailFrom'
+        },
+        success : function(){
+          this.accept();
+        }
+    });
+  	
+  	function showDetail(itemList){
+  		detail.show();
+  		var items = "";
+  		for(var item in itemList){
+  			items += "<div class='row'>";
+  			items += "<label>"+item.name+"("+item.code+") "+item.price+"元 "+item.quantity+"箱</label>";
+  			items += "</div>";
+  		}
+  		$('#detailFrom').empty().append(items);
+  	}
     
     function exportFunction(){
     	jQuery("#queryForm").attr("action","$admin.setTarget('/export/purchase.vm')");

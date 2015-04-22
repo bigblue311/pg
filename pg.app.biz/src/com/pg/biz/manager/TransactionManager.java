@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pg.biz.model.OrderStatisticVO;
 import com.pg.biz.model.OrderVO;
+import com.pg.biz.model.PurchaseVO;
 import com.pg.dal.model.OrderDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.OrderQueryCondition;
@@ -59,6 +60,7 @@ public interface TransactionManager {
 	Paging<OrderDO> getOrderDOPage(OrderQueryCondition queryCondition);
 	List<PurchaseDO> getPurchaseDOByCondition(PurchaseQueryCondition queryCondition);
 	Paging<PurchaseDO> getPurchaseDOPage(PurchaseQueryCondition queryCondition);
+	Paging<PurchaseVO> getPurchaseVOPage(PurchaseQueryCondition queryCondition);
 	Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition);
 	
 	List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition);

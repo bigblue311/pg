@@ -276,12 +276,12 @@ $control.setTemplate("paging.vm")
 					var packageId = obj.packageId;
 					result += '<span class="grid-command"><a href="$admin.setTarget("prodpack.vm")?packageId='+packageId+'">产品管理</a></span>';
 				}
-				result += '<span class="grid-command btn-edit">编辑</span>';
+				result += '<span class="grid-command btn-edit" onclick="updateFunction('+index+')">编辑</span>';
 				if(obj!=null){
 					if(obj.enable == '0'){
-						result += '<span class="grid-command btn-del">删除</span>';
+						result += '<span class="grid-command btn-del" onclick="deleteFunction('+index+')">删除</span>';
 					} else {
-						result += '<span class="grid-command btn-rec">恢复</span>';
+						result += '<span class="grid-command btn-rec" onclick="recoverFunction('+index+')">恢复</span>';
 					}
 				}
 				return result;
@@ -346,39 +346,28 @@ $control.setTemplate("paging.vm")
 		clearRecord('event_submit_do_update');
 	}
 	
-	jQuery(".btn-edit").click(function(){
-		if(grid.getSelection().length == 0){
-			return;
-		}
+	function updateFunction(index){
 		editor.show();
-		bindRecord('event_submit_do_update');
-	});
+		bindRecord(index,'event_submit_do_update');
+	}
 	
-	jQuery(".btn-del").click(function(){
-		if(grid.getSelection().length == 0){
-			return;
-		}
+	function deleteFunction(index){
 		BUI.Message.Confirm("确定删除该商品吗?", function() {
-			bindRecord('event_submit_do_delete');
+			bindRecord(index,'event_submit_do_delete');
 			jQuery("#actionFrom").submit();
 		}, 'question');
-	});
+	}
 	
-	jQuery(".btn-rec").click(function(){
-    	if(grid.getSelection().length == 0){
-			return;
-		}
+	function recoverFunction(index){
 		BUI.Message.Confirm("确定恢复该商品吗?", function() {
-			bindRecord('event_submit_do_recover');
+			bindRecord(index,'event_submit_do_recover');
 			jQuery("#actionFrom").submit();
 		}, 'question');
-    });
+	}
 	
 	function bindRecord(event){
 		copyCsrf();
-		var selections = grid.getSelection();
-    	var record = selections[0];
-    	var option = "";
+		var record = grid.getItemAt(index);
 		
     	var id = record.id;
     	var discount = record.discount;

@@ -12,6 +12,7 @@ import com.pg.biz.manager.TransactionManager;
 import com.pg.biz.model.OrderAlertVO;
 import com.pg.biz.model.OrderStatisticVO;
 import com.pg.biz.model.OrderVO;
+import com.pg.biz.model.PurchaseVO;
 import com.pg.dal.dao.CustomerDAO;
 import com.pg.dal.dao.EmployeeDAO;
 import com.pg.dal.dao.OpLogDAO;
@@ -136,7 +137,7 @@ public class TransactionManagerImpl implements TransactionManager{
 	
 	@Override
 	public OrderVO getOrderVOById(Long id) {
-		return DO2VO(getOrderDOById(id));
+		return orderDO2VO(getOrderDOById(id));
 	}
 
 	@Override
@@ -160,6 +161,24 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
+	public Paging<PurchaseVO> getPurchaseVOPage(PurchaseQueryCondition queryCondition) {
+		int totalSize = purchaseDAO.getCount(queryCondition);
+		@SuppressWarnings("unchecked")
+		Paging<PurchaseVO> page = queryCondition.getPaging(totalSize, 5);
+		List<PurchaseDO> list = purchaseDAO.getPage(queryCondition);
+		List<PurchaseVO> voList = Lists.transform(list, new Function<PurchaseDO,PurchaseVO>(){
+
+			@Override
+			public PurchaseVO apply(PurchaseDO purchaseDO) {
+				return purchaseDO2VO(purchaseDO);
+			}
+			
+		});
+		page.setData(voList);
+		return page;
+	}
+	
+	@Override
 	public Paging<OrderVO> getOrderVOPage(OrderQueryCondition queryCondition) {
 		int totalSize = orderDAO.getCount(queryCondition);
 		@SuppressWarnings("unchecked")
@@ -169,7 +188,7 @@ public class TransactionManagerImpl implements TransactionManager{
 
 			@Override
 			public OrderVO apply(OrderDO orderDO) {
-				return DO2VO(orderDO);
+				return orderDO2VO(orderDO);
 			}
 			
 		});
@@ -177,7 +196,7 @@ public class TransactionManagerImpl implements TransactionManager{
 		return page;
 	}
 	
-	private OrderVO DO2VO(OrderDO orderDO){
+	private OrderVO orderDO2VO(OrderDO orderDO){
 		if(orderDO == null){
 			return null;
 		}
@@ -205,6 +224,45 @@ public class TransactionManagerImpl implements TransactionManager{
 		}
 		orderVO.setPurchaseMap(purchaseMap);
 		return orderVO;
+	}
+	
+	private PurchaseVO purchaseDO2VO(PurchaseDO purchaseDO){
+		if(purchaseDO == null){
+			return null;
+		}
+		PurchaseVO purchaseVO = new PurchaseVO();
+		purchaseVO.setId(purchaseDO.getId());
+		purchaseVO.setGmtCreate(purchaseDO.getGmtCreate());
+		purchaseVO.setGmtModify(purchaseDO.getGmtModify());
+		purchaseVO.setOrderId(purchaseDO.getOrderId());
+		purchaseVO.setName(purchaseDO.getName());
+		purchaseVO.setTitle(purchaseDO.getTitle());
+		purchaseVO.setPublishId(purchaseDO.getPublishId());
+		purchaseVO.setAddressFrom(purchaseDO.getAddressFrom());
+		purchaseVO.setAddressTo(purchaseDO.getAddressTo());
+		purchaseVO.setKeeper(purchaseDO.getKeeper());
+		purchaseVO.setKeeperIdCard(purchaseDO.getKeeperIdCard());
+		purchaseVO.setPhone(purchaseDO.getPhone());
+		purchaseVO.setMobile(purchaseDO.getMobile());
+		purchaseVO.setTransportFee(purchaseDO.getTransportFee());
+		purchaseVO.setTransportCode(purchaseDO.getTransportCode());
+		purchaseVO.setComment(purchaseDO.getComment());
+		
+		Long orderId = purchaseDO.getOrderId();
+		OrderDO orderDO = orderDAO.getById(orderId);
+		if(orderDO != null){
+			purchaseVO.setCustomerName(orderDO.getCustomerName());
+			purchaseVO.setCustomerMobile(orderDO.getCustomerMobile());
+			purchaseVO.setCustomerIdCard(orderDO.getCustomerIdCard());
+			purchaseVO.setStatus(orderDO.getStatus());
+		}
+		
+		PurchaseItemQueryCondition purchaseItemQueryCondition = new PurchaseItemQueryCondition();
+		purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
+		List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
+		purchaseVO.setItemList(purchaseItemlist);
+		
+		return purchaseVO;
 	}
 
 	private String getEmployeeName(Long employeeId){
@@ -259,16 +317,25 @@ public class TransactionManagerImpl implements TransactionManager{
 			return "";
 		}
 		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]操作了";
-		if(orderDO.getDeposit()!=null){
+		if(orderDO.getCustomerName()!=null && !orderDO.getCustomerName().equals(originDO.getCustomerName())){
+			msg += "客户姓名["+originDO.getCustomerName()+"]:"+orderDO.getCustomerName()+";";
+		}
+		if(orderDO.getCustomerMobile()!=null && !orderDO.getCustomerMobile().equals(originDO.getCustomerMobile())){
+			msg += "客户电话["+originDO.getCustomerMobile()+"]:"+orderDO.getCustomerMobile()+";";
+		}
+		if(orderDO.getCustomerIdCard()!=null && !orderDO.getCustomerIdCard().equals(originDO.getCustomerIdCard())){
+			msg += "客户身份证["+originDO.getCustomerIdCard()+"]:"+orderDO.getCustomerIdCard()+";";
+		}
+		if(orderDO.getDeposit()!=null && orderDO.getDeposit() != originDO.getDeposit()){
 			msg += "定金["+originDO.getDeposit()+"]:"+orderDO.getDeposit()+";";
 		}
-		if(orderDO.getTotalPrice()!=null){
+		if(orderDO.getTotalPrice()!=null && orderDO.getTotalPrice() != originDO.getTotalPrice()){
 			msg += "单价["+originDO.getTotalPrice()+"]:"+orderDO.getTotalPrice()+";";
 		}
-		if(orderDO.getTransportFee()!=null){
+		if(orderDO.getTransportFee()!=null && orderDO.getTransportFee() != originDO.getTransportFee()){
 			msg += "物流费["+originDO.getTransportFee()+"]:"+orderDO.getTransportFee()+";";
 		}
-		if(StringTools.isNotEmpty(orderDO.getStatus())){
+		if(StringTools.isNotEmpty(orderDO.getStatus()) && !orderDO.getStatus().equals(originDO.getStatus())){
 			try {
 				String old = OrderStatusEnum.getByCode(originDO.getStatus()).getDesc();
 				String cur = OrderStatusEnum.getByCode(orderDO.getStatus()).getDesc();
@@ -277,7 +344,7 @@ public class TransactionManagerImpl implements TransactionManager{
 				msg += "状态异常:;";
 			}
 		}
-		if(StringTools.isNotEmpty(orderDO.getComment())){
+		if(StringTools.isNotEmpty(orderDO.getComment()) && !orderDO.getComment().equals(originDO.getComment())){
 			msg += "备注["+originDO.getComment()+"]:"+orderDO.getComment()+";";
 		}
 		return msg;

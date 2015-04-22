@@ -48,6 +48,7 @@ public class Order {
 		
 			context.put("customerName", customerDO.getName());
 			context.put("customerMobile", customerDO.getMobile());
+			context.put("customerIdCard", customerDO.getIdCard());
 		}
 		context.put("crumbs", crumbs);
 	}

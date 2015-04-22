@@ -172,29 +172,32 @@
 		
 		<group name="purchase" extends="csrfCheck">
 			<field name="id" displayName="ID" />
+			<field name="orderId" displayName="订单ID" />
+			<field name="name" displayName="产品包名称" />
+			<field name="title" displayName="产品包标题" />
+			<field name="publishId" displayName="商品ID" />
 			<field name="addressFrom" displayName="发货地址" />
 			<field name="addressTo" displayName="收货地址" />
 			<field name="keeper" displayName="联系人" />
-			<field name="mobile" displayName="联系手机" />
+			<field name="keeperIdCard" displayName="联系人身份证" />
 			<field name="phone" displayName="联系电话" />
+			<field name="mobile" displayName="联系手机" />
 			<field name="transportFee" displayName="物流费" />
 			<field name="transportCode" displayName="物流编码" />
-			<field name="publishId" displayName="商品ID" />
-			<field name="price" displayName="价格" />
-			<field name="quantity" displayName="数量" />
 			<field name="comment" displayName="备注" />
-			<field name="customerId" displayName="客户ID" />
-			<field name="orderId" displayName="订单ID" />
 		</group>
 		
 		<group name="order" extends="csrfCheck">
 			<field name="id" displayName="ID" />
+			<field name="customerId" displayName="客户ID" />
+			<field name="customerName" displayName="客户姓名" />
+			<field name="customerMobile" displayName="客户手机" />
+			<field name="customerIdCard" displayName="客户身份证" />
 			<field name="deposit" displayName="定金" />
 			<field name="totalPrice" displayName="总价格" />
 			<field name="transportFee" displayName="物流费" />
 			<field name="status" displayName="状态" />
 			<field name="comment" displayName="备注" />
-			<field name="customerId" displayName="客户ID" />
 		</group>
 	</services:form>
 </beans:beans>
