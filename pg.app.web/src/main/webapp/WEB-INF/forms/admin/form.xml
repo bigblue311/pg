@@ -185,6 +185,15 @@
 			<field name="transportFee" displayName="物流费" />
 			<field name="transportCode" displayName="物流编码" />
 			<field name="comment" displayName="备注" />
+			<field name="customerId" displayName="客户ID" />
+		</group>
+		
+		<group name="purchaseItem" extends="csrfCheck">
+			<field name="ids" displayName="ID" />
+			<field name="quantitys" displayName="数量" />
+			<field name="orderId" displayName="订单编号" />
+			<field name="purchaseId" displayName="购买编号" />
+			<field name="publishId" displayName="商品包编号" />
 		</group>
 		
 		<group name="order" extends="csrfCheck">

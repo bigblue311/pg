@@ -209,6 +209,20 @@ public class ProductManagerImpl implements ProductManager{
 		return page;
 	}
 	
+	@Override
+	public List<PackageVO> getPackageVOByCondition(PublishQueryCondition queryCondition) {
+		List<PublishDO> publishList = publishDAO.getByCondition(queryCondition);
+		List<PackageVO> packageList = Lists.transform(publishList, new Function<PublishDO,PackageVO>(){
+
+			@Override
+			public PackageVO apply(PublishDO publishDO) {
+				return PackageDO2VO(publishDO);
+			}
+			
+		});
+		return packageList;
+	}
+	
 	private PackageVO PackageDO2VO(PublishDO publishDO){
 		if(publishDO == null) {
 			return null;

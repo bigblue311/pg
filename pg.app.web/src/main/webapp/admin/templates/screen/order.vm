@@ -73,11 +73,13 @@ $control.setTemplate("paging.vm")
       <div class="control-group">
         <label class="control-label">客户姓名：</label>
 		<div class="controls">
-			<input type="text" id="customerName" name="$group.customerName.key" class="input-normal control-text">
+			<input type="text" id="customerName" name="$group.customerName.key" class="input-normal control-text"
+			data-rules="{required:true}" data-messages="{required:'用户名必填'}">
 		</div>
         <label class="control-label">客户手机：</label>
         <div class="controls">
-          <input type="text" id="customerMobile" name="$group.customerMobile.key" class="input-normal control-text">
+          <input type="text" id="customerMobile" name="$group.customerMobile.key" class="input-normal control-text"
+          data-rules="{regexp:/^(1(([35][0-9])|(47)|[5][036789]|[8][012346789]))\d{8}$/}" data-messages="{regexp:'请输入正确的手机号码'}">
         </div>
         <label class="control-label">身份证：</label>
 		<div class="controls">

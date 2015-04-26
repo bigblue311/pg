@@ -35,6 +35,7 @@ public interface TransactionManager {
 	 */
 	void updateOrder(OrderDO orderDO,Long employeeId);
 	void updatePurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId);
+	void updatePurchaseItem(Long id,Integer quantity);
 	
 	/**
 	 * 删除一个购买
@@ -44,6 +45,13 @@ public interface TransactionManager {
 	void deletePurchase(Long id,Long employeeId,Long customerId);
 	
 	/**
+	 * 重新计算一笔订单
+	 * @param orderId
+	 */
+	void recalculate(Long orderId);
+	Double getFinalPrice(Long publishId, Long productId, Integer quantity);
+	
+	/**
 	 * 根据订单ID获取
 	 * @param id
 	 * @return
@@ -51,6 +59,7 @@ public interface TransactionManager {
 	OrderDO getOrderDOById(Long id);
 	PurchaseDO getPurchaseDOById(Long id);
 	OrderVO getOrderVOById(Long id);
+	PurchaseVO getPurchaseVOById(Long id);
 	
 	/**
 	 * 根据查询条件获取分页数据

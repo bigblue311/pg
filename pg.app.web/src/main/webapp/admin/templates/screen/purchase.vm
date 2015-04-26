@@ -161,7 +161,7 @@ $control.setTemplate("paging.vm")
 			renderer : function(val,obj,index) {
 				var orderId = obj.orderId;
 				var detail = '<a href="$admin.setTarget('orderdetail.vm')?id='+orderId+'">详情</a>';
-				detail += ' <span class="grid-command" onclick="showDetail('+obj.itemList+')">明细</span>';
+				detail += ' <span class="grid-command" onclick="showDetail('+index+')">明细</span>';
 				return detail;
 			},
 	        width:'15%'
@@ -214,12 +214,18 @@ $control.setTemplate("paging.vm")
         }
     });
   	
-  	function showDetail(itemList){
+  	function showDetail(index){
   		detail.show();
+  		var record = grid.getItemAt(index);
+  		var itemList = record.itemList;
+  		
   		var items = "";
-  		for(var item in itemList){
+  		for(var i = 0;i<itemList.length;i++){
+  			var item = itemList[i];
   			items += "<div class='row'>";
-  			items += "<label>"+item.name+"("+item.code+") "+item.price+"元 "+item.quantity+"箱</label>";
+  			items += "<label style='display:inline-block;min-width:300px;'>["+item.code+"]"+item.name+"</label>";
+  			items += "<label style='display:inline-block;min-width:100px;'>"+item.price+"元</label>";
+  			items += "<label style='display:inline-block;min-width:100px;'>"+item.quantity+"箱</label>";
   			items += "</div>";
   		}
   		$('#detailFrom').empty().append(items);

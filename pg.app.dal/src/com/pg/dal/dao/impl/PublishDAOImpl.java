@@ -33,7 +33,8 @@ public class PublishDAOImpl extends EntityDAO<PublishDO,PublishQueryCondition> i
 
 	public Map<String,String> getEnumMap(){
 		Map<String,String> map = Maps.newLinkedHashMap();
-		List<PublishDO> list = this.getByCondition(new PublishQueryCondition());
+		PublishQueryCondition queryCondition = new PublishQueryCondition();
+		List<PublishDO> list = this.getByCondition(queryCondition);
 		for(PublishDO e: list){
 			Object obj = super.getById(PackageDO.class.getSimpleName(), e.getPackageId());
 			if(obj == null){

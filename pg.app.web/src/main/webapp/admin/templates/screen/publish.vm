@@ -365,7 +365,7 @@ $control.setTemplate("paging.vm")
 		}, 'question');
 	}
 	
-	function bindRecord(event){
+	function bindRecord(index,event){
 		copyCsrf();
 		var record = grid.getItemAt(index);
 		

@@ -26,19 +26,20 @@ public class ResourceRolesFO {
 	
 	public List<ResourceRoleDO> getDO(){
 		List<ResourceRoleDO> list = Lists.newArrayList();
-		if(StringTools.isNotEmpty(resourceIds)){
-			String[] ids = resourceIds.split(Split.逗号);
-			for(String id : ids){
-				try{
-					Long resId = Long.parseLong(id);
-					ResourceRoleDO resourceRoleDO = new ResourceRoleDO();
-					resourceRoleDO.setId(null);
-					resourceRoleDO.setRoleId(roleId);
-					resourceRoleDO.setResourceId(resId);
-					list.add(resourceRoleDO);
-				} catch(Exception ex){
-					//do nothing
-				}
+		if(StringTools.isEmpty(resourceIds)){
+			return list;
+		}
+		String[] ids = resourceIds.split(Split.逗号);
+		for(String id : ids){
+			try{
+				Long resId = Long.parseLong(id);
+				ResourceRoleDO resourceRoleDO = new ResourceRoleDO();
+				resourceRoleDO.setId(null);
+				resourceRoleDO.setRoleId(roleId);
+				resourceRoleDO.setResourceId(resId);
+				list.add(resourceRoleDO);
+			} catch(Exception ex){
+				continue;
 			}
 		}
 		return list;

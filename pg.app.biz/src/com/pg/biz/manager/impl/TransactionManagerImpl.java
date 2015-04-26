@@ -1,13 +1,13 @@
 package com.pg.biz.manager.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.biz.model.OrderAlertVO;
 import com.pg.biz.model.OrderStatisticVO;
@@ -17,6 +17,8 @@ import com.pg.dal.dao.CustomerDAO;
 import com.pg.dal.dao.EmployeeDAO;
 import com.pg.dal.dao.OpLogDAO;
 import com.pg.dal.dao.OrderDAO;
+import com.pg.dal.dao.ProductDAO;
+import com.pg.dal.dao.PublishDAO;
 import com.pg.dal.dao.PurchaseDAO;
 import com.pg.dal.dao.PurchaseItemDAO;
 import com.pg.dal.enumerate.OrderStatusEnum;
@@ -24,10 +26,13 @@ import com.pg.dal.model.CustomerDO;
 import com.pg.dal.model.EmployeeDO;
 import com.pg.dal.model.OpLogDO;
 import com.pg.dal.model.OrderDO;
+import com.pg.dal.model.ProductDO;
+import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.model.PurchaseItemDO;
 import com.pg.dal.query.OpLogQueryCondition;
 import com.pg.dal.query.OrderQueryCondition;
+import com.pg.dal.query.ProductQueryCondition;
 import com.pg.dal.query.PurchaseItemQueryCondition;
 import com.pg.dal.query.PurchaseQueryCondition;
 import com.victor.framework.common.tools.DateTools;
@@ -47,6 +52,12 @@ public class TransactionManagerImpl implements TransactionManager{
 	
 	@Autowired
 	private CustomerDAO customerDAO;
+	
+	@Autowired
+	private PublishDAO publishDAO;
+	
+	@Autowired
+	private ProductDAO productDAO;
 	
 	@Autowired
 	private PurchaseDAO purchaseDAO;
@@ -84,7 +95,9 @@ public class TransactionManagerImpl implements TransactionManager{
 	
 	@Override
 	public void createPurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId) {
-		purchaseDAO.insert(purchaseDO);
+		Long purchaseId = purchaseDAO.insert(purchaseDO);
+		purchaseDO.setId(purchaseId);
+		createPurchaseItem(purchaseDO);
 		Long orderId = purchaseDO.getOrderId();
 		recalculate(orderId);
 		
@@ -98,6 +111,50 @@ public class TransactionManagerImpl implements TransactionManager{
 		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]购买了"+purchaseDO.getName();
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
+	}
+	
+	private void createPurchaseItem(PurchaseDO purchaseDO){
+		if(purchaseDO == null){
+			return;
+		}
+		Long publishId = purchaseDO.getPublishId();
+		if(publishId == null){
+			return;
+		}
+		PublishDO publishDO = publishDAO.getById(publishId);
+		if(publishDO == null){
+			return;
+		}
+		Long packageId = publishDO.getPackageId();
+		if(packageId == null){
+			return;
+		}
+		ProductQueryCondition query = new ProductQueryCondition();
+		query.setPackageId(packageId);
+		List<ProductDO> list = productDAO.getByCondition(query);
+		for(ProductDO productDO : list){
+			PurchaseItemDO purchaseItemDO = new PurchaseItemDO();
+			purchaseItemDO.setName(productDO.getName());
+			purchaseItemDO.setTitle(productDO.getTitle());
+			purchaseItemDO.setBrandId(productDO.getBrandId());
+			purchaseItemDO.setCategoryId(productDO.getCategoryId());
+			purchaseItemDO.setCode(productDO.getCode());
+			purchaseItemDO.setBarcode(productDO.getBarcode());
+			purchaseItemDO.setBoxcode(productDO.getBoxcode());
+			purchaseItemDO.setSpec(productDO.getSpec());
+			purchaseItemDO.setPackageSpec(productDO.getPackageSpec());
+			purchaseItemDO.setMsu(productDO.getMsu());
+			purchaseItemDO.setPrice(getFinalPrice(publishId,productDO.getId(),0));
+			purchaseItemDO.setQuantity(0);
+			purchaseItemDO.setCubage(productDO.getCubage());
+			purchaseItemDO.setWeight(productDO.getWeight());
+			purchaseItemDO.setValidFrom(productDO.getValidFrom());
+			purchaseItemDO.setExpTo(productDO.getExpTo());
+			purchaseItemDO.setDescription(productDO.getDescription());
+			purchaseItemDO.setPurchaseId(purchaseDO.getId());
+			purchaseItemDO.setProductId(productDO.getId());
+			purchaseItemDAO.insert(purchaseItemDO);
+		}
 	}
 
 	@Override
@@ -126,6 +183,26 @@ public class TransactionManagerImpl implements TransactionManager{
 	}
 	
 	@Override
+	public void updatePurchaseItem(Long id,Integer quantity){
+		if(id == null || quantity == null || quantity < 0){
+			return;
+		}
+		PurchaseItemDO purchaseItemDO = purchaseItemDAO.getById(id);
+		if(purchaseItemDO == null){
+			return;
+		}
+		PurchaseDO purchaseDO = purchaseDAO.getById(purchaseItemDO.getPurchaseId());
+		if(purchaseDO == null){
+			return;
+		}
+		purchaseItemDO.setId(id);
+		purchaseItemDO.setQuantity(quantity);
+		Double finalPrice = getFinalPrice(purchaseDO.getPublishId(),purchaseItemDO.getProductId(),quantity);
+		purchaseItemDO.setPrice(finalPrice);
+		purchaseItemDAO.update(purchaseItemDO);
+	}
+	
+	@Override
 	public OrderDO getOrderDOById(Long id) {
 		return orderDAO.getById(id);
 	}
@@ -138,6 +215,11 @@ public class TransactionManagerImpl implements TransactionManager{
 	@Override
 	public OrderVO getOrderVOById(Long id) {
 		return orderDO2VO(getOrderDOById(id));
+	}
+	
+	@Override
+	public PurchaseVO getPurchaseVOById(Long id) {
+		return purchaseDO2VO(purchaseDAO.getById(id));
 	}
 
 	@Override
@@ -215,14 +297,15 @@ public class TransactionManagerImpl implements TransactionManager{
 		PurchaseQueryCondition queryCondition = new PurchaseQueryCondition();
 		queryCondition.setOrderId(orderDO.getId());
 		List<PurchaseDO> purchaseList = purchaseDAO.getByCondition(queryCondition);
-		Map<PurchaseDO, List<PurchaseItemDO>> purchaseMap = Maps.newHashMap();
-		for(PurchaseDO purchaseDO : purchaseList){
-			PurchaseItemQueryCondition purchaseItemQueryCondition = new PurchaseItemQueryCondition();
-			purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
-			List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
-			purchaseMap.put(purchaseDO, purchaseItemlist);
-		}
-		orderVO.setPurchaseMap(purchaseMap);
+		List<PurchaseVO> purchaseVOList = Lists.transform(purchaseList, new Function<PurchaseDO,PurchaseVO>(){
+
+			@Override
+			public PurchaseVO apply(PurchaseDO purchaseDO) {
+				return purchaseDO2VO(purchaseDO);
+			}
+			
+		});
+		orderVO.setPurchaseList(purchaseVOList);
 		return orderVO;
 	}
 	
@@ -261,6 +344,13 @@ public class TransactionManagerImpl implements TransactionManager{
 		purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
 		List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
 		purchaseVO.setItemList(purchaseItemlist);
+		
+		Long publishId = purchaseDO.getPublishId();
+		PublishDO publishDO = publishDAO.getById(publishId);
+		if(publishDO!=null){
+			purchaseVO.setLimitBuyPrice(publishDO.getLimitBuyPrice());
+			purchaseVO.setLimitBuyQuantity(publishDO.getLimitBuyQuantity());
+		}
 		
 		return purchaseVO;
 	}
@@ -365,9 +455,16 @@ public class TransactionManagerImpl implements TransactionManager{
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
 		purchaseDAO.delete(id);
+		PurchaseItemQueryCondition purchaseItemQueryCondition = new PurchaseItemQueryCondition();
+		purchaseItemQueryCondition.setPurchaseId(purchaseDO.getId());
+		List<PurchaseItemDO> purchaseItemlist = purchaseItemDAO.getByCondition(purchaseItemQueryCondition);
+		for(PurchaseItemDO purchaseItemDO : purchaseItemlist){
+			purchaseItemDAO.delete(purchaseItemDO.getId());
+		}
 	}
 	
-	private void recalculate(Long orderId){
+	@Override
+	public void recalculate(Long orderId){
 		OrderDO order = orderDAO.getById(orderId);
 		if(order == null){
 			return;
@@ -396,6 +493,42 @@ public class TransactionManagerImpl implements TransactionManager{
 		order.setTotalPrice(total);
 		order.setTransportFee(totalTransportFee);
 		orderDAO.update(order);
+	}
+	
+	@Override
+	public Double getFinalPrice(Long publishId, Long productId, Integer quantity){
+		if(publishId == null || productId == null){
+			return 0d;
+		}
+		PublishDO publishDO = publishDAO.getById(publishId);
+		ProductDO productDO = productDAO.getById(productId);
+		if(publishDO == null || productDO == null){
+			return 0d;
+		}
+		Double finalDiscount = 1.0;
+		if(publishDO != null && publishDO.getDiscount() != null){
+			finalDiscount = finalDiscount * publishDO.getDiscount();
+		}
+		if(quantity == null || quantity <= 100){
+			BigDecimal finalPrice = new BigDecimal(productDO.getPrice100() * finalDiscount);
+			return finalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+		}
+		if(quantity>100 && quantity<=200){
+			BigDecimal finalPrice = new BigDecimal(productDO.getPrice200() * finalDiscount);
+			return finalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+		}
+		if(quantity>200 && quantity<=800){
+			BigDecimal finalPrice = new BigDecimal(productDO.getPrice800() * finalDiscount);
+			return finalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+		}
+		if(quantity>800 && quantity<=2000){
+			BigDecimal finalPrice = new BigDecimal(productDO.getPrice2000() * finalDiscount);
+			return finalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+		}
+		else{
+			BigDecimal finalPrice = new BigDecimal(productDO.getPrice3500() * finalDiscount);
+			return finalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
+		}
 	}
 
 	@Override

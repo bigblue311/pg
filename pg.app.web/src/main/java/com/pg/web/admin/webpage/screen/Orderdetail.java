@@ -30,8 +30,7 @@ public class Orderdetail {
 		
 		context.put("order", order);
 		context.put("statusEnum", OrderStatusEnum.getAll());
-		context.put("list", JSONObject.toJSONString(order.getPurchaseMap().keySet()));
-		context.put("productEnum", productManager.getProductEnumMap().entrySet());
+		context.put("list", JSONObject.toJSONString(order.getPurchaseList()));
 		context.put("packageEnum", productManager.getPackageEnumMap().entrySet());
 	}
 	

@@ -60,7 +60,7 @@
     ) values (
       now(), now(), #name#, #title#,#brandId#, #categoryId#,
       #code#, #barcode#, #boxcode#, #spec#, #packageSpec#, #msu#,
-      #price#, #cubage#, #weight#, #validFrom#, #expTo#,
+      #price#,#quantity#, #cubage#, #weight#, #validFrom#, #expTo#,
       #description#, #purchaseId#, #productId#
     )
     ]]>
@@ -160,6 +160,11 @@
       <isNotEmpty property="productId">  
          <![CDATA[   
            product_id = #productId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="quantity">  
+         <![CDATA[   
+           quantity = #quantity#,
          ]]> 
       </isNotEmpty>
     </dynamic>

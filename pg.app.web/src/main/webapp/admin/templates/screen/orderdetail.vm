@@ -1,4 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<link href="/css/numberInput.css" rel="stylesheet">
 <script type="text/javascript" src="/js/Location/location.js"></script>
 #set ($orderGroup = $form.order.defaultInstance)
 #set ($orderDO = $order.orderDO)
@@ -27,18 +28,32 @@
 				#end
 			</select>
         </div>
-        <label class="control-label">客户名称：</label>
-		<div class="controls">
-			<label style="position: relative;top: 2px;min-width: 70px;display: inline-block;">$!orderDO.customerName</label>&nbsp;&nbsp;
-			<label style="position: relative;top: 2px;min-width: 70px;display: inline-block;">$!orderDO.customerMobile</label>
-		</div>
-		<label class="control-label">交易时间：</label>
+        <label class="control-label">交易时间：</label>
 		<div class="controls">
 			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$dateTools.DateToString($!orderDO.gmtCreate)</label>
 		</div>
 		<label class="control-label">最后更新：</label>
 		<div class="controls">
 			<label style="position: relative;top: 2px;min-width: 150px;display: inline-block;">$dateTools.DateToString($!orderDO.gmtModify)</label>
+		</div>
+	 </div>
+	</div>
+	<div class="row">
+	 <div class="control-group">
+	 	<label class="control-label">客户名称：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.customerName.key" class="input-normal control-text"
+			data-rules="{required:true}" data-messages="{required:'用户名必填'}" value="$!orderDO.customerName">
+		</div>
+		<label class="control-label">客户电话：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.customerMobile.key" class="input-normal control-text" value="$!orderDO.customerMobile"
+			data-rules="{regexp:/^(1(([35][0-9])|(47)|[5][036789]|[8][012346789]))\d{8}$/}" data-messages="{regexp:'请输入正确的手机号码'}">
+		</div>
+		<label class="control-label">客户身份证：</label>
+		<div class="controls">
+			<input type="text" name="$orderGroup.customerIdCard.key" class="input-normal control-text" 
+			data-rules="{required:true}" data-messages="{required:'用户名必填'}" value="$!orderDO.customerIdCard">
 		</div>
 	  </div>
 	</div>
@@ -88,21 +103,15 @@
 	<input type="hidden" id="orderId" name="$group.orderId.key" value="$!orderDO.id"/>
     <div class="row">
       <div class="control-group">
-      	<label class="control-label">商品名称：</label>
+      	<label class="control-label">产品包名称：</label>
 		<div class="controls">
 			<input type="hidden" id="publishId" name="$group.publishId.key" class="input-normal control-text" value="">
-			<input type="text" id="name" class="input-normal control-text" value="">
+			<input type="text" id="name" name="$group.name.key" class="input-normal control-text" value="">
 		</div>
-        <label class="control-label">单价：</label>
+		<label class="control-label">产品包标题：</label>
 		<div class="controls">
-			<input type="text" id="price" name="$group.price.key" class="input-normal control-text"
-			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="">
+			<input type="text" id="title" name="$group.title.key" class="input-normal control-text" value="">
 		</div>
-        <label class="control-label">数量：</label>
-        <div class="controls">
-          	<input type="text" id="quantity" name="$group.quantity.key" class="input-normal control-text" 
-			data-rules="{regexp:/^[1-9]\d*|0$/}" data-messages="{regexp:'必须为非负整数'}" value="">
-        </div>
 	  </div>
 	</div>
 	<div class="row">
@@ -138,6 +147,14 @@
 		<div class="controls">
 			<input type="text" id="keeper" name="$group.keeper.key" class="input-normal control-text">
 		</div>
+		<label class="control-label">身份证：</label>
+		<div class="controls">
+			<input type="text" id="keeperIdCard" name="$group.keeperIdCard.key" class="input-normal control-text">
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
 		<label class="control-label">联系手机：</label>
 		<div class="controls">
 			<input type="text" id="mobile" name="$group.mobile.key" class="input-normal control-text" 
@@ -159,6 +176,23 @@
     </div>
   </form>
 </div>
+<div id="detail" style="display:none">
+	<form method="post" id="detailFrom">
+	</form>
+</div>
+#set ($itemGroup = $form.purchaseItem.defaultInstance)
+<div id="purchaseEditor" style="display:none">
+	<form method="post" id="purchaseItemActionFrom">
+		$csrfToken.hiddenField
+	  	<input type="hidden" name="action" value="purchaseAction"/>  
+		<input type="hidden" name="event_submit_do_update_items" value="true"/>
+		<input type="hidden" id="ids" name="$itemGroup.ids.key" value=""/>
+		<input type="hidden" id="quantitys" name="$itemGroup.quantitys.key" value=""/>
+		<input type="hidden" name="$itemGroup.orderId.key" value="$!orderDO.id"/>
+		<input type="hidden" id="itemPurchaseId" name="$itemGroup.purchaseId.key" value=""/>
+		<input type="hidden" id="itemPublishId" name="$itemGroup.publishId.key" value=""/>
+	</form>
+</div>
 <br><br>
 <h1>订单商品</h1>
 <hr>
@@ -168,116 +202,84 @@
       Data = BUI.Data;
       var Grid = Grid,
       Store = Data.Store,
-      publishObj = #if($!{publishEnum})#noescape()$!{publishEnum}#end#else null #end,
       columns = [
-	  {
-		  	title : 'ID',
+		{
+			title : 'ID',
 			elCls: 'center',
 			dataIndex : 'id',
 			width:'5%'
-	  },{
-			title : '客户名称',
+		},{
+			title : '产品包名称',
 			elCls: 'left',
-			dataIndex : 'customerName',
-			width:'10%'
-	  },{
-	        title : '交易时间',
-	        elCls: 'left',
-	        dataIndex :'gmtCreate',
-	        renderer:BUI.Grid.Format.datetimeRenderer,
+			dataIndex : 'name',
+			width:'15%'
+		},{
+            title : '交易时间',
+            elCls: 'left',
+            dataIndex :'gmtCreate',
+            renderer:BUI.Grid.Format.datetimeRenderer,
+            width:'15%'
+        },{
+            title : '客户',
+            elCls: 'left',
+            dataIndex :'customerName',
+            renderer : function(val,obj,index){
+            	var customerName = obj.customerName;
+            	var customerMobile = obj.customerMobile;
+            	return customerName+"("+customerMobile+")";
+            },
+		    width:'15%'
+        },{
+            title : '物流费',
+            elCls: 'left',
+            dataIndex :'transportFee',
+            width:'15%'
+        },{
+            title : '物流编号',
+            elCls: 'left',
+            dataIndex :'transportCode',
+            width:'10%'
+        },{
+            title : '总价',
+            elCls: 'left',
+            renderer: function(val,obj,index){
+            	var total = 0;
+            	if(obj!=null){
+            		var items = obj.itemList;
+            		for(var item in items){
+            			var price = item.price;
+                		var quantity = item.quantity;
+                		if(price != null && quantity !=null){
+                			total += price * quantity;
+                		}
+            		}
+            	}
+            	return total;
+          	}, 
+            width:'10%'
+        },{
+			title : '操作',
+			elCls: 'center',
+			dataIndex : 'oper',
+			renderer : function(val,obj,index) {
+				var edit = '<span class="grid-command btn-edit" onclick="updateFunction('+index+');">编辑</span>';
+				var del = '<span class="grid-command btn-del" onclick="deleteFunction('+index+');">删除</span>';
+				var detail = '<span class="grid-command" onclick="showDetail('+index+')">明细</span>';
+				return detail+edit+del;
+			},
 	        width:'15%'
-      },{
-	        title : '类型',
-	        elCls: 'left',
-	        dataIndex :'prodType',
-	        renderer : function(val,obj,index){
-	        	var prodType = obj.prodType;
-	        	if(prodType == '0') return '产品';
-	        	if(prodType == '1') return '产品包';
-	        	return "未知";
-	        },
-		    width:'5%'
-      },{
-	        title : '产品(包)',
-	        elCls: 'left',
-	        dataIndex :'extendCode',
-	        renderer : function(val,obj,index){
-	         	var prodType = obj.prodType;
-	         	var extendCode = obj.extendCode;
-	         	var name = "";
-	         	if(prodType == '0'){
-	         		#foreach($product in $productEnum)
-	         			if('$product.key' == obj.extendId){
-	         				return '['+extendCode+']$product.value';
-	         			}
-	         		#end
-	         	}
-				if(prodType == '1'){
-					#foreach($package in $packagetEnum)
-	     				if('$package.key' == obj.extendId){
-	     					return '['+extendCode+']$package.value';
-	     				}
-	     			#end
-	         	}
-				return '['+extendCode+']';
-	         },
-		     width:'10%'
-       },{
-	         title : '数量',
-	         elCls: 'left',
-	         dataIndex :'quantity',
-	         width:'10%'
-       },{
-	         title : '单价',
-	         elCls: 'left',
-	         dataIndex :'price',
-	         width:'10%'
-       },{
-	         title : '物流费',
-	         elCls: 'left',
-	         dataIndex :'transportFee',
-	         width:'10%'
-       },{
-	         title : '物流编号',
-	         elCls: 'left',
-	         dataIndex :'transportCode',
-	         width:'10%'
-       },{
-	         title : '总价',
-	         elCls: 'left',
-	         renderer: function(val,obj,index){
-	         	if(obj!=null){
-	           		var price = obj.price;
-	           		var quantity = obj.quantity;
-	           		if(price != null && quantity !=null){
-	           			return price * quantity;
-	           		}
-	           	}
-	           	return 0;
-	         }, 
-	         width:'5%'
-       },{
-		 	title : '操作',
-		 	elCls: 'center',
-		 	dataIndex : 'oper',
-		 	renderer : function(val,obj,index) {
-				var edit = '<span class="grid-command btn-edit">编辑</span>';
-				var del = '<span class="grid-command btn-del">删除</span>';
-				return edit+del;
-		 	},
-	     	width:'10%'
-			}],
-			data = #if($!{list})#noescape()$!{list}#end#else null #end;
+		}],
+		data = #if($!{list})#noescape()$!{list}#end#else null #end;
       var store = new Store({
-        	data : data
+        data : data
       }),
       cascade = new Grid.Plugins.Cascade({
 		    renderer : function(record){
-			    var row = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
-			    row += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
-			    row += '<div><p>&nbsp;联系方式：' + record.keeper + ' ' + record.mobile+' ' + record.phone + '</p></div>';
-			    row += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
-			    return row;
+			    var result = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
+			    result += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
+			    result += '<div><p>&nbsp;联系方式：' + record.keeper + '('+record.keeperIdCard+') ' + record.mobile+' ' + record.phone + '</p></div>';
+			    result += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
+			    return result;
 		    }
 	  }),
       grid = new Grid.Grid({
@@ -322,60 +324,54 @@
 		editor.show();
 		clearRecord('event_submit_do_update');
 	}
-    
-    jQuery(".btn-edit").click(function(){
-		if(grid.getSelection().length == 0){
-			return;
-		}
+	
+	function updateFunction(index){
 		editor.show();
-		bindRecord('event_submit_do_update');
-	});
-    
-    jQuery(".btn-del").click(function(){
-		if(grid.getSelection().length == 0){
-			return;
-		}
+		bindRecord(index,'event_submit_do_update');
+	}
+	
+	function deleteFunction(index){
 		BUI.Message.Confirm("确定删除该订购记录吗?", function() {
-			bindRecord('event_submit_do_delete');
+			bindRecord(index,'event_submit_do_delete');
 			jQuery("#actionFrom").submit();
 		}, 'question');
-	});
-    
-    function bindRecord(event){
+	}
+	
+	function bindRecord(index,event){
 		copyCsrf();
-		var selections = grid.getSelection();
-    	var record = selections[0];
-		
+		var record = grid.getItemAt(index);
+    
     	var id = record.id;
+    	var orderId = '$!orderDO.id';
+    	var name = record.name;
+    	var title = record.title;
+    	var publishId = record.publishId;
     	var addressFrom = record.addressFrom;
     	var addressTo = record.addressTo;
     	var keeper = record.keeper;
-    	var mobile = record.mobile;
+    	var keeperIdCard = record.keeperIdCard;
     	var phone = record.phone;
+    	var mobile = record.mobile;
     	var transportFee = record.transportFee;
     	var transportCode = record.transportCode;
-    	var publishId = record.publishId;
-    	var name = record.name;
-    	var price = record.price;
-    	var quantity = record.quantity;
     	var comment = record.comment;
 
     	jQuery("#id").val(id);
     	jQuery("#action").val('purchaseAction');
+    	jQuery("#name").val(name);
+    	jQuery("#title").val(title);
+    	jQuery("#publishId").val(publishId);
     	jQuery("#addressFrom").val(addressFrom);
     	jQuery("#addressTo").val(addressTo);
     	jQuery("#keeper").val(keeper);
-    	jQuery("#mobile").val(mobile);
+    	jQuery("#keeperIdCard").val(keeperIdCard);
     	jQuery("#phone").val(phone);
+    	jQuery("#mobile").val(mobile);
     	jQuery("#transportFee").val(transportFee);
     	jQuery("#transportCode").val(transportCode);
-    	jQuery("#publishId").val(publishId);
-    	jQuery("#name").val(name);
-    	jQuery("#price").val(price);
-    	jQuery("#quantity").val(quantity);
     	jQuery("#comment").val(comment);
+    	jQuery("#orderId").val('');
     	jQuery("#customerId").val('$!orderDO.customerId');
-    	jQuery("#orderId").val('$!orderDO.id');
     	jQuery("#event").attr("name",event);
     	jQuery("#event").val(true);
     	addPublishPicker();
@@ -385,19 +381,19 @@
 		copyCsrf();
     	jQuery("#id").val('');
     	jQuery("#action").val('purchaseAction');
+    	jQuery("#name").val('');
+    	jQuery("#title").val('');
+    	jQuery("#publishId").val('');
     	jQuery("#addressFrom").val('');
     	jQuery("#addressTo").val('');
     	jQuery("#keeper").val('');
-    	jQuery("#mobile").val('');
+    	jQuery("#keeperIdCard").val('');
     	jQuery("#phone").val('');
+    	jQuery("#mobile").val('');
     	jQuery("#transportFee").val('');
     	jQuery("#transportCode").val('');
-    	jQuery("#publishId").val('');
-    	jQuery("#name").val('');
-    	jQuery("#price").val('');
-    	jQuery("#quantity").val('');
-    	jQuery("#customerId").val('$!orderDO.customerId');
     	jQuery("#orderId").val('$!orderDO.id');
+    	jQuery("#customerId").val('$!orderDO.customerId');
     	jQuery("#comment").val('');
     	showLocation('province','city','town');
     	jQuery("#event").attr("name",event);
@@ -418,15 +414,16 @@
 			url: '/admin/api/getPublish.json',
 			success:function(data, textStatus){
 				if(data.success){
-					publisPicker(data.dataObject,"name",function(obj){
-						jQuery("#publishId").val(obj.id);
+					publishPicker(data.dataObject,"name",function(obj){
+						jQuery("#publishId").val(obj.publishDO.id);
+						jQuery("#title").val(obj.packageDO.title);
 					});
 				}
 			}
 	 	});
 	}
 	
-	function publisPicker(json ,id, func){
+	function publishPicker(json ,id, func){
 		if(typeof(jQuery("#"+id).next()) == "undefined"){
 			jQuery("#"+id).after("<span class='icon-list-alt' style='cursor:pointer; position: relative;left: -20px;'></span>");
 		} else {
@@ -436,33 +433,32 @@
 		}
 		BUI.use(['bui/picker','bui/grid'],function(Picker,Grid){
 	   		var columns = [{
-	                 title : '商品名称',
+	                 title : '产品包名称',
 	                 elCls: 'left',
-	                 dataIndex :'name',
-	                 width:'15%'
-	             },{
-	                 title : '库存',
-	                 elCls: 'left',
-	                 dataIndex :'balance',
-	                 width:'15%',
+	                 width:'25%',
 	                 renderer : function(val,obj,index){
-	                	 if(obj == null){
-	                		 return "不限";
-	                	 } else {
-	                		 return obj.balance;
-	                	 }
+	                	 return obj.packageDO.name;
 	                 }
 	             },{
-	                 title : '最小预定量',
+	                 title : '最小预定数量',
 	                 elCls: 'left',
-	                 dataIndex :'limitBuy',
-	                 width:'15%',
+	                 width:'25%',
 	                 renderer : function(val,obj,index){
-	                	 if(obj == null){
-	                		 return "不限";
-	                	 } else {
-	                		 return obj.limitBuy;
-	                	 }
+	                	 return obj.publishDO.limitBuyQuantity;
+	                 }
+	             },{
+	                 title : '最小预定价格',
+	                 elCls: 'left',
+	                 width:'25%',
+	                 renderer : function(val,obj,index){
+	                	 return obj.publishDO.limitBuyPrice;
+	                 }
+	             },{
+	                 title : '所在仓库',
+	                 elCls: 'left',
+	                 width:'25%',
+	                 renderer : function(val,obj,index){
+	                	 return obj.warehouseDO.name;
 	                 }
 	             }],
 	           grid = new Grid.SimpleGrid({
@@ -474,7 +470,7 @@
 		        		if(func != null){
 		        			func(obj);
 		        		}
-	              		return  obj.name;
+	              		return obj.packageDO.name;
 	              	} else {
 	              		return "";
 	              	}
@@ -489,6 +485,142 @@
 	   		   picker.render();
 		});
 	}
+	
+	//创建编辑器
+    var detail = new BUI.Editor.DialogEditor({ 
+        contentId:'detail',
+        width : 650,
+        mask : true,
+        title : '成交明细',
+        form : {
+          srcNode : '#detailFrom'
+        },
+        success : function(){
+        	var ids = getIds();
+        	var quantitys = getQuantitys();
+        	var param = "ids="+ids;
+        	param += "&quantitys="+quantitys;
+        	param += "&orderId=$!orderDO.id";
+        	param += "&purchaseId="+jQuery("#itemPurchaseId").val();
+        	param += "&publishId="+jQuery("#itemPublishId").val();
+        	jQuery.ajax({
+				type: "get",
+				url: '$admin.setTarget('/api/checkPurchaseItems.json')?'+ param,
+				success:function(data, textStatus){
+					if(data.success){
+						jQuery(".error").empty();
+						jQuery("#ids").val(ids);
+						jQuery("#quantitys").val(quantitys);
+						jQuery("#purchaseItemActionFrom").submit();
+					} else {
+						jQuery(".error").empty().append(data.message);
+			     		return;
+					}
+				}
+	     	});
+        }
+    });
+  	
+  	function showDetail(index){
+  		detail.show();
+  		var record = grid.getItemAt(index);
+  		var itemList = record.itemList;
+  		
+  		jQuery("#itemPurchaseId").val(record.id);
+  		jQuery("#itemPublishId").val(record.publishId);
+  		
+  		var items = "";
+  		for(var i = 0;i<itemList.length;i++){
+  			var item = itemList[i];
+  			items += "<div class='row itemRow' price='"+item.price+"' itemId='"+item.id+"'>";
+  			items += "<label style='display:inline-block;min-width:300px;'>["+item.code+"]"+item.name+"</label>";
+  			items += "<label style='display:inline-block;min-width:100px;'>"+item.price+"元</label>";
+  			items += "<span class='numbericLeft'><i class='icon-plus-mini'></i></span>";
+  			items += "<input type='text' class='quan' value='"+item.quantity+"' style='text-align: center;width: 50px;border-left: 0px;border-right: 0px;'>";
+  			items += "<span class='numbericRight'><i class='icon-minus-mini'></i></span>箱";
+  			items += "</div>";
+  		}
+  		items += "<div class='row'>";
+		items += "<label class='totalPrice' style='display:inline-block;min-width:150px;'></label>";
+		items += "<label class='totalQuantity' style='display:inline-block;min-width:150px;'></label>";
+		items += "<label class='error' style='display:inline-block;min-width:150px;color:red'></label>";
+		items += "</div>";
+  		$('#detailFrom').empty().append(items);
+  		getTotal();
+  		
+  		jQuery(".numbericLeft").click(function(){
+  			if(jQuery(this).next().attr("disabled") == "disabled"){
+  				return;
+  			}
+  			var current = jQuery(this).next().val();
+  			if(current.isNumber()){
+  				current++;
+  	    		jQuery(this).next().val(current);
+  			} else {
+  				jQuery(this).next().val("1");
+  			}
+  			getTotal();
+  		});
+  		
+  		jQuery(".numbericRight").click(function(){
+  			if(jQuery(this).next().attr("disabled") == "disabled"){
+  				return;
+  			}
+  			var current = jQuery(this).prev().val();
+  			if(current.isNumber()){
+  				current--;
+  				if(current<=0) {
+  					current = 0;
+  				}
+  	    		jQuery(this).prev().val(current);
+  			} else {
+  				jQuery(this).prev().val("0");
+  			}
+  			getTotal();
+  		});
+  		
+  		jQuery(".quan").keyup(function(){
+  			if(!jQuery(this).val().isNumber()){
+  				jQuery(this).val("0");
+  			}
+  			getTotal();
+  		});
+  		
+  		function getTotal(){
+  			var totalPrice = 0;
+  			var totalQuantity = 0;
+  			jQuery(".quan").each(function(){
+  				var price = Number(jQuery(this).parent().attr("price"));
+  				var quantity = Number(jQuery(this).val());
+  				totalPrice += setScale(price * quantity / 10000,2);
+  				totalQuantity += quantity;
+  			});
+  			jQuery(".totalPrice").empty().append("共"+totalPrice+" / "+record.limitBuyPrice+" 万元");
+			jQuery(".totalQuantity").empty().append("共"+totalQuantity+" / "+record.limitBuyQuantity+" 箱");
+  			jQuery(".error").empty();
+  		}
+  		
+  		function setScale(Dight,How){  
+            Dight = Math.round(Dight*Math.pow(10,How))/Math.pow(10,How);  
+            return Dight;  
+        } 
+  	}
+  	
+  	function getIds(){
+		var ids = "";
+		jQuery(".itemRow").each(function(){
+			ids+=jQuery(this).attr("itemId")+",";
+		});
+		return ids;
+	}
+  	
+  	function getQuantitys(){
+  		var quans = "";
+		jQuery(".quan").each(function(){
+			quans+=jQuery(this).val()+",";
+		});
+		return quans;
+  	}
 </script>
 <br><br>
 <h1>操作日志</h1>
@@ -514,6 +646,7 @@ jQuery(function(){
 	location.addressFrom("addressFrom",null);
 	location.addressTo("addressTo",customerId,function(obj){
 		jQuery("#keeper").val(obj.keeper);
+		jQuery("#keeperIdCard").val(obj.keeperIdCard);
  		jQuery("#mobile").val(obj.mobile);
  		jQuery("#phone").val(obj.phone);
 	});
