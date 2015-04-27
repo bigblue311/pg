@@ -107,7 +107,7 @@ $control.setTemplate("paging.vm")
 		<label class="control-label">折扣：</label>
 		<div class="controls">
 			<input type="text" id="discount" name="$group.discount.key" class="input-normal control-text"
-			data-rules="{regexp:/0\.[0-9]*[1-9]$/}" data-messages="{regexp:'0-1之间的小数'}" placeholder="0-1之间的小数">
+			data-rules="{regexp:/[1]|0\.[0-9]*[1-9]/}" data-messages="{regexp:'0-1之间的小数'}" placeholder="0-1之间的小数">
 		</div>
 	  </div>
 	</div>
