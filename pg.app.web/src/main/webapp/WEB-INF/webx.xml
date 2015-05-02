@@ -49,7 +49,7 @@
     <services:webx-configuration>
         <!-- 默认将productionMode设为true，建议在jetty插件中设置-DproductionMode=false。 -->
         <productionMode>${productionMode:true}</productionMode>
-        <components defaultComponent="api" />
+        <components defaultComponent="app" />
     </services:webx-configuration>
 
     <!-- 设置request/response/session。 -->
