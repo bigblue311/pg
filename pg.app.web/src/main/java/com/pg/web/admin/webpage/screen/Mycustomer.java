@@ -35,7 +35,7 @@ public class Mycustomer {
 						Context context){
 		setCrumb(context,queryCondition.getId());
 		
-		EmployeeDO loginedUser = AuthenticationToken.get(session);
+		EmployeeDO loginedUser = AuthenticationToken.getLoginedUser(session);
 		queryCondition.setEmployeeId(loginedUser.getId());
 		
 		List<EmployeeDO> employeeList = employeeManager.getAll();

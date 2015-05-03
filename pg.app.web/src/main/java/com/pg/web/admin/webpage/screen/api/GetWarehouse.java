@@ -17,7 +17,7 @@ public class GetWarehouse {
 	private WarehouseManager warehouseManager;
 	
 	public Result<List<WarehouseDO>> execute(@Param("customerId") Long customerId,
-								   @Param("system") Boolean system) {
+								   			 @Param("system") Boolean system) {
 		List<WarehouseDO> list = Lists.newArrayList();
 		WarehouseQueryCondition queryCondition = new WarehouseQueryCondition();
 		if(system!=null && system){

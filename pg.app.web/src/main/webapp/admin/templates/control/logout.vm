@@ -119,7 +119,7 @@
 	     	
 	     	jQuery.ajax({
 				type: "get",
-				url: '$admin.setTarget('/api/checkPwd.json')?'+ para,
+				url: '$admin.setTarget('/api/checkEmployeePwd.json')?'+ para,
 				success:function(data, textStatus){
 					if(data.success){
 						jQuery("#form_newPassword").val(pwd2);

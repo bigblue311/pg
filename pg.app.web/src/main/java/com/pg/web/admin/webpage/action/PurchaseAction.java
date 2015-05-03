@@ -24,7 +24,7 @@ public class PurchaseAction {
 	
 	public void doUpdate(@FormGroup("purchase") PurchaseDO purchaseDO, 
 						 @FormField(name="customerId",group="purchase") Long customerId) throws Exception{
-		EmployeeDO loginedUser = AuthenticationToken.get(session);
+		EmployeeDO loginedUser = AuthenticationToken.getLoginedUser(session);
 		if(purchaseDO.getId() == null){
 			transactionManager.createPurchase(purchaseDO,loginedUser.getId(),customerId);
 		} else {
@@ -42,7 +42,7 @@ public class PurchaseAction {
 	
 	public void doDelete(@FormGroup("purchase") PurchaseDO purchaseDO,
 						 @FormField(name="customerId",group="purchase") Long customerId){
-		EmployeeDO loginedUser = AuthenticationToken.get(session);
+		EmployeeDO loginedUser = AuthenticationToken.getLoginedUser(session);
 		transactionManager.deletePurchase(purchaseDO.getId(),loginedUser.getId(),customerId);
 	}
 }

@@ -24,7 +24,7 @@ public class OrderAction {
 	private CustomerManager customerManager;
 	
 	public void doUpdate(@FormGroup("order") OrderDO orderDO) throws Exception{
-		EmployeeDO loginedUser = AuthenticationToken.get(session);
+		EmployeeDO loginedUser = AuthenticationToken.getLoginedUser(session);
 		saveCustomer(orderDO,loginedUser.getId());
 		if(orderDO.getId() == null){
 			orderDO.setStatus(OrderStatusEnum.提交.getCode());

@@ -34,12 +34,12 @@ public class EmployeeAction {
 		String password = MD5.getMD5(employeeDO.getPassword());
 		employeeDO.setPassword(password);
 		employeeManager.update(employeeDO);
-		AuthenticationToken.expire(session);
+		AuthenticationToken.expireUser(session);
 		nav.redirectTo("admin").withTarget("login.vm");
 	}
 	
 	public void doLogout(Navigator nav){
-		AuthenticationToken.expire(session);
+		AuthenticationToken.expireUser(session);
 		nav.redirectTo("admin").withTarget("login.vm");
 	}
 	

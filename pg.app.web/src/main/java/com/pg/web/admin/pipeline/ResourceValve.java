@@ -84,8 +84,8 @@ public class ResourceValve implements Valve{
 					//security check
 					break;
 				case HTM:
-					if(AuthenticationToken.logined(session)){
-						EmployeeDO loginedUser = AuthenticationToken.get(session);
+					if(AuthenticationToken.userLogined(session)){
+						EmployeeDO loginedUser = AuthenticationToken.getLoginedUser(session);
 						//加载菜单
 						ResourceEnum resEnum = ResourceEnum.getByResource(resource);
 						SubMenuEnum subMenu = resEnum.getSubMenu();

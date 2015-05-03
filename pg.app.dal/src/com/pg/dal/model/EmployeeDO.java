@@ -23,6 +23,7 @@ public class EmployeeDO extends EntityDO implements Serializable{
 	private String password; 		//密码
 	private Long roleId;			//角色
 	private String enable;			//有效
+	private String phone;
 	
 	public String getName() {
 		return name;
@@ -49,6 +50,12 @@ public class EmployeeDO extends EntityDO implements Serializable{
 		this.enable = enable;
 	}
 	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public boolean isValid(){
 		if(StringTools.isEmpty(enable)){
 			return false;

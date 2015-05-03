@@ -1,7 +1,5 @@
 package com.pg.web.admin.webpage.action;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.citrus.turbine.dataresolver.FormGroup;
@@ -14,9 +12,6 @@ public class CustomerAction {
 	
 	@Autowired
 	private CustomerManager customerManager;
-	
-	@Autowired
-	private HttpSession session;
 	
 	public void doUpdate(@FormGroup("customer") CustomerDO customerDO){
 		if(customerDO.getId() == null){

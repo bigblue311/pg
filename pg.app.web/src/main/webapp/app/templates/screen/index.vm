@@ -1,403 +1,95 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="http://cdn.amazeui.org/amazeui/2.2.1/css/amazeui.min.css">
-        <title>快消助手</title>
-    </head>
-    <body>
-        <header data-am-widget="header" class="am-header am-header-default">
-		<div class="am-header-left am-header-nav">
-		  <a href="/index.htm" class="">
-		    <i class="am-header-icon am-icon-home"></i>
-		  </a>
-		  <a href="#phone-link" class="">
-		    <i class="am-header-icon am-icon-phone"></i>
-		  </a>
-		</div>
-		<h1 class="am-header-title">快消助手</h1>
-		<div class="am-header-right am-header-nav">
-		  <a href="#" class="" data-am-modal="{target: '#login-popup'}">
-		    <i class="am-header-icon am-icon-user"></i>
-		  </a>
-		  <a href="#" class="">
-		  </a>
-		</div>
-		<div class="am-popup" id="login-popup">
-		  <div class="am-popup-inner">
-		    <div class="am-popup-hd">
-		      <span data-am-modal-close class="am-close">&times;</span>
-		    </div>
-		    <div class="am-popup-bd">
-		      	<form action="" class="am-form">
-					<fieldset>
-					  <legend>会员登录 <span class="am-fr am-serif"><small>还没有账号&nbsp;&nbsp;<a href="#" data-am-modal="{target: '#register-popup'}">立即注册</a></small></span></legend>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-user"></i>
-					    <input type="text" id="doc-vld-name" minlength="3" placeholder="输入手机号码" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-key"></i>
-					    <input type="password" id="doc-vld-pwd" minlength="3" placeholder="输入密码" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group">
-					    <button type="submit" class="am-btn am-btn-primary am-fl">&nbsp;&nbsp;登录&nbsp;&nbsp;</button>
-					    <button type="reset" class="am-btn am-btn-primary am-fr">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
-					  </div>
-					</fieldset>
-				</form>
-		    </div>
-		  </div>
-		</div>
-		<div class="am-popup" id="register-popup">
-		  <div class="am-popup-inner">
-		    <div class="am-popup-hd">
-		      <span data-am-modal-close class="am-close">&times;</span>
-		    </div>
-		    <div class="am-popup-bd">
-		      	<form action="" class="am-form am-form-horizontal">
-					<fieldset>
-					  <legend>会员注册</legend>
-					  <div class="am-form-group am-form-icon">
-					  	<i class="am-icon-user"></i>
-					    <input type="text" id="doc-vld-name" minlength="3" placeholder="输入用户名" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-mobile-phone"></i>
-					    <input type="phone" id="doc-vld-mobile" minlength="3" placeholder="输入手机号码" class="am-form-field" pattern="number" required/>
-					  </div>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-at"></i>
-					    <input type="email" id="doc-vld-email" minlength="3" placeholder="输入电子邮箱" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-key"></i>
-					    <input type="password" id="doc-vld-pwd" minlength="3" placeholder="输入密码" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group am-form-icon">
-					    <i class="am-icon-key"></i>
-					    <input type="password" id="doc-vld-pwd2" minlength="3" placeholder="再次输入密码" class="am-form-field" required/>
-					  </div>
-					  <div class="am-form-group">
-					    <button type="submit" class="am-btn am-btn-primary am-fl">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
-					    <button type="reset" class="am-btn am-btn-primary am-fr">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
-					  </div>
-					</fieldset>
-				</form>
-		    </div>
-		  </div>
-		</div>
-	</header>
-	<div id="nav-view" data-backend-compiled="">
-		<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
-		  <a href="javascript: void(0)" class="am-menu-toggle ">
-		    <i class="am-menu-toggle-icon am-icon-bars"></i>
-		  </a>
-		  <div class="am-offcanvas">
-		    <div class="am-offcanvas-bar am-offcanvas-bar-flip">
-		      <ul class="am-menu-nav am-avg-sm-1">
-		        <li class="am-parent">
-		          <a href="##" class="">美尚</a>
-		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
-		            <li class="">
-		              <a href="##" class="">OLAY</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">SK-II</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">海肌源</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">潘婷</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">飘柔</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">海飞丝</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">塞巴斯汀</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">沙宣</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">伊卡璐</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">伊卡璐丝焕</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">维娜</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">卡玫尔</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">吉列</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">德国博朗</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">舒肤佳</a>
-		            </li>
-		            <li class="am-menu-nav-channel">
-		              <a href="##" class="" title="美尚">进入栏目 &raquo;</a>
-		            </li>
-		          </ul>
-		        </li>
-		        <li class="am-parent">
-		          <a href="##" class="">健康</a>
-		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
-		            <li class="">
-		              <a href="##" class="">佳洁士</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">护舒宝</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">朵朵</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">欧乐-B</a>
-		            </li>
-		            <li class="am-menu-nav-channel">
-		              <a href="##" class="" title="健康">进入栏目 &raquo;</a>
-		            </li>
-		          </ul>
-		        </li>
-		        <li class="am-parent">
-		          <a href="#c3" class="">家居</a>
-		          <ul class="am-menu-sub am-collapse am-avg-sm-2 ">
-		            <li class="">
-		              <a href="##" class="">金霸王</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">帮宝适</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">汰渍</a>
-		            </li>
-		            <li class="">
-		              <a href="##" class="">碧浪</a>
-		            </li>
-		           
-		            <li class="am-menu-nav-channel">
-		              <a href="#c3" class="" title="家居">进入栏目 &raquo;</a>
-		            </li>
-		          </ul>
-		        </li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<div data-am-widget="tabs" class="am-tabs am-tabs-default">
+  <ul class="am-tabs-nav am-cf">
+    <li class="am-active">
+      <a href="[data-tab-panel-0]">武汉</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-1]">广州</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-2]">重庆</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-0]">沈阳</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-1]">杭州</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-2]">南京</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-0]">大连</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-1]">济南</a>
+    </li>
+    <li class="">
+      <a href="[data-tab-panel-2]">上海</a>
+    </li>
+  </ul>
+  <div class="am-tabs-bd">
+    <div data-tab-panel-0 class="am-tab-panel am-active">
+		<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div class="am-list-news-hd am-cf">
+    <!--带更多链接-->
+    <h2 class="am-sans-serif">今日最新报价</h2>
+    <span class="am-list-news-more am-fr">刷新</span>
+  </div>
+  <div class="am-list-news-bd">
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+        <div class=" am-u-sm-12 am-list-main">
+          <h3 class="am-list-item-hd">
+            PCC订单2&nbsp;&nbsp;<span class="am-badge am-badge-success am-round">9.5折</span>
+            <span class="am-sans-serif am-fr"><a><i class="am-icon-shopping-cart"></i>&nbsp;订购</a></span>
+          </h3>
+          <div class="am-list-item-text">
+          	2015-04-24 至 2016-04-24
+          	<span class="am-sans-serif am-fr">仓库: 杭州</span>
+          </div>
+          <div class="am-list-item-text">
+          	<em>飘柔,海飞丝除外</em>
+          </div>
+          <section data-am-widget="accordion" class="am-accordion am-accordion-basic" data-am-accordion='{ "multiple": true }'>
+			  <dl class="am-accordion-item">
+			    <dt class="am-accordion-title">
+			    	商品详情列表
+			    	<span class="am-fr">
+		          		<span class="am-badge am-badge-warning am-round">100箱 起</span>&nbsp;
+		          		<span class="am-badge am-badge-warning am-round">1万元 起</span>
+		          	</span>
+			    </dt>
+			    <dd class="am-accordion-bd am-collapse ">
+			      <div class="am-accordion-content">
+			      		 走在忠孝东路
+			        <br/>徘徊在茫然中
+			        <br/>在我的人生旅途
+			        <br/>选择了多少错误
+			        <br/>我在睡梦中惊醒
+			        <br/>感叹悔言无尽
+			        <br/>恨我不能说服自己
+			        <br/>接受一切教训
+			        <br/>让生命去等候
+			        <br/>等候下一个漂流
+			        <br/>让生命去等候
+			        <br/>等候下一个伤口</div>
+			    </dd>
+			  </dl>
+			</section>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
 	</div>
-	<div data-am-widget="list_news" class="am-list-news am-list-news-default">
-	  <!--列表标题-->
-	  <div class="am-list-news-hd am-cf">
-	    <!--带更多链接-->
-	    <a href="###" class="">
-	      <h2><img src="http://wiki.mbalib.com/w/images/1/1a/Olay_logo.jpg" style="height:30px;"></img></h2>
-	      <span class="am-list-news-more am-fr">更多 &raquo;</span>
-	    </a>
-	  </div>
-	  <div class="am-list-news-bd">
-	    <ul class="am-list">
-	      <!--缩略图在标题左边-->
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	          	<img src="http://picm.bbzhi.com/guanggaobizhi/yulanyouguanggao-zhangmanyu/design_ad_281722_m.jpg" alt="玉兰油五件当季热卖套装"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="detail.html" class="">Olay玉兰油Prox纯白爽肤水+精华眼霜+祛斑液+面霜 补水</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">眼霜</span>
-	          <span class="am-badge am-badge-success am-round">洗面奶</span>
-	          <span class="am-badge am-badge-success am-round">乳液</span>
-	          <span class="am-badge am-badge-success am-round">护手霜</span>
-	          <span class="am-badge am-badge-success am-round">精油</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥180.00</label>/套<span class="am-sans-serif am-fr">北京</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://gzdaily.dayoo.com/images/2007-06/15/11818172114530615B1002_b.jpg" alt="玉兰油沐浴系列"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">Olay玉兰油健康嫩白营养水/爽肤水150g 面霜50g套装</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">美白保湿</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥15.00</label>/瓶<span class="am-sans-serif am-fr">上海</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://img2.miqi.cn/static/team/2011/0610/13076364211664.png" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">玉兰油新生修纹紧致弹力面膜</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">5片装</span>
-	          <span class="am-badge am-badge-success am-round">美白</span>
-	          <span class="am-badge am-badge-success am-round">补水</span>
-	          <span class="am-badge am-badge-success am-round">保湿</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥49.00</label>/盒<span class="am-sans-serif am-fr">深圳</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://www.shzgh.org/renda/node4420/node4448/node4452/images/00029707.jpg" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">玉兰油清新净透爽肤水150ml</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">化妆水</span>
-	          <span class="am-badge am-badge-success am-round">水润滋养</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥39.00</label>/瓶<span class="am-sans-serif am-fr">武汉</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://www.szgccy.com/editor/UploadFile/2010714152246777.jpg" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">水漾动力弹嫩免洗睡眠面膜130g</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">补水保湿</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥39.00</label>/瓶<span class="am-sans-serif am-fr">武汉</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://d03.res.meilishuo.net/pic/_o/77/ee/8ca7397012d490b63c0f96b95fbf_872_655.jpg" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">水漾动力弹嫩免洗睡眠面膜130g</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">补水保湿</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥35.00</label>/瓶<span class="am-sans-serif am-fr">天津</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://image.suning.cn/images/shop/b2c/olay/201209/20120912191047_2_16.jpg" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">精纯深澈透白精华霜</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">淡斑小滴管</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥82.00</label>/瓶<span class="am-sans-serif am-fr">上海</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-	        <div class="am-u-sm-4 am-list-thumb">
-	          <a href="#" class="">
-	            <img src="http://i7.hexunimg.cn/2011-10-20/134405909.jpg" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
-	          </a>
-	        </div>
-	        <div class=" am-u-sm-8 am-list-main">
-	          <h3 class="am-list-item-hd">
-	            <a href="" class="">【女神心机之选】OLAY乳液修护洗发水750ml+玉兰油深层滋养沐浴</a>
-	          </h3>
-	          <span class="am-badge am-badge-success am-round">护发沐浴套装</span>
-	          <div class="am-list-item-text"><label style="color:#C00;">￥59.90</label>/套<span class="am-sans-serif am-fr">杭州</span></div>
-	          <div class="am-list-item-text am-show-md-up">净重:300kg 尺寸:50*80*100cm 礼盒装另加20元</div>
-	          <div class="am-list-item-text am-show-md-up">温馨提示：由于此商品处于包装转换期间，不能确保客户收到的货物与效果图片完全一致，请以收到的实物为准，我们确保为原厂正货，请亲们知悉！</div>
-	        </div>
-	      </li>
-	      <li class="am-g am-list-item-desced" data-am-scrollspy="{animation: 'fade', delay: 300}">
-	       <div class=" am-list-main">
-	         <div class="am-list-item-text" style="text-align:center">玩命加载中&nbsp;<i class="am-icon-spinner am-icon-spin"></i></div>
-	       </div>
-	      </li>
-	    </ul>
-	  </div>
-	</div>
+    <div data-tab-panel-1 class="am-tab-panel ">【彩虹】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。</div>
+  <div
+  data-tab-panel-2 class="am-tab-panel ">【歌唱】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。</div>
+</div>
+</div>
+<script>
 	
-	<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
-	  <a href="#top" title="">
-	    <i class="am-gotop-icon am-icon-arrow-up"></i>
-	  </a>
-	</div>
-	
-	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
-	  <ul class="am-navbar-nav am-cf am-avg-sm-4">
-	    <li>
-	      <a href="tel:123456789" class="">
-	        <span class="am-icon-phone"></span>
-	        <span class="am-navbar-label">呼叫客服</span>
-	      </a>
-	    </li>
-	    <li>
-	      <a href="###" class="">
-	        <span class="am-icon-shopping-cart"></span>
-	        <span class="am-navbar-label">我的购物车</span>
-	      </a>
-	    </li>
-	    <li>
-	      <a href="###" class="">
-	        <span class="am-icon-location-arrow"></span>
-	        <span class="am-navbar-label">我的订单</span>
-	      </a>
-	    </li>
-	    <li>
-	      <a href="###" class="">
-	        <span class="am-icon-location-arrow"></span>
-	        <span class="am-navbar-label">退出登录</span>
-	      </a>
-	    </li>
-	  </ul>
-	</div>
-	
-	<footer class="am-margin-top">
-	  <p class="am-text-center">
-	    <small>Powered by victor</small>
-	  </p>
-	</footer>
-	
-	<!--[if (gte IE 9)|!(IE)]><!-->
-	<script src="http://g.tbcdn.cn/fi/bui/jquery-1.8.1.min.js"></script>
-	<script src="http://cdn.amazeui.org/amazeui/2.2.1/js/amazeui.min.js"></script>
-    </body>
-</html>
+</script>
