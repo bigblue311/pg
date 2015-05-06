@@ -142,6 +142,13 @@ public class DateTools {
 		return simpleFull.format(date);
 	}
 	
+	public static String DateToStringSimple(Date date){
+		if(date == null){
+			return "";
+		}
+		return simpleDate.format(date);
+	}
+	
 	public static Date StringToDate(String date) throws ParseException{
 		if(StringTools.isEmpty(date)) {
 			return null;

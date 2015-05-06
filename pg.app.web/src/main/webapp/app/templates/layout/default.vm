@@ -147,6 +147,17 @@
 			 str += getTimeStr(d.getSeconds()); 
 			return str;
 		}
+		
+		function getTimestamp(){
+			var d = new Date(),str = '';
+			 str += d.getFullYear();
+			 str += getTimeStr(d.getMonth() + 1);
+			 str += getTimeStr(d.getDate());
+			 str += getTimeStr(d.getHours()); 
+			 str += getTimeStr(d.getMinutes()); 
+			 str += getTimeStr(d.getSeconds()); 
+			return str;
+		}
 
 		function getTimeStr(t){
 			if(t < 10){

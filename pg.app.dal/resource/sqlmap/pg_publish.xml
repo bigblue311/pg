@@ -130,6 +130,21 @@
         	warehouse_id = #warehouseId#
         	]]>
 	    </isNotEmpty>
+	    <isNotEmpty property="province" prepend="and">
+        	<![CDATA[ 
+        	warehouse_id in (select id from pg_warehouse where province = #province#)
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="city" prepend="and">
+        	<![CDATA[ 
+        	warehouse_id in (select id from pg_warehouse where city = #city#)
+        	]]>
+	    </isNotEmpty>
+	    <isNotEmpty property="town" prepend="and">
+        	<![CDATA[ 
+        	warehouse_id in (select id from pg_warehouse where town = #town#)
+        	]]>
+	    </isNotEmpty>
 	    <isNotEmpty property="packageId" prepend="and">
         	<![CDATA[ 
         	package_id = #packageId#

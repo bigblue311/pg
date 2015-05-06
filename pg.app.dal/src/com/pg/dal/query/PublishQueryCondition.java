@@ -16,6 +16,33 @@ public class PublishQueryCondition extends QueryCondition {
 		return getLong("warehouseId");
 	}
 	
+	public PublishQueryCondition setProvince(String province){
+		put("province",province);
+		return this;
+	}
+	
+	public String getProvince(){
+		return getString("province");
+	}
+	
+	public PublishQueryCondition setCity(String city){
+		put("city",city);
+		return this;
+	}
+	
+	public String getCity(){
+		return getString("city");
+	}
+	
+	public PublishQueryCondition setTown(String town){
+		put("town",town);
+		return this;
+	}
+	
+	public String getTown(){
+		return getString("town");
+	}
+	
 	public PublishQueryCondition setEnable(String enable){
 		put("enable",enable);
 		return this;
