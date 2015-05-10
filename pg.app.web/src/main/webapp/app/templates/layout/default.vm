@@ -35,25 +35,8 @@
 		    <div class="am-offcanvas-bar am-offcanvas-bar-flip">
 		      <ul class="am-menu-nav am-avg-sm-1">
 		        <li class="am-parent">
-		          <a href="#" class="">基础功能</a>
-		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
-		            <li class="">
-		              <a href="#" class="" id="logoutBtn">退出登录</a>
-		            </li>
-		            <li class="">
-		              <a href="#" class="">注册</a>
-		            </li>
-		            <li class="">
-		              <a href="#" class="hotline">呼叫客服</a>
-		            </li>
-		          </ul>
-		        </li>
-		        <li class="am-parent">
 		          <a href="#" class="">我的订单</a>
 		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
-		            <li class="">
-		              <a href="#" class="">购物车</a>
-		            </li>
 		            <li class="">
 		              <a href="#" class="">待确认</a>
 		            </li>
@@ -75,10 +58,16 @@
 		          <a href="#c3" class="">个人信息</a>
 		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
 		            <li class="">
-		              <a href="#" class="">注册信息</a>
+		              <a href="#" class="" data-am-modal="{target: '#customer-popup'}">个人信息</a>
 		            </li>
 		            <li class="">
 		              <a href="#" class="">地址簿</a>
+		            </li>
+		            <li class="">
+		              <a href="#" class="">修改密码</a>
+		            </li>
+		            <li class="">
+		              <a href="#" class="" id="logoutBtn">退出登录</a>
 		            </li>
 		          </ul>
 		        </li>
@@ -104,19 +93,19 @@
 	    <li>
 	      <a class="" data-am-modal="{target: '#login-popup'}">
 	        <span class="am-icon-shopping-cart"></span>
-	        <span class="am-navbar-label">购物车</span>
-	      </a>
-	    </li>
-	    <li>
-	      <a href="/index.htm" class="" data-am-modal="{target: '#login-popup'}">
-	        <span class="am-icon-credit-card"></span>
 	        <span class="am-navbar-label">我的订单</span>
 	      </a>
 	    </li>
 	    <li>
 	      <a href="/index.htm" class="" data-am-modal="{target: '#login-popup'}">
-	        <span class="am-icon-location-arrow"></span>
-	        <span class="am-navbar-label">我的快消</span>
+	        <span class="am-icon-book"></span>
+	        <span class="am-navbar-label">地址薄</span>
+	      </a>
+	    </li>
+	    <li>
+	      <a class="" data-am-modal="{target: '#customer-popup'}">
+	        <span class="am-icon-user"></span>
+	        <span class="am-navbar-label">个人信息</span>
 	      </a>
 	    </li>
 	  </ul>
@@ -216,6 +205,10 @@
 		
 		$control.setTemplate('register.vm')
 		
+		$control.setTemplate('customer.vm')
+		
 		$control.setTemplate('confirm.vm')
+		
+		$control.setTemplate('loading.vm')
     </body>
 </html>

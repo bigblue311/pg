@@ -1,68 +1,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <div class="am-tabs" id="citytab">
   <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify" id="citymap">
-    <li class="am-active">
-      <a href="">全国</a>
-    </li>
-    <li class="">
-      <a href="">武汉</a>
-    </li>
   </ul>
   <div class="am-tabs-bd" id="citypublish">
-    <div class="am-tab-panel am-active">
-		<div data-am-widget="list_news" class="am-list-news am-list-news-default">
-		  <div class="am-list-news-hd am-cf">
-		    <h2 class="am-sans-serif">今日最新报价</h2>
-		    <span class="am-list-news-more am-fr">刷新</span>
-		  </div>
-		  <div class="am-list-news-bd">
-		    <ul class="am-list">
-		      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
-		        <div class=" am-u-sm-12 am-list-main">
-		          <h3 class="am-list-item-hd">
-		            PCC订单2&nbsp;&nbsp;<span class="am-badge am-badge-success am-round">9.5折</span>
-		            <span class="am-sans-serif am-fr"><a><i class="am-icon-shopping-cart"></i>&nbsp;订购</a></span>
-		          </h3>
-		          <div class="am-list-item-text">
-		          	2015-04-24 至 2016-04-24
-		          	<span class="am-sans-serif am-fr">仓库: 杭州</span>
-		          </div>
-		          <div class="am-list-item-text">
-		          	<em>飘柔,海飞丝除外</em>
-		          </div>
-		          <section class='am-accordion am-accordion-basic' data-am-accordion='{ \"multiple\": true }'>
-				  <dl class="am-accordion-item">
-				    <dt class="am-accordion-title" data-am-collapse="{target: '#123'}">
-				    	商品详情列表
-				    	<span class="am-fr">
-			          		<span class="am-badge am-badge-warning am-round">100箱 起</span>&nbsp;
-			          		<span class="am-badge am-badge-warning am-round">1万元 起</span>
-			          	</span>
-				    </dt>
-				    <dd class="am-accordion-bd am-collapse " id="123">
-				      <div class="am-accordion-content">
-				      		 走在忠孝东路
-				        <br/>徘徊在茫然中
-				        <br/>在我的人生旅途
-				        <br/>选择了多少错误
-				        <br/>我在睡梦中惊醒
-				        <br/>感叹悔言无尽
-				        <br/>恨我不能说服自己
-				        <br/>接受一切教训
-				        <br/>让生命去等候
-				        <br/>等候下一个漂流
-				        <br/>让生命去等候
-				        <br/>等候下一个伤口</div>
-				    </dd>
-				  </dl>
-				  </section>
-		        </div>
-		      </li>
-		    </ul>
-		  </div>
-		</div>
-	</div>
-    <div class="am-tab-panel">【彩虹】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。</div>
   </div>
 </div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
@@ -91,114 +31,128 @@
 <script>
 jQuery(function(){
 	loadCityMap();
-	
-	function loadCityMap(){
-		loadAllPublishList();
+});
+
+function loadCityMap(){
+	loadQuanguo();
+	jQuery.ajax({
+		type: "get",
+		url: '/admin/api/getMyWarehouseCity.json',
+		success:function(data,textStatus){
+			if(data.success){
+				var items = data.dataObject;
+				for(var i=0;i<items.length;i++){
+					loadCity(items[i]);
+				}
+				loadPublishList();
+			}
+		}
+	});
+}
+
+function loadQuanguo(){
+	var item = "";
+	item += "<li class='am-active' city='' cityName='全国'>";
+	item += "<a href='#tab'>全国</a>";
+	item += "</li>";
+	jQuery("#citymap").empty().append(item);
+}
+
+function loadCity(locationDO){
+	var item = "";
+	item += "<li class='' city='"+locationDO.city+"' cityName='"+locationDO.name+"'>";
+	item += "<a href='#tab"+locationDO.city+"'>"+locationDO.name+"</a>";
+	item += "</li>";
+	jQuery("#citymap").append(item);
+}
+
+function loadPublishList(){
+	loading();
+	jQuery("#citypublish").empty();
+	jQuery("#citymap").find("li").each(function(index){
+		var city = jQuery(this).attr("city");
+		var cityName = jQuery(this).attr("cityName");
+		loadingText("正在加载"+cityName+"数据");
 		jQuery.ajax({
 			type: "get",
-			url: '/admin/api/getMyWarehouseCity.json',
-			success:function(data,textStatus){
+			url: '/admin/api/getPublish.json?city='+city,
+			success:function(data, textStatus){
 				if(data.success){
-					var items = data.dataObject;
-					for(var i=0;i<items.length;i++){
-						loadPublisList(items[i]);
+					var size = data.dataObject.length;
+					for(var loop=0;loop<size;loop++){
+						var dataObject = data.dataObject[loop];
+						var packageDO = dataObject.packageDO;
+						var productList = dataObject.productList;
+						var publishDO = dataObject.publishDO;
+						var warehouseDO = dataObject.warehouseDO;
+						var description = dataObject.description;
+						var discount = dataObject.discount;
+						var validStr = dataObject.validStr;
+						
+						var id = city+publishDO.id+getTimestamp();
+						
+						var item = "";
+						if(index == 0){
+							item += "<div id='tab"+city+"' class='am-tab-panel am-active'>";
+						} else {
+							item += "<div id='tab"+city+"' class='am-tab-panel'>";
+						}
+						item += "<div data-am-widget='list_news' class='am-list-news am-list-news-default'>";
+						item += "<div class='am-list-news-hd am-cf'>";
+						item += "	<h2 class='am-sans-serif'>今日最新报价</h2>";
+						item += "	<span class='am-list-news-more am-fr'><a href='/'>刷新</a></span>";
+						item += "</div>";
+						item += "<div class='am-list-news-bd'>";
+						item += "	<ul class='am-list'>";
+						item += "		<li class='am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left'>";
+						item += "			<div class='am-u-sm-12 am-list-main'>";
+						item += "				<h3 class='am-list-item-hd'>";
+						item += "					"+packageDO.name+"&nbsp;&nbsp;<span class='am-badge am-badge-success am-round'>"+discount+"</span>";
+						item += "					<span class='am-sans-serif am-fr'><a><i class='am-icon-shopping-cart'></i>&nbsp;订购</a></span>";
+						item += "				</h3>";
+						item += "				<div class='am-list-item-text'>";
+						item += "					"+validStr+" <span class='am-sans-serif am-fr'>仓库: "+warehouseDO.name+"</span>";
+						item += "				</div>";
+						item += "				<div class='am-list-item-text'>";
+						item += "					<em>"+description+"</em>";
+						item += "				</div>";
+						item += "				<section data-am-widget='accordion' class='am-accordion am-accordion-basic' data-am-accordion='{ \"multiple\": true }'>";
+						item += "				<dl class='am-accordion-item'>";
+						item += "				<dt class='am-accordion-title' data-am-collapse='{target: \"#"+id+"\"}'>";
+						item += "					商品详情列表";
+						item += "					<span class='am-fr'>";
+						item += "						<span class='am-badge am-badge-warning am-round'>"+publishDO.limitBuyQuantity+"箱 起</span>&nbsp;";
+						item += "						<span class='am-badge am-badge-warning am-round'>"+publishDO.limitBuyPrice+"万元 起</span>";
+						item += "					</span>";
+						item += "				</dt>";
+						item += "				<dd class='am-accordion-bd am-collapse' id="+id+">";
+						item += "				<div class='am-accordion-content'>";
+						for(var i=0;i<productList.length;i++){
+							var productDO = productList[i];
+							item += "				<div>"+productDO.title+" ["+productDO.code+"]";
+							item += "					<ul>";
+							item += "						<li>体积:<span class='am-fr'>"+productDO.cubage+" /箱</span></li>";
+							item += "						<li>重量:<span class='am-fr'>"+productDO.weight+" 公斤/箱</span></li>";
+							item += "						<li>100箱:<span class='am-fr'>"+productDO.price100+" 元/箱</span></li>";
+							item += "						<li>200箱:<span class='am-fr'>"+productDO.price200+" 元/箱</span></li>";
+							item += "						<li>800箱:<span class='am-fr'>"+productDO.price800+" 元/箱</span></li>";
+							item += "						<li>2000箱:<span class='am-fr'>"+productDO.price2000+" 元/箱</span></li>";
+							item += "						<li>3500箱:<span class='am-fr'>"+productDO.price3500+" 元/箱</span></li>";
+							item += "					</ul>";
+							item += "				</div>"
+						}
+						item += "				</div>";
+						item += "				</dd></dl></section></div></li></ul></div></div></div>";
+						jQuery("#citypublish").append(item);
 					}
-					loadPublishList();
+					if(jQuery("#citymap").find("li").size() == (index + 1)){
+						jQuery('#citytab').tabs();
+						jQuery('.am-accordion-content').collapse();
+						loaded();
+					}
 				}
 			}
-		});
-	}
-	
-	function loadAllPublishList(){
-		var item = "";
-		item += "<li class='am-active' city=''>";
-		item += "<a href=''>全国</a>";
-		item += "</li>";
-		jQuery("#citymap").empty().append(item);
-	}
-	
-	function loadPublisList(locationDO){
-		var item = "";
-		item += "<li class='' city='"+locationDO.city+"'>";
-		item += "<a href=''>"+locationDO.name+"</a>";
-		item += "</li>";
-		jQuery("#citymap").append(item);
-	}
-	
-	function loadPublishList(){
-		jQuery("#citymap").find("li").each(function(index){
-			var city = jQuery(this).attr("city");
-			jQuery("#citypublish").empty();
-			jQuery.ajax({
-				type: "get",
-				url: '/admin/api/getPublish.json?city='+city,
-				success:function(data, textStatus){
-					if(data.success){
-						var size = data.dataObject.length;
-						for(var loop=0;loop<size;loop++){
-							var dataObject = data.dataObject[loop];
-							var packageDO = dataObject.packageDO;
-							var productList = dataObject.productList;
-							var publishDO = dataObject.publishDO;
-							var warehouseDO = dataObject.warehouseDO;
-							var description = dataObject.description;
-							var discount = dataObject.discount;
-							var validStr = dataObject.validStr;
-							
-							var id = city+publishDO.id+getTimestamp();
-							
-							var item = "";
-							if(index == 0){
-								item += "<div class='am-tab-panel am-active'>";
-							} else {
-								item += "<div class='am-tab-panel'>";
-							}
-							item += "<div data-am-widget='list_news' class='am-list-news am-list-news-default'>";
-							item += "<div class='am-list-news-hd am-cf'>";
-							item += "	<h2 class='am-sans-serif'>今日最新报价</h2>";
-							item += "	<span class='am-list-news-more am-fr'>刷新</span>";
-							item += "</div>";
-							item += "<div class='am-list-news-bd'>";
-							item += "	<ul class='am-list'>";
-							item += "		<li class='am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left'>";
-							item += "			<div class='am-u-sm-12 am-list-main'>";
-							item += "				<h3 class='am-list-item-hd'>";
-							item += "					"+packageDO.name+"&nbsp;&nbsp;<span class='am-badge am-badge-success am-round'>"+discount+"</span>";
-							item += "					<span class='am-sans-serif am-fr'><a><i class='am-icon-shopping-cart'></i>&nbsp;订购</a></span>";
-							item += "				</h3>";
-							item += "				<div class='am-list-item-text'>";
-							item += "					"+validStr+" <span class='am-sans-serif am-fr'>仓库: "+warehouseDO.name+"</span>";
-							item += "				</div>";
-							item += "				<div class='am-list-item-text'>";
-							item += "					<em>"+description+"</em>";
-							item += "				</div>";
-							item += "				<section data-am-widget='accordion' class='am-accordion am-accordion-basic' data-am-accordion='{ \"multiple\": true }'>";
-							item += "				<dl class='am-accordion-item'>";
-							item += "				<dt class='am-accordion-title' data-am-collapse='{target: \"#"+id+"\"}'>";
-							item += "					商品详情列表";
-							item += "					<span class='am-fr'>";
-							item += "						<span class='am-badge am-badge-warning am-round'>"+publishDO.limitBuyQuantity+"箱 起</span>&nbsp;";
-							item += "						<span class='am-badge am-badge-warning am-round'>"+publishDO.limitBuyPrice+"万元 起</span>";
-							item += "					</span>";
-							item += "				</dt>";
-							item += "				<dd class='am-accordion-bd am-collapse' id="+id+">";
-							item += "				<div class='am-accordion-content'>";
-							for(var i=0;i<productList.length;i++){
-								var productDO = productList[i];
-								item += "				"+productDO.title+" "+productDO.code;	
-							}
-							item += "				</div>";
-							item += "				</dd></dl></section></div></li></ul></div></div></div>";
-							jQuery("#citypublish").append(item);
-						}
-						if(jQuery("#citymap").find("li").size() == (index + 1)){
-							jQuery('#citytab').tabs();
-							jQuery('.am-accordion-content').collapse();
-						}
-					}
-				}
-		 	});
-		});
-	}
-});
+	 	});
+	});
+}
 </script>
