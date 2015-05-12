@@ -18,11 +18,18 @@ public class UpdateCustomer {
 	private HttpSession session;
 	
 	public Result<Boolean> execute(@Params CustomerDO customerDO){
-		customerManager.update(customerDO);
+		CustomerDO customer = AuthenticationToken.getLoginedCustomer(session);
+		if(customer == null){
+			return Result.newInstance(false, "登陆已失效", false);
+		}
+		if(customer.getId().intValue() != customerDO.getId()){
+			return Result.newInstance(false, "登陆已失效", false);
+		}
 		boolean exist = checkMobile(customerDO.getMobile(),customerDO.getId());
 		if(exist){
 			return Result.newInstance(false, "该手机号码已经被注册", false);
 		}
+		customerManager.update(customerDO);
 		CustomerDO updated = customerManager.getById(customerDO.getId());
 		AuthenticationToken.set(session, updated);
 		return Result.newInstance(true, "更新成功", true);

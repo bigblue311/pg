@@ -100,7 +100,7 @@ function loadPublishList(){
 						item += "<div data-am-widget='list_news' class='am-list-news am-list-news-default'>";
 						item += "<div class='am-list-news-hd am-cf'>";
 						item += "	<h2 class='am-sans-serif'>今日最新报价</h2>";
-						item += "	<span class='am-list-news-more am-fr'><a href='/'>刷新</a></span>";
+						item += "	<span class='am-list-news-more am-fr'><a href='/'><i class='am-icon-refresh'></i>&nbsp;刷新</a></span>";
 						item += "</div>";
 						item += "<div class='am-list-news-bd'>";
 						item += "	<ul class='am-list'>";

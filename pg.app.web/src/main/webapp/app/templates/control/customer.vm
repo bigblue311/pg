@@ -5,10 +5,10 @@
      <span data-am-modal-close class="am-close">&times;</span>
    </div>
    <div class="am-popup-bd">
+   		<input type="hidden" name="id" value="" id="doc-customer-id"/>
      	<form action="" class="am-form am-form-horizontal" id="customerForm">
 		<fieldset>
 		  <legend>个人信息</legend>
-		  <input type="hidden" name="id" value="" id="doc-customer-id"/>
 		  <div class="am-form-group am-form-icon">
 		  	<i class="am-icon-user"></i>
 		    <input type="text" id="doc-customer-name" minlength="3" placeholder="输入用户名" class="am-form-field" required/>

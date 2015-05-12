@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="http://cdn.amazeui.org/amazeui/2.2.1/css/amazeui.min.css">
         <script src="http://g.tbcdn.cn/fi/bui/jquery-1.8.1.min.js"></script>
 		<script src="http://cdn.amazeui.org/amazeui/2.2.1/js/amazeui.min.js"></script>
+		<script type="text/javascript" src="/js/Location/location.js"></script>
         <title>快消助手</title>
     </head>
     <body>
@@ -61,10 +62,10 @@
 		              <a href="#" class="" data-am-modal="{target: '#customer-popup'}">个人信息</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">地址簿</a>
+		              <a href="#" class="" onclick="openWarehouseList()">地址簿</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">修改密码</a>
+		              <a href="#" class="" data-am-modal="{target: '#password-popup'}">修改密码</a>
 		            </li>
 		            <li class="">
 		              <a href="#" class="" id="logoutBtn">退出登录</a>
@@ -97,7 +98,7 @@
 	      </a>
 	    </li>
 	    <li>
-	      <a href="/index.htm" class="" data-am-modal="{target: '#login-popup'}">
+	      <a class="" onclick="openWarehouseList()">
 	        <span class="am-icon-book"></span>
 	        <span class="am-navbar-label">地址薄</span>
 	      </a>
@@ -200,15 +201,21 @@
 		});
 	</script>
 	
-		<!-- popups -->
-		$control.setTemplate('login.vm')
-		
-		$control.setTemplate('register.vm')
-		
-		$control.setTemplate('customer.vm')
-		
-		$control.setTemplate('confirm.vm')
-		
-		$control.setTemplate('loading.vm')
+	<!-- popups -->
+	$control.setTemplate('login.vm')
+	
+	$control.setTemplate('register.vm')
+	
+	$control.setTemplate('customer.vm')
+	
+	$control.setTemplate('warehouseList.vm')
+	
+	$control.setTemplate('warehouse.vm')
+	
+	$control.setTemplate('password.vm')
+	
+	$control.setTemplate('confirm.vm')
+	
+	$control.setTemplate('loading.vm')
     </body>
 </html>
