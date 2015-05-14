@@ -30,7 +30,7 @@
 		  </div>
 		  <div class="am-form-group">
 		    <button type="submit" class="am-btn am-btn-primary am-fl">&nbsp;&nbsp;确定&nbsp;&nbsp;</button>
-		    <button type="reset" class="am-btn am-btn-primary am-fr">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+		    <button data-am-modal-close class="am-btn am-btn-primary am-fr">&nbsp;&nbsp;关闭&nbsp;&nbsp;</button>
 		  </div>
 		</fieldset>
 	</form>

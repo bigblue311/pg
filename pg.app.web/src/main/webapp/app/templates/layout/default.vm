@@ -37,22 +37,25 @@
 		    <div class="am-offcanvas-bar am-offcanvas-bar-flip">
 		      <ul class="am-menu-nav am-avg-sm-1">
 		        <li class="am-parent">
-		          <a href="#" class="">我的订单</a>
+		          <a href="#" class="" onclick="myOrderCount()">我的订单</a>
 		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
 		            <li class="">
-		              <a href="#" class="">待确认</a>
+		              <a href="#" class="myOrderCount" status='0' label="待确认" badgeClass="am-badge-danger" onclick="openOrderList('0')">待确认</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">待发货</a>
+		              <a href="#" class="myOrderCount" status='1' label="已确认" badgeClass="am-badge-primary" onclick="openOrderList('1')">已确认</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">待收货</a>
+		              <a href="#" class="myOrderCount" status='2' label="已发货" badgeClass="am-badge-warning" onclick="openOrderList('2')">已发货</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">待结算</a>
+		              <a href="#" class="myOrderCount" status='3' label="已收货" badgeClass="am-badge-success" onclick="openOrderList('3')">已收货</a>
 		            </li>
 		            <li class="">
-		              <a href="#" class="">已取消</a>
+		              <a href="#" class="myOrderCount" status='4' label="已完成" badgeClass="am-badge-secondary" onclick="openOrderList('4')">已完成</a>
+		            </li>
+		            <li class="">
+		              <a href="#" class="myOrderCount" status='5' label="已取消" badgeClass="" onclick="openOrderList('5')">已取消</a>
 		            </li>
 		          </ul>
 		        </li>
@@ -60,7 +63,7 @@
 		          <a href="#c3" class="">个人信息</a>
 		          <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
 		            <li class="">
-		              <a href="#" class="" data-am-modal="{target: '#customer-popup'}">个人信息</a>
+		              <a href="#" class="" onclick="openCustomerInfo()">个人信息</a>
 		            </li>
 		            <li class="">
 		              <a href="#" class="" onclick="openWarehouseList()">地址簿</a>
@@ -93,7 +96,7 @@
 	      </a>
 	    </li>
 	    <li>
-	      <a class="" data-am-modal="{target: '#login-popup'}">
+	      <a class="" onclick="openOrderList('')">
 	        <span class="am-icon-shopping-cart"></span>
 	        <span class="am-navbar-label">我的订单</span>
 	      </a>
@@ -105,7 +108,7 @@
 	      </a>
 	    </li>
 	    <li>
-	      <a class="" data-am-modal="{target: '#customer-popup'}">
+	      <a class="" onclick="openCustomerInfo()">
 	        <span class="am-icon-user"></span>
 	        <span class="am-navbar-label">个人信息</span>
 	      </a>
@@ -171,6 +174,28 @@
 		 	});
 		}
 		
+		function myOrderCount(){
+			jQuery(".myOrderCount").each(function(){
+				var status = jQuery(this).attr("status");
+				var label = jQuery(this).attr("label");
+				var badgeClass= jQuery(this).attr("badgeClass");
+				var that = this;
+				jQuery.ajax({
+					type: "get",
+					url: '/admin/api/getMyOrderList.json?status='+status,
+					success:function(data, textStatus){
+						if(data.success){
+							var size = data.dataObject.length;
+							var badge = "<span class='am-badge "+badgeClass+" am-round'>"+size+"</span>";
+							jQuery(that).empty().append(label+" "+badge);
+						} else {
+							jQuery(that).empty().append(label);
+						}
+					}
+			 	});
+			});
+		}
+		
 		jQuery(function(){
 			getHotline();
 			jQuery(".after-login").hide();
@@ -213,11 +238,17 @@
 	
 	$control.setTemplate('warehouse.vm')
 	
+	$control.setTemplate('orderList.vm')
+	
+	$control.setTemplate('orderDetail.vm')
+	
 	$control.setTemplate('order.vm')
 	
 	$control.setTemplate('password.vm')
 	
 	$control.setTemplate('confirm.vm')
+	
+	$control.setTemplate('alert.vm')
 	
 	$control.setTemplate('loading.vm')
     </body>

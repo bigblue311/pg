@@ -1,6 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <div class="am-popup" id="login-popup">
 <div class="am-popup-inner">
+   <div class="am-popup-hd">
+     <span data-am-modal-close class="am-close">&times;</span>
+   </div>
    <div class="am-popup-bd">
      	<form id="loginForm" class="am-form">
 		<fieldset>
@@ -18,7 +21,7 @@
 		  </div>
 		  <div class="am-form-group">
 		    <button type="submit" class="am-btn am-btn-primary am-fl" id="loginBtn">&nbsp;&nbsp;登录&nbsp;&nbsp;</button>
-		    <button data-am-modal-close class="am-btn am-btn-primary am-fr" id="closeBtn">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+		    <button data-am-modal-close class="am-btn am-btn-primary am-fr">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 		  </div>
 		</fieldset>
 	</form>
@@ -45,7 +48,7 @@ jQuery(function(){
 				if(data.success){
 					getHotline();
 					jQuery(".after-login").show();
-					jQuery("#closeBtn").click();
+					jQuery("#login-popup").modal('close');
 				} else {
 					jQuery("#am-alert-message").empty().append(data.message);
 		     		return;

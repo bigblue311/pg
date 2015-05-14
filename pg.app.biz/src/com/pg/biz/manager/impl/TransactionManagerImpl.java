@@ -605,9 +605,24 @@ public class TransactionManagerImpl implements TransactionManager{
 	public List<OrderDO> getOrderDOList(OrderQueryCondition queryCondition) {
 		return orderDAO.getByCondition(queryCondition);
 	}
+	
+	@Override
+	public List<OrderVO> getOrderVOList(OrderQueryCondition queryCondition) {
+		List<OrderDO> list = getOrderDOList(queryCondition);
+		return Lists.transform(list, new Function<OrderDO,OrderVO>(){
+
+			@Override
+			public OrderVO apply(OrderDO orderDO) {
+				return orderDO2VO(orderDO);
+			}
+			
+		});
+	}
 
 	@Override
 	public List<PurchaseDO> getPurchaseDOByCondition(PurchaseQueryCondition queryCondition) {
 		return purchaseDAO.getByCondition(queryCondition);
 	}
+
+	
 }
