@@ -108,7 +108,7 @@ function loadPublishList(){
 						item += "			<div class='am-u-sm-12 am-list-main'>";
 						item += "				<h3 class='am-list-item-hd'>";
 						item += "					"+packageDO.name+"&nbsp;&nbsp;<span class='am-badge am-badge-success am-round'>"+discount+"</span>";
-						item += "					<span class='am-sans-serif am-fr'><a><i class='am-icon-shopping-cart'></i>&nbsp;订购</a></span>";
+						item += "					<span class='am-sans-serif am-fr'><a onclick='openOrder("+publishDO.id+")'><i class='am-icon-shopping-cart'></i>&nbsp;订购</a></span>";
 						item += "				</h3>";
 						item += "				<div class='am-list-item-text'>";
 						item += "					"+validStr+" <span class='am-sans-serif am-fr'>仓库: "+warehouseDO.name+"</span>";

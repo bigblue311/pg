@@ -16,7 +16,6 @@ import com.pg.biz.manager.CustomerManager;
 import com.pg.biz.manager.WarehouseManager;
 import com.pg.dal.cache.LocationCache;
 import com.pg.dal.model.CustomerDO;
-import com.pg.dal.model.LocationDO;
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.WarehouseQueryCondition;
 import com.victor.framework.dal.basic.Paging;
@@ -101,9 +100,9 @@ public class Warehouse {
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
 		out.write("<td>"+warehouseDO.getName()+"</td>");
-		out.write("<td>"+getProvince(warehouseDO)+"</td>");
-		out.write("<td>"+getCity(warehouseDO)+"</td>");
-		out.write("<td>"+getTown(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getProvince(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getCity(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getTown(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getAddress()+"</td>");
 		out.write("<td>"+getContact(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getKeeperIdCard()+"</td>");
@@ -114,39 +113,6 @@ public class Warehouse {
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{
 		out.write("</table><div>共"+count+"条数据</div>");
-	}
-	
-	private String getProvince(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
-	}
-	
-	private String getCity(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
-	}
-	
-	private String getTown(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity()+","+warehouseDO.getTown());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
 	}
 	
 	private String getContact(WarehouseDO warehouseDO){

@@ -66,13 +66,13 @@ public class TransactionManagerImpl implements TransactionManager{
 	private PurchaseItemDAO purchaseItemDAO;
 	
 	@Override
-	public void createOrder(OrderDO orderDO) {
-		orderDAO.insert(orderDO);
+	public Long createOrder(OrderDO orderDO) {
+		return orderDAO.insert(orderDO);
 	}
 	
 	@Override
-	public void createPurchase(PurchaseDO purchaseDO) {
-		purchaseDAO.insert(purchaseDO);
+	public Long createPurchase(PurchaseDO purchaseDO) {
+		return purchaseDAO.insert(purchaseDO);
 	}
 	
 	@Override
@@ -111,6 +111,32 @@ public class TransactionManagerImpl implements TransactionManager{
 		String msg = getEmployeeName(employeeId)+"为客户"+customerDO.getName()+"["+customerDO.getMobile()+"]购买了"+purchaseDO.getName();
 		opLogDO.setAction(msg);
 		opLogDAO.insert(opLogDO);
+	}
+	
+	@Override
+	public void createPurchaseItem(Long purchaseId, Long publishId, Long productId, Integer quantity) {
+		ProductDO productDO = productDAO.getById(productId);
+		PurchaseItemDO purchaseItemDO = new PurchaseItemDO();
+		purchaseItemDO.setName(productDO.getName());
+		purchaseItemDO.setTitle(productDO.getTitle());
+		purchaseItemDO.setBrandId(productDO.getBrandId());
+		purchaseItemDO.setCategoryId(productDO.getCategoryId());
+		purchaseItemDO.setCode(productDO.getCode());
+		purchaseItemDO.setBarcode(productDO.getBarcode());
+		purchaseItemDO.setBoxcode(productDO.getBoxcode());
+		purchaseItemDO.setSpec(productDO.getSpec());
+		purchaseItemDO.setPackageSpec(productDO.getPackageSpec());
+		purchaseItemDO.setMsu(productDO.getMsu());
+		purchaseItemDO.setPrice(getFinalPrice(publishId,productId,quantity));
+		purchaseItemDO.setQuantity(quantity);
+		purchaseItemDO.setCubage(productDO.getCubage());
+		purchaseItemDO.setWeight(productDO.getWeight());
+		purchaseItemDO.setValidFrom(productDO.getValidFrom());
+		purchaseItemDO.setExpTo(productDO.getExpTo());
+		purchaseItemDO.setDescription(productDO.getDescription());
+		purchaseItemDO.setPurchaseId(purchaseId);
+		purchaseItemDO.setProductId(productDO.getId());
+		purchaseItemDAO.insert(purchaseItemDO);
 	}
 	
 	private void createPurchaseItem(PurchaseDO purchaseDO){

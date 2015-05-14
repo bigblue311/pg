@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.pg.biz.manager.WarehouseManager;
+import com.pg.dal.cache.LocationCache;
 import com.pg.dal.dao.WarehouseDAO;
+import com.pg.dal.model.LocationDO;
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.WarehouseQueryCondition;
 import com.victor.framework.dal.basic.Paging;
@@ -15,6 +17,9 @@ public class WarehouseManagerImpl implements WarehouseManager{
 
 	@Autowired
 	private WarehouseDAO warehouseDAO;
+	
+	@Autowired
+	private LocationCache locationCache;
 	
 	@Override
 	public void create(WarehouseDO warehouseDO) {
@@ -59,4 +64,48 @@ public class WarehouseManagerImpl implements WarehouseManager{
 		return warehouseDAO.getEnumMap(customerId);
 	}
 
+	@Override
+	public String getFullAddress(WarehouseDO warehouseDO) {
+		String address = "";
+		if(warehouseDO!=null){
+			address = warehouseDO.getAddress();
+		}
+		return getProvince(warehouseDO) + " " + getCity(warehouseDO) + " " + getTown(warehouseDO) + " "+ address;
+	}
+	
+	@Override
+	public String getProvince(WarehouseDO warehouseDO){
+		if(warehouseDO == null) {
+			return "";
+		}
+		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince());
+		if(locationDO == null){
+			return "";
+		}
+		return locationDO.getName();
+	}
+	
+	@Override
+	public String getCity(WarehouseDO warehouseDO){
+		if(warehouseDO == null) {
+			return "";
+		}
+		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity());
+		if(locationDO == null){
+			return "";
+		}
+		return locationDO.getName();
+	}
+	
+	@Override
+	public String getTown(WarehouseDO warehouseDO){
+		if(warehouseDO == null) {
+			return "";
+		}
+		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity()+","+warehouseDO.getTown());
+		if(locationDO == null){
+			return "";
+		}
+		return locationDO.getName();
+	}
 }

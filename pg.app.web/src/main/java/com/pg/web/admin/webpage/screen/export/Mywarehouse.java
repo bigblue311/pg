@@ -13,8 +13,6 @@ import com.alibaba.citrus.turbine.Context;
 import com.alibaba.citrus.turbine.dataresolver.Params;
 import com.google.common.collect.Lists;
 import com.pg.biz.manager.WarehouseManager;
-import com.pg.dal.cache.LocationCache;
-import com.pg.dal.model.LocationDO;
 import com.pg.dal.model.WarehouseDO;
 import com.pg.dal.query.WarehouseQueryCondition;
 import com.victor.framework.dal.basic.Paging;
@@ -30,9 +28,6 @@ public class Mywarehouse {
 	
 	@Autowired
 	private WarehouseManager warehouseManager;
-	
-	@Autowired
-	private LocationCache locationCache;
 	
 	public void execute(@Params WarehouseQueryCondition queryCondition,
 						Context context) throws Exception{
@@ -96,47 +91,14 @@ public class Mywarehouse {
 		
 		out.write("<td style='text-align:center'>"+count+"</td>");
 		out.write("<td>"+warehouseDO.getName()+"</td>");
-		out.write("<td>"+getProvince(warehouseDO)+"</td>");
-		out.write("<td>"+getCity(warehouseDO)+"</td>");
-		out.write("<td>"+getTown(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getProvince(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getCity(warehouseDO)+"</td>");
+		out.write("<td>"+warehouseManager.getTown(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getAddress()+"</td>");
 		out.write("<td>"+getContact(warehouseDO)+"</td>");
 		out.write("<td>"+warehouseDO.getKeeperIdCard()+"</td>");
 		out.write("<td>"+warehouseDO.getComment()+"</td>");
 		out.write("</tr>");
-	}
-	
-	private String getProvince(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
-	}
-	
-	private String getCity(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
-	}
-	
-	private String getTown(WarehouseDO warehouseDO){
-		if(warehouseDO == null) {
-			return "";
-		}
-		LocationDO locationDO = locationCache.getCache(warehouseDO.getProvince()+","+warehouseDO.getCity()+","+warehouseDO.getTown());
-		if(locationDO == null){
-			return "";
-		}
-		return locationDO.getName();
 	}
 	
 	private void printTableFoot(PrintWriter out,int count) throws Exception{

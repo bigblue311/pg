@@ -35,6 +35,16 @@ public interface WarehouseManager {
 	WarehouseDO getById(Long id);
 	
 	/**
+	 * 根据warehouseDO获取全地址
+	 * @param warehouseDO
+	 * @return
+	 */
+	String getProvince(WarehouseDO warehouseDO);
+	String getCity(WarehouseDO warehouseDO);
+	String getTown(WarehouseDO warehouseDO);
+	String getFullAddress(WarehouseDO warehouseDO);
+	
+	/**
 	 * 
 	 * @return
 	 */

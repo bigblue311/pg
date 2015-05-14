@@ -273,6 +273,13 @@ public class ProductManagerImpl implements ProductManager{
 	public PublishDO getPublishById(Long id) {
 		return publishDAO.getById(id);
 	}
+	
+	@Override
+	public PackageVO getPackageVOByPublishId(Long id) {
+		PublishDO publishDO = getPublishById(id);
+		return PackageDO2VO(publishDO);
+	}
+
 
 	@Override
 	public Map<String, String> getPublishEnumMap() {

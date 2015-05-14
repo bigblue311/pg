@@ -9,6 +9,7 @@
         <script src="http://g.tbcdn.cn/fi/bui/jquery-1.8.1.min.js"></script>
 		<script src="http://cdn.amazeui.org/amazeui/2.2.1/js/amazeui.min.js"></script>
 		<script type="text/javascript" src="/js/Location/location.js"></script>
+		<script type="text/javascript" src="/js/jString.js"></script>
         <title>快消助手</title>
     </head>
     <body>
@@ -211,6 +212,8 @@
 	$control.setTemplate('warehouseList.vm')
 	
 	$control.setTemplate('warehouse.vm')
+	
+	$control.setTemplate('order.vm')
 	
 	$control.setTemplate('password.vm')
 	

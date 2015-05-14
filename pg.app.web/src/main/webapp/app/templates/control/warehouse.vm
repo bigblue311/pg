@@ -10,7 +10,7 @@
 		<fieldset>
 		  <legend>我的地址</legend>
 		  <div class="am-form-group am-form-icon">
-		    <i class="am-icon-key"></i>
+		    <i class="am-icon-home"></i>
 		    <input type="text" id="doc-warehouse-name" minlength="3" placeholder="收货地址名称" class="am-form-field" required/>
 		  </div>
 		  <div class="am-form-group am-form-icon">
@@ -34,7 +34,7 @@
 		    <i class="am-icon-phone"></i>
 		    <input type="text" id="doc-warehouse-phone" placeholder="地址联系电话" class="am-form-field"/>
 		  </div>
-		  <div class="am-form-group am-form-icon">
+		  <div class="am-form-group">
 		    <textarea id="doc-warehouse-comment" maxlength="100" placeholder="备注"></textarea>
 		  </div>
 		  <div class="am-form-group">

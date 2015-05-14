@@ -157,6 +157,7 @@ public interface ProductManager {
 	 * @return
 	 */
 	PublishDO getPublishById(Long id);
+	PackageVO getPackageVOByPublishId(Long id);
 	
 	/**
 	 * 

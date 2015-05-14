@@ -17,8 +17,8 @@ public interface TransactionManager {
 	 * 创建订单
 	 * @param orderDO
 	 */
-	void createOrder(OrderDO orderDO);
-	void createPurchase(PurchaseDO purchaseDO);
+	Long createOrder(OrderDO orderDO);
+	Long createPurchase(PurchaseDO purchaseDO);
 	
 	/**
 	 * 创建订单
@@ -27,6 +27,7 @@ public interface TransactionManager {
 	 */
 	void createOrder(OrderDO orderDO, Long employeeId);
 	void createPurchase(PurchaseDO purchaseDO, Long employeeId, Long customerId);
+	void createPurchaseItem(Long purchaseId, Long publishId, Long productId,Integer quantity);
 	
 	/**
 	 * 更新订单
