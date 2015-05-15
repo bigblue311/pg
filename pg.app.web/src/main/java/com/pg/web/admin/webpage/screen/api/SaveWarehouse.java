@@ -26,17 +26,10 @@ public class SaveWarehouse {
 		if(warehouse == null){
 			return Result.newInstance(false, "地址不存在", false);
 		}
+		warehouse.setCustomerId(customer.getId());
 		if(warehouse.getId() == null){
-			warehouse.setCustomerId(customer.getId());
 			warehouseManager.create(warehouse);
 		} else {
-			WarehouseDO warehouseDO = warehouseManager.getById(warehouse.getId());
-			if(warehouse == null || warehouse.getCustomerId() == null){
-				return Result.newInstance(false, "地址不存在", false);
-			}
-			if(warehouseDO.getCustomerId().intValue() != customer.getId().intValue()){
-				return Result.newInstance(false, "登陆已失效", false);
-			}
 			warehouseManager.update(warehouse);
 		}
 		return Result.newInstance(true, "更新成功", true);

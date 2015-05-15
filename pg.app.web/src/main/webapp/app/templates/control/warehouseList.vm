@@ -39,6 +39,7 @@ function openWarehouseList(){
 }
 
 function loadWarehouseList(){
+	jQuery("#warehouse-list-alert-message").empty();
 	jQuery.ajax({
 		type: "get",
 		url: '/admin/api/getWarehouse.json',

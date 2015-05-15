@@ -9,6 +9,7 @@ import com.pg.biz.manager.CustomerManager;
 import com.pg.dal.model.CustomerDO;
 import com.pg.web.admin.common.AuthenticationToken;
 import com.victor.framework.common.shared.Result;
+import com.victor.framework.common.tools.MD5;
 
 public class UpdatePassword {
 	@Autowired
@@ -27,7 +28,7 @@ public class UpdatePassword {
 		if(!result.isSuccess()){
 			return Result.newInstance(false, result.getMessage(), false);
 		}
-		customer.setPassword(newPwd);
+		customer.setPassword(MD5.getMD5(newPwd));
 		customerManager.update(customer);
 		AuthenticationToken.set(session, customer);
 		return Result.newInstance(true, "更新成功", true);

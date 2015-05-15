@@ -42,6 +42,6 @@ public class GetWarehouse {
 			}
 		}
 		list = warehouseManager.getByCondition(queryCondition);
-		return Result.newInstance(list, "获取数据成功", !list.isEmpty());
+		return Result.newInstance(list, "获取数据成功", true);
 	}
 }

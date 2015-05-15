@@ -1,14 +1,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <div class="am-popup" id="register-popup">
 <div class="am-popup-inner">
-   <div class="am-popup-hd">
-     <span data-am-modal-close class="am-close">&times;</span>
-   </div>
    <div class="am-popup-bd">
-     	<form action="" class="am-form am-form-horizontal">
+     	<form action="" class="am-form am-form-horizontal" id="registerForm">
 		<fieldset>
 		  <legend>会员注册</legend>
-		  <div class="am-form-group am-form-icon" id="registerForm">
+		  <div class="am-form-group am-form-icon">
 		  	<i class="am-icon-user"></i>
 		    <input type="text" id="doc-register-name" minlength="3" placeholder="输入用户名" class="am-form-field" required/>
 		  </div>
@@ -61,6 +58,7 @@ jQuery(function(){
 		
 		if(pwd1 != pwd2){
 			jQuery("#register-alert-message").empty().append("两次密码输入不符");
+			return;
 		}
 		
 		var timestamp = currentTime();

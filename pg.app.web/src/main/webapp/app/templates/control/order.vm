@@ -1,9 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <div class="am-popup" id="order-popup">
 <div class="am-popup-inner">
-   <div class="am-popup-hd">
-     <span data-am-modal-close class="am-close">&times;</span>
-   </div>
    <div class="am-popup-bd">
    		<input type="hidden" value="" id="doc-order-publishId"/>
      	<form action="" class="am-form am-form-horizontal" id="orderForm">
@@ -170,7 +167,7 @@
 							if(data.success){
 								var timestamp = currentTime();
 							    var param = "timestamp="+timestamp;
-								param += "publishId="+publishId;
+								param += "&publishId="+publishId;
 								param += "&warehouseId="+warehouseId;
 								param += "&ids="+ids;
 								param += "&quantitys="+quantitys;
