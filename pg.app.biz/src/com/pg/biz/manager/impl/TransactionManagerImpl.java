@@ -624,5 +624,10 @@ public class TransactionManagerImpl implements TransactionManager{
 		return purchaseDAO.getByCondition(queryCondition);
 	}
 
+	@Override
+	public Integer getOrderCount(OrderQueryCondition queryCondition) {
+		return orderDAO.getCount(queryCondition);
+	}
+
 	
 }

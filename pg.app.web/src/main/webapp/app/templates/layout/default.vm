@@ -182,10 +182,10 @@
 				var that = this;
 				jQuery.ajax({
 					type: "get",
-					url: '/admin/api/getMyOrderList.json?status='+status,
+					url: '/admin/api/getMyOrderCount.json?status='+status,
 					success:function(data, textStatus){
 						if(data.success){
-							var size = data.dataObject.length;
+							var size = data.dataObject;
 							var badge = "<span class='am-badge "+badgeClass+" am-round'>"+size+"</span>";
 							jQuery(that).empty().append(label+" "+badge);
 						} else {
