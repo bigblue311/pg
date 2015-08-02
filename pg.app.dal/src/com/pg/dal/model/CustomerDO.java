@@ -22,6 +22,7 @@ public class CustomerDO extends EntityDO implements Serializable{
 	private String idCard;		//身份证号
 	private Long employeeId;	//归属员工
 	private String wechatId;	//微信ID
+	private String recommender; //推荐人
 	
 	public String getName() {
 		return name;
@@ -59,8 +60,14 @@ public class CustomerDO extends EntityDO implements Serializable{
 	public void setWechatId(String wechatId) {
 		this.wechatId = wechatId;
 	}
-	
-	public CustomerQueryCondition toQueryCondition(){
+	public String getRecommender() {
+        return recommender;
+    }
+    public void setRecommender(String recommender) {
+        this.recommender = recommender;
+    }
+    
+    public CustomerQueryCondition toQueryCondition(){
 		CustomerQueryCondition queryCondition = new CustomerQueryCondition();
 		queryCondition.setQueryMap(this.toMap());
 		return queryCondition;

@@ -18,6 +18,7 @@
     <result property="idCard" column="id_card"/>
     <result property="employeeId" column="employee_id"/>
     <result property="wechatId" column="wechat_id"/>
+    <result property="recommender" column="recommender"/>
   </resultMap>
 
   <insert id="insert" parameterClass="Customer">
@@ -30,11 +31,12 @@
       mobile,
       password,
       employee_id,
-      wechat_id
+      wechat_id,
+      recommender
     ) values (
       now(), now(),
       #name#, #idCard# ,#mobile#, #password#,
-      #employeeId#, #wechatId#
+      #employeeId#, #wechatId#, #recommender#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -73,6 +75,11 @@
       <isNotEmpty property="wechatId">  
          <![CDATA[   
            wechat_id = #wechatId#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="recommender">  
+         <![CDATA[   
+           recommender = #recommender#,
          ]]> 
       </isNotEmpty>
     </dynamic>
@@ -126,6 +133,11 @@
         	gmt_create <= #gmtCreateEnd#
         	 ]]>
         </isNotNull>
+        <isNotNull property="recommender" prepend="and">  
+         <![CDATA[   
+           recommender = #recommender#
+         ]]> 
+      	</isNotNull>
 	    <include refid="Common.queryModify" />
   	</dynamic>
   </sql>
@@ -136,7 +148,9 @@
   	<isNull property="employeeId">
   	<isNull property="gmtCreateStart">
 	<isNull property="gmtCreateEnd">
+	<isNull property="recommender">
         <include refid="Common.validModify" />
+    </isNull>
     </isNull>
     </isNull>
    	</isNull>

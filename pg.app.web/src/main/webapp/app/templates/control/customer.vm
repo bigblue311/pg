@@ -18,6 +18,10 @@
 		    <i class="am-icon-credit-card"></i>
 		    <input type="text" id="doc-customer-idCard" minlength="3" placeholder="输入身份证号码" class="am-form-field"/>
 		  </div>
+		  <div class="am-form-group am-form-icon">
+		    <i class="am-icon-mobile-phone"></i>
+		    <input type="phone" id="doc-customer-recommender" minlength="3" placeholder="推荐人手机号码" class="am-form-field"/>
+		  </div>
 		  <div class="am-form-group">
 		    <small id="customer-alert-message" style="color:red"></small>
 		  </div>
@@ -58,6 +62,7 @@ function loadCustomerInfo(){
 				jQuery("#doc-customer-name").val(customer.name);
 				jQuery("#doc-customer-mobile").val(customer.mobile);
 				jQuery("#doc-customer-idCard").val(customer.idCard);
+				jQuery("#doc-customer-recommender").val(customer.recommender);
 			}
 		}
  	});
@@ -73,9 +78,10 @@ jQuery(function(){
 		var name = jQuery("#doc-customer-name").val();
 		var mobile = jQuery("#doc-customer-mobile").val();
 		var idCard = jQuery("#doc-customer-idCard").val();
+		var recommender = jQuery("#doc-customer-recommender").val();
 		
 		var timestamp = currentTime();
-	    var para = "timestamp="+timestamp+"&id="+id+"&name="+name+"&mobile="+mobile+"&idCard="+idCard;
+	    var para = "timestamp="+timestamp+"&id="+id+"&name="+name+"&mobile="+mobile+"&idCard="+idCard+"&recommender="+recommender;
 		
 		jQuery.ajax({
 			type: "get",

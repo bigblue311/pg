@@ -43,6 +43,15 @@ public class CustomerQueryCondition extends QueryCondition {
 		return getLong("employeeId");
 	}
 	
+	public CustomerQueryCondition setRecommender(String recommender) {
+        put("recommender",recommender);
+        return this;
+    }
+    
+    public String getRecommender(){
+        return getString("recommender");
+    }
+	
 	public void setCreateStart(String createStart){
 		put("createStart",createStart);
 		setGmtCreateStart(StringToDate(createStart));

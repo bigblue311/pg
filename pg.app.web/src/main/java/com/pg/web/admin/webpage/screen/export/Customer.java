@@ -45,10 +45,11 @@ public class Customer {
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","3%"));
 		pairs.add(new NameValuePair("注册时间","15%"));
-		pairs.add(new NameValuePair("称呼","20%"));
-		pairs.add(new NameValuePair("身份证号","20%"));
-		pairs.add(new NameValuePair("电话号码","20%"));
-		pairs.add(new NameValuePair("归属坐席","22%"));
+		pairs.add(new NameValuePair("称呼","15%"));
+		pairs.add(new NameValuePair("身份证号","15%"));
+		pairs.add(new NameValuePair("电话号码","15%"));
+		pairs.add(new NameValuePair("归属坐席","15%"));
+		pairs.add(new NameValuePair("推荐人手机","22%"));
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -96,6 +97,7 @@ public class Customer {
 		out.write("<td>"+customerDO.getIdCard()+"</td>");
 		out.write("<td>"+customerDO.getMobile()+"</td>");
 		out.write("<td>"+getEmployeeName(customerDO.getEmployeeId())+"</td>");
+		out.write("<td>"+customerDO.getRecommender()+"</td>");
 		out.write("</tr>");
 	}
 	

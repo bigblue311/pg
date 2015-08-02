@@ -141,6 +141,7 @@
 			<field name="mobile" displayName="电话" />
 			<field name="idCard" displayName="身份证号" />
 			<field name="employeeId" displayName="归属坐席" />
+			<field name="recommender" displayName="推荐人"/>
 		</group>
 		
 		<group name="warehouse" extends="csrfCheck">

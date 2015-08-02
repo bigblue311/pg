@@ -25,6 +25,10 @@
 		    <i class="am-icon-key"></i>
 		    <input type="password" id="doc-register-pwd2" minlength="3" placeholder="再次输入密码" class="am-form-field" required/>
 		  </div>
+		  <div class="am-form-group am-form-icon">
+		    <i class="am-icon-mobile-phone"></i>
+		    <input type="phone" id="doc-register-recommender" minlength="3" placeholder="推荐人手机号码" class="am-form-field"/>
+		  </div>
 		  <div class="am-form-group">
 		    <small id="register-alert-message" style="color:red"></small>
 		  </div>
@@ -55,6 +59,7 @@ jQuery(function(){
 		var idCard = jQuery("#doc-register-idCard").val();
 		var pwd1 = jQuery("#doc-register-pwd").val();
 		var pwd2 = jQuery("#doc-register-pwd2").val();
+		var recommender = jQuery("#doc-register-recommender").val();
 		
 		if(pwd1 != pwd2){
 			jQuery("#register-alert-message").empty().append("两次密码输入不符");
@@ -62,7 +67,7 @@ jQuery(function(){
 		}
 		
 		var timestamp = currentTime();
-	    var para = "timestamp="+timestamp+"&name="+name+"&mobile="+mobile+"&idCard="+idCard+"&password="+pwd1;
+	    var para = "timestamp="+timestamp+"&name="+name+"&mobile="+mobile+"&idCard="+idCard+"&password="+pwd1+"&recommender="+recommender;
 		
 		jQuery.ajax({
 			type: "get",
