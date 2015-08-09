@@ -121,19 +121,19 @@ public class TransactionManagerImpl implements TransactionManager{
 		purchaseItemDO.setTitle(productDO.getTitle());
 		purchaseItemDO.setBrandId(productDO.getBrandId());
 		purchaseItemDO.setCategoryId(productDO.getCategoryId());
-		purchaseItemDO.setCode(productDO.getCode());
-		purchaseItemDO.setBarcode(productDO.getBarcode());
-		purchaseItemDO.setBoxcode(productDO.getBoxcode());
-		purchaseItemDO.setSpec(productDO.getSpec());
-		purchaseItemDO.setPackageSpec(productDO.getPackageSpec());
-		purchaseItemDO.setMsu(productDO.getMsu());
+		if(quantity != null){
+		    if(productDO.getSu() != null){
+		        purchaseItemDO.setMsu(productDO.getSu()*quantity);
+		    }
+		    if(productDO.getCubage() != null) {
+		        purchaseItemDO.setMcubage(productDO.getCubage()*quantity);
+		    }
+		    if(productDO.getWeight() != null) {
+		        purchaseItemDO.setMweight(productDO.getWeight()*quantity);
+		    }
+		}
 		purchaseItemDO.setPrice(getFinalPrice(publishId,productId,quantity));
 		purchaseItemDO.setQuantity(quantity);
-		purchaseItemDO.setCubage(productDO.getCubage());
-		purchaseItemDO.setWeight(productDO.getWeight());
-		purchaseItemDO.setValidFrom(productDO.getValidFrom());
-		purchaseItemDO.setExpTo(productDO.getExpTo());
-		purchaseItemDO.setDescription(productDO.getDescription());
 		purchaseItemDO.setPurchaseId(purchaseId);
 		purchaseItemDO.setProductId(productDO.getId());
 		purchaseItemDAO.insert(purchaseItemDO);
@@ -164,19 +164,11 @@ public class TransactionManagerImpl implements TransactionManager{
 			purchaseItemDO.setTitle(productDO.getTitle());
 			purchaseItemDO.setBrandId(productDO.getBrandId());
 			purchaseItemDO.setCategoryId(productDO.getCategoryId());
-			purchaseItemDO.setCode(productDO.getCode());
-			purchaseItemDO.setBarcode(productDO.getBarcode());
-			purchaseItemDO.setBoxcode(productDO.getBoxcode());
-			purchaseItemDO.setSpec(productDO.getSpec());
-			purchaseItemDO.setPackageSpec(productDO.getPackageSpec());
-			purchaseItemDO.setMsu(productDO.getMsu());
+			purchaseItemDO.setMsu(0d);
 			purchaseItemDO.setPrice(getFinalPrice(publishId,productDO.getId(),0));
 			purchaseItemDO.setQuantity(0);
-			purchaseItemDO.setCubage(productDO.getCubage());
-			purchaseItemDO.setWeight(productDO.getWeight());
-			purchaseItemDO.setValidFrom(productDO.getValidFrom());
-			purchaseItemDO.setExpTo(productDO.getExpTo());
-			purchaseItemDO.setDescription(productDO.getDescription());
+			purchaseItemDO.setMcubage(0d);
+			purchaseItemDO.setMweight(0d);
 			purchaseItemDO.setPurchaseId(purchaseDO.getId());
 			purchaseItemDO.setProductId(productDO.getId());
 			purchaseItemDAO.insert(purchaseItemDO);

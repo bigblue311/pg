@@ -16,19 +16,11 @@
     <result property="title" 		column="title"/>
     <result property="brandId" 		column="brand_id"/>
     <result property="categoryId" 	column="category_id"/>
-    <result property="code" 		column="code"/>
-    <result property="barcode" 		column="barcode"/>
-    <result property="boxcode" 		column="boxcode"/>
-    <result property="spec" 		column="spec"/>
-    <result property="packageSpec" 	column="package_spec"/>
     <result property="msu" 			column="msu"/>
     <result property="price" 		column="price"/>
     <result property="quantity" 	column="quantity"/>
-    <result property="cubage" 		column="cubage"/>
-    <result property="weight" 		column="weight"/>
-    <result property="validFrom" 	column="valid_from"/>
-    <result property="expTo" 		column="exp_to"/>
-    <result property="description" 	column="description"/>
+    <result property="mcubage" 		column="mcubage"/>
+    <result property="mweight" 		column="mweight"/>
     <result property="purchaseId" 	column="purchase_id"/>
     <result property="productId" 	column="product_id"/>
   </resultMap>
@@ -42,26 +34,17 @@
       title,
       brand_id,
       category_id,
-      code,
-      barcode,
-      boxcode,
-      spec,
-   	  package_spec,
       msu,
       price,
       quantity,
-      cubage,
-      weight,
-      valid_from,
-      exp_to,
-      description,
+      mcubage,
+      mweight,
       purchase_id,
       product_id
     ) values (
       now(), now(), #name#, #title#,#brandId#, #categoryId#,
-      #code#, #barcode#, #boxcode#, #spec#, #packageSpec#, #msu#,
-      #price#,#quantity#, #cubage#, #weight#, #validFrom#, #expTo#,
-      #description#, #purchaseId#, #productId#
+      #msu#, #price#, #quantity#, #mcubage#, #mweight#, 
+      #purchaseId#, #productId#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -92,31 +75,6 @@
            category_id = #categoryId#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="code">  
-         <![CDATA[   
-           code = #code#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="barcode">  
-         <![CDATA[   
-           barcode = #barcode#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="boxcode">  
-         <![CDATA[   
-           boxcode = #boxcode#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="spec">  
-         <![CDATA[   
-           spec = #spec#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="packageSpec">  
-         <![CDATA[   
-           package_spec = #packageSpec#,
-         ]]> 
-      </isNotEmpty>
       <isNotEmpty property="msu">  
          <![CDATA[   
            msu = #msu#,
@@ -127,29 +85,19 @@
            price = #price#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="cubage">  
+      <isNotEmpty property="quantity">  
          <![CDATA[   
-           cubage = #cubage#,
+           quantity = #quantity#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="weight">  
+      <isNotEmpty property="mcubage">  
          <![CDATA[   
-           weight = #weight#,
+           mcubage = #mcubage#,
          ]]> 
       </isNotEmpty>
-      <isNotEmpty property="validFrom">  
+      <isNotEmpty property="mweight">  
          <![CDATA[   
-           valid_from = #validFrom#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="expTo">  
-         <![CDATA[   
-           exp_to = #expTo#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="description">  
-         <![CDATA[   
-           description = #description#,
+           mweight = #mweight#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="purchaseId">  
@@ -160,11 +108,6 @@
       <isNotEmpty property="productId">  
          <![CDATA[   
            product_id = #productId#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="quantity">  
-         <![CDATA[   
-           quantity = #quantity#,
          ]]> 
       </isNotEmpty>
     </dynamic>
@@ -194,21 +137,6 @@
         	title like concat('%',#title#,'%')
         	]]>
 	    </isNotEmpty>
-	    <isNotEmpty property="code" prepend="and">
-        	<![CDATA[ 
-        	code = #code#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="barcode" prepend="and">
-        	<![CDATA[ 
-        	barcode = #barcode#
-        	]]>
-	    </isNotEmpty>
-	    <isNotEmpty property="boxcode" prepend="and">
-        	<![CDATA[ 
-        	boxcode = #boxcode#
-        	]]>
-	    </isNotEmpty>
 	    <isNotEmpty property="brandId" prepend="and">
         	<![CDATA[ 
         	brand_id = #brandId#
@@ -231,9 +159,6 @@
   <sql id="validate">
   	<isNull property="name">
   	<isNull property="title">
-  	<isNull property="code">
-  	<isNull property="barcode">
-  	<isNull property="boxcode">
   	<isNull property="brandId">
   	<isNull property="categoryId">
   	<isNull property="purchaseId">
@@ -243,9 +168,6 @@
     </isNull>
     </isNull>
     </isNull>
-    </isNull>
-    </isNull>
-	</isNull>
   </sql>
   
   <select id="getByCondition" parameterClass="java.util.HashMap" resultMap="RM">

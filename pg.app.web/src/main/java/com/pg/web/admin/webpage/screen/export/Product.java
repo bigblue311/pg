@@ -49,28 +49,21 @@ public class Product {
 
 		List<NameValuePair> pairs = Lists.newArrayList();
 		pairs.add(new NameValuePair("","50px"));
-		pairs.add(new NameValuePair("创建时间","150px"));
-		pairs.add(new NameValuePair("名称","150px"));
-		pairs.add(new NameValuePair("标题","150px"));
-		pairs.add(new NameValuePair("品牌","150px"));
-		pairs.add(new NameValuePair("品类","150px"));
-		pairs.add(new NameValuePair("编号","150px"));
-		pairs.add(new NameValuePair("条形码","150px"));
-		pairs.add(new NameValuePair("箱码","150px"));
-		pairs.add(new NameValuePair("规则","150px"));
-		pairs.add(new NameValuePair("包装系数","150px"));
-		pairs.add(new NameValuePair("MSU","150px"));
-		pairs.add(new NameValuePair("3500箱价格","150px"));
-		pairs.add(new NameValuePair("2000箱价格","150px"));
-		pairs.add(new NameValuePair("800箱价格","150px"));
-		pairs.add(new NameValuePair("200箱价格","150px"));
-		pairs.add(new NameValuePair("100箱价格","150px"));
-		pairs.add(new NameValuePair("建议售价","150px"));
-		pairs.add(new NameValuePair("体积","150px"));
-		pairs.add(new NameValuePair("重量(公斤/箱)","150px"));
-		pairs.add(new NameValuePair("生效日期","150px"));
-		pairs.add(new NameValuePair("保质期","150px"));
-		pairs.add(new NameValuePair("描述","300px"));
+		pairs.add(new NameValuePair("创建时间","150px"));    //gmtCreate
+		pairs.add(new NameValuePair("名称","150px"));       //name
+		pairs.add(new NameValuePair("标题","150px"));       //title
+		pairs.add(new NameValuePair("品牌","150px"));       //brandId
+		pairs.add(new NameValuePair("品类","150px"));       //categoryId
+		pairs.add(new NameValuePair("SU","150px"));        //SU
+		pairs.add(new NameValuePair("3500箱价格","150px")); //price3500
+		pairs.add(new NameValuePair("2000箱价格","150px")); //price2000
+		pairs.add(new NameValuePair("800箱价格","150px"));  //price800
+		pairs.add(new NameValuePair("200箱价格(不含税)","150px"));  //price200NoTax
+		pairs.add(new NameValuePair("200箱价格","150px"));  //price200
+		pairs.add(new NameValuePair("100箱价格","150px"));  //price100
+		pairs.add(new NameValuePair("建议售价","150px"));   //priceSugg
+		pairs.add(new NameValuePair("体积(立方分米/箱)","150px"));//cubage
+		pairs.add(new NameValuePair("重量(公斤/箱)","150px"));   //weight
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -118,23 +111,16 @@ public class Product {
 		out.write("<td>"+productDO.getTitle()+"</td>");
 		out.write("<td>"+getBrandName(productDO)+"</td>");
 		out.write("<td>"+getCategoryName(productDO)+"</td>");
-		out.write("<td>"+productDO.getCode()+"</td>");
-		out.write("<td>"+productDO.getBarcode()+"</td>");
-		out.write("<td>"+productDO.getBoxcode()+"</td>");
-		out.write("<td>"+productDO.getSpec()+"</td>");
-		out.write("<td>"+productDO.getPackageSpec()+"</td>");
-		out.write("<td>"+productDO.getMsu()+"</td>");
+		out.write("<td>"+productDO.getSu()+"</td>");
 		out.write("<td>"+productDO.getPrice3500()+"</td>");
 		out.write("<td>"+productDO.getPrice2000()+"</td>");
 		out.write("<td>"+productDO.getPrice800()+"</td>");
+		out.write("<td>"+productDO.getPrice200NoTax()+"</td>");
 		out.write("<td>"+productDO.getPrice200()+"</td>");
 		out.write("<td>"+productDO.getPrice100()+"</td>");
 		out.write("<td>"+productDO.getPriceSugg()+"</td>");
 		out.write("<td>"+productDO.getCubage()+"</td>");
 		out.write("<td>"+productDO.getWeight()+"</td>");
-		out.write("<td>"+DateTools.DateToString(productDO.getValidFrom())+"</td>");
-		out.write("<td>"+DateTools.DateToString(productDO.getExpTo())+"</td>");
-		out.write("<td>"+productDO.getDescription()+"</td>");
 		out.write("</tr>");
 	}
 	

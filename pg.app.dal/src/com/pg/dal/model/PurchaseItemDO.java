@@ -1,7 +1,6 @@
 package com.pg.dal.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.pg.dal.query.PurchaseItemQueryCondition;
 import com.victor.framework.annotation.EnumValue;
@@ -24,21 +23,13 @@ public class PurchaseItemDO extends EntityDO implements Serializable{
 	private String 	title;			//标题
 	private Long 	brandId;		//品牌ID
 	private Long 	categoryId;		//品类ID
-	private String 	code;			//编号
-	private String 	barcode;		//条形码
-	private String 	boxcode;		//箱码
-	private String 	spec;			//规格
-	private String 	packageSpec;	//包装系数
-	private String 	msu;			//MSU
+	private Double 	msu;			//MSU
 	private Double 	price;			//成交价格
 	private Integer quantity;		//数量
-	private String 	cubage;			//体积
-	private Double 	weight;			//公斤/箱
-	private Date   	validFrom;		//信息生效日期
-	private Date   	expTo;			//保质期
-	private String 	description;	//描述
-	private Long 	purchaseId;		//订单购买ID
-	private Long	productId;		//产品ID
+	private Double 	mcubage;		//体积 (立方米)
+	private Double 	mweight;		//重量 (吨)
+	private Long    purchaseId;     //订单购买ID
+    private Long    productId;      //产品ID
 	
 	public String getName() {
 		return name;
@@ -72,51 +63,11 @@ public class PurchaseItemDO extends EntityDO implements Serializable{
 		this.categoryId = categoryId;
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getBarcode() {
-		return barcode;
-	}
-
-	public void setBarcode(String barcode) {
-		this.barcode = barcode;
-	}
-
-	public String getBoxcode() {
-		return boxcode;
-	}
-
-	public void setBoxcode(String boxcode) {
-		this.boxcode = boxcode;
-	}
-
-	public String getSpec() {
-		return spec;
-	}
-
-	public void setSpec(String spec) {
-		this.spec = spec;
-	}
-
-	public String getPackageSpec() {
-		return packageSpec;
-	}
-
-	public void setPackageSpec(String packageSpec) {
-		this.packageSpec = packageSpec;
-	}
-
-	public String getMsu() {
+	public Double getMsu() {
 		return msu;
 	}
 
-	public void setMsu(String msu) {
+	public void setMsu(Double msu) {
 		this.msu = msu;
 	}
 
@@ -136,44 +87,20 @@ public class PurchaseItemDO extends EntityDO implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public String getCubage() {
-		return cubage;
+	public Double getMcubage() {
+		return mcubage;
 	}
 
-	public void setCubage(String cubage) {
-		this.cubage = cubage;
+	public void setMcubage(Double mcubage) {
+		this.mcubage = mcubage;
 	}
 
-	public Double getWeight() {
-		return weight;
+	public Double getMweight() {
+		return mweight;
 	}
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
-
-	public Date getValidFrom() {
-		return validFrom;
-	}
-
-	public void setValidFrom(Date validFrom) {
-		this.validFrom = validFrom;
-	}
-
-	public Date getExpTo() {
-		return expTo;
-	}
-
-	public void setExpTo(Date expTo) {
-		this.expTo = expTo;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMweight(Double mweight) {
+		this.mweight = mweight;
 	}
 
 	public Long getPurchaseId() {
@@ -191,8 +118,8 @@ public class PurchaseItemDO extends EntityDO implements Serializable{
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-
-	public PurchaseItemQueryCondition toQueryCondition(){
+	
+    public PurchaseItemQueryCondition toQueryCondition(){
 		PurchaseItemQueryCondition queryCondition = new PurchaseItemQueryCondition();
 		queryCondition.setQueryMap(this.toMap());
 		return queryCondition;

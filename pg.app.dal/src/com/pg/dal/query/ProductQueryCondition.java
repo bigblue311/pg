@@ -25,36 +25,9 @@ public class ProductQueryCondition extends QueryCondition {
 		return getString("title");
 	}
 	
-	public ProductQueryCondition setCode(String code) {
-		put("code",code);
-		return this;
-	}
-	
-	public String getCode(){
-		return getString("code");
-	}
-	
-	public ProductQueryCondition setBarcode(String barcode) {
-		put("barcode",barcode);
-		return this;
-	}
-	
-	public String getBarcode(){
-		return getString("barcode");
-	}
-	
-	public ProductQueryCondition setBoxcode(String boxcode) {
-		put("boxcode",boxcode);
-		return this;
-	}
-	
 	public ProductQueryCondition setEnable(String enable){
 		put("enable",enable);
 		return this;
-	}
-	
-	public String getBoxcode(){
-		return getString("boxcode");
 	}
 	
 	public ProductQueryCondition setPackageId(Long packageId) {

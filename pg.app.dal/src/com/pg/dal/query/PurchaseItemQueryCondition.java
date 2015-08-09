@@ -25,33 +25,6 @@ public class PurchaseItemQueryCondition extends QueryCondition {
 		return getString("title");
 	}
 	
-	public PurchaseItemQueryCondition setCode(String code) {
-		put("code",code);
-		return this;
-	}
-	
-	public String getCode(){
-		return getString("code");
-	}
-	
-	public PurchaseItemQueryCondition setBarcode(String barcode) {
-		put("barcode",barcode);
-		return this;
-	}
-	
-	public String getBarcode(){
-		return getString("barcode");
-	}
-	
-	public PurchaseItemQueryCondition setBoxcode(String boxcode) {
-		put("boxcode",boxcode);
-		return this;
-	}
-	
-	public String getBoxcode(){
-		return getString("boxcode");
-	}
-	
 	public PurchaseItemQueryCondition setPurchaseId(Long purchaseId) {
 		put("purchaseId",purchaseId);
 		return this;
