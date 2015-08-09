@@ -324,9 +324,9 @@ $control.setTemplate("paging.vm")
     function clearRecord(event){
 		copyCsrf();
 
-		jQuery("#customerName").val('${customerName}');
-		jQuery("#customerMobile").val('${customerMobile}');
-		jQuery("#customerIdCard").val('${customerIdCard}');
+		jQuery("#customerName").val('$!{customerName}');
+		jQuery("#customerMobile").val('$!{customerMobile}');
+		jQuery("#customerIdCard").val('$!{customerIdCard}');
 		
 		jQuery("#status").hide();
     	jQuery("#action").val('orderAction');

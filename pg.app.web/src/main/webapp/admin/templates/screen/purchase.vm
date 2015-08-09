@@ -223,7 +223,7 @@ $control.setTemplate("paging.vm")
   		for(var i = 0;i<itemList.length;i++){
   			var item = itemList[i];
   			items += "<div class='row'>";
-  			items += "<label style='display:inline-block;min-width:300px;'>["+item.code+"]"+item.name+"</label>";
+  			items += "<label style='display:inline-block;min-width:300px;'>"+item.name+"</label>";
   			items += "<label style='display:inline-block;min-width:100px;'>"+item.price+"元</label>";
   			items += "<label style='display:inline-block;min-width:100px;'>"+item.quantity+"箱</label>";
   			items += "</div>";

@@ -6,12 +6,12 @@
 		<td class="comboList">
 			<h2>可添加的商品
 				<span class="selectAll"><i class="icon-check"></i>全选</span>
-				<input type="text" placeholder="可输入名称/编号来过滤" class="filter">
+				<input type="text" placeholder="可输入名称来过滤" class="filter">
 			</h2>
 			<div id="box1" class="box">
 			#foreach($exclude in $excludeList)
 			<div class="item">
-				<label>[$exclude.code]</label><label>$exclude.name</label>
+				<label>$exclude.name</label>
 				<input class="prod" type="hidden" value="${exclude.id}"/>
 			</div>
 			#end
@@ -23,12 +23,12 @@
 		<td class="comboList">
 			<h2>已添加的商品
 				<span class="selectAll"><i class="icon-check"></i>全选</span>
-				<input type="text" placeholder="可输入名称/编号来过滤" class="filter">
+				<input type="text" placeholder="可输入名称来过滤" class="filter">
 			</h2>
 			<div id="box2" class="box">
 			#foreach($include in $includeList)
 			<div class="item">
-				<label>[$include.code]</label><label>$include.name</label>
+				<label>$include.name</label>
 				<input class="prod" type="hidden" value="${include.productId}"/>
 			</div>
 			#end

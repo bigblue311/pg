@@ -147,10 +147,10 @@ $control.setTemplate("paging.vm")
 		  </select>
         </div>
       </div>
-    </div>
-	<div class="row">
+     </div> 
+     <div class="row">
       <div class="control-group">
-        <label class="control-label">销售时间：</label>
+		<label class="control-label">销售时间：</label>
 		<div class="controls">
 			<input type="text" class="calendar" name="$group.gmtValidFrom.key" id="validFrom">
 			至

@@ -157,45 +157,21 @@
 			<div class="controls">
 				<label>$!item.name</label>
 			</div>
-	        <label class="control-label">编号：</label>
-	        <div class="controls">
-	        	<label>$!item.code</label>
-	        </div>
-	        <label class="control-label">条形码：</label>
-			<div class="controls">
-				<label>$!item.barcode</label>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-	    <div class="control-group">
-	    	<label class="control-label">箱码：</label>
-			<div class="controls">
-				<label>$!item.boxcode</label>
-			</div>
-	        <label class="control-label">规格：</label>
-			<div class="controls">
-				<label>$!item.spec</label>
-			</div>
-	        <label class="control-label">包装系数：</label>
-	        <div class="controls">
-	        	<label>$!item.packageSpec</label>
-	        </div>
-		</div>
-	</div>
-	<div class="row">
-	    <div class="control-group">
 			<label class="control-label">数量：</label>
 			<div class="controls">
 				<label>$!item.quantity 箱</label>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+	    <div class="control-group">
 	        <label class="control-label">体积：</label>
 			<div class="controls">
-				<label>$!item.cubage /箱</label>
+				<label>$!item.mcubage 立方米</label>
 			</div>
 	        <label class="control-label">重量：</label>
 	        <div class="controls">
-	        	<label>$!item.weight 公斤/箱</label>
+	        	<label>$!item.mweight 吨</label>
 	        </div>
 		</div>
 	</div>

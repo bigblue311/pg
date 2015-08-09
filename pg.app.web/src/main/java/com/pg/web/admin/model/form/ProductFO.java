@@ -19,6 +19,7 @@ public class ProductFO extends ProductDO{
 		productDO.setPrice3500(getPrice3500());
 		productDO.setPrice2000(getPrice2000());
 		productDO.setPrice800(getPrice800());
+		productDO.setPrice200NoTax(getPrice200NoTax());
 		productDO.setPrice200(getPrice200());
 		productDO.setPrice100(getPrice100());
 		productDO.setPriceSugg(getPriceSugg());

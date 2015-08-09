@@ -22,7 +22,6 @@ public class PublishDO extends EntityDO implements Serializable{
 	private Double	limitBuyPrice;		//最小购买金额
 	private Date 	validFrom;			//有效期开始
 	private Date 	validTo;			//有效期结束
-	private Integer volume;             //库存
 	private String 	enable;				//有效
 	private String 	description;		//描述
 	
@@ -99,14 +98,6 @@ public class PublishDO extends EntityDO implements Serializable{
 		this.description = description;
 	}
 	
-	public Integer getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Integer volume) {
-        this.volume = volume;
-    }
-
     public boolean isValid(){
 		if(StringTools.isEmpty(enable)){
 			return false;

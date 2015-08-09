@@ -19,8 +19,6 @@
     <result property="limitBuyPrice" column="limit_buy_price"/>
     <result property="validFrom" column="valid_from"/>
     <result property="validTo" column="valid_to"/>
-    <result property="validTo" column="valid_to"/>
-    <result property="volume" column="volume"/>
     <result property="enable" column="enable"/>
     <result property="description" column="description"/>
   </resultMap>
@@ -37,13 +35,12 @@
       limit_buy_price,
       valid_from,
       valid_to,
-      volume,
       enable,
       description
     ) values (
       now(), now(),
       #discount#, #warehouseId#, #packageId#, #limitBuyQuantity#, #limitBuyPrice#,
-      #validFrom#, #validTo#,#volume#, #enable#, #description#
+      #validFrom#, #validTo#, #enable#, #description#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -87,11 +84,6 @@
       <isNotEmpty property="validTo">  
          <![CDATA[   
            valid_to = #validTo#,
-         ]]> 
-      </isNotEmpty>
-      <isNotEmpty property="volume">  
-         <![CDATA[   
-           volume = #volume#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="enable">  

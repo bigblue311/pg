@@ -49,8 +49,8 @@ public class Publish {
 		pairs.add(new NameValuePair("产品包","15%"));
 		pairs.add(new NameValuePair("折扣","5%"));
 		pairs.add(new NameValuePair("预定限制","15%"));
-		pairs.add(new NameValuePair("仓库","12%"));
-		pairs.add(new NameValuePair("销售时间","25%"));
+		pairs.add(new NameValuePair("仓库","17%"));
+		pairs.add(new NameValuePair("销售时间","20%"));
 		pairs.add(new NameValuePair("状态","5%"));
 		pairs.add(new NameValuePair("描述","20%"));
 		printTableHead(out,pairs);

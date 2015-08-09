@@ -533,7 +533,7 @@
   		for(var i = 0;i<itemList.length;i++){
   			var item = itemList[i];
   			items += "<div class='row itemRow' price='"+item.price+"' itemId='"+item.id+"'>";
-  			items += "<label style='display:inline-block;min-width:300px;'>["+item.code+"]"+item.name+"</label>";
+  			items += "<label style='display:inline-block;min-width:300px;'>"+item.name+"</label>";
   			items += "<label style='display:inline-block;min-width:100px;'>"+item.price+"元</label>";
   			items += "<span class='numbericLeft'><i class='icon-plus-mini'></i></span>";
   			items += "<input type='text' class='quan' value='"+item.quantity+"' style='text-align: center;width: 50px;border-left: 0px;border-right: 0px;'>";
@@ -592,17 +592,23 @@
   			jQuery(".quan").each(function(){
   				var price = Number(jQuery(this).parent().attr("price"));
   				var quantity = Number(jQuery(this).val());
-  				totalPrice += setScale(price * quantity / 10000,2);
+  				totalPrice += setScale(price * quantity / 10000);
   				totalQuantity += quantity;
   			});
-  			jQuery(".totalPrice").empty().append("共"+totalPrice+" / "+record.limitBuyPrice+" 万元");
-			jQuery(".totalQuantity").empty().append("共"+totalQuantity+" / "+record.limitBuyQuantity+" 箱");
+  			jQuery(".totalPrice").empty().append("共"+setScale(totalPrice)+"万元 / "+record.limitBuyPrice+" 万元");
+			jQuery(".totalQuantity").empty().append("共"+totalQuantity+"箱 / "+record.limitBuyQuantity+" 箱");
   			jQuery(".error").empty();
   		}
   		
-  		function setScale(Dight,How){  
-            Dight = Math.round(Dight*Math.pow(10,How))/Math.pow(10,How);  
-            return Dight;  
+  		function setScale(Dight){  
+  			var f_x = parseFloat(Dight);
+  			if (isNaN(f_x))
+  			{
+  				alert('function:changeTwoDecimal->parameter error');
+  				return false;
+  			}
+  			var f_x = Math.round(Dight*100)/100;
+  			return f_x;
         } 
   	}
   	

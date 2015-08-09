@@ -102,24 +102,17 @@
 			<field name="title" displayName="标题" />
 			<field name="brandId" displayName="品牌ID" />
 			<field name="categoryId" displayName="品类ID" />
-			<field name="code" displayName="编号" />
-			<field name="barcode" displayName="条形码" />
-			<field name="boxcode" displayName="箱码" />
-			<field name="spec" displayName="规格" />
-			<field name="packageSpec" displayName="包装系数" />
-			<field name="msu" displayName="msu" />
+			<field name="su" displayName="su" />
 			<field name="price3500" displayName="3500箱价格" />
 			<field name="price2000" displayName="2000箱价格" />
 			<field name="price800" displayName="800箱价格" />
+			<field name="price200NoTax" displayName="200箱不含税价格" />
 			<field name="price200" displayName="200箱价格" />
 			<field name="price100" displayName="100箱价格" />
 			<field name="priceSugg" displayName="建议零售" />
 			<field name="cubage" displayName="体积" />
 			<field name="weight" displayName="公斤/箱" />
-			<field name="gmtValidFrom" displayName="信息生效日期" />
-			<field name="gmtExpTo" displayName="保质期" />
 			<field name="enable" displayName="是否有效" />
-			<field name="description" displayName="描述" />
 		</group>
 		
 		<group name="package" extends="csrfCheck">
