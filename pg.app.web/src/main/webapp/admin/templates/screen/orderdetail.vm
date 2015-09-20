@@ -277,7 +277,7 @@
 		    renderer : function(record){
 			    var result = '<div><p>&nbsp;发货地址：' + record.addressFrom + '</p></div>';
 			    result += '<div><p>&nbsp;收货地址：' + record.addressTo + '</p></div>';
-			    result += '<div><p>&nbsp;联系方式：' + record.keeper + '('+record.keeperIdCard+') ' + record.mobile+' ' + record.phone + '</p></div>';
+			    result += '<div><p>&nbsp;联系方式：' + record.keeper + ' ' + record.mobile+' ' + record.phone + '</p></div>';
 			    result += '<div><p>&nbsp;备注：' + record.comment + '</p></div>';
 			    return result;
 		    }

@@ -313,7 +313,7 @@ $control.setTemplate("paging.vm")
 		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">200箱价格：</label>' + record.price200 + ' 元</p></div>';
 		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">100箱价格：</label>' + record.price100 + ' 元</p></div>';
 		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">建议售价：</label>' + record.priceSugg + ' 元</p></div>';
-		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">体积：</label>' + record.cubage + 'dm³/箱</p></div>';
+		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">体积：</label>' + record.cubage + ' dm³/箱</p></div>';
 		    	result += '<div><p><label style="padding-left: 20px;min-width: 80px;display: inline-block;">重量：</label>' + record.weight + ' 公斤/箱</p></div>';
 			    return result;
 		    }
