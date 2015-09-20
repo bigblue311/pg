@@ -64,6 +64,7 @@ public class Product {
 		pairs.add(new NameValuePair("建议售价","150px"));   //priceSugg
 		pairs.add(new NameValuePair("体积(立方分米/箱)","150px"));//cubage
 		pairs.add(new NameValuePair("重量(公斤/箱)","150px"));   //weight
+		pairs.add(new NameValuePair("库存","100px"));       //volume
 		printTableHead(out,pairs);
 		
 		int count = 0;
@@ -121,6 +122,7 @@ public class Product {
 		out.write("<td>"+productDO.getPriceSugg()+"</td>");
 		out.write("<td>"+productDO.getCubage()+"</td>");
 		out.write("<td>"+productDO.getWeight()+"</td>");
+		out.write("<td>"+productDO.getVolume()+"</td>");
 		out.write("</tr>");
 	}
 	

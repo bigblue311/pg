@@ -112,6 +112,7 @@
 			<field name="priceSugg" displayName="建议零售" />
 			<field name="cubage" displayName="体积" />
 			<field name="weight" displayName="公斤/箱" />
+			<field name="volume" displayName="库存/箱" />
 			<field name="enable" displayName="是否有效" />
 		</group>
 		

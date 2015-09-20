@@ -6,6 +6,7 @@ import com.pg.biz.model.OrderStatisticVO;
 import com.pg.biz.model.OrderVO;
 import com.pg.biz.model.PurchaseVO;
 import com.pg.dal.model.OrderDO;
+import com.pg.dal.model.ProductDO;
 import com.pg.dal.model.PurchaseDO;
 import com.pg.dal.query.OrderQueryCondition;
 import com.pg.dal.query.PurchaseQueryCondition;
@@ -13,6 +14,16 @@ import com.victor.framework.dal.basic.Paging;
 
 public interface TransactionManager {
 	
+    /**
+     * 检查库存
+     * @param productDO
+     * @param quantity
+     * @return
+     */
+    Integer checkQuantity(ProductDO productDO, Integer quantity);
+    Integer checkQuantity(ProductDO productDO, Integer originQuantity, Integer quantity);
+    Integer checkQuantity(ProductDO productDO, Long purchaseItemId, Integer quantity);
+    
 	/**
 	 * 创建订单
 	 * @param orderDO

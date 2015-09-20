@@ -11,7 +11,7 @@
 			<div id="box1" class="box">
 			#foreach($exclude in $excludeList)
 			<div class="item">
-				<label>$exclude.name</label>
+				<label>${exclude.name} (库存 $!{exclude.volume} 箱)</label>
 				<input class="prod" type="hidden" value="${exclude.id}"/>
 			</div>
 			#end
@@ -28,7 +28,7 @@
 			<div id="box2" class="box">
 			#foreach($include in $includeList)
 			<div class="item">
-				<label>$include.name</label>
+				<label>${include.name} (库存 $!{include.volume} 箱)</label>
 				<input class="prod" type="hidden" value="${include.productId}"/>
 			</div>
 			#end

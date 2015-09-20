@@ -38,6 +38,7 @@ public class ProductDO extends EntityDO implements Serializable{
 	private Double priceSugg;	  //建议售价
 	private Double cubage;		  //立方分米/体积
 	private Double weight;		  //公斤/箱
+	private Integer volume;       //库存
 	private String properties;    //属性
 	private String enable;		  //有效
 	
@@ -138,7 +139,13 @@ public class ProductDO extends EntityDO implements Serializable{
 		this.weight = weight;
 	}
 	
-	@SuppressWarnings("unchecked")
+	public Integer getVolume() {
+        return volume;
+    }
+    public void setVolume(Integer volume) {
+        this.volume = volume;
+    }
+    @SuppressWarnings("unchecked")
     public Map<String,String> getPropMap(){
 	    if(StringTools.isEmpty(properties)){
 	        return Maps.newHashMap();
@@ -158,6 +165,9 @@ public class ProductDO extends EntityDO implements Serializable{
 		}
 		if(EnableEnum.无效.getCode().equals(enable)){
 			return false;
+		}
+		if(volume == null || volume <= 0){
+		    return false;
 		}
 		return true;
 	}

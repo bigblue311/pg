@@ -82,6 +82,96 @@ $control.setTemplate("paging.vm")
 	  </div>
 	</div>
 	<div class="row">
+		<label class="control-label"><s>*</s>库存：</label>
+		<div class="controls">
+			<input type="text" id="volume" name="$group.volume.key" class="input-normal control-text"
+			data-rules="{required:true,regexp:/^[1-9]\d*|0$/}" 
+			data-messages="{required:'请输入库存',regexp:'必须为非负整数'}" style="width: 124px;"> 箱
+		</div>
+		<label class="control-label"><s>*</s>有(无)效：</label>
+		<div class="controls selector">
+			<select id="enable" name="$group.enable.key">
+				#foreach($enable in $enableEnum)
+				<option value="$!enable.code">$!enable.desc</option>
+				#end
+			</select>
+		</div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">SU：</label>
+        <div class="controls">
+          <input type="text" id="su" name="$group.su.key" class="input-normal control-text">
+        </div>
+        <label class="control-label"><s>*</s>3500箱价格：</label>
+        <div class="controls">
+          <input type="text" id="price3500" name="$group.price3500.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label"><s>*</s>2000箱价格：</label>
+        <div class="controls">
+          <input type="text" id="price2000" name="$group.price2000.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+        <label class="control-label"><s>*</s>800箱价格：</label>
+        <div class="controls">
+          <input type="text" id="price800" name="$group.price800.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label"><s>*</s>200箱不含税：</label>
+        <div class="controls">
+          <input type="text" id="price200NoTax" name="$group.price200NoTax.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+        <label class="control-label"><s>*</s>200箱价格：</label>
+        <div class="controls">
+          <input type="text" id="price200" name="$group.price200.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label"><s>*</s>100箱价格：</label>
+        <div class="controls">
+          <input type="text" id="price100" name="$group.price100.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+        <label class="control-label"><s>*</s>建议售价：</label>
+        <div class="controls">
+          <input type="text" id="priceSugg" name="$group.priceSugg.key" class="input-normal control-text"
+          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
+          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
+        </div>
+	  </div>
+	</div>
+	<div class="row">
+      <div class="control-group">
+        <label class="control-label">体积：</label>
+        <div class="controls">
+          <input type="text" id="cubage" name="$group.cubage.key" class="input-normal control-text" style="width: 98px;"> dm³/箱
+        </div>
+        <label class="control-label">重量：</label>
+        <div class="controls">
+          <input type="text" id="weight" name="$group.weight.key" class="input-normal control-text" style="width: 98px;"> 公斤/箱
+        </div>
+	  </div>
+	</div>
+	<div class="row">
 		<label class="control-label">品牌：</label>
 		<div class="controls">
 			<select id="brandId" name="$group.brandId.key">
@@ -95,90 +185,6 @@ $control.setTemplate("paging.vm")
 			<select id="categoryId" name="$group.categoryId.key">
 				#foreach($category in $categoryEnum)
 				<option value="$!category.key">$!category.value</option>
-				#end
-			</select>
-		</div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">SU：</label>
-        <div class="controls">
-          <input type="text" id="su" name="$group.su.key" class="input-normal control-text">
-        </div>
-        <label class="control-label">3500箱价格：</label>
-        <div class="controls">
-          <input type="text" id="price3500" name="$group.price3500.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">2000箱价格：</label>
-        <div class="controls">
-          <input type="text" id="price2000" name="$group.price2000.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-        <label class="control-label">800箱价格：</label>
-        <div class="controls">
-          <input type="text" id="price800" name="$group.price800.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">200箱不含税：</label>
-        <div class="controls">
-          <input type="text" id="price200NoTax" name="$group.price200NoTax.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-        <label class="control-label">200箱价格：</label>
-        <div class="controls">
-          <input type="text" id="price200" name="$group.price200.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">100箱价格：</label>
-        <div class="controls">
-          <input type="text" id="price100" name="$group.price100.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-        <label class="control-label">建议售价：</label>
-        <div class="controls">
-          <input type="text" id="priceSugg" name="$group.priceSugg.key" class="input-normal control-text"
-          data-rules="{required:true,regexp:/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/}" 
-          data-messages="{required:'请输入单价',regexp:'请输入正确的数字格式'}" style="width: 124px;"> 元
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-      <div class="control-group">
-        <label class="control-label">体积：</label>
-        <div class="controls">
-          <input type="text" id="cubage" name="$group.cubage.key" class="input-normal control-text"> dm³/箱
-        </div>
-        <label class="control-label">重量：</label>
-        <div class="controls">
-          <input type="text" id="weight" name="$group.weight.key" class="input-normal control-text" style="width:94px;"> 公斤/箱
-        </div>
-	  </div>
-	</div>
-	<div class="row">
-		<label class="control-label">有(无)效：</label>
-		<div class="controls selector">
-			<select id="enable" name="$group.enable.key">
-				#foreach($enable in $enableEnum)
-				<option value="$!enable.code">$!enable.desc</option>
 				#end
 			</select>
 		</div>
@@ -258,6 +264,11 @@ $control.setTemplate("paging.vm")
           dataIndex :'weight',
           width:'10%'
         },{
+            title : '库存 (箱)',
+            elCls: 'left',
+            dataIndex :'volume',
+            width:'5%'
+        },{
           title : '有(无)效',
           elCls: 'left',
           dataIndex :'enable',
@@ -269,7 +280,7 @@ $control.setTemplate("paging.vm")
           		return '<label style="color:red">无效</label>';
           	}
           },
-          width:'10%'
+          width:'5%'
         },{
 		  title : '操作',
 		  elCls: 'center',
@@ -395,6 +406,7 @@ $control.setTemplate("paging.vm")
     	var priceSugg = record.priceSugg;
     	var cubage = record.cubage;
     	var weight = record.weight;
+    	var volume = record.volume;
     	var enable = record.enable;
 
     	jQuery("#id").val(id);
@@ -413,6 +425,7 @@ $control.setTemplate("paging.vm")
     	jQuery("#priceSugg").val(priceSugg);
     	jQuery("#cubage").val(cubage);
     	jQuery("#weight").val(weight);
+    	jQuery("#volume").val(volume);
     	jQuery("#enable").val(enable);
     	
     	jQuery("#event").attr("name",event);
@@ -437,6 +450,7 @@ $control.setTemplate("paging.vm")
     	jQuery("#priceSugg").val('');
     	jQuery("#cubage").val('');
     	jQuery("#weight").val('');
+    	jQuery("#volume").val('');
     	jQuery("#enable").val('');
     	
     	jQuery("#event").attr("name",event);

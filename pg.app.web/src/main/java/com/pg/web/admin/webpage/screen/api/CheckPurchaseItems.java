@@ -8,6 +8,7 @@ import com.alibaba.citrus.turbine.dataresolver.Params;
 import com.pg.biz.manager.ProductManager;
 import com.pg.biz.manager.TransactionManager;
 import com.pg.biz.model.PurchaseVO;
+import com.pg.dal.model.ProductDO;
 import com.pg.dal.model.PublishDO;
 import com.pg.dal.model.PurchaseItemDO;
 import com.pg.web.admin.model.form.PurchaseItemsFO;
@@ -55,14 +56,19 @@ public class CheckPurchaseItems {
 	}
 	
 	private Integer getFinalQuantity(PurchaseItemDO purchaseItemDO, List<PurchaseItemDO> updateList){
-		for(PurchaseItemDO update : updateList){
+	    ProductDO productDO = productManager.getProductById(purchaseItemDO.getProductId());
+	    for(PurchaseItemDO update : updateList){
 			if(update.getId().equals(purchaseItemDO.getId())){
 				if(update.getQuantity()!=null||update.getQuantity()>=0){
+				    Integer quantity = update.getQuantity();
+			        quantity = transactionManager.checkQuantity(productDO, quantity);
 					return update.getQuantity();
 				}
 			}
 		}
-		return purchaseItemDO.getQuantity();
+		Integer quantity = purchaseItemDO.getQuantity();
+        quantity = transactionManager.checkQuantity(productDO, quantity);
+		return quantity;
 	}
 	
 	private Double getFinalPrice(PurchaseItemDO purchaseItemDO, Long publishId, Integer quantity){

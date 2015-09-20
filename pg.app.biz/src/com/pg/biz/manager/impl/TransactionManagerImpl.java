@@ -121,6 +121,7 @@ public class TransactionManagerImpl implements TransactionManager{
 		purchaseItemDO.setTitle(productDO.getTitle());
 		purchaseItemDO.setBrandId(productDO.getBrandId());
 		purchaseItemDO.setCategoryId(productDO.getCategoryId());
+		quantity = checkQuantity(productDO,quantity);
 		if(quantity != null){
 		    if(productDO.getSu() != null){
 		        purchaseItemDO.setMsu(productDO.getSu()*quantity);
@@ -137,7 +138,78 @@ public class TransactionManagerImpl implements TransactionManager{
 		purchaseItemDO.setPurchaseId(purchaseId);
 		purchaseItemDO.setProductId(productDO.getId());
 		purchaseItemDAO.insert(purchaseItemDO);
+		updateVolume(productDO, quantity);
 	}
+	
+	private void updateVolume(ProductDO productDO, Integer quantity){
+	    if(productDO == null || productDO.getVolume() == null){
+            return;
+        }
+        Integer volume = productDO.getVolume();
+        if(volume <= quantity){
+            volume = 0;
+        } else {
+            volume = volume - quantity;
+        }
+        productDO.setVolume(volume);
+        productDAO.update(productDO);
+	}
+	
+	private void updateVolume(ProductDO productDO, Integer originQuantity, Integer quantity){
+        if(productDO == null || productDO.getVolume() == null){
+            return;
+        }
+        Integer volume = productDO.getVolume();
+        if(originQuantity!=null){
+            volume = volume + originQuantity;
+        }
+        if(volume <= quantity){
+            volume = 0;
+        } else {
+            volume = volume - quantity;
+        }
+        productDO.setVolume(volume);
+        productDAO.update(productDO);
+    }
+	
+	@Override
+	public Integer checkQuantity(ProductDO productDO, Integer quantity){
+	    if(productDO == null || productDO.getVolume() == null){
+	        return quantity;
+	    }
+	    Integer volume = productDO.getVolume();
+	    if(volume <= quantity){
+	        return volume;
+	    } else {
+	        return quantity;
+	    }
+	}
+	
+	@Override
+	public Integer checkQuantity(ProductDO productDO,Integer originQuantity, Integer quantity){
+        if(productDO == null || productDO.getVolume() == null){
+            return quantity;
+        }
+        Integer volume = productDO.getVolume();
+        if(originQuantity!=null){
+            volume = volume + originQuantity;
+        }
+        if(volume <= quantity){
+            return volume;
+        } else {
+            return quantity;
+        }
+    }
+	
+	@Override
+    public Integer checkQuantity(ProductDO productDO, Long purchaseItemId, Integer quantity) {
+        PurchaseItemDO purchaseItemDO = purchaseItemDAO.getById(purchaseItemId);
+        if(purchaseItemDO == null){
+            return checkQuantity(productDO,quantity);
+        } else {
+            return checkQuantity(productDO,purchaseItemDO.getQuantity(),quantity);
+        }
+    }
 	
 	private void createPurchaseItem(PurchaseDO purchaseDO){
 		if(purchaseDO == null){
@@ -213,11 +285,17 @@ public class TransactionManagerImpl implements TransactionManager{
 		if(purchaseDO == null){
 			return;
 		}
+		ProductDO productDO = productDAO.getById(purchaseItemDO.getProductId());
+		if(productDO == null){
+            return;
+        }
+		quantity = checkQuantity(productDO,purchaseItemDO.getQuantity(), quantity);
 		purchaseItemDO.setId(id);
 		purchaseItemDO.setQuantity(quantity);
 		Double finalPrice = getFinalPrice(purchaseDO.getPublishId(),purchaseItemDO.getProductId(),quantity);
 		purchaseItemDO.setPrice(finalPrice);
 		purchaseItemDAO.update(purchaseItemDO);
+		updateVolume(productDO,purchaseItemDO.getQuantity(), quantity);
 	}
 	
 	@Override
@@ -523,6 +601,7 @@ public class TransactionManagerImpl implements TransactionManager{
 		if(publishDO == null || productDO == null){
 			return 0d;
 		}
+		quantity = checkQuantity(productDO,quantity);
 		Double finalDiscount = 1.0;
 		if(publishDO != null && publishDO.getDiscount() != null){
 			finalDiscount = finalDiscount * publishDO.getDiscount();
@@ -620,6 +699,4 @@ public class TransactionManagerImpl implements TransactionManager{
 	public Integer getOrderCount(OrderQueryCondition queryCondition) {
 		return orderDAO.getCount(queryCondition);
 	}
-
-	
 }

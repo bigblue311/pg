@@ -26,6 +26,7 @@
     <result property="priceSugg" 	column="price_sugg"/>
     <result property="cubage" 		column="cubage"/>
     <result property="weight" 		column="weight"/>
+    <result property="volume" 		column="volume"/>
     <result property="properties" 	column="properties"/>
     <result property="enable" 		column="enable"/>
   </resultMap>
@@ -49,12 +50,13 @@
       price_sugg,
       cubage,
       weight,
+      volume,
       properties,
       enable
     ) values (
       now(), now(), #name#, #title#,#brandId#, #categoryId#, #su#, 
       #price3500#, #price2000#, #price800#, #price200NoTax#, #price200#, 
-      #price100#, #priceSugg#, #cubage#, #weight#, #properties#, #enable#
+      #price100#, #priceSugg#, #cubage#, #weight#, #volume#, #properties#, #enable#
     )
     ]]>
     <selectKey resultClass="long" keyProperty="id">    
@@ -138,6 +140,11 @@
       <isNotEmpty property="weight">  
          <![CDATA[   
            weight = #weight#,
+         ]]> 
+      </isNotEmpty>
+      <isNotEmpty property="volume">  
+         <![CDATA[   
+           volume = #volume#,
          ]]> 
       </isNotEmpty>
       <isNotEmpty property="enable">  

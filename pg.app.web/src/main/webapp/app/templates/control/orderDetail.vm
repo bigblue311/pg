@@ -74,13 +74,11 @@ function loadOrderDetail(id){
 						}
 						item += "	<hr data-am-widget='divider' style='border-bottom:1px dashed lightgrey;' class='am-divider am-divider-default' />";
 						item += "	<ul>";
-						item += "		<li>名称:<span class='am-fr'>"+"["+purchaseItem.code+"]"+purchaseItem.name+"</span></li>";
-						item += "		<li>条形码:<span class='am-fr'>"+purchaseItem.barcode+"</span></li>";
-						item += "		<li>箱码:<span class='am-fr'>"+purchaseItem.boxcode+"</span></li>";
+						item += "		<li>名称:<span class='am-fr'>"+purchaseItem.name+"</span></li>";
 						item += "		<li>成交价格:<span class='am-fr'>"+purchaseItem.price+"元</span></li>";
 						item += "		<li>成交数量:<span class='am-fr'>"+purchaseItem.quantity+"箱</span></li>";
-						item += "		<li>体积:<span class='am-fr'>"+purchaseItem.cubage+"/箱</span></li>";
-						item += "		<li>重量:<span class='am-fr'>"+purchaseItem.weight+"公斤/箱</span></li>";
+						item += "		<li>体积:<span class='am-fr'>"+purchaseItem.mcubage+"立方米</span></li>";
+						item += "		<li>重量:<span class='am-fr'>"+purchaseItem.mweight+"吨</span></li>";
 						item += "	</ul>";
 					}
 				}

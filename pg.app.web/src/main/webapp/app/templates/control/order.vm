@@ -99,7 +99,7 @@
 					for(var i=0;i<productList.length;i++){
 						var productDO = productList[i];
 						var item = "<div>";
-						item += "<span class='am-fl'>"+productDO.title+" ["+productDO.code+"]</span>";
+						item += "<span class='am-fl'>"+productDO.title+" </span>";
 						item += "<span class='am-fr' price='"+productDO.price100+"' id='purchaseItemPrice"+productDO.id+"'>"+productDO.price100+"元/箱</span>";
 						item += "<input type='number' class='purchaseItem' productId='"+productDO.id+"' value='' placeholder='输入订购数量箱' min='0'/>";
 						item += "<br><br>";

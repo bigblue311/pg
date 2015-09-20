@@ -103,14 +103,14 @@
 	<input type="hidden" id="orderId" name="$group.orderId.key" value="$!orderDO.id"/>
     <div class="row">
       <div class="control-group">
+      	<label class="control-label">产品包标题：</label>
+		<div class="controls">
+			<input type="text" id="title" name="$group.title.key" class="input-normal control-text" value="">
+		</div>
       	<label class="control-label">产品包名称：</label>
 		<div class="controls">
 			<input type="hidden" id="publishId" name="$group.publishId.key" class="input-normal control-text" value="">
 			<input type="text" id="name" name="$group.name.key" class="input-normal control-text" value="">
-		</div>
-		<label class="control-label">产品包标题：</label>
-		<div class="controls">
-			<input type="text" id="title" name="$group.title.key" class="input-normal control-text" value="">
 		</div>
 	  </div>
 	</div>
@@ -170,7 +170,7 @@
       <div class="control-group">
         <label class="control-label">备注：</label>
         <div class="controls control-row4">
-          <textarea id="comment" name="$group.comment.key" class="input-large"></textarea>
+          <textarea id="comment" name="$group.comment.key" class="input-large" style="width:410px"></textarea>
         </div>
       </div>
     </div>
@@ -532,9 +532,9 @@
   		var items = "";
   		for(var i = 0;i<itemList.length;i++){
   			var item = itemList[i];
-  			items += "<div class='row itemRow' price='"+item.price+"' itemId='"+item.id+"'>";
-  			items += "<label style='display:inline-block;min-width:300px;'>"+item.name+"</label>";
-  			items += "<label style='display:inline-block;min-width:100px;'>"+item.price+"元</label>";
+  			items += "<div class='row itemRow' itemId='"+item.id+"' publishId='"+record.publishId+"'>";
+  			items += "<label style='display:inline-block;min-width:300px;'>"+item.name+"<span class='volume' prodId='"+item.productId+"'></span></label>";
+  			items += "<label style='display:inline-block;min-width:100px;' class='price'>"+item.price+"元</label>";
   			items += "<span class='numbericLeft'><i class='icon-plus-mini'></i></span>";
   			items += "<input type='text' class='quan' value='"+item.quantity+"' style='text-align: center;width: 50px;border-left: 0px;border-right: 0px;'>";
   			items += "<span class='numbericRight'><i class='icon-minus-mini'></i></span>箱";
@@ -590,14 +590,39 @@
   			var totalPrice = 0;
   			var totalQuantity = 0;
   			jQuery(".quan").each(function(){
-  				var price = Number(jQuery(this).parent().attr("price"));
   				var quantity = Number(jQuery(this).val());
-  				totalPrice += setScale(price * quantity / 10000);
-  				totalQuantity += quantity;
+  				var purchaseId = jQuery(this).parent().attr("itemId");
+  				var quanItem = this;
+  				jQuery(this).parent().find(".volume").each(function(){
+  					var prodId = jQuery(this).attr("prodId");
+  					var volumeItem = this;
+  					jQuery.ajax({
+  						type: "get",
+  						url: '$admin.setTarget('/api/getProductById.json')?id='+ prodId,
+  						success:function(data, textStatus){
+  							if(data.success){
+  								var productDO = data.dataObject;
+  								var volume = productDO.volume;
+  								if(volume == null){
+  									volume = 9999999;
+  								}
+  								if(quantity > volume){
+  									quantity = volume;
+  								}
+  								jQuery(quanItem).val(quantity);
+  								jQuery(volumeItem).empty().append(" (库存 "+volume+" 箱)");
+  							} else {
+  								jQuery(volumeItem).empty().append(" (库存 "+9999999+" 箱)");
+  							}
+  							totalPrice += setScale(price * quantity / 10000);
+  			  				totalQuantity += quantity;
+	  			  			jQuery(".totalPrice").empty().append("共 "+setScale(totalPrice)+" 万元 / "+record.limitBuyPrice+" 万元");
+	  						jQuery(".totalQuantity").empty().append("共 "+totalQuantity+" 箱 / "+record.limitBuyQuantity+" 箱");
+	  			  			jQuery(".error").empty();
+  						}
+  			     	});
+  				});
   			});
-  			jQuery(".totalPrice").empty().append("共"+setScale(totalPrice)+"万元 / "+record.limitBuyPrice+" 万元");
-			jQuery(".totalQuantity").empty().append("共"+totalQuantity+"箱 / "+record.limitBuyQuantity+" 箱");
-  			jQuery(".error").empty();
   		}
   		
   		function setScale(Dight){  

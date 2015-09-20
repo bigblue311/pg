@@ -129,12 +129,13 @@ function loadPublishList(){
 						item += "				<div class='am-accordion-content'>";
 						for(var i=0;i<productList.length;i++){
 							var productDO = productList[i];
-							item += "				<div>"+productDO.title+" ["+productDO.code+"]";
+							item += "				<div>"+productDO.title;
 							item += "					<ul>";
-							item += "						<li>体积:<span class='am-fr'>"+productDO.cubage+" /箱</span></li>";
+							item += "						<li>体积:<span class='am-fr'>"+productDO.cubage+" 立方分米/箱</span></li>";
 							item += "						<li>重量:<span class='am-fr'>"+productDO.weight+" 公斤/箱</span></li>";
 							item += "						<li>100箱:<span class='am-fr'>"+productDO.price100+" 元/箱</span></li>";
 							item += "						<li>200箱:<span class='am-fr'>"+productDO.price200+" 元/箱</span></li>";
+							item += "						<li>200箱(不含税):<span class='am-fr'>"+productDO.price200NoTax+" 元/箱</span></li>";
 							item += "						<li>800箱:<span class='am-fr'>"+productDO.price800+" 元/箱</span></li>";
 							item += "						<li>2000箱:<span class='am-fr'>"+productDO.price2000+" 元/箱</span></li>";
 							item += "						<li>3500箱:<span class='am-fr'>"+productDO.price3500+" 元/箱</span></li>";

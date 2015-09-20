@@ -25,6 +25,7 @@ public class ProductFO extends ProductDO{
 		productDO.setPriceSugg(getPriceSugg());
 		productDO.setCubage(getCubage());
 		productDO.setWeight(getWeight());
+		productDO.setVolume(getVolume());
 		productDO.setEnable(getEnable());
 		return productDO;
 	}
