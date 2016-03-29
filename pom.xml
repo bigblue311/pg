@@ -1,4 +1,4 @@
-﻿<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">	
 	<modelVersion>4.0.0</modelVersion>
@@ -19,9 +19,9 @@
 		<guava.version>15.0</guava.version>
         <java.encoding>UTF-8</java.encoding>
         <webx-version>3.2.3</webx-version>
+		<poi.version>3.9</poi.version>
         <spring-version>3.2.4.RELEASE</spring-version>
         <springext-plugin-version>1.2</springext-plugin-version>
-        <!--<jetty-version>8.1.13.v20130916</jetty-version>-->
         <project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
         <productionMode>false</productionMode>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -212,6 +212,16 @@
 				<artifactId>commons-httpclient</artifactId>
 				<version>3.0.1</version>
 			</dependency>
+			<dependency>
+	 			<groupId>org.apache.poi</groupId>
+	 			<artifactId>poi</artifactId>
+	 			<version>${poi.version}</version>
+			</dependency>
+			<dependency>  
+	            <groupId>org.apache.poi</groupId>  
+	            <artifactId>poi-excelant</artifactId>  
+	            <version>${poi.version}</version>  
+	        </dependency>  
 		</dependencies>
 	</dependencyManagement>
 	<build>
